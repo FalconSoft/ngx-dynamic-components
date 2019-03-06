@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CoreComponent } from './core.component';
+import { UISelectorComponent } from './components/ui-selector-component';
 
 @NgModule({
-  declarations: [CoreComponent],
+  declarations: [UISelectorComponent],
   imports: [
   ],
-  exports: [CoreComponent]
+  exports: [UISelectorComponent]
 })
 export class CoreModule { }

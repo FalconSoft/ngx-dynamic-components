@@ -19,20 +19,23 @@
       "dom"
     ],
     "paths": {
+      "@ngx-dynamic-components/core": ["dist/@ngx-dynamic-components/core"],
+      "@ngx-dynamic-components/material": ["dist/@ngx-dynamic-components/material"],
+      "@ngx-dynamic-components/tools": ["dist/@ngx-dynamic-components/tools"],
       "core": [
-        "dist/core"
+        "dist/@ngx-dynamic-components/core"
       ],
       "core/*": [
         "dist/core/*"
       ],
       "material": [
-        "dist/material"
+        "dist/@ngx-dynamic-components/material"
       ],
       "material/*": [
         "dist/material/*"
       ],
       "tools": [
-        "dist/tools"
+        "dist/@ngx-dynamic-components/tools"
       ],
       "tools/*": [
         "dist/tools/*"
