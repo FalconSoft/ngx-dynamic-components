@@ -6,12 +6,13 @@ import { ActionsContainer, ActionsMap, UIModel } from '@ngx-dynamic-components/c
   selector: 'dc-editor-container',
   template: `
     <div fxLayout="column" fxFlex="1 1 auto">
-      <dc-editor-toolbar (action)="OnToolbarAction($event)"></dc-editor-toolbar>
       <as-split direction="horizontal">
           <as-split-area size="50" fxLayout="column" fxFlex="1 1 auto">
             <dc-editor #editor fxLayout fxFlex="1 1 auto"></dc-editor>
           </as-split-area>
           <as-split-area size="50" fxLayout="column" fxFlex="1 1 auto">
+            <dc-editor-toolbar (action)="OnToolbarAction($event)"></dc-editor-toolbar>
+            <mat-divider></mat-divider>
             <dc-editor-preview [uiModel]="uiModel" [actions]="actions" fxLayout="column" fxFlex="1 1 auto"></dc-editor-preview>
           </as-split-area>
       </as-split>

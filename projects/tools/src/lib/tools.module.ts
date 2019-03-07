@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
-import { MatToolbarModule, MatButtonModule, MatTabsModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -23,6 +23,7 @@ import { EditorComponent } from './components/editor.component';
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,
+    MatDividerModule,
     FormsModule,
     FlexLayoutModule,
     AngularSplitModule.forRoot(),
