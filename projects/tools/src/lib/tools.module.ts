@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
@@ -26,9 +26,12 @@ import { EditorComponent } from './components/editor.component';
     FormsModule,
     FlexLayoutModule,
     AngularSplitModule.forRoot(),
-    MonacoEditorModule.forRoot()
+    MonacoEditorModule.forRoot({
+      // Use baseUrl if needed for deployment purpose.
+      // TODO: set it in runtime programaticly or in build time based on params.
+      // baseUrl: '/ngx-dynamic-components/assets'
+    })
   ],
   exports: [ EditorContainerComponent ],
-  schemas: [NO_ERRORS_SCHEMA]
 })
 export class ToolsModule { }

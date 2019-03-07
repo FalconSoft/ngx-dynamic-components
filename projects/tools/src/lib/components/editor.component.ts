@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { registerMonacoCompletion, defaultOptions } from '../monaco.config';
 
 @Component({
@@ -26,9 +27,6 @@ import { registerMonacoCompletion, defaultOptions } from '../monaco.config';
   `]
 })
 export class EditorComponent implements OnInit {
-
-  constructor() { }
-
   editorOptions = defaultOptions;
   uiModel: string;
 

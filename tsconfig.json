@@ -20,8 +20,11 @@
     ],
     "paths": {
       "@ngx-dynamic-components/core": ["dist/@ngx-dynamic-components/core"],
+      "@ngx-dynamic-components/core/*": ["dist/@ngx-dynamic-components/core/*"],
       "@ngx-dynamic-components/material": ["dist/@ngx-dynamic-components/material"],
+      "@ngx-dynamic-components/material/*": ["dist/@ngx-dynamic-components/material/*"],
       "@ngx-dynamic-components/tools": ["dist/@ngx-dynamic-components/tools"],
+      "@ngx-dynamic-components/tools/*": ["dist/@ngx-dynamic-components/tools/*"],
       "core": [
         "dist/@ngx-dynamic-components/core"
       ],

@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Setup application
 
-Setup application `npm run setup`. Installs node modules and build libraries.
+Run `npm run setup`. Installs node modules and build libraries.
 
 ## Development server
 
@@ -25,6 +25,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Deploy to GitHub pages
+
+Run `npm run deploy:gh`. Change `baseUrl` for monaco editor if needed (projects/tools/src/lib/tools.module.ts).
 
 ## Further help
 

@@ -18,8 +18,6 @@ import { CardUIComponent } from './components/card-ui-component';
 
 import { registerComponents } from './components/register';
 
-registerComponents();
-
 @NgModule({
     declarations: [
       ButtonUIComponent,
@@ -66,4 +64,8 @@ registerComponents();
       CardUIComponent
     ],
 })
-export class MaterialModule {}
+export class MaterialModule {
+  constructor() {
+    registerComponents();
+  }
+}

@@ -7,6 +7,8 @@
     "start": "ng serve",
     "build": "ng build",
     "build:libs": "ng build core && ng build material && ng build tools",
+    "build:gh": "ng build --prod --base-href='/ngx-dynamic-components/'",
+    "deploy:gh": "npm run build:libs && npm run build:gh && npx ngh --dir=dist/ngx-dynamic-components/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

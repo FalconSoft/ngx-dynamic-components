@@ -75,18 +75,6 @@ export const COMPONENTS_LIST = [{
   component: TextUIComponent
 }];
 
-export {
-  ButtonUIComponent,
-  FlexContainerUIComponent,
-  CardUIComponent,
-  CheckboxUIComponent,
-  InputUIComponent,
-  SelectUIComponent,
-  TextUIComponent,
-  TextareaUIComponent,
-};
-
-
 // Register components.
 export function registerComponents() {
   COMPONENTS_LIST.forEach(({desc, component}) => CoreService.registerComponent(desc, component));
