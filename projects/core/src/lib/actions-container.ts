@@ -1,19 +1,19 @@
 import { IActionsContainer, UIModel, ActionsMap, AttributesMap } from './models';
 
 export class ActionsContainer implements IActionsContainer {
-    constructor(am: ActionsMap, uiModel?: UIModel<AttributesMap>) {
+    constructor(am: ActionsMap, uiModel?: UIModel) {
       this.actions = am;
       this.uiModel = uiModel;
     }
     actions: ActionsMap;
 
-    uiModel: UIModel<AttributesMap>;
+    uiModel: UIModel;
 
     hasAction(actionName: string): boolean {
       return this.actions.hasOwnProperty(actionName) && typeof this.actions[actionName] === 'function';
     }
 
-    onRunAction(sender: UIModel<AttributesMap>, actionName: string, dataModel: any): void {
+    onRunAction(sender: UIModel, actionName: string, dataModel: any): void {
       if (typeof this.actions[actionName] === 'function') {
           this.actions[actionName](sender, dataModel, this.uiModel);
       } else {

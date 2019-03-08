@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, AttributesMap, propDescription } from '@ngx-dynamic-components/core';
 
 @Component({
     selector: 'dc-ui-text',
@@ -18,6 +18,20 @@ import { BaseUIComponent } from '@ngx-dynamic-components/core';
       `
     ]
 })
-export class TextUIComponent extends BaseUIComponent {
+export class TextUIComponent extends BaseUIComponent<TextProperties> {
 
+}
+
+export class TextProperties implements AttributesMap {
+  @propDescription({
+    description: 'Displays text data.',
+    example: 'Text information',
+  })
+  text: string;
+
+  @propDescription({
+    description: 'Element width',
+    example: '100%',
+  })
+  width: string;
 }

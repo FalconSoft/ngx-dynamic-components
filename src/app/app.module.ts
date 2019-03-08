@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule, MatTabsModule, MatSidenavModule, MatListModule, MatCardModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatTabsModule, MatSidenavModule, MatListModule, MatCardModule,
+  MatTableModule, MatExpansionModule } from '@angular/material';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { ToolsModule } from '@ngx-dynamic-components/tools';
@@ -43,6 +45,8 @@ import { CardsComponent } from './components/cards.component';
     MatSidenavModule,
     MatListModule,
     MatCardModule,
+    MatTableModule,
+    MatExpansionModule,
     FlexLayoutModule
   ],
   providers: [],

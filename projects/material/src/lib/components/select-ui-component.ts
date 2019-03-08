@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { BaseUIComponent, AttributesMap, UIModel, propDescription } from '@ngx-dynamic-components/core';
+import { Component } from '@angular/core';
+import { BaseUIComponent, DataModelProperties, propDescription } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-ui-select',
@@ -15,16 +15,14 @@ import { BaseUIComponent, AttributesMap, UIModel, propDescription } from '@ngx-d
     </mat-form-field>
   `
 })
-export class SelectUIComponent extends BaseUIComponent {
-  @Input()
-  uiModel: UIModel<SelectProperties>;
+export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
   onSelect() {
     this.changedDataModel.emit(this.dataModel);
     this.triggerAction('_selectionChanged');
   }
 }
 
-export class SelectProperties implements AttributesMap {
+export class SelectProperties extends DataModelProperties {
   @propDescription({
     description: 'Select options.',
     example: '[{label: "One", value: 1}]',
@@ -36,6 +34,4 @@ export class SelectProperties implements AttributesMap {
     example: 'Please select an option',
   })
   placeholder: string;
-
-  dataModelPath: string;
 }

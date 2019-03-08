@@ -1,3 +1,5 @@
+import { propDescription } from './components/base-ui-component';
+
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 
 export interface AttributesMap {
@@ -9,6 +11,14 @@ export interface AttributesMap {
     [key: string]: any;
 }
 
+export abstract class DataModelProperties implements AttributesMap {
+  @propDescription({
+    description: 'Path to key in data model.',
+    example: 'name'
+  })
+  dataModelPath?: string;
+}
+
 export interface ActionsMap {
     [key: string]: UIAction;
 }
@@ -17,14 +27,6 @@ export interface ActionsMap {
 export interface PropDescriptor {
   description: string;
   example: string;
-}
-
-export interface UIModel<T = AttributesMap> {
-  key?: string;
-  type: string;
-  itemProperties: T;
-  containerProperties: AttributesMap;
-  children: UIModel[];
 }
 
 export interface IActionsContainer {
@@ -38,4 +40,12 @@ export interface ComponentDescriptor {
   category: string;
   name: string;
   description: string;
+}
+
+export abstract class UIModel<T = AttributesMap> {
+  key?: string;
+  type: string;
+  itemProperties: T;
+  containerProperties: AttributesMap;
+  children: UIModel[];
 }

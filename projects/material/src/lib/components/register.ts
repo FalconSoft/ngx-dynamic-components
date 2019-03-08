@@ -1,20 +1,21 @@
 import { CoreService } from '@ngx-dynamic-components/core';
 
-import { ButtonUIComponent } from './button-ui-component';
-import { FlexContainerUIComponent } from './flex-container-ui-component';
-import { CardUIComponent } from './card-ui-component';
-import { CheckboxUIComponent } from './checkbox-ui-component';
-import { InputUIComponent } from './input-ui-component';
+import { ButtonUIComponent, ButtonProperties } from './button-ui-component';
+import { FlexContainerUIComponent, FlexContainerProperties } from './flex-container-ui-component';
+import { CardUIComponent, CardProperties } from './card-ui-component';
+import { CheckboxUIComponent, CheckboxProperties } from './checkbox-ui-component';
+import { InputUIComponent, InputProperties } from './input-ui-component';
 import { SelectUIComponent, SelectProperties} from './select-ui-component';
-import { TextUIComponent } from './text-ui-component';
-import { TextareaUIComponent } from './textarea-ui-component';
+import { TextUIComponent, TextProperties } from './text-ui-component';
+import { TextareaUIComponent, TextareaProperties } from './textarea-ui-component';
 
 export const COMPONENTS_LIST = [{
   desc: {
     name: 'card',
     package: 'material',
     category: 'Layout',
-    description: 'Card layout component'
+    description: 'Card layout component',
+    itemProperties: CardProperties
   },
   component: CardUIComponent
 }, {
@@ -22,7 +23,8 @@ export const COMPONENTS_LIST = [{
     name: 'flex-container',
     package: 'material',
     category: 'Layout',
-    description: 'Flex layout component'
+    description: 'Flex layout component',
+    itemProperties: FlexContainerProperties
   },
   component: FlexContainerUIComponent
 }, {
@@ -30,7 +32,8 @@ export const COMPONENTS_LIST = [{
     name: 'text-input',
     package: 'material',
     category: 'Form control',
-    description: 'Input component'
+    description: 'Input component',
+    itemProperties: InputProperties
   },
   component: InputUIComponent
 }, {
@@ -38,7 +41,8 @@ export const COMPONENTS_LIST = [{
     name: 'checkbox',
     package: 'material',
     category: 'Form control',
-    description: 'Checkbox component'
+    description: 'Checkbox component',
+    itemProperties: CheckboxProperties
   },
   component: CheckboxUIComponent
 }, {
@@ -55,7 +59,8 @@ export const COMPONENTS_LIST = [{
     name: 'textarea',
     package: 'material',
     category: 'Form control',
-    description: 'Text area component'
+    description: 'Text area component',
+    itemProperties: TextareaProperties
   },
   component: TextareaUIComponent
 }, {
@@ -63,7 +68,8 @@ export const COMPONENTS_LIST = [{
     name: 'button',
     package: 'material',
     category: 'Button',
-    description: 'Button component'
+    description: 'Button component',
+    itemProperties: ButtonProperties
   },
   component: ButtonUIComponent
 }, {
@@ -71,7 +77,8 @@ export const COMPONENTS_LIST = [{
     name: 'text',
     package: 'material',
     category: 'Text',
-    description: 'Text component'
+    description: 'Text component',
+    itemProperties: TextProperties
   },
   component: TextUIComponent
 }];

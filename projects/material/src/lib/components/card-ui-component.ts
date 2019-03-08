@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseUIComponent } from '@ngx-dynamic-components/core';
+import { Component } from '@angular/core';
+import { BaseUIComponent, AttributesMap, UIModel, ActionsContainer, propDescription } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-ui-card',
   template: `<mat-card>
     <ng-container *ngIf="uiModel.itemProperties.header as header">
-      <ng-container [ngSwitch]="getContentType(header)">
+      <ng-container [ngSwitch]="getHeaderType(header)">
         <mat-card-header *ngSwitchCase="'component'">
           <dc-ui-selector
             [uiModel]='header.item'
@@ -47,8 +47,12 @@ import { BaseUIComponent } from '@ngx-dynamic-components/core';
   `]
 })
 
-export class CardUIComponent extends BaseUIComponent implements OnInit {
-  getContentType(content) {
+export class CardUIComponent extends BaseUIComponent<CardProperties> {
+  getHeaderType(content: HeaderConfig | string) {
+    if (typeof content === 'string') {
+      return 'string';
+    }
+
     if (content.item) {
       return 'component';
     }
@@ -56,9 +60,39 @@ export class CardUIComponent extends BaseUIComponent implements OnInit {
     if (content.html) {
       return 'html';
     }
-
-    if (typeof content === 'string') {
-      return 'string';
-    }
   }
+}
+
+interface HeaderConfig {
+  item?: UIModel;
+  dataModel?: any;
+  actions?: ActionsContainer;
+  html?: string;
+}
+
+export class CardProperties implements AttributesMap {
+  @propDescription({
+    description: 'Card header component',
+    example: '<h1>Header title</h1>',
+  })
+  header: HeaderConfig | string;
+
+  @propDescription({
+    description: 'Card content component.',
+    example: `{
+      type: 'text',
+      containerProperties: {},
+      itemProperties: {
+          text: 'Card content text',
+          width: '50%'
+      }
+    },`,
+  })
+  content: AttributesMap;
+
+  @propDescription({
+    description: 'Card image url',
+    example: 'logo.png',
+  })
+  img: string;
 }

@@ -1,9 +1,9 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { UIModel, IActionsContainer, PropDescriptor } from '../models';
+import { UIModel, IActionsContainer, PropDescriptor, AttributesMap } from '../models';
 
-export class BaseUIComponent implements OnInit, OnDestroy {
+export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     @Input() dataModel: any;
-    @Input() uiModel: UIModel;
+    @Input() uiModel: UIModel<T>;
     @Input() actions: IActionsContainer;
 
     @Output()
@@ -26,12 +26,13 @@ export class BaseUIComponent implements OnInit, OnDestroy {
 }
 
 export function propDescription(description: PropDescriptor) {
-  function decor(target: any, key: string) {
-    target.properties = target.properties || [];
-    target.properties.push({
+  function decorate(target: any, key: string) {
+    const properties = target.hasOwnProperty('properties') ? target.properties : [];
+    properties.push({
       name: key,
       ...description
     });
+    target.properties = properties;
   }
-  return decor;
+  return decorate;
 }

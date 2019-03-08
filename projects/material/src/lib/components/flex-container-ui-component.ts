@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, AttributesMap, propDescription } from '@ngx-dynamic-components/core';
 
 @Component({
     selector: 'dc-ui-flex-container',
@@ -27,6 +27,44 @@ import { BaseUIComponent } from '@ngx-dynamic-components/core';
     </div>
     `
 })
-export class FlexContainerUIComponent extends BaseUIComponent {
+export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
 
+}
+
+export class FlexContainerProperties implements AttributesMap {
+  @propDescription({
+    description: 'fxLayout (Angular Flex-Layout property)',
+    example: 'column',
+  })
+  fxLayout?: string;
+
+  @propDescription({
+    description: 'fxLayoutGap (Angular Flex-Layout property)',
+    example: '10px',
+  })
+  fxLayoutGap?: string;
+
+  @propDescription({
+    description: 'fxLayoutAlign (Angular Flex-Layout property)',
+    example: '10px',
+  })
+  fxLayoutAlign?: string;
+
+  @propDescription({
+    description: 'fxFlex (Angular Flex-Layout property)',
+    example: '10px',
+  })
+  fxFlex?: string;
+
+  @propDescription({
+    description: 'Container width',
+    example: '100%',
+  })
+  width?: string;
+
+  @propDescription({
+    description: 'Container height',
+    example: '100px',
+  })
+  height?: string;
 }

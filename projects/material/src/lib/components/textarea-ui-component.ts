@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, propDescription } from '@ngx-dynamic-components/core';
 
 @Component({
     selector: 'dc-ui-textarea',
@@ -12,5 +12,25 @@ import { BaseUIComponent } from '@ngx-dynamic-components/core';
         </mat-form-field>
     `
 })
-export class TextareaUIComponent extends BaseUIComponent {
+export class TextareaUIComponent extends BaseUIComponent<TextareaProperties> {
+}
+
+export class TextareaProperties extends DataModelProperties {
+  @propDescription({
+    description: 'Number of rows in textarea',
+    example: '5',
+  })
+  rows: number;
+
+  @propDescription({
+    description: 'Control width',
+    example: '100%',
+  })
+  width: string;
+
+  @propDescription({
+    description: 'Text shown when field is empty',
+    example: 'Type about yourself',
+  })
+  placeholder: string;
 }

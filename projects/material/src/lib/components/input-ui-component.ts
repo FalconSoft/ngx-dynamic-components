@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, propDescription } from '@ngx-dynamic-components/core';
 
 @Component({
     selector: 'dc-ui-input',
@@ -12,6 +12,20 @@ import { BaseUIComponent } from '@ngx-dynamic-components/core';
         </mat-form-field>
     `
 })
-export class InputUIComponent extends BaseUIComponent {
+export class InputUIComponent extends BaseUIComponent<InputProperties> {
 
+}
+
+export class InputProperties extends DataModelProperties {
+  @propDescription({
+    description: 'Text shown when field is empty',
+    example: 'Type your name',
+  })
+  placeholder: string;
+
+  @propDescription({
+    description: 'Control width',
+    example: '100%',
+  })
+  width: string;
 }

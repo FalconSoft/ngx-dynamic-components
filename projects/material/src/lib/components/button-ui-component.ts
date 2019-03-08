@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, propDescription, AttributesMap} from '@ngx-dynamic-components/core';
 
 @Component({
     selector: 'dc-ui-button',
@@ -10,5 +10,20 @@ import { BaseUIComponent } from '@ngx-dynamic-components/core';
     </button>
     `
 })
-export class ButtonUIComponent extends BaseUIComponent {
+export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
+
+}
+
+export class ButtonProperties implements AttributesMap {
+  @propDescription({
+    description: 'Button label',
+    example: 'Click me!',
+  })
+  label: string;
+
+  @propDescription({
+    description: 'Key for action that fires onclick',
+    example: 'submit',
+  })
+  clickActionKey: string;
 }
