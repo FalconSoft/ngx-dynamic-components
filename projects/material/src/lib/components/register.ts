@@ -5,7 +5,7 @@ import { FlexContainerUIComponent } from './flex-container-ui-component';
 import { CardUIComponent } from './card-ui-component';
 import { CheckboxUIComponent } from './checkbox-ui-component';
 import { InputUIComponent } from './input-ui-component';
-import { SelectUIComponent} from './select-ui-component';
+import { SelectUIComponent, SelectProperties} from './select-ui-component';
 import { TextUIComponent } from './text-ui-component';
 import { TextareaUIComponent } from './textarea-ui-component';
 
@@ -46,7 +46,8 @@ export const COMPONENTS_LIST = [{
     name: 'select',
     package: 'material',
     category: 'Form control',
-    description: 'Select component'
+    description: 'Select component',
+    itemProperties: SelectProperties
   },
   component: SelectUIComponent
 }, {

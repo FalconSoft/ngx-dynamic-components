@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
     .app-content {
       height: 100%;
     }
+    ::ng-deep router-outlet + * {
+      overflow: auto;
+    }
   `]
 })
 export class AppComponent {

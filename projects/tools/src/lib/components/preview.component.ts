@@ -5,12 +5,12 @@ import { ActionsContainer, UIModel } from '@ngx-dynamic-components/core';
   selector: 'dc-editor-preview',
   template: `
     <as-split direction="vertical">
-      <as-split-area size="60" fxLayout fxFlex="1 1 auto">
+      <as-split-area size="70" fxLayout fxFlex="1 1 auto">
         <dc-ui-flex-container fxFlex="1 1 auto"
           [uiModel]='uiModel' [dataModel]='dataModel' [actions]='actions'
           (changedDataModel)="OnDataModelChange()"></dc-ui-flex-container>
       </as-split-area>
-      <as-split-area size="40" fxLayout fxFlex="1 1 auto">
+      <as-split-area size="30" fxLayout fxFlex="1 1 auto">
         <ngx-monaco-editor [options]="editorOptions" fxLayout fxFlex="1 1 auto"
         (input)="OnCodeChange()" [(ngModel)]="dataModelStr"></ngx-monaco-editor>
       </as-split-area>
@@ -22,7 +22,7 @@ import { ActionsContainer, UIModel } from '@ngx-dynamic-components/core';
       background: white;
     }
     ngx-monaco-editor {
-      height: 100%;
+      height: calc(100% - 7px);
     }
   `],
 })

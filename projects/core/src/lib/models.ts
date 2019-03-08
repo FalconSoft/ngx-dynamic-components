@@ -14,12 +14,17 @@ export interface ActionsMap {
 }
 
 
-export interface UIModel {
-    key?: string;
-    type: string;
-    itemProperties: AttributesMap;
-    containerProperties: AttributesMap;
-    children: UIModel[];
+export interface PropDescriptor {
+  description: string;
+  example: string;
+}
+
+export interface UIModel<T = AttributesMap> {
+  key?: string;
+  type: string;
+  itemProperties: T;
+  containerProperties: AttributesMap;
+  children: UIModel[];
 }
 
 export interface IActionsContainer {
