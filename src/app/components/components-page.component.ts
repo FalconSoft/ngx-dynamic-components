@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
+import { ComponentDescriptor } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-components-page',
@@ -39,8 +40,8 @@ import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
 })
 export class ComponentsPageComponent implements OnInit {
 
-  components = COMPONENTS_LIST.map(({desc}) => desc);
-  categories;
+  components: ComponentDescriptor[] = COMPONENTS_LIST;
+  categories: {name: string, components: ComponentDescriptor[]}[];
   constructor() {
     const categories = this.components.reduce((map, desc) => {
       map[desc.category] = map[desc.category] || [];
@@ -48,7 +49,7 @@ export class ComponentsPageComponent implements OnInit {
       return map;
     }, {});
 
-    this.categories = Object.entries(categories).map(([key, val]) => {
+    this.categories = Object.entries(categories).map(([key, val]: [string, ComponentDescriptor[]]) => {
       return {
         name: key,
         components: val

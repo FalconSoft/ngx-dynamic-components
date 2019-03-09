@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
+import { ComponentDescriptor } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-cards',
@@ -34,7 +35,7 @@ import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
 })
 export class CardsComponent implements OnInit {
 
-  components = COMPONENTS_LIST.map(({desc}) => desc);
+  components: ComponentDescriptor[] = COMPONENTS_LIST;
 
   constructor() { }
 
