@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, propDescription } from '@ngx-dynamic-components/core';
-import { addToComponentsList } from './register';
+import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
+
+console.log('test - input component - module - load');
 
 @Component({
     selector: 'dc-ui-input',
@@ -32,7 +33,15 @@ export class InputProperties extends DataModelProperties {
   width: string;
 }
 
-export const inputDescriptor = {
+interface InputUIComponentConstrutor {
+  new (): InputUIComponent;
+}
+
+interface InputPropertiesConstrutor {
+  new (): InputProperties;
+}
+
+export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, InputPropertiesConstrutor> = {
   name: 'text-input',
   package: packageName,
   category: Categories.FormControl,
@@ -40,5 +49,3 @@ export const inputDescriptor = {
   itemProperties: InputProperties,
   component: InputUIComponent
 };
-
-addToComponentsList(inputDescriptor);

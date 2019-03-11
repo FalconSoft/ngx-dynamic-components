@@ -6,11 +6,11 @@ export const defaultOptions = {
 };
 
 export function registerMonacoCompletion() {
-  if (!window['monaco']) {
+  if (!window.hasOwnProperty('monaco')) {
     return setTimeout(registerMonacoCompletion, 1e2);
   }
   monaco.languages.registerCompletionItemProvider('json', {
-    provideCompletionItems: function(model, position) {
+    provideCompletionItems(model, position) {
       const textUntilPosition = model.getValueInRange({
         startLineNumber: 1,
         startColumn: 1,

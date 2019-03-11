@@ -1,14 +1,27 @@
 import { CoreService, ComponentDescriptor } from '@ngx-dynamic-components/core';
+import { inputDescriptor } from './input-ui-component';
+import { selectDescriptor } from './select-ui-component';
+import { buttonDescriptor } from './button-ui-component';
+import { cardDescriptor } from './card-ui-component';
+import { checkboxDescriptor } from './checkbox-ui-component';
+import { flexContainerDescriptor } from './flex-container-ui-component';
+import { textDescriptor } from './text-ui-component';
+import { textareaDescriptor } from './textarea-ui-component';
 
-export const COMPONENTS_LIST: ComponentDescriptor[] = [];
+export const COMPONENTS_LIST: ComponentDescriptor[] = [
+  selectDescriptor,
+  inputDescriptor,
+  buttonDescriptor,
+  cardDescriptor,
+  checkboxDescriptor,
+  flexContainerDescriptor,
+  textDescriptor,
+  textareaDescriptor
+];
 
 // Register components.
 export function registerComponents() {
   COMPONENTS_LIST.forEach(component => CoreService.registerComponent(component));
-}
-
-export function addToComponentsList(componentDescriptor: ComponentDescriptor) {
-  COMPONENTS_LIST.push(componentDescriptor);
 }
 
 export function getCategories(): {name: string, components: ComponentDescriptor[]}[] {

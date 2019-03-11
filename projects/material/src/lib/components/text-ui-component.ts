@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, AttributesMap, propDescription } from '@ngx-dynamic-components/core';
-import { addToComponentsList } from './register';
+import { BaseUIComponent, AttributesMap, propDescription, ComponentDescriptor } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
 @Component({
@@ -38,7 +37,15 @@ export class TextProperties implements AttributesMap {
   width: string;
 }
 
-export const textDescriptor = {
+interface TextUIComponentConstrutor {
+  new (): TextUIComponent;
+}
+
+interface TextPropertiesConstrutor {
+  new (): TextProperties;
+}
+
+export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, TextPropertiesConstrutor>  = {
   name: 'text',
   package: packageName,
   category: Categories.Text,
@@ -46,5 +53,3 @@ export const textDescriptor = {
   itemProperties: TextProperties,
   component: TextUIComponent
 };
-
-addToComponentsList(textDescriptor);

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, AttributesMap, UIModel, ActionsContainer, ComponentDescriptor,
   propDescription } from '@ngx-dynamic-components/core';
-import { addToComponentsList } from './register';
 import { Categories, packageName } from '../constants';
 
 @Component({
@@ -116,5 +115,3 @@ export const cardDescriptor: ComponentDescriptor<CardUIComponentConstrutor, Card
   itemProperties: CardProperties,
   component: CardUIComponent
 };
-
-addToComponentsList(cardDescriptor);

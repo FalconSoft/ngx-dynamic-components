@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, propDescription, AttributesMap} from '@ngx-dynamic-components/core';
-import { addToComponentsList } from './register';
+import { BaseUIComponent, propDescription, AttributesMap, ComponentDescriptor} from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
+
+console.log('test - button component - module - load');
 
 @Component({
     selector: 'dc-ui-button',
@@ -30,7 +31,15 @@ export class ButtonProperties implements AttributesMap {
   clickActionKey: string;
 }
 
-export const buttonDescriptor = {
+interface ButtonUIComponentConstrutor {
+  new (): ButtonUIComponent;
+}
+
+interface ButtonPropertiesConstrutor {
+  new (): ButtonProperties;
+}
+
+export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, ButtonPropertiesConstrutor> = {
   name: 'button',
   package: packageName,
   category: Categories.Buttons,
@@ -38,5 +47,3 @@ export const buttonDescriptor = {
   itemProperties: ButtonProperties,
   component: ButtonUIComponent
 };
-
-addToComponentsList(buttonDescriptor);

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
-import { addToComponentsList } from './register';
 import { Categories, packageName } from '../constants';
 
 @Component({
@@ -54,5 +53,3 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
   itemProperties: SelectProperties,
   component: SelectUIComponent
 };
-
-addToComponentsList(selectDescriptor);
