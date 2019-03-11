@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, AttributesMap, propDescription } from '@ngx-dynamic-components/core';
+import { addToComponentsList } from './register';
+import { Categories, packageName } from '../constants';
 
 @Component({
     selector: 'dc-ui-flex-container',
@@ -68,3 +70,14 @@ export class FlexContainerProperties implements AttributesMap {
   })
   height?: string;
 }
+
+export const flexContainerDescriptor = {
+  name: 'flex-container',
+  package: packageName,
+  category: Categories.Layout,
+  description: 'Flex layout component',
+  itemProperties: FlexContainerProperties,
+  component: FlexContainerUIComponent
+};
+
+addToComponentsList(flexContainerDescriptor);

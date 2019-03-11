@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
+import { addToComponentsList } from './register';
+import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-select',
@@ -46,9 +48,11 @@ interface SelectPropertiesConstrutor {
 
 export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
   name: 'select',
-  package: 'material',
-  category: 'Form control',
+  package: packageName,
+  category: Categories.FormControl,
   description: 'Select component',
   itemProperties: SelectProperties,
   component: SelectUIComponent
 };
+
+addToComponentsList(selectDescriptor);
