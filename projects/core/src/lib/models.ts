@@ -50,6 +50,7 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
   description: string;
   itemProperties: PropertiesType;
   component: ComponentType;
+  example?: string;
 }
 
 export abstract class UIModel<T = AttributesMap> {

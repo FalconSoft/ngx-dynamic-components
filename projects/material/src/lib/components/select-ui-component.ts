@@ -51,5 +51,18 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
   category: Categories.FormControl,
   description: 'Select component',
   itemProperties: SelectProperties,
-  component: SelectUIComponent
+  component: SelectUIComponent,
+  example: JSON.stringify({
+    type: 'select',
+    containerProperties: {},
+    key: 'stateSelection',
+    itemProperties: {
+      options: [
+        {label: 'United Kindom', value: 'uk'},
+        {label: 'Ukraine', value: 'ua'}
+      ],
+      placeholder: 'Country',
+      dataModelPath: 'country'
+    }
+  }, null, 4)
 };

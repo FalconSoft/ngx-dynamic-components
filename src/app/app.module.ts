@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatButtonModule, MatTabsModule, MatSidenavModule, MatListModule, MatCardModule,
-  MatTableModule, MatExpansionModule } from '@angular/material';
+  MatTableModule, MatExpansionModule, MatIconModule } from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+// import { MonacoEditorModule } from 'ngx-monaco-editor';
 
+import { CoreModule } from '@ngx-dynamic-components/core';
 import { ToolsModule } from '@ngx-dynamic-components/tools';
 import { MaterialModule } from '@ngx-dynamic-components/material';
 
@@ -23,6 +25,7 @@ import { CardsComponent } from './components/cards/cards.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { CategoriesComponent } from './components/categories.component';
 import { ComponentsComponent } from './components/components.component';
+import { ExamplePanelComponent } from './components/example-panel/example-panel.component';
 
 @NgModule({
   declarations: [
@@ -37,10 +40,12 @@ import { ComponentsComponent } from './components/components.component';
     CardsComponent,
     SideBarComponent,
     CategoriesComponent,
-    ComponentsComponent
+    ComponentsComponent,
+    ExamplePanelComponent
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     ToolsModule,
     MaterialModule,
     BrowserAnimationsModule,
@@ -53,6 +58,7 @@ import { ComponentsComponent } from './components/components.component';
     MatCardModule,
     MatTableModule,
     MatExpansionModule,
+    MatIconModule,
     FlexLayoutModule
   ],
   providers: [],

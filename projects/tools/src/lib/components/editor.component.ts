@@ -18,7 +18,7 @@ import { registerMonacoCompletion, defaultOptions } from '../monaco.config';
     }
 
     ngx-monaco-editor {
-      height: calc(100% - 7px);
+      height: calc(100% - 10px);
     }
 
     mat-tab-group {

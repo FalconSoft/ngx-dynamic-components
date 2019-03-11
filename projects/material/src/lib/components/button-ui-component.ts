@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { BaseUIComponent, propDescription, AttributesMap, ComponentDescriptor} from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
-console.log('test - button component - module - load');
-
 @Component({
     selector: 'dc-ui-button',
     template: `

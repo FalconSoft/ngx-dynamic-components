@@ -19,7 +19,7 @@ export interface PeriodicElement {
     <div *ngIf="component$ | async as component">
       <h1 class="mat-h1">{{component.name}}</h1>
       <h3 class="mat-h3">{{component.description}}</h3>
-      <mat-divider></mat-divider>
+      <dc-example-panel *ngIf="component.example" [component]="component"></dc-example-panel>
       <ng-container *ngIf="itemProperties$ | async as properties">
         <h3 class="mat-h3">Item properties</h3>
         <mat-table [dataSource]="properties">

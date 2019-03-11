@@ -22,7 +22,7 @@ import { ActionsContainer, UIModel } from '@ngx-dynamic-components/core';
       background: white;
     }
     ngx-monaco-editor {
-      height: calc(100% - 7px);
+      height: calc(100% - 10px);
     }
   `],
 })

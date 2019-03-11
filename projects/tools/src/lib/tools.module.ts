@@ -33,6 +33,6 @@ import { EditorComponent } from './components/editor.component';
       // baseUrl: '/ngx-dynamic-components/assets'
     })
   ],
-  exports: [ EditorContainerComponent ],
+  exports: [ EditorContainerComponent, MonacoEditorModule, FormsModule ],
 })
 export class ToolsModule { }

@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
-console.log('test - input component - module - load');
-
 @Component({
     selector: 'dc-ui-input',
     template: `
