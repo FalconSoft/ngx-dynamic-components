@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, propDescription } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
+import { addToComponentsList } from './register';
+import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-select',
@@ -35,3 +37,22 @@ export class SelectProperties extends DataModelProperties {
   })
   placeholder: string;
 }
+
+interface SelectUIComponentConstrutor {
+  new (): SelectUIComponent;
+}
+
+interface SelectPropertiesConstrutor {
+  new (): SelectProperties;
+}
+
+export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
+  name: 'select',
+  package: packageName,
+  category: Categories.FormControl,
+  description: 'Select component',
+  itemProperties: SelectProperties,
+  component: SelectUIComponent
+};
+
+addToComponentsList(selectDescriptor);

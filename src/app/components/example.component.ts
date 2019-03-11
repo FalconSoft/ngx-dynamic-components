@@ -60,7 +60,7 @@ export class ExampleComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.component$ = this.route.params.pipe(map(p => COMPONENTS_LIST.find(c => c.desc.name === p.component).desc));
+    this.component$ = this.route.params.pipe(map(p => COMPONENTS_LIST.find((c: ComponentDescriptor) => c.name === p.component)));
     this.itemProperties$ = this.component$.pipe(pluck('itemProperties', 'prototype', 'properties'));
   }
 

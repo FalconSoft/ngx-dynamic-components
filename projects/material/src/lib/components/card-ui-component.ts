@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, AttributesMap, UIModel, ActionsContainer, propDescription } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, AttributesMap, UIModel, ActionsContainer, ComponentDescriptor,
+  propDescription } from '@ngx-dynamic-components/core';
+import { addToComponentsList } from './register';
+import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-card',
@@ -96,3 +99,22 @@ export class CardProperties implements AttributesMap {
   })
   img: string;
 }
+
+interface CardUIComponentConstrutor {
+  new (): CardUIComponent;
+}
+
+interface CardPropertiesConstrutor {
+  new (): CardProperties;
+}
+
+export const cardDescriptor: ComponentDescriptor<CardUIComponentConstrutor, CardPropertiesConstrutor> = {
+  name: 'card',
+  package: packageName,
+  category: Categories.Layout,
+  description: 'Card layout component',
+  itemProperties: CardProperties,
+  component: CardUIComponent
+};
+
+addToComponentsList(cardDescriptor);

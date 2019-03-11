@@ -1,4 +1,4 @@
-import { propDescription } from './components/base-ui-component';
+import { propDescription, BaseUIComponent } from './components/base-ui-component';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 
@@ -35,11 +35,21 @@ export interface IActionsContainer {
     onRunAction(sender: UIModel, actionName: string, dataModel: any): void;
 }
 
-export interface ComponentDescriptor {
+interface BaseUIComponentConstructor {
+  new (): BaseUIComponent;
+}
+
+interface AttributesMapConstructor {
+  new (): AttributesMap;
+}
+
+export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor, PropertiesType = AttributesMapConstructor> {
   package: string;
   category: string;
   name: string;
   description: string;
+  itemProperties: PropertiesType;
+  component: ComponentType;
 }
 
 export abstract class UIModel<T = AttributesMap> {

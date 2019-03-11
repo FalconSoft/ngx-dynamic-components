@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, propDescription } from '@ngx-dynamic-components/core';
+import { addToComponentsList } from './register';
+import { packageName, Categories } from '../constants';
 
 @Component({
     selector: 'dc-ui-textarea',
@@ -34,3 +36,14 @@ export class TextareaProperties extends DataModelProperties {
   })
   placeholder: string;
 }
+
+export const textareaDescriptor = {
+  name: 'textarea',
+  package: packageName,
+  category: Categories.FormControl,
+  description: 'Text area component',
+  itemProperties: TextareaProperties,
+  component: TextareaUIComponent
+};
+
+addToComponentsList(textareaDescriptor);
