@@ -1,0 +1,34 @@
+@import "src/_vars.scss";
+mat-accordion {
+  display: block;
+  margin: 1em 0 0 1em;
+
+  mat-expansion-panel {
+    border-radius: 0;
+    background-color: $secondary;
+
+    a {
+      color: $text;
+      text-decoration: none;
+      &.active,&:hover {
+        color: $active;
+      }
+    }
+
+    h4 {
+      color: $text;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+
+  ::ng-deep {
+    .mat-list-base .mat-list-item {
+      height: 2em;
+    }
+
+    .mat-expansion-panel-spacing {
+      margin: 0;
+    }
+  }
+}

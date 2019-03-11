@@ -6,7 +6,8 @@ import { EditorPageComponent } from './components/editor-page.component';
 import { ComponentsPageComponent } from './components/components-page.component';
 import { GuidesPageComponent } from './components/guides-page.component';
 import { ExampleComponent } from './components/example.component';
-import { CardsComponent } from './components/cards.component';
+import { ComponentsComponent } from './components/components.component';
+import { CategoriesComponent } from './components/categories.component';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -14,8 +15,10 @@ export const routes: Routes = [
   { path: 'guides', component: GuidesPageComponent },
   { path: 'components', component: ComponentsPageComponent,
     children: [
+      { path: '', component: ComponentsComponent },
+      { path: 'categories', component: CategoriesComponent },
+      { path: 'categories/:category', component: ComponentsComponent },
       { path: ':component', component: ExampleComponent },
-      { path: '', component: CardsComponent }
     ]
   },
 ];

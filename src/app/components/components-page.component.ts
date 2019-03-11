@@ -8,20 +8,7 @@ import { ComponentDescriptor } from '@ngx-dynamic-components/core';
     <dc-page-header title="Components"></dc-page-header>
     <mat-drawer-container fxFlex="1 1 auto">
       <mat-drawer mode="side" opened>
-        <mat-accordion multi="true">
-          <mat-expansion-panel expanded="true" *ngFor="let category of categories">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{category.name}}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-list role="list">
-              <mat-list-item role="listitem" *ngFor="let component of category.components">
-                <a mat-button [routerLink]="[component.name]" routerLinkActive="active">{{component.name}}</a>
-              </mat-list-item>
-            </mat-list>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <dc-side-bar [components]="components"></dc-side-bar>
       </mat-drawer>
       <mat-drawer-content>
         <router-outlet></router-outlet>
@@ -33,29 +20,17 @@ import { ComponentDescriptor } from '@ngx-dynamic-components/core';
       flex: 1 1 auto;
       flex-direction: column;
     }
-    .active {
-      text-decoration: underline;
+
+    mat-drawer {
+      background: #fafafa;
     }
   `]
 })
 export class ComponentsPageComponent implements OnInit {
 
   components: ComponentDescriptor[] = COMPONENTS_LIST;
-  categories: {name: string, components: ComponentDescriptor[]}[];
-  constructor() {
-    const categories = this.components.reduce((map, desc) => {
-      map[desc.category] = map[desc.category] || [];
-      map[desc.category].push(desc);
-      return map;
-    }, {});
 
-    this.categories = Object.entries(categories).map(([key, val]: [string, ComponentDescriptor[]]) => {
-      return {
-        name: key,
-        components: val
-      };
-    });
-  }
+  constructor() {}
 
   ngOnInit() {
   }

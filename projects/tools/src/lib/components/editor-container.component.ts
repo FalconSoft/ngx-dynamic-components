@@ -21,7 +21,7 @@ import { ActionsContainer, ActionsMap, UIModel } from '@ngx-dynamic-components/c
     :host {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      height: calc(100% - 64px); // Page header ~ 64px;
     }
     app-editor-preview {
       overflow: hidden;

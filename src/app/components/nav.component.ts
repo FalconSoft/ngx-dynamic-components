@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <a mat-button routerLink="/">Dynamic Content Editor</a>
-        <a mat-button routerLink="/components">Components</a>
+        <a mat-button routerLink="/components/categories">Components</a>
         <a mat-button routerLink="/editor">Editor</a>
         <a mat-button routerLink="/guides">Guides</a>
       </mat-toolbar-row>

@@ -1,0 +1,14 @@
+<mat-accordion multi="true">
+  <mat-expansion-panel expanded="true" *ngFor="let category of categories">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4 class="mat-h4">{{category.name}}</h4>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let component of category.components">
+        <a [routerLink]="[component.name]" routerLinkActive="active">{{component.name}}</a>
+      </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -19,7 +19,10 @@ import { GuidesPageComponent } from './components/guides-page.component';
 import { ComponentsPageComponent } from './components/components-page.component';
 import { PageHeaderComponent } from './components/page-header.component';
 import { ExampleComponent } from './components/example.component';
-import { CardsComponent } from './components/cards.component';
+import { CardsComponent } from './components/cards/cards.component';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { CategoriesComponent } from './components/categories.component';
+import { ComponentsComponent } from './components/components.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { CardsComponent } from './components/cards.component';
     ComponentsPageComponent,
     PageHeaderComponent,
     ExampleComponent,
-    CardsComponent
+    CardsComponent,
+    SideBarComponent,
+    CategoriesComponent,
+    ComponentsComponent
   ],
   imports: [
     BrowserModule,

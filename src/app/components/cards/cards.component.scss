@@ -1,0 +1,21 @@
+@import "src/_vars.scss";
+
+.cards-wrapper {
+  flex-wrap: wrap;
+
+  a {
+    text-decoration: none;
+    margin: 25px 0;
+  }
+
+  mat-card {
+    width: 160px;
+    mat-card-header ::ng-deep .mat-card-header-text {
+      margin: 0;
+    }
+
+    mat-card-content {
+      color: $text;
+    }
+  }
+}
