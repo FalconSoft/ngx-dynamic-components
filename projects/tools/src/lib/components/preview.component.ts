@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActionsContainer, UIModel } from '@ngx-dynamic-components/core';
 
+/**
+ * @depracated
+ */
 @Component({
   selector: 'dc-editor-preview',
   template: `

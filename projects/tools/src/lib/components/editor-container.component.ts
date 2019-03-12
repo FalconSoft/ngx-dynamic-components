@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { EditorComponent } from './editor.component';
 import { ActionsContainer, ActionsMap, UIModel } from '@ngx-dynamic-components/core';
 
+/**
+ * @depracated
+ */
 @Component({
   selector: 'dc-editor-container',
   template: `

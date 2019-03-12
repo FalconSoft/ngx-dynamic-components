@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { registerMonacoCompletion, defaultOptions } from '../monaco.config';
 
+/**
+ * @depracated
+ */
 @Component({
   selector: 'dc-editor',
   template: `

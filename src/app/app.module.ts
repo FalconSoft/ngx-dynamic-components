@@ -4,9 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatButtonModule, MatTabsModule, MatSidenavModule, MatListModule, MatCardModule,
   MatTableModule, MatExpansionModule, MatIconModule } from '@angular/material';
-
 import { FlexLayoutModule } from '@angular/flex-layout';
-// import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
 import { ToolsModule } from '@ngx-dynamic-components/tools';
@@ -20,12 +18,13 @@ import { EditorPageComponent } from './components/editor-page.component';
 import { GuidesPageComponent } from './components/guides-page.component';
 import { ComponentsPageComponent } from './components/components-page.component';
 import { PageHeaderComponent } from './components/page-header.component';
-import { ExampleComponent } from './components/example.component';
+import { ComponentPageComponent } from './components/component-page.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { CategoriesComponent } from './components/categories.component';
 import { ComponentsComponent } from './components/components.component';
-import { ExamplePanelComponent } from './components/example-panel/example-panel.component';
+import { ItemPropertiesComponent } from './components/item-properties/item-properties.component';
+import { JsonFormatterDirective } from './directives/json-formatter.directive';
 
 @NgModule({
   declarations: [
@@ -36,12 +35,13 @@ import { ExamplePanelComponent } from './components/example-panel/example-panel.
     GuidesPageComponent,
     ComponentsPageComponent,
     PageHeaderComponent,
-    ExampleComponent,
+    ComponentPageComponent,
     CardsComponent,
     SideBarComponent,
     CategoriesComponent,
     ComponentsComponent,
-    ExamplePanelComponent
+    ItemPropertiesComponent,
+    JsonFormatterDirective,
   ],
   imports: [
     BrowserModule,

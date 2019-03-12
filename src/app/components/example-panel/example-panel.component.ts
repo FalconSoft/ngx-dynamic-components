@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ComponentDescriptor, UIModel, ActionsContainer } from '@ngx-dynamic-components/core';
 
+/**
+ * @depracated
+ */
 @Component({
   selector: 'dc-example-panel',
   templateUrl: './example-panel.component.html',
@@ -24,10 +27,8 @@ export class ExamplePanelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.uiModel = JSON.parse(this.component.example);
+    this.uiModel = this.component.example.uiModel;
     this.actions = new ActionsContainer({}, this.uiModel);
-
-    console.log('this.component.example', this.component.example);
   }
 
   toggleSourceCode() {

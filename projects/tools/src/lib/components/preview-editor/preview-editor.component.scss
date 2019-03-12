@@ -1,0 +1,49 @@
+@import 'src/_vars.scss';
+
+::ng-deep mat-card {
+  .mat-card-header-text {
+    margin: 0
+  }
+
+  .mat-tab-body-wrapper {
+    display: block;
+    overflow: visible;
+  }
+}
+
+mat-card {
+  width: 100%;
+  padding: 0;
+  mat-card-header, mat-card-content {
+    padding: 1em;
+  }
+
+  mat-divider {
+    margin: 1em 0;
+    position: static;
+  }
+
+  mat-card-header {
+    background: $secondary;
+    mat-icon {
+      cursor: pointer;
+    }
+    h3 {
+      margin: 0;
+    }
+  }
+
+  .preview {
+    background: $secondary;
+    padding: 1em;
+  }
+
+  ngx-monaco-editor {
+    height: 400px;
+    overflow: hidden;
+  }
+}
+
+
+
+

@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+/**
+ * @depracated
+ */
 @Component({
   selector: 'dc-editor-toolbar',
   template: `

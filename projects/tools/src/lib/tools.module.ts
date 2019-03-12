@@ -1,30 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
-import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule, MatCardModule, MatIconModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
+import { CoreModule } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
 
-import { EditorContainerComponent } from './components/editor-container.component';
 import { ToolbarComponent } from './components/toolbar.component';
-import { PreviewComponent } from './components/preview.component';
-import { EditorComponent } from './components/editor.component';
+import { PreviewEditorComponent } from './components/preview-editor/preview-editor.component';
 
 @NgModule({
   declarations: [
-    EditorContainerComponent, ToolbarComponent, PreviewComponent, EditorComponent
+    ToolbarComponent, PreviewEditorComponent
   ],
   imports: [
     CommonModule,
+    CoreModule,
     MaterialModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,
     MatDividerModule,
+    MatCardModule,
+    MatIconModule,
     FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     AngularSplitModule.forRoot(),
     MonacoEditorModule.forRoot({
@@ -33,6 +37,6 @@ import { EditorComponent } from './components/editor.component';
       // baseUrl: '/ngx-dynamic-components/assets'
     })
   ],
-  exports: [ EditorContainerComponent, MonacoEditorModule, FormsModule ],
+  exports: [ PreviewEditorComponent ],
 })
 export class ToolsModule { }

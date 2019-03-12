@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, ComponentDescriptor,
+  UIModel, ComponentExample, propDescription } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
 @Component({
@@ -45,14 +46,8 @@ interface SelectPropertiesConstrutor {
   new (): SelectProperties;
 }
 
-export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
-  name: 'select',
-  package: packageName,
-  category: Categories.FormControl,
-  description: 'Select component',
-  itemProperties: SelectProperties,
-  component: SelectUIComponent,
-  example: JSON.stringify({
+const example: ComponentExample<UIModel<SelectProperties>> = {
+  uiModel: {
     type: 'select',
     containerProperties: {},
     key: 'stateSelection',
@@ -64,5 +59,17 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
       placeholder: 'Country',
       dataModelPath: 'country'
     }
-  }, null, 4)
+  },
+  dataModel: {},
+  title: 'Basic select example'
+};
+
+export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
+  name: 'select',
+  package: packageName,
+  category: Categories.FormControl,
+  description: 'Select component',
+  itemProperties: SelectProperties,
+  component: SelectUIComponent,
+  example
 };

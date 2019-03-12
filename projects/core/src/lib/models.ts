@@ -35,6 +35,12 @@ export interface IActionsContainer {
     onRunAction(sender: UIModel, actionName: string, dataModel: any): void;
 }
 
+export interface ComponentExample<T = UIModel> {
+  uiModel: T;
+  dataModel;
+  title: string;
+}
+
 interface BaseUIComponentConstructor {
   new (): BaseUIComponent;
 }
@@ -50,7 +56,7 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
   description: string;
   itemProperties: PropertiesType;
   component: ComponentType;
-  example?: string;
+  example?: ComponentExample;
 }
 
 export abstract class UIModel<T = AttributesMap> {
@@ -58,5 +64,5 @@ export abstract class UIModel<T = AttributesMap> {
   type: string;
   itemProperties: T;
   containerProperties: AttributesMap;
-  children: UIModel[];
+  children?: UIModel[];
 }
