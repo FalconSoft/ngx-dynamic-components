@@ -13,7 +13,7 @@ export interface AttributesMap {
 
 export abstract class DataModelProperties implements AttributesMap {
   @propDescription({
-    description: 'Path to key in data model.',
+    description: 'Path to id in data model.',
     example: 'name'
   })
   dataModelPath?: string;
@@ -50,7 +50,7 @@ interface AttributesMapConstructor {
 }
 
 export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor, PropertiesType = AttributesMapConstructor> {
-  package: string;
+  packageName: string;
   category: string;
   name: string;
   description: string;
@@ -60,7 +60,7 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
 }
 
 export abstract class UIModel<T = AttributesMap> {
-  key?: string;
+  id?: string;
   type: string;
   itemProperties: T;
   containerProperties: AttributesMap;

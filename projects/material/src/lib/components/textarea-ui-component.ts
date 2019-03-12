@@ -46,7 +46,7 @@ interface TextareaPropertiesConstrutor {
 
 export const textareaDescriptor: ComponentDescriptor<TextareaUIComponentConstrutor, TextareaPropertiesConstrutor> = {
   name: 'textarea',
-  package: packageName,
+  packageName,
   category: Categories.FormControl,
   description: 'Text area component',
   itemProperties: TextareaProperties,

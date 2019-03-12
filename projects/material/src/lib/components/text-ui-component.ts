@@ -47,7 +47,7 @@ interface TextPropertiesConstrutor {
 
 export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, TextPropertiesConstrutor>  = {
   name: 'text',
-  package: packageName,
+  packageName,
   category: Categories.Text,
   description: 'Text component',
   itemProperties: TextProperties,

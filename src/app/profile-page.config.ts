@@ -1,7 +1,7 @@
 import { UIModel, AttributesMap, ActionsMap } from '@ngx-dynamic-components/core';
 
 export const ProfileFormUIModel = {
-    type: 'flex-container',
+    type: 'material:flex-container',
     itemProperties: <AttributesMap>{
         fxLayout: 'column',
         width: '100%',
@@ -9,7 +9,7 @@ export const ProfileFormUIModel = {
     },
     children: [
         {
-            type: 'text-input',
+            type: 'material:text-input',
             containerProperties: <AttributesMap>{
                 width: '100%'
             },
@@ -22,7 +22,7 @@ export const ProfileFormUIModel = {
             }
         },
         {
-            type: 'flex-container',
+            type: 'material:flex-container',
             containerProperties: {
                 width: '100%'
             },
@@ -32,7 +32,7 @@ export const ProfileFormUIModel = {
                 width: '100%'
             },
             children: [{
-                type: 'text-input',
+                type: 'material:text-input',
                 containerProperties: {
                   fxFlex: '1 1 auto'
                 },
@@ -45,7 +45,7 @@ export const ProfileFormUIModel = {
                 }
             },
             {
-                type: 'text-input',
+                type: 'material:text-input',
                 containerProperties: {
                   fxFlex: '1 1 auto'
                 },
@@ -60,7 +60,7 @@ export const ProfileFormUIModel = {
             ]
         },
         {
-            type: 'text',
+            type: 'material:text',
             containerProperties: {},
             itemProperties: {
                 text: 'Address',
@@ -68,7 +68,7 @@ export const ProfileFormUIModel = {
             }
         },
         {
-            type: 'text-input',
+            type: 'material:text-input',
             containerProperties: {},
             itemProperties: {
                 isNumeric: false,
@@ -79,7 +79,7 @@ export const ProfileFormUIModel = {
             }
         },
         {
-            type: 'text-input',
+            type: 'material:text-input',
             containerProperties: {},
             itemProperties: {
                 isNumeric: false,
@@ -90,12 +90,12 @@ export const ProfileFormUIModel = {
           }
         },
         {
-            type: 'select',
+            type: 'material:select',
             containerProperties: {},
-            key: 'stateSelection',
+            id: 'stateSelection',
             itemProperties: {
                 options: [
-                  {label: 'United Kindom', value: 'uk'},
+                  {label: 'United Kingdom', value: 'uk'},
                   {label: 'Ukraine', value: 'ua'}
                 ],
                 placeholder: 'Country',
@@ -103,7 +103,7 @@ export const ProfileFormUIModel = {
           }
         },
         {
-            type: 'flex-container',
+            type: 'material:flex-container',
             containerProperties: {
                 width: '100%'
             },
@@ -113,8 +113,8 @@ export const ProfileFormUIModel = {
                 width: '100%',
             },
             children: [{
-                key: 'citySelection',
-                type: 'select',
+                id: 'citySelection',
+                type: 'material:select',
                 containerProperties: {
                     fxFlex: '1 1 auto'
                 },
@@ -124,7 +124,7 @@ export const ProfileFormUIModel = {
                 }
             },
             {
-                type: 'text-input',
+                type: 'material:text-input',
                 containerProperties: {
                     fxFlex: '1 1 auto'
                 },
@@ -138,13 +138,13 @@ export const ProfileFormUIModel = {
             }]
         },
         {
-            type: 'flex-container',
+            type: 'material:flex-container',
             itemProperties: {
               fxLayoutAlign: 'flex-end stretch'
             },
             children: [
               {
-                type: 'button',
+                type: 'material:button',
                 containerProperties: {
                     fxLayout: 'row'
                 },
@@ -158,7 +158,7 @@ export const ProfileFormUIModel = {
 } as UIModel;
 
 export const ProfileCardUIModel = {
-  type: 'card',
+  type: 'material:card',
   containerProperties: {
     width: '100%'
   },
@@ -174,10 +174,10 @@ export const TestPageDataModel = {
 
 };
 
-export const ProfileActionsMap = <ActionsMap>{
+export const ProfileActionsMap = {
     consoleLog: (uiModel, dm) => console.log('consoleLog ->', dm, uiModel),
-    stateSelection_selectionChanged: (uiModel, {country}, fullUIModel) => {
-      const targetModel = getUIModelByKey(fullUIModel, 'citySelection');
+    stateSelection_selectionChanged: (uiModel: UIModel, {country}, fullUIModel: UIModel) => {
+      const targetModel = getUIModelById(fullUIModel, 'citySelection');
       targetModel.itemProperties.options = {
         uk: [
           {label: 'London', value: 'london'},
@@ -189,17 +189,17 @@ export const ProfileActionsMap = <ActionsMap>{
         ]
       }[country] || [];
     }
-};
+} as ActionsMap;
 
 // TODO make function reusable, move it to class UIModel or ActionsContainer.
-function getUIModelByKey(model: UIModel, key: string): UIModel {
-  if (model.key === key) {
+function getUIModelById(model: UIModel, id: string): UIModel {
+  if (model.id === id) {
     return model;
   }
 
   if (model.children && model.children.length) {
-    for (let i = 0; i < model.children.length; i++) {
-      const uiModel = getUIModelByKey(model.children[i], key);
+    for (const child of model.children) {
+      const uiModel = getUIModelById(child, id);
       if (uiModel) {
         return uiModel;
       }

@@ -9,9 +9,8 @@ export class CoreService {
 
   private static COMPONENTS_REGISTER = new Map();
 
-  public static registerComponent({name, component}: ComponentDescriptor) {
-    // TODO add package to map key.
-    CoreService.COMPONENTS_REGISTER.set(`${name}`, component);
+  public static registerComponent({name, component, packageName}: ComponentDescriptor) {
+    CoreService.COMPONENTS_REGISTER.set(`${packageName}:${name}`, component);
   }
 
   public static getComponent(type: string) {

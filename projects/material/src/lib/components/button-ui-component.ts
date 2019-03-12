@@ -39,7 +39,7 @@ interface ButtonPropertiesConstrutor {
 
 export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, ButtonPropertiesConstrutor> = {
   name: 'button',
-  package: packageName,
+  packageName,
   category: Categories.Buttons,
   description: 'Button component',
   itemProperties: ButtonProperties,

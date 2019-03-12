@@ -18,8 +18,8 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     }
 
     triggerAction(action: string): void {
-      const actionKey = this.uiModel.key + action;
-      if (this.actions && this.uiModel.key && this.actions.hasAction(actionKey)) {
+      const actionKey = this.uiModel.id + action;
+      if (this.actions && this.uiModel.id && this.actions.hasAction(actionKey)) {
           this.actions.onRunAction(this.uiModel, actionKey, this.dataModel);
       }
     }

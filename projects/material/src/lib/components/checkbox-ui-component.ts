@@ -31,7 +31,7 @@ interface CheckboxPropertiesConstrutor {
 
 export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrutor, CheckboxPropertiesConstrutor> = {
   name: 'checkbox',
-  package: packageName,
+  packageName,
   category: Categories.FormControl,
   description: 'Checkbox component',
   itemProperties: CheckboxProperties,

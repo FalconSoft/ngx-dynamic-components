@@ -109,7 +109,7 @@ interface CardPropertiesConstrutor {
 
 export const cardDescriptor: ComponentDescriptor<CardUIComponentConstrutor, CardPropertiesConstrutor> = {
   name: 'card',
-  package: packageName,
+  packageName,
   category: Categories.Layout,
   description: 'Card layout component',
   itemProperties: CardProperties,

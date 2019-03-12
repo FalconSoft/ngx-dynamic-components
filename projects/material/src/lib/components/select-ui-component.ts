@@ -48,12 +48,12 @@ interface SelectPropertiesConstrutor {
 
 const example: ComponentExample<UIModel<SelectProperties>> = {
   uiModel: {
-    type: 'select',
+    type: 'material:select',
     containerProperties: {},
-    key: 'stateSelection',
+    id: 'stateSelection',
     itemProperties: {
       options: [
-        {label: 'United Kindom', value: 'uk'},
+        {label: 'United Kingdom', value: 'uk'},
         {label: 'Ukraine', value: 'ua'}
       ],
       placeholder: 'Country',
@@ -66,7 +66,7 @@ const example: ComponentExample<UIModel<SelectProperties>> = {
 
 export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
   name: 'select',
-  package: packageName,
+  packageName,
   category: Categories.FormControl,
   description: 'Select component',
   itemProperties: SelectProperties,

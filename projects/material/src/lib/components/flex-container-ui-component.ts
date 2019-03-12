@@ -80,7 +80,7 @@ interface FlexContainerPropertiesConstrutor {
 
 export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUIComponentConstrutor, FlexContainerPropertiesConstrutor> = {
   name: 'flex-container',
-  package: packageName,
+  packageName,
   category: Categories.Layout,
   description: 'Flex layout component',
   itemProperties: FlexContainerProperties,
