@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PreviewEditorComponent } from './preview-editor.component';
 
-describe('ExamplePanelComponent', () => {
+describe('PreviewEditorComponent', () => {
   let component: PreviewEditorComponent;
   let fixture: ComponentFixture<PreviewEditorComponent>;
 
