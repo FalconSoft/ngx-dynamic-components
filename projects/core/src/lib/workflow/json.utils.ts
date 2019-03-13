@@ -12,11 +12,15 @@ export class JSONUtils {
      *  - can create object structure if missing.
      * @param value - a simple Javascript object
      * @param path  - path (check out json.utils.spec.ts for syntax)
-     * @param createIfMissing - if true and @param path is syntactically correct. It will create an object structure accordignly.
-     *  If false, then it will return null.
+     * @param defaultValue - if present and @param path is syntactically correct. It will create an object structure accordignly.
+     *  If NULL, then it will return null.
      */
-    public static find(value: any, path: string, createIfMissing: boolean = false): any {
-        return value;
+    public static find(objectValue: object, path: string, defaultValue: any = null): any {
+        return objectValue;
+    }
+
+    public static setValue(objectValue: object, path: string, value: any): void {
+
     }
 
 }
