@@ -108,5 +108,11 @@ describe('JSON Utils', async () => {
         // expect(testObject.parent.children[0].children[1].itemProperties.options.join(',')).toBe('1,2');
     });
 
+    it('setValue: $(children:name=name12)/someProp', async () => {
+        // expect(JSONUtils.find(testObject, '$(children:name=name12)/someProp')).toBe(12);
+        JSONUtils.setValue(testObject, '$(children:name=name12)/someProp', 80);
+        // expect(testObject.parent.children[0].children[1].someProp).toBe(80);
+    });
+
 
 });
