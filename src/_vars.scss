@@ -9,10 +9,12 @@ $accent: mat-color($app-accent);
 $warn: mat-color($app-warn);
 
 $active: mat-color(mat-palette($mat-indigo));
-// $text: mat-color(mat-palette($mat-grey, A700));
-$secondary: mat-color(mat-palette($mat-grey, 200));
-$secondaryDark: mat-color(mat-palette($mat-grey, A400));
 
-$text: rgba(0,0,0,.5);
+$gray: mat-color(mat-palette($mat-grey, 200));
+$lightGray: mat-color(mat-palette($mat-grey, 50));
+$darkGray: mat-color(mat-palette($mat-grey, A400));
+
+$text: rgba(0, 0, 0, .5);
 
 $panelMargin: 25px;
+$staticSpace: 25px;

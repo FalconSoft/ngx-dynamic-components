@@ -16,25 +16,20 @@ export interface PeriodicElement {
 @Component({
   selector: 'dc-example',
   template: `
-    <div *ngIf="component$ | async as component" class="page">
+    <div *ngIf="component$ | async as component" class="static-padding">
       <h1 class="mat-h1">{{component.name}}</h1>
       <h3 class="mat-h3">{{component.description}}</h3>
       <ng-container *ngIf="component.example as ex">
-        <dc-preview-editor #editor
+        <dc-preview-editor
           [title]="ex.title"
+          [actionsMap]="ex.actionsMap"
           [initUiModel]="ex.uiModel"
           [initDataModel]="ex.dataModel"></dc-preview-editor>
-        <span class="mat-h4">Data Model: </span>
-        <div dcJsonFormatter [json]="editor.dataModel$ | async"></div>
       </ng-container>
       <dc-item-properties [component$]="component$"></dc-item-properties>
     </div>
   `,
   styles: [`
-    .page {
-      padding: 2em;
-    }
-
     dc-item-properties {
       margin-top: 1em;
       display: block;

@@ -13,7 +13,7 @@ import { getSlugFromStr } from '../utils';
   `,
   styles: [`
     :host {
-      padding: 2em;
+      padding: 25px;
       display: flex;
       flex-direction: column;
     }

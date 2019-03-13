@@ -1,5 +1,5 @@
 <ng-container *ngIf="itemProperties$ | async as properties">
-  <h3 class="mat-h3">Item properties</h3>
+  <h3>Item properties</h3>
   <mat-table [dataSource]="properties">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>

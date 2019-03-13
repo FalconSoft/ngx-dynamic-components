@@ -1,5 +1,7 @@
 @import 'src/_vars.scss';
 
+$color: rgba(0, 0, 0, .5);
+
 ::ng-deep mat-card {
   .mat-card-header-text {
     margin: 0
@@ -24,7 +26,9 @@ mat-card {
   }
 
   mat-card-header {
-    background: $secondary;
+    color: $color;
+    background: $gray;
+    padding: 8px 20px;
     mat-icon {
       cursor: pointer;
     }
@@ -34,7 +38,7 @@ mat-card {
   }
 
   .preview {
-    background: $secondary;
+    background: $gray;
     padding: 1em;
   }
 

@@ -1,0 +1,9 @@
+<dc-page-header title="Examples"></dc-page-header>
+<mat-drawer-container fxFlex="1 1 auto" class="page-drawer">
+  <mat-drawer mode="side" opened>
+    <dc-side-bar [groups]="examples"></dc-side-bar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

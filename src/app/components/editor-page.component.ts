@@ -9,15 +9,11 @@ import { ProfileFormUIModel, ProfileActionsMap } from '../profile-page.config';
       title="Profile form example"
       [initUiModel]="defaultModel"
       [initDataModel]="{}"
-      [actions]="defaultActionsMap"></dc-preview-editor>
+      [actionsMap]="defaultActionsMap"></dc-preview-editor>
   `,
   styles: [`
-    :host {
-      flex: 1 1 auto;
-      flex-direction: column;
-    }
     dc-preview-editor {
-      margin: 1em;
+      margin: 25px;
     }
   `]
 })

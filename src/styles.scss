@@ -5,9 +5,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .scrollbar::-webkit-scrollbar {
   width: 4px;
-  background: $secondary;
+  background: $gray;
 }
 
 .scrollbar::-webkit-scrollbar-thumb{
-  background:$secondaryDark;
+  background:$darkGray;
+}
+
+.static-padding {
+  padding: $staticSpace;
 }

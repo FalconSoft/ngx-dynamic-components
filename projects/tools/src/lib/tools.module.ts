@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
-import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule, MatCardModule, MatIconModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule, MatCardModule, MatIconModule,
+  MatTooltipModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 
@@ -27,6 +28,7 @@ import { PreviewEditorComponent } from './components/preview-editor/preview-edit
     MatDividerModule,
     MatCardModule,
     MatIconModule,
+    MatTooltipModule,
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,

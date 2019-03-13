@@ -1,12 +1,15 @@
 <mat-card *ngIf="initUiModel">
-  <mat-card-header>
-    <h3 class="mat-h3">{{title}}</h3>
-    <span fxFlex="1 1 auto"></span>
-    <mat-icon *ngIf="sourceCode" (click)="toggleLayout()">{{isHorizontal ? 'vertical_split' : 'horizontal_split'}}</mat-icon>
-    <mat-icon (click)="toggleSourceCode()">code</mat-icon>
+  <mat-card-header fxLayoutAlign="start center">
+    <span fxFlex="1 1 auto">{{title}}</span>
+    <button mat-icon-button *ngIf="sourceCode" (click)="toggleLayout()"
+      [matTooltip]="(isHorizontal ? 'Vertical' : 'Horizontal') + ' layout'">
+      <mat-icon>{{isHorizontal ? 'vertical_split' : 'horizontal_split'}}</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Source code">
+      <mat-icon (click)="toggleSourceCode()">code</mat-icon>
+    </button>
   </mat-card-header>
   <mat-card-content [fxLayout]="layout">
-
     <ng-container *ngIf="sourceCode">
       <mat-tab-group fxFlex="1 1 auto" [ngStyle]="{'max-width': isHorizontal ? '100%' : '50%'}">
         <mat-tab label="UI Model">

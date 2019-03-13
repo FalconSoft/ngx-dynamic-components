@@ -38,6 +38,7 @@ export interface IActionsContainer {
 export interface ComponentExample<T = UIModel> {
   uiModel: T;
   dataModel;
+  actionsMap: ActionsMap;
   title: string;
 }
 

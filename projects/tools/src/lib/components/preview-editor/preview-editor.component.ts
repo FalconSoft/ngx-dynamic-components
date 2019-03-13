@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UIModel, ActionsContainer } from '@ngx-dynamic-components/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { UIModel, ActionsContainer, ActionsMap } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
@@ -14,15 +14,16 @@ enum Layout {
   templateUrl: './preview-editor.component.html',
   styleUrls: ['./preview-editor.component.scss']
 })
-export class PreviewEditorComponent implements OnInit {
+export class PreviewEditorComponent implements OnInit, OnChanges {
 
-  @Input() actions: ActionsContainer;
+  @Input() actionsMap: ActionsMap;
   @Input() initUiModel: UIModel;
   @Input() initDataModel: any;
   @Input() title: string;
 
   uiModel$: Observable<UIModel>;
   dataModel$: Observable<any>;
+  actions: ActionsContainer;
 
   uiModelControl: FormControl;
   dataModelControl: FormControl;
@@ -38,22 +39,13 @@ export class PreviewEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.actions = new ActionsContainer({}, this.initUiModel);
+    this.initUIPreview();
+  }
 
-    const strUiModel = JSON.stringify(this.initUiModel, null, 4);
-    const strDataModel = JSON.stringify(this.initDataModel, null, 4);
-
-    this.uiModelControl = new FormControl(strUiModel);
-    this.uiModel$ = this.uiModelControl.valueChanges.pipe(
-      filter(this.jsonValidFilter),
-      startWith(strUiModel),
-      map(str => JSON.parse(str)));
-
-    this.dataModelControl = new FormControl(strDataModel);
-    this.dataModel$ = this.dataModelControl.valueChanges.pipe(
-      filter(this.jsonValidFilter),
-      startWith(strDataModel),
-      map(str => JSON.parse(str)));
+  ngOnChanges({initUiModel}: SimpleChanges) {
+    if (!initUiModel.firstChange) {
+      this.initUIPreview();
+    }
   }
 
   get isHorizontal() {
@@ -82,6 +74,25 @@ export class PreviewEditorComponent implements OnInit {
     } catch {
       return false;
     }
+  }
+
+  private initUIPreview() {
+    this.actions = new ActionsContainer(this.actionsMap, this.initUiModel);
+
+    const strUiModel = JSON.stringify(this.initUiModel, null, 4);
+    const strDataModel = JSON.stringify(this.initDataModel, null, 4);
+
+    this.uiModelControl = new FormControl(strUiModel);
+    this.uiModel$ = this.uiModelControl.valueChanges.pipe(
+      filter(this.jsonValidFilter),
+      startWith(strUiModel),
+      map(str => JSON.parse(str)));
+
+    this.dataModelControl = new FormControl(strDataModel);
+    this.dataModel$ = this.dataModelControl.valueChanges.pipe(
+      filter(this.jsonValidFilter),
+      startWith(strDataModel),
+      map(str => JSON.parse(str)));
   }
 
 }

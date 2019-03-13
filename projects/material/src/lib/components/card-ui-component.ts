@@ -36,6 +36,7 @@ import { Categories, packageName } from '../constants';
     <ng-container *ngIf="uiModel.itemProperties.content as contentUIModel">
       <mat-card-content>
         <dc-ui-selector
+            (changedDataModel)="changedDataModel.emit(this.dataModel)"
             [uiModel]='contentUIModel'
             [dataModel]='dataModel'
             [actions]='actions'></dc-ui-selector>

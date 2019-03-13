@@ -25,6 +25,8 @@ import { CategoriesComponent } from './components/categories.component';
 import { ComponentsComponent } from './components/components.component';
 import { ItemPropertiesComponent } from './components/item-properties/item-properties.component';
 import { JsonFormatterDirective } from './directives/json-formatter.directive';
+import { ExamplesPageComponent } from './components/examples-page/examples-page.component';
+import { ExampleViewComponent } from './components/example-view.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { JsonFormatterDirective } from './directives/json-formatter.directive';
     ComponentsComponent,
     ItemPropertiesComponent,
     JsonFormatterDirective,
+    ExamplesPageComponent,
+    ExampleViewComponent
   ],
   imports: [
     BrowserModule,

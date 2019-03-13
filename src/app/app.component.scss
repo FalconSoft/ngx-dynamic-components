@@ -1,0 +1,15 @@
+@import '../vars';
+
+.app-content {
+  height: 100%;
+}
+::ng-deep router-outlet + * {
+  overflow: auto;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+::ng-deep .page-drawer mat-drawer {
+  background: $lightGray;
+  border: 0;
+}

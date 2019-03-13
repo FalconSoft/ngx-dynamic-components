@@ -18,11 +18,17 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    for (const prop in changes) {
-      if (changes.hasOwnProperty(prop)) {
-        const change = changes[prop];
-        if (!change.firstChange && change.currentValue !== change.previousValue) {
-          this.component[prop] = change.currentValue;
+    if (this.component && this.component.uiModel.type !== this.uiModel.type) {
+      // Recreate component with new type.
+      this.createComponent();
+    } else {
+      // Update component properties.
+      for (const prop in changes) {
+        if (changes.hasOwnProperty(prop)) {
+          const change = changes[prop];
+          if (!change.firstChange && change.currentValue !== change.previousValue) {
+            this.component[prop] = change.currentValue;
+          }
         }
       }
     }
@@ -30,6 +36,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
 
   private createComponent() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CoreService.getComponent(this.uiModel.type));
+    this.containerRef.clear();
     const componentRef = this.containerRef.createComponent(componentFactory);
     this.component = componentRef.instance as BaseUIComponent;
     this.component.actions = this.actions;

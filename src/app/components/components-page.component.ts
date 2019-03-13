@@ -6,7 +6,7 @@ import { GroupItem } from './side-bar/side-bar.component';
   selector: 'dc-components-page',
   template: `
     <dc-page-header title="Components"></dc-page-header>
-    <mat-drawer-container fxFlex="1 1 auto">
+    <mat-drawer-container fxFlex="1 1 auto" class="page-drawer">
       <mat-drawer mode="side" opened>
         <dc-side-bar [groups]="categories"></dc-side-bar>
       </mat-drawer>
@@ -14,18 +14,7 @@ import { GroupItem } from './side-bar/side-bar.component';
         <router-outlet></router-outlet>
       </mat-drawer-content>
     </mat-drawer-container>
-  `,
-  styles: [`
-    :host {
-      flex: 1 1 auto;
-      flex-direction: column;
-    }
-
-    mat-drawer {
-      background: #fafafa;
-      border: 0;
-    }
-  `]
+  `
 })
 export class ComponentsPageComponent implements OnInit {
   categories: GroupItem[];
