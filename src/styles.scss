@@ -1,4 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@import '_vars';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.scrollbar::-webkit-scrollbar {
+  width: 4px;
+  background: $secondary;
+}
+
+.scrollbar::-webkit-scrollbar-thumb{
+  background:$secondaryDark;
+}

@@ -1,11 +1,20 @@
 @import "src/_vars.scss";
-mat-accordion {
+mat-accordion.side-bar {
   display: block;
-  margin: 1em 0 0 1em;
+  margin: $panelMargin;
+  width: 240px;
+  max-height: 75vh;
+  overflow: auto;
 
   mat-expansion-panel {
-    border-radius: 0;
     background-color: $secondary;
+    border-radius: 0;
+    border-bottom: solid 1px $secondaryDark;
+    box-shadow: none;
+
+    &:last-child {
+      border-bottom: none;
+    }
 
     a {
       color: $text;
@@ -15,20 +24,48 @@ mat-accordion {
       }
     }
 
-    h4 {
-      color: $text;
-      font-weight: 700;
-      margin: 0;
+    mat-expansion-panel-header {
+      padding: 0 15px;
+      .title {
+        color: $text;
+        font-family: Arial;
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 16px;
+        margin: 0;
+      }
+    }
+
+    mat-list {
+      padding: 0;
+    }
+
+    mat-list-item {
+      height: auto;
+      width: auto;
+      font-size: 13px;
+      line-height: 16px;
+      padding: 5px 15px 5px 20px;
     }
   }
 
   ::ng-deep {
-    .mat-list-base .mat-list-item {
-      height: 2em;
+    .mat-expansion-panel-body {
+      padding: 0;
+
+      .mat-list-item-content {
+        padding: 0;
+      }
+    }
+
+    .mat-expansion-indicator::after {
+      border-width: 0 1px 1px 0;
+      margin-bottom: 5px;
     }
 
     .mat-expansion-panel-spacing {
       margin: 0;
+      padding-bottom: 5px;
     }
   }
 }

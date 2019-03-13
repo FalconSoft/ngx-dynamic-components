@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
-import { ComponentDescriptor } from '@ngx-dynamic-components/core';
+import { getCategories } from '@ngx-dynamic-components/material';
+import { GroupItem } from './side-bar/side-bar.component';
 
 @Component({
   selector: 'dc-components-page',
@@ -8,7 +8,7 @@ import { ComponentDescriptor } from '@ngx-dynamic-components/core';
     <dc-page-header title="Components"></dc-page-header>
     <mat-drawer-container fxFlex="1 1 auto">
       <mat-drawer mode="side" opened>
-        <dc-side-bar [components]="components"></dc-side-bar>
+        <dc-side-bar [groups]="categories"></dc-side-bar>
       </mat-drawer>
       <mat-drawer-content>
         <router-outlet></router-outlet>
@@ -23,16 +23,19 @@ import { ComponentDescriptor } from '@ngx-dynamic-components/core';
 
     mat-drawer {
       background: #fafafa;
+      border: 0;
     }
   `]
 })
 export class ComponentsPageComponent implements OnInit {
-
-  components: ComponentDescriptor[] = COMPONENTS_LIST;
+  categories: GroupItem[];
 
   constructor() {}
 
   ngOnInit() {
+    this.categories = getCategories().map(({name, components}) => {
+      return { name, list: components };
+    });
   }
 
 }

@@ -10,7 +10,7 @@ import { getCategories } from '@ngx-dynamic-components/material';
 export class SideBarComponent implements OnInit {
 
   @Input()
-  components: ComponentDescriptor[];
+  groups: GroupItem[];
 
   categories: {name: string, components: ComponentDescriptor[]}[];
 
@@ -20,4 +20,9 @@ export class SideBarComponent implements OnInit {
     this.categories = getCategories();
   }
 
+}
+
+export interface GroupItem {
+  name: string;
+  list: {name: string}[];
 }
