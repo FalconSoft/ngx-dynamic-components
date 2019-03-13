@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, AttributesMap, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, StyleProperties, UIModel, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
+import { ComponentExample } from '@ngx-dynamic-components/core/lib/models';
 
 @Component({
     selector: 'dc-ui-flex-container',
@@ -12,6 +13,8 @@ import { Categories, packageName } from '../constants';
         [fxFlex]="uiModel.itemProperties?.fxFlex || '1 1 auto'"
         [style.height]="uiModel.itemProperties?.height || '100%'"
         [style.width]="uiModel.itemProperties?.width || '100%'"
+        [style.padding]="uiModel.itemProperties?.padding || '0'"
+        [style.margin]="uiModel.itemProperties?.margin || '0'"
     >
         <div *ngFor="let item of uiModel.children"
             [fxFlex]="item.containerProperties?.fxFlex"
@@ -32,7 +35,7 @@ export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerPrope
 
 }
 
-export class FlexContainerProperties implements AttributesMap {
+export class FlexContainerProperties extends StyleProperties {
   @propDescription({
     description: 'fxLayout (Angular Flex-Layout property)',
     example: 'column',
@@ -56,19 +59,43 @@ export class FlexContainerProperties implements AttributesMap {
     example: '10px',
   })
   fxFlex?: string;
-
-  @propDescription({
-    description: 'Container width',
-    example: '100%',
-  })
-  width?: string;
-
-  @propDescription({
-    description: 'Container height',
-    example: '100px',
-  })
-  height?: string;
 }
+
+const example: ComponentExample<UIModel<FlexContainerProperties>> = {
+  title: 'Flex example',
+  uiModel: {
+    type: 'material:flex-container',
+    containerProperties: {
+      width: '100%'
+    },
+    itemProperties: {
+      fxLayout: 'row',
+      fxLayoutGap: '1rem',
+      fxFlex: '0 1 auto',
+      width: '20%',
+      padding: '10px'
+    },
+    children: [{
+      type: 'material:text',
+      containerProperties: {
+        fxFlex: '1 1 auto'
+      },
+      itemProperties: {
+        text: 'Text line 1',
+      }
+    }, {
+      type: 'material:text',
+      containerProperties: {
+        fxFlex: '1 1 auto'
+      },
+      itemProperties: {
+        text: 'Text line 2',
+      }
+    }]
+  },
+  dataModel: {},
+  actionsMap: {}
+};
 
 interface FlexContainerUIComponentConstrutor {
   new (): FlexContainerUIComponent;
@@ -84,5 +111,6 @@ export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUICompone
   category: Categories.Layout,
   description: 'Flex layout component',
   itemProperties: FlexContainerProperties,
-  component: FlexContainerUIComponent
+  component: FlexContainerUIComponent,
+  example
 };

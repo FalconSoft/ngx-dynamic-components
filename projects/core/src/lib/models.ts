@@ -11,7 +11,33 @@ export interface AttributesMap {
     [key: string]: any;
 }
 
-export abstract class DataModelProperties implements AttributesMap {
+export abstract class StyleProperties implements AttributesMap {
+  @propDescription({
+    description: 'Element\'s width.',
+    example: '100%'
+  })
+  width?: string;
+
+  @propDescription({
+    description: 'Element\'s width.',
+    example: '100%'
+  })
+  height?: string;
+
+  @propDescription({
+    description: 'Element\'s padding.',
+    example: '10px 5px'
+  })
+  padding?: string;
+
+  @propDescription({
+    description: 'Element\'s margin.',
+    example: '5px 3px 5px 10px'
+  })
+  margin?: string;
+}
+
+export abstract class DataModelProperties extends StyleProperties {
   @propDescription({
     description: 'Path to id in data model.',
     example: 'name'

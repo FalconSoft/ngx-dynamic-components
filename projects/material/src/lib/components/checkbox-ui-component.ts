@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, propDescription, ComponentDescriptor } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, ComponentExample,
+  propDescription, ComponentDescriptor, UIModel } from '@ngx-dynamic-components/core';
 
 import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-checkbox',
   template: `<mat-checkbox
+      [style.width]="uiModel.itemProperties?.width || 'auto'"
+      [style.height]="uiModel.itemProperties?.height || 'auto'"
+      [style.padding]="uiModel.itemProperties?.padding || '0'"
+      [style.margin]="uiModel.itemProperties?.margin || '0'"
       [(ngModel)]="dataModel[uiModel.itemProperties.dataModelPath]">{{uiModel.itemProperties.label}}
     </mat-checkbox>`,
 })
@@ -21,6 +26,22 @@ export class CheckboxProperties extends DataModelProperties {
   label: string;
 }
 
+const example: ComponentExample<UIModel<CheckboxProperties>> = {
+  title: 'Checkbox example',
+  uiModel: {
+    type: 'material:checkbox',
+    containerProperties: {},
+    itemProperties: {
+      label: 'Accept conditions',
+      padding: '20px',
+      margin: '40px',
+      dataModelPath: 'accept'
+    }
+  },
+  dataModel: {},
+  actionsMap: {}
+};
+
 interface CheckboxUIComponentConstrutor {
   new (): CheckboxUIComponent;
 }
@@ -35,5 +56,6 @@ export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrut
   category: Categories.FormControl,
   description: 'Checkbox component',
   itemProperties: CheckboxProperties,
-  component: CheckboxUIComponent
+  component: CheckboxUIComponent,
+  example
 };

@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, AttributesMap, UIModel, ActionsContainer, ComponentDescriptor,
-  propDescription } from '@ngx-dynamic-components/core';
+  propDescription, StyleProperties, ComponentExample } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-card',
-  template: `<mat-card>
+  template: `<mat-card
+      [style.width]="uiModel.itemProperties?.width || 'auto'"
+      [style.height]="uiModel.itemProperties?.height || 'auto'"
+      [style.padding]="uiModel.itemProperties?.padding || '0'"
+      [style.margin]="uiModel.itemProperties?.margin || '0'">
     <ng-container *ngIf="uiModel.itemProperties.header as header">
       <ng-container [ngSwitch]="getHeaderType(header)">
         <mat-card-header *ngSwitchCase="'component'">
@@ -51,11 +55,7 @@ import { Categories, packageName } from '../constants';
 })
 
 export class CardUIComponent extends BaseUIComponent<CardProperties> {
-  getHeaderType(content: HeaderConfig | string) {
-    if (typeof content === 'string') {
-      return 'string';
-    }
-
+  getHeaderType(content: HeaderConfig) {
     if (content.item) {
       return 'component';
     }
@@ -71,14 +71,15 @@ interface HeaderConfig {
   dataModel?: any;
   actions?: ActionsContainer;
   html?: string;
+  title?: string;
 }
 
-export class CardProperties implements AttributesMap {
+export class CardProperties extends StyleProperties {
   @propDescription({
     description: 'Card header component',
     example: '<h1>Header title</h1>',
   })
-  header: HeaderConfig | string;
+  header: HeaderConfig;
 
   @propDescription({
     description: 'Card content component.',
@@ -97,8 +98,34 @@ export class CardProperties implements AttributesMap {
     description: 'Card image url',
     example: 'logo.png',
   })
-  img: string;
+  img?: string;
 }
+
+const example: ComponentExample<UIModel<CardProperties>> = {
+  title: 'Card panel example',
+  uiModel: {
+    type: 'material:card',
+    containerProperties: {},
+    itemProperties: {
+      padding: '20px',
+      height: '200px',
+      width: '50%',
+      header: {
+        title: 'Profile form'
+      },
+      content: {
+        type: 'material:text',
+        containerProperties: {},
+        itemProperties: {
+          text: 'Card content text',
+          width: '50%'
+        }
+      }
+    }
+  },
+  dataModel: {},
+  actionsMap: {}
+};
 
 interface CardUIComponentConstrutor {
   new (): CardUIComponent;
@@ -114,5 +141,6 @@ export const cardDescriptor: ComponentDescriptor<CardUIComponentConstrutor, Card
   category: Categories.Layout,
   description: 'Card layout component',
   itemProperties: CardProperties,
-  component: CardUIComponent
+  component: CardUIComponent,
+  example
 };

@@ -27,12 +27,27 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
 
 export function propDescription(description: PropDescriptor) {
   function decorate(target: any, key: string) {
-    const properties = target.hasOwnProperty('properties') ? target.properties : [];
+    let properties = target.hasOwnProperty('properties') ? target.properties : [];
     properties.push({
       name: key,
       ...description
     });
-    target.properties = properties;
+
+    let proto = Object.getPrototypeOf(target);
+
+    while (proto.hasOwnProperty('properties')) {
+      properties = properties.concat(proto.properties);
+      proto = Object.getPrototypeOf(proto);
+    }
+    target.properties = Array.from(new Set(properties)).sort((a: any, b: any) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
   }
   return decorate;
 }
