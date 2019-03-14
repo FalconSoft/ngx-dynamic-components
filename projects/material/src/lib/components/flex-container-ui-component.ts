@@ -10,15 +10,11 @@ import { ComponentExample } from '@ngx-dynamic-components/core/lib/models';
         [fxLayout]="uiModel.itemProperties?.fxLayout || 'row'"
         [fxLayoutGap]="uiModel.itemProperties?.fxLayoutGap || '0'"
         [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign"
-        [fxFlex]="uiModel.itemProperties?.fxFlex || '1 1 auto'"
-        [style.height]="uiModel.itemProperties?.height || '100%'"
-        [style.width]="uiModel.itemProperties?.width || '100%'"
-        [style.padding]="uiModel.itemProperties?.padding || '0'"
-        [style.margin]="uiModel.itemProperties?.margin || '0'"
-    >
+        [fxFlex]="uiModel.itemProperties?.fxFlex || 'initial'"
+        [ngStyle]="itemStyles">
         <div *ngFor="let item of uiModel.children"
-            [fxFlex]="item.containerProperties?.fxFlex"
-            [style.background] ="item.containerProperties?.backgroundColor">
+            [fxFlex]="item.containerProperties?.fxFlex || 'initial'"
+            [ngStyle]="getStyles(item.containerProperties)">
 
             <dc-ui-selector
                 (changedDataModel)="changedDataModel.emit(this.dataModel)"
@@ -59,6 +55,12 @@ export class FlexContainerProperties extends StyleProperties {
     example: '10px',
   })
   fxFlex?: string;
+
+  @propDescription({
+    description: 'Array of children ui Models',
+    example: '[{type: \'text\', itemProperties: {}, containerProperties: {}}]',
+  })
+  children?: UIModel[];
 }
 
 const example: ComponentExample<UIModel<FlexContainerProperties>> = {

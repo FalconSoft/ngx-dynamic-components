@@ -23,6 +23,24 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
           this.actions.onRunAction(this.uiModel, actionKey, this.dataModel);
       }
     }
+
+    get itemStyles() {
+      return this.getStyles(this.uiModel.itemProperties);
+    }
+
+    get containerStyles() {
+      return this.getStyles(this.uiModel.containerProperties);
+    }
+
+    getStyles(properties: AttributesMap = {}): {[key: string]: string} {
+      const styleProperties = ['width', 'height', 'padding', 'margin', 'background'];
+      return styleProperties.reduce((styles, prop) => {
+        if (properties.hasOwnProperty(prop)) {
+          styles[prop] = properties[prop];
+        }
+        return styles;
+      }, {});
+    }
 }
 
 export function propDescription(description: PropDescriptor) {
@@ -50,4 +68,8 @@ export function propDescription(description: PropDescriptor) {
     });
   }
   return decorate;
+}
+
+export interface BaseUIComponentConstrutor {
+  new (): BaseUIComponent;
 }

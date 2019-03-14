@@ -6,9 +6,10 @@ import { Categories, packageName } from '../constants';
 @Component({
   selector: 'dc-ui-select',
   template: `
-    <mat-form-field [style.width]="uiModel?.containerProperties?.width || '100%'">
-      <mat-select (selectionChange)="onSelect()"
+    <mat-form-field [ngStyle]="containerStyles">
+      <mat-select [ngStyle]="itemStyles"
         [placeholder]="uiModel.itemProperties?.placeholder"
+        (selectionChange)="onSelect()"
         [(ngModel)]="dataModel[uiModel.itemProperties?.dataModelPath]">
         <mat-option *ngFor="let option of uiModel.itemProperties?.options" [value]="option.value">
           {{option.label}}

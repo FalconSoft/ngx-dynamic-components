@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, propDescription, AttributesMap, StyleProperties, ComponentExample, ComponentDescriptor} from '@ngx-dynamic-components/core';
+import { BaseUIComponent, propDescription, StyleProperties, ComponentExample, ComponentDescriptor} from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 import { UIModel } from '@ngx-dynamic-components/core/lib/models';
 
@@ -7,10 +7,7 @@ import { UIModel } from '@ngx-dynamic-components/core/lib/models';
     selector: 'dc-ui-button',
     template: `
     <button mat-flat-button color="primary"
-      [style.width]="uiModel.itemProperties?.width || 'auto'"
-      [style.height]="uiModel.itemProperties?.height || 'auto'"
-      [style.padding]="uiModel.itemProperties?.padding || '0'"
-      [style.margin]="uiModel.itemProperties?.margin || '0'"
+      [ngStyle]="itemStyles"
       (click)="actions.onRunAction(uiModel, uiModel.itemProperties?.clickActionKey, dataModel)">
     {{uiModel.itemProperties?.label}}
     </button>
@@ -43,7 +40,7 @@ const example: ComponentExample<UIModel<ButtonProperties>> = {
         label: 'SUBMIT',
         width: '50%',
         margin: '15px',
-        padding: '10px 0 0 20px',
+        padding: '10px 5px 10px 0px',
         clickActionKey: 'consoleLog'
     }
   },

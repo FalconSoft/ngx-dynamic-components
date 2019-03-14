@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription,
+  ComponentExample, UIModel } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
 @Component({
     selector: 'dc-ui-input',
     template: `
-        <mat-form-field [style.width]="uiModel?.containerProperties?.width || '100%'">
-            <input matInput [placeholder]="uiModel?.itemProperties?.placeholder"
-                [style.width]="uiModel?.itemProperties?.width"
-                (input)="changedDataModel.emit(this.dataModel)"
-                [(ngModel)]="dataModel[uiModel.itemProperties?.dataModelPath]"/>
+        <mat-form-field [ngStyle]="containerStyles">
+          <input matInput
+            [ngStyle]="itemStyles"
+            [placeholder]="uiModel.itemProperties?.placeholder"
+            (input)="changedDataModel.emit(this.dataModel)"
+            [(ngModel)]="dataModel[uiModel.itemProperties?.dataModelPath]"/>
         </mat-form-field>
     `
 })
@@ -22,14 +24,30 @@ export class InputProperties extends DataModelProperties {
     description: 'Text shown when field is empty',
     example: 'Type your name',
   })
-  placeholder: string;
+  placeholder?: string;
 
-  @propDescription({
-    description: 'Control width',
-    example: '100%',
-  })
-  width: string;
+  // TODO: Implement input properties.
+  isNumeric: boolean;
+  isDate: boolean;
+  format: string;
 }
+
+const example: ComponentExample<UIModel<InputProperties>> = {
+  title: 'Text input example',
+  uiModel: {
+    type: 'material:text-input',
+    containerProperties: {},
+    itemProperties: {
+      isNumeric: false,
+      isDate: false,
+      format: '',
+      placeholder: 'Enter your name',
+      dataModelPath: 'name'
+    }
+  },
+  dataModel: {},
+  actionsMap: {}
+};
 
 interface InputUIComponentConstrutor {
   new (): InputUIComponent;
@@ -45,5 +63,6 @@ export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, In
   category: Categories.FormControl,
   description: 'Input component',
   itemProperties: InputProperties,
-  component: InputUIComponent
+  component: InputUIComponent,
+  example
 };

@@ -5,11 +5,7 @@ import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-card',
-  template: `<mat-card
-      [style.width]="uiModel.itemProperties?.width || 'auto'"
-      [style.height]="uiModel.itemProperties?.height || 'auto'"
-      [style.padding]="uiModel.itemProperties?.padding || '0'"
-      [style.margin]="uiModel.itemProperties?.margin || '0'">
+  template: `<mat-card [ngStyle]="itemStyles">
     <ng-container *ngIf="uiModel.itemProperties.header as header">
       <ng-container [ngSwitch]="getHeaderType(header)">
         <mat-card-header *ngSwitchCase="'component'">

@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, propDescription, ComponentDescriptor } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, propDescription,
+  ComponentDescriptor, ComponentExample, UIModel } from '@ngx-dynamic-components/core';
 import { packageName, Categories } from '../constants';
 
 @Component({
     selector: 'dc-ui-textarea',
     template: `
-        <mat-form-field [style.width]="uiModel?.containerProperties?.width || '100%'">
+        <mat-form-field [ngStyle]="containerStyles">
             <textarea matInput [placeholder]="uiModel?.itemProperties?.placeholder"
                 [rows]="uiModel?.itemProperties?.rows"
-                [style.width]="uiModel?.itemProperties?.width"
+                [ngStyle]="itemStyles"
+                (input)="changedDataModel.emit(this.dataModel)"
                 [(ngModel)]="dataModel[uiModel.itemProperties?.dataModelPath]"></textarea>
         </mat-form-field>
     `
@@ -24,17 +26,28 @@ export class TextareaProperties extends DataModelProperties {
   rows: number;
 
   @propDescription({
-    description: 'Control width',
-    example: '100%',
-  })
-  width: string;
-
-  @propDescription({
     description: 'Text shown when field is empty',
     example: 'Type about yourself',
   })
   placeholder: string;
 }
+
+const example: ComponentExample<UIModel<TextareaProperties>> = {
+  title: 'Text area example',
+  uiModel: {
+    type: 'material:textarea',
+    containerProperties: {
+      fxFlex: '1 1 auto'
+    },
+    itemProperties: {
+      rows: 10,
+      placeholder: 'Type information about yourself',
+      dataModelPath: 'info'
+    }
+  },
+  dataModel: {},
+  actionsMap: {}
+};
 
 interface TextareaUIComponentConstrutor {
   new (): TextareaUIComponent;
@@ -50,5 +63,6 @@ export const textareaDescriptor: ComponentDescriptor<TextareaUIComponentConstrut
   category: Categories.FormControl,
   description: 'Text area component',
   itemProperties: TextareaProperties,
-  component: TextareaUIComponent
+  component: TextareaUIComponent,
+  example
 };

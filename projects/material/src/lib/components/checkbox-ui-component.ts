@@ -6,11 +6,9 @@ import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-checkbox',
-  template: `<mat-checkbox
-      [style.width]="uiModel.itemProperties?.width || 'auto'"
-      [style.height]="uiModel.itemProperties?.height || 'auto'"
-      [style.padding]="uiModel.itemProperties?.padding || '0'"
-      [style.margin]="uiModel.itemProperties?.margin || '0'"
+  template: `
+    <mat-checkbox [ngStyle]="itemStyles"
+      (input)="changedDataModel.emit(this.dataModel)"
       [(ngModel)]="dataModel[uiModel.itemProperties.dataModelPath]">{{uiModel.itemProperties.label}}
     </mat-checkbox>`,
 })

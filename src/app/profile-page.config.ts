@@ -10,7 +10,7 @@ export const ProfileFormUIModel = {
     children: [
         {
             type: 'material:text-input',
-            containerProperties: <AttributesMap>{
+            containerProperties: {
                 width: '100%'
             },
             itemProperties: <AttributesMap>{
@@ -34,7 +34,7 @@ export const ProfileFormUIModel = {
             children: [{
                 type: 'material:text-input',
                 containerProperties: {
-                  fxFlex: '1 1 auto'
+                  width: '100%'
                 },
                 itemProperties: {
                     isNumeric: false,
@@ -47,7 +47,7 @@ export const ProfileFormUIModel = {
             {
                 type: 'material:text-input',
                 containerProperties: {
-                  fxFlex: '1 1 auto'
+                  width: '100%'
                 },
                 itemProperties: {
                     isNumeric: false,
@@ -69,7 +69,9 @@ export const ProfileFormUIModel = {
         },
         {
             type: 'material:text-input',
-            containerProperties: {},
+            containerProperties: {
+              width: '100%'
+            },
             itemProperties: {
                 isNumeric: false,
                 isDate: false,
@@ -80,7 +82,9 @@ export const ProfileFormUIModel = {
         },
         {
             type: 'material:text-input',
-            containerProperties: {},
+            containerProperties: {
+              width: '100%'
+            },
             itemProperties: {
                 isNumeric: false,
                 isDate: false,
@@ -91,9 +95,12 @@ export const ProfileFormUIModel = {
         },
         {
             type: 'material:select',
-            containerProperties: {},
+            containerProperties: {
+              width: '100%'
+            },
             id: 'stateSelection',
             itemProperties: {
+                width: '100%',
                 options: [
                   {label: 'United Kingdom', value: 'uk'},
                   {label: 'Ukraine', value: 'ua'}
@@ -116,7 +123,8 @@ export const ProfileFormUIModel = {
                 id: 'citySelection',
                 type: 'material:select',
                 containerProperties: {
-                    fxFlex: '1 1 auto'
+                    fxFlex: '1 1 auto',
+                    width: '100%',
                 },
                 itemProperties: {
                     placeholder: 'City',
@@ -126,7 +134,8 @@ export const ProfileFormUIModel = {
             {
                 type: 'material:text-input',
                 containerProperties: {
-                    fxFlex: '1 1 auto'
+                    fxFlex: '1 1 auto',
+                    width: '100%',
                 },
                 itemProperties: {
                     isNumeric: false,
