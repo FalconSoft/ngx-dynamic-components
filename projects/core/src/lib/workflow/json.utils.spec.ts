@@ -42,49 +42,49 @@ describe('JSON Utils', async () => {
 
     it('find: $.parent ', async () => {
         const result = JSONUtils.find(testObject, '$.parent');
-        // expect(result).toBe(testObject.parent);
-        // expect(result.children).toBe(testObject.parent.children);
+        expect(result).toBe(testObject.parent);
+        expect(result.children).toBe(testObject.parent.children);
     });
 
     it('find: $.parent/children ', async () => {
         const result = JSONUtils.find(testObject, '$.parent/children');
-        // expect(Array.isArray(result)).toBeTruthy();
-        // expect(result.length).toBeTruthy(TEST_OBJECT.parent.children.length);
+        expect(Array.isArray(result)).toBeTruthy();
+        expect(result.length).toBeTruthy(TEST_OBJECT.parent.children.length);
     });
 
     it('find: $.parent/invalidProp ', async () => {
         const result = JSONUtils.find(testObject, '$.parent/invalidProp');
-        // expect(result).toBe(null);
+        expect(result).toBe(null);
     });
 
     it('find: $.parent/newProperty (it should create newProperty object)', async () => {
         const newObject = { someObject: 11 };
-        // const result = JSONUtils.find(testObject, '$.parent/newProperty', newObject);
-        // expect(result).toBe(newObject);
+        const result = JSONUtils.find(testObject, '$.parent/newProperty', newObject);
+        expect(result).toBe(newObject);
     });
 
 
     it('find: $(children) ', async () => {
         const result = JSONUtils.find(testObject, '$(children)');
         // should flattern the tree
-        // expect(Array.isArray(result)).toBeTruthy();
-        // expect(result.length).toBeTruthy(3);
-        // expect(result.map(r=>r.name).join(',')).toBe('name1,name11,name12');
+        expect(Array.isArray(result)).toBeTruthy();
+        expect(result.length).toBeTruthy(3);
+        expect(result.map(r => r.name).join(',')).toBe('name1,name11,name12');
     });
 
     it('find: $(children:name=name12) ', async () => {
         const result = JSONUtils.find(testObject, '$(children:name=name12)');
-        // expect(result).toBe(testObject.parent.children[0].children[1]);
+        expect(result).toBe(testObject.parent.children[0].children[1]);
     });
 
     it('find: $(children:name=name12)/someProp ', async () => {
         const result = JSONUtils.find(testObject, '$(children:name=name12)/someProp');
-        // expect(result).toBe(testObject.parent.children[0].children[1].someProp);
+        expect(result).toBe(testObject.parent.children[0].children[1].someProp);
     });
 
     it('find: $(children:name=name12)/itemProperties/options ', async () => {
         const result = JSONUtils.find(testObject, '$(children:name=name12)/itemProperties/options');
-        // expect(result).toBe(testObject.parent.children[0].children[1].itemProperties.options);
+        expect(result).toBe(testObject.parent.children[0].children[1].itemProperties.options);
     });
 
     it('setValue: $.parent ', async () => {
