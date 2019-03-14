@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   selector: 'dc-example',
   template: `
     <ng-container *ngIf="example | async as ex">
-      <dc-preview-editor fxLayout fxFlex="auto"
+      <dc-preview-editor
           #editor
           [title]="ex.name"
           [initUiModel]="ex.uiModel"
@@ -21,6 +21,9 @@ import { Observable } from 'rxjs';
   styles: [`
     :host {
       padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      min-height: 1000px;
     }
   `]
 })

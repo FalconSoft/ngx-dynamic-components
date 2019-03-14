@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding } from '@angular/core';
 import { UIModel, ActionsContainer, ActionsMap } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -20,6 +20,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges {
   @Input() initUiModel: UIModel;
   @Input() initDataModel: any;
   @Input() title: string;
+  @HostBinding('style.flex') flex = 'initial';
 
   uiModel$: Observable<UIModel>;
   dataModel$: Observable<any>;
@@ -53,7 +54,8 @@ export class PreviewEditorComponent implements OnInit, OnChanges {
   }
 
   toggleSourceCode() {
-    this.sourceCode = ! this.sourceCode;
+    this.sourceCode = !this.sourceCode;
+    this.flex = this.sourceCode ? '1 1 auto' : 'initial';
     if (!this.sourceCode) {
       this.layout = Layout.horizontal;
     }
