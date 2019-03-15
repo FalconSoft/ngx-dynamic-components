@@ -27,7 +27,7 @@ export const TEST_OBJECT = {
     }
 };
 
-describe('JSON Utils', async () => {
+fdescribe('JSON Utils', async () => {
     let testObject: any = null;
 
     beforeEach(() => {
@@ -88,31 +88,29 @@ describe('JSON Utils', async () => {
     });
 
     it('setValue: $.parent ', async () => {
-        const inObject = {};
+        const inObject: any = {};
         JSONUtils.setValue(inObject, '$.parent', 55);
-        // expect(inObject.parent).toBe(55);
+        expect(inObject.parent).toBe(55);
     });
 
     it('setValue: $.parent/someValue ', async () => {
-        const inObject = {};
+        const inObject: any = {};
         JSONUtils.setValue(inObject, '$.parent/someValue', 55);
-        // expect(inObject.parent.someValue).toBe(55);
+        expect(inObject.parent.someValue).toBe(55);
 
         JSONUtils.setValue(inObject, '$.parent/someValue', 88);
-        // expect(inObject.parent.someValue).toBe((88);
+        expect(inObject.parent.someValue).toBe(88);
 
     });
 
     it('setValue: $(children:name=name12)/itemProperties/options ', async () => {
         JSONUtils.setValue(testObject, '$(children:name=name12)/itemProperties/options', ['1', '2']);
-        // expect(testObject.parent.children[0].children[1].itemProperties.options.join(',')).toBe('1,2');
+        expect(testObject.parent.children[0].children[1].itemProperties.options.join(',')).toBe('1,2');
     });
 
     it('setValue: $(children:name=name12)/someProp', async () => {
-        // expect(JSONUtils.find(testObject, '$(children:name=name12)/someProp')).toBe(12);
+        expect(JSONUtils.find(testObject, '$(children:name=name12)/someProp')).toBe(12);
         JSONUtils.setValue(testObject, '$(children:name=name12)/someProp', 80);
-        // expect(testObject.parent.children[0].children[1].someProp).toBe(80);
+        expect(testObject.parent.children[0].children[1].someProp).toBe(80);
     });
-
-
 });
