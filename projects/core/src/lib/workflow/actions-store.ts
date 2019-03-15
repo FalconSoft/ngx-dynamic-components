@@ -1,4 +1,5 @@
 import { ExecutionContext } from './workflow.processor';
+import { JSONUtils } from './json.utils';
 
 interface HttpCallConfig {
     method: string;
@@ -13,11 +14,17 @@ interface SetValueConfig {
 }
 
 interface SetValuesConfig {
-    object: any;
-    valuesList: any;
+    object: object;
+    valuesList: object;
 }
 
-function getObject(context: ExecutionContext, object: any) {
+interface switchActionConfig {
+    object: object;
+    valuesList: object;
+}
+
+
+function getValueOrVariable(context: ExecutionContext, object: any) {
     if (!object) { return null; }
     if (typeof object === 'object') { return object; }
 
@@ -38,15 +45,27 @@ function getObject(context: ExecutionContext, object: any) {
 }
 
 const setValueAction = (context: ExecutionContext, payload: SetValueConfig) => {
-    const objValue = getObject(context, payload.object);
-    const propertyName = payload.propertyName;
-    const value = payload.propertyValue;
-    objValue[propertyName] = value;
+    const objValue = getValueOrVariable(context, payload.object);
+    const value = getValueOrVariable(context, payload.propertyValue);
+    JSONUtils.setValue(objValue, payload.propertyName, value);
+};
+
+const setValuesAction = (context: ExecutionContext, payload: SetValuesConfig) => {
+    const propertyNames = Object.keys(payload.valuesList).filter(f => !f.startsWith('_'));
+    const objValue = getValueOrVariable(context, payload.object);
+    for (const propertyName of propertyNames) {
+        const value = getValueOrVariable(context, payload.valuesList[propertyName]);
+        JSONUtils.setValue(objValue, propertyName, value);
+    }
+};
+
+const switchAction = (context: ExecutionContext, payload: SetValuesConfig) => {
+
 };
 
 export const commonActionsMap = new Map<string, Function>([
     ['httpCall', (config: HttpCallConfig) => {}],
     ['switch', () => {}],
     ['setValue', setValueAction],
-    ['setValues', (config: SetValuesConfig) => {}],
+    ['setValues', setValuesAction],
 ]);
