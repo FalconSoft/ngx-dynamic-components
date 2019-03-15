@@ -1,16 +1,16 @@
-import { ProfileFormUIModel, ProfileCardUIModel, ProfileActionsMap } from './profile-page.config';
+import { ProfileFormUIModel, ProfileCardUIModel, ProfileActionsMap, ProfileDataModel } from './profile-page.config';
 
 export const EXAMPLES_LIST = [{
   type: 'Form Controls',
   name: 'profile-form',
   uiModel: ProfileFormUIModel,
-  dataModel: {},
+  dataModel: ProfileDataModel,
   actionsMap: ProfileActionsMap
 }, {
   type: 'Form Controls',
   name: 'profile-form-card',
   uiModel: ProfileCardUIModel,
-  dataModel: {},
+  dataModel: ProfileDataModel,
   actionsMap: ProfileActionsMap
 }];
 

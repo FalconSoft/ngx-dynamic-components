@@ -1,5 +1,6 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { UIModel, IActionsContainer, PropDescriptor, AttributesMap } from '../models';
+import { UIModel, IActionsContainer, PropDescriptor, AttributesMap, DataModelProperties } from '../models';
+import { JSONUtils } from '../workflow/json.utils';
 
 export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     @Input() dataModel: any;
@@ -15,6 +16,21 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
       this.triggerAction('_OnDestroy');
+    }
+
+    get componentDataModel() {
+      if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
+        return null;
+      }
+      const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
+      return JSONUtils.find(this.dataModel, dataModelPath);
+    }
+
+    set componentDataModel(val) {
+      if (this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
+        const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
+        JSONUtils.setValue(this.dataModel, dataModelPath, val);
+      }
     }
 
     triggerAction(action: string): void {

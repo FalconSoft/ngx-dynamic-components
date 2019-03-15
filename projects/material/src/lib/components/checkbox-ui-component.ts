@@ -9,7 +9,7 @@ import { Categories, packageName } from '../constants';
   template: `
     <mat-checkbox [ngStyle]="itemStyles"
       (input)="changedDataModel.emit(this.dataModel)"
-      [(ngModel)]="dataModel[uiModel.itemProperties.dataModelPath]">{{uiModel.itemProperties.label}}
+      [(ngModel)]="componentDataModel">{{uiModel.itemProperties.label}}
     </mat-checkbox>`,
 })
 export class CheckboxUIComponent extends BaseUIComponent<CheckboxProperties> {
@@ -33,7 +33,7 @@ const example: ComponentExample<UIModel<CheckboxProperties>> = {
       label: 'Accept conditions',
       padding: '20px',
       margin: '40px',
-      dataModelPath: 'accept'
+      dataModelPath: '$.accept'
     }
   },
   dataModel: {},

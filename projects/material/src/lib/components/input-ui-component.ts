@@ -11,7 +11,8 @@ import { Categories, packageName } from '../constants';
             [ngStyle]="itemStyles"
             [placeholder]="uiModel.itemProperties?.placeholder"
             (input)="changedDataModel.emit(this.dataModel)"
-            [(ngModel)]="dataModel[uiModel.itemProperties?.dataModelPath]"/>
+            [(ngModel)]="componentDataModel"
+            />
         </mat-form-field>
     `
 })
@@ -42,7 +43,7 @@ const example: ComponentExample<UIModel<InputProperties>> = {
       isDate: false,
       format: '',
       placeholder: 'Enter your name',
-      dataModelPath: 'name'
+      dataModelPath: '$.name'
     }
   },
   dataModel: {},

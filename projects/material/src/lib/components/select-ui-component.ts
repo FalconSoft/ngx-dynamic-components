@@ -10,7 +10,7 @@ import { Categories, packageName } from '../constants';
       <mat-select [ngStyle]="itemStyles"
         [placeholder]="uiModel.itemProperties?.placeholder"
         (selectionChange)="onSelect()"
-        [(ngModel)]="dataModel[uiModel.itemProperties?.dataModelPath]">
+        [(ngModel)]="componentDataModel">
         <mat-option *ngFor="let option of uiModel.itemProperties?.options" [value]="option.value">
           {{option.label}}
         </mat-option>

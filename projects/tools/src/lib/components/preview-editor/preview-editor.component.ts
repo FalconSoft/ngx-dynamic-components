@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding } from '@angular/core';
-import { UIModel, ActionsContainer, ActionsMap } from '@ngx-dynamic-components/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild } from '@angular/core';
+import { UIModel, ActionsContainer, ActionsMap, UISelectorComponent } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
@@ -29,6 +29,8 @@ export class PreviewEditorComponent implements OnInit, OnChanges {
   uiModelControl: FormControl;
   dataModelControl: FormControl;
 
+  @ViewChild('dynamicComponent') dynamicComponent: UISelectorComponent;
+
   layout: Layout = Layout.horizontal;
 
   sourceCode = false;
@@ -47,6 +49,10 @@ export class PreviewEditorComponent implements OnInit, OnChanges {
     if (!initUiModel.firstChange) {
       this.initUIPreview();
     }
+  }
+
+  ngAfterViewInit() {
+    this.onDataModelChange(this.dynamicComponent.dataModel);
   }
 
   get isHorizontal() {

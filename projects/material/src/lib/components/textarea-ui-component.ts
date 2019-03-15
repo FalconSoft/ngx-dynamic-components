@@ -11,7 +11,7 @@ import { packageName, Categories } from '../constants';
                 [rows]="uiModel?.itemProperties?.rows"
                 [ngStyle]="itemStyles"
                 (input)="changedDataModel.emit(this.dataModel)"
-                [(ngModel)]="dataModel[uiModel.itemProperties?.dataModelPath]"></textarea>
+                [(ngModel)]="componentDataModel"></textarea>
         </mat-form-field>
     `
 })
@@ -42,7 +42,7 @@ const example: ComponentExample<UIModel<TextareaProperties>> = {
     itemProperties: {
       rows: 10,
       placeholder: 'Type information about yourself',
-      dataModelPath: 'info'
+      dataModelPath: '$.info'
     }
   },
   dataModel: {},

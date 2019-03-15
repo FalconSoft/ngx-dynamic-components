@@ -24,7 +24,7 @@
     </ng-container>
 
     <div class="preview" fxFlex="1 1 auto">
-      <dc-ui-selector
+      <dc-ui-selector #dynamicComponent
       (changedDataModel)="onDataModelChange($event)"
       [uiModel]='uiModel$ | async'
       [dataModel]='dataModel$ | async'

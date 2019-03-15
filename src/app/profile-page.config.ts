@@ -18,7 +18,7 @@ export const ProfileFormUIModel = {
                 isDate: false,
                 format: '',
                 placeholder: 'Username',
-                dataModelPath: 'userName',
+                dataModelPath: '$.user/userName',
             }
         },
         {
@@ -41,7 +41,7 @@ export const ProfileFormUIModel = {
                     isDate: false,
                     format: '',
                     placeholder: 'First Name',
-                    dataModelPath: 'firstName'
+                    dataModelPath: '$.user/firstName'
                 }
             },
             {
@@ -54,7 +54,7 @@ export const ProfileFormUIModel = {
                     isDate: false,
                     format: '',
                     placeholder: 'Last Name',
-                    dataModelPath: 'lastName'
+                    dataModelPath: '$.user/lastName'
                 }
             },
             ]
@@ -77,7 +77,7 @@ export const ProfileFormUIModel = {
                 isDate: false,
                 format: '',
                 placeholder: 'Line 1',
-                dataModelPath: 'line1'
+                dataModelPath: '$.address/details/line1'
             }
         },
         {
@@ -90,7 +90,7 @@ export const ProfileFormUIModel = {
                 isDate: false,
                 format: '',
                 placeholder: 'Line 2',
-                dataModelPath: 'line2'
+                dataModelPath: '$.address/details/line2'
           }
         },
         {
@@ -106,7 +106,7 @@ export const ProfileFormUIModel = {
                   {label: 'Ukraine', value: 'ua'}
                 ],
                 placeholder: 'Country',
-                dataModelPath: 'country'
+                dataModelPath: '$.address/country'
           }
         },
         {
@@ -128,7 +128,7 @@ export const ProfileFormUIModel = {
                 },
                 itemProperties: {
                     placeholder: 'City',
-                    dataModelPath: 'city'
+                    dataModelPath: '$.address/city'
                 }
             },
             {
@@ -142,7 +142,7 @@ export const ProfileFormUIModel = {
                     isDate: false,
                     format: '',
                     placeholder: 'Zip',
-                    dataModelPath: 'zip'
+                    dataModelPath: '$.address/zip'
                 }
             }]
         },
@@ -179,8 +179,10 @@ export const ProfileCardUIModel = {
   }
 };
 
-export const TestPageDataModel = {
-
+export const ProfileDataModel = {
+  user: {
+    firstName: 'John'
+  }
 };
 
 export const ProfileActionsMap = {

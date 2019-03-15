@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileFormUIModel, ProfileActionsMap } from '../profile-page.config';
+import { ProfileFormUIModel, ProfileActionsMap, ProfileDataModel } from '../profile-page.config';
 
 @Component({
   selector: 'dc-editor-page',
@@ -8,7 +8,7 @@ import { ProfileFormUIModel, ProfileActionsMap } from '../profile-page.config';
     <dc-preview-editor fxLayout fxFlex="auto"
       title="Profile form example"
       [initUiModel]="defaultModel"
-      [initDataModel]="{}"
+      [initDataModel]="defaultDataModel"
       [actionsMap]="defaultActionsMap"></dc-preview-editor>
   `,
   styles: [`
@@ -20,6 +20,7 @@ import { ProfileFormUIModel, ProfileActionsMap } from '../profile-page.config';
 export class EditorPageComponent implements OnInit {
 
   defaultModel = ProfileFormUIModel;
+  defaultDataModel = ProfileDataModel;
   defaultActionsMap = ProfileActionsMap;
 
   constructor() { }
