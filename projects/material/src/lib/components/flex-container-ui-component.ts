@@ -20,7 +20,7 @@ import { ComponentExample } from '@ngx-dynamic-components/core/lib/models';
                 (changedDataModel)="changedDataModel.emit(this.dataModel)"
                 [uiModel]='item'
                 [dataModel]='dataModel'
-                [actions]='actions'
+                [workflowEngine]='workflowEngine'
             ></dc-ui-selector>
 
         </div>
@@ -95,8 +95,7 @@ const example: ComponentExample<UIModel<FlexContainerProperties>> = {
       }
     }]
   },
-  dataModel: {},
-  actionsMap: {}
+  dataModel: {}
 };
 
 interface FlexContainerUIComponentConstrutor {

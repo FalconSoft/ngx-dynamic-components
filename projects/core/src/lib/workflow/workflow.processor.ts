@@ -18,6 +18,15 @@ export class ExecutionContext {
 
 export class WorkflowEngine {
 
+    private readonly context: ExecutionContext = null;
+    private isInitialized = false;
+
+    constructor(private readonly workflowConfig: WorkflowConfig) {
+        this.context = new ExecutionContext();
+        workflowConfig.vars = workflowConfig.vars || {};
+        workflowConfig.consts = workflowConfig.consts || {};
+    }
+
     private async loadContext(context: ExecutionContext, config: WorkflowConfig): Promise<void> {
         context.failOnError = !!config.failOnError;
         for (const name of Object.keys(config.vars).filter(p => !p.startsWith('_'))) {
@@ -32,7 +41,7 @@ export class WorkflowEngine {
     }
 
     private async loadExternals(context: ExecutionContext, includes: string[]): Promise<void> {
-        for(const include of includes) {
+        for (const include of includes) {
             if (include === '@common') {
                 commonActionsMap.forEach((func, key) => context.actions.set(key, func));
             }
@@ -50,7 +59,7 @@ export class WorkflowEngine {
         steps = steps || [];
         for (const step of steps) {
             if (!context.actions.has(step.actionType)) {
-                if (context.failOnError){
+                if (context.failOnError) {
                     throw new Error(`Can't find action ${step.actionType}`);
                 } else {
                     console.warn(`Can't find action ${step.actionType}. Step ${step.actionType} ${step.actionName} skipped.`);
@@ -70,16 +79,32 @@ export class WorkflowEngine {
         }
     }
 
-    async run(config: WorkflowConfig, workflowName: string, payload: any = null): Promise<any> {
-        config.vars = config.vars || {};
-        config.consts = config.consts || {};
-        const context = new ExecutionContext();
-        await this.loadExternals(context, config.include);
-        await this.loadContext(context, config);
-        if (context.workflows.has(workflowName)) {
-            await this.executeFlow(context, context.workflows.get(workflowName));
+    async initialize() {
+        if (this.isInitialized) { return; }
+
+        await this.loadExternals(this.context, this.workflowConfig.include);
+        await this.loadContext(this.context, this.workflowConfig);
+
+        this.isInitialized = true;
+    }
+
+    async hasWorkflow(workflowName: string): Promise<boolean> {
+        if (!this.isInitialized) {
+            await this.initialize();
+        }
+
+        return this.context.workflows.has(workflowName);
+    }
+
+    async run(workflowName: string, payload: any = null): Promise<any> {
+        if (!this.isInitialized) {
+            await this.initialize();
+        }
+
+        if (this.context.workflows.has(workflowName)) {
+            await this.executeFlow(this.context, this.context.workflows.get(workflowName));
         } else {
-            if (context.failOnError) {
+            if (this.context.failOnError) {
                 throw new Error(`Can't find workflow ${workflowName}`);
             } else {
                 console.warn(`Can't find workflow ${workflowName}`);
@@ -88,3 +113,4 @@ export class WorkflowEngine {
         //
     }
 }
+

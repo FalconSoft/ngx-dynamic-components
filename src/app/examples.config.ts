@@ -1,17 +1,17 @@
-import { ProfileFormUIModel, ProfileCardUIModel, ProfileActionsMap, ProfileDataModel } from './profile-page.config';
+import { ProfileFormUIModel, ProfileCardUIModel, ProfileDataModel, ProfileWorkflowsMap } from './profile-page.config';
 
 export const EXAMPLES_LIST = [{
   type: 'Form Controls',
   name: 'profile-form',
   uiModel: ProfileFormUIModel,
   dataModel: ProfileDataModel,
-  actionsMap: ProfileActionsMap
+  workflowConfig: ProfileWorkflowsMap
 }, {
   type: 'Form Controls',
   name: 'profile-form-card',
   uiModel: ProfileCardUIModel,
   dataModel: ProfileDataModel,
-  actionsMap: ProfileActionsMap
+  workflowConfig: ProfileWorkflowsMap
 }];
 
 export function getGroupedExamples(): {name: string, examples: []}[] {

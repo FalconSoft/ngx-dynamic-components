@@ -8,8 +8,8 @@ export const WORKFLOW_SPEC = {
     ],
     vars: [
         {
-            uiModel: {},
-            dataModel: {}
+            $uiModel: {},
+            $dataModel: {}
         }
     ],
     consts: [{
@@ -21,9 +21,9 @@ export const WORKFLOW_SPEC = {
                 actionType: 'setValues',
                 object: '$dataModel',
                 valuesList: {
-                    firstName: '',
-                    lastName: '',
-                    address: '',
+                    '$.firstName': '',
+                    '$.lastName': '',
+                    '$.address': '',
                 }
             }
         ],
@@ -31,13 +31,13 @@ export const WORKFLOW_SPEC = {
             actionType: 'httpClient',
             actionName: 'getData',
             method: 'get',
-            url: '$getUrl',
+            url: '$GET_DATA_URL',
             queryString: ''
         },
         {
             actionType: 'switch',
-            switchValue: '$getData.result',
-            success: [
+            switchValue: '$getData-returnValue',
+            200: [
                 {
                     actionType: 'setValue',
                     object: '$uiModel',
@@ -45,34 +45,41 @@ export const WORKFLOW_SPEC = {
                     propertyValue: '$getData-returnValue/data'
                 }
             ],
-            error: [
+            else: [
                 {
                     actionType: 'showErrorToast',
-                    message: '$getData.result.error'
+                    message: '$getData.returnValue'
                 },
                 {
-                    actionType: 'actionCall',
+                    actionType: 'runWorkflow',
                     actionName: 'cleanUpForm'
                 }
             ]
         },
         ]
     }]
-
 };
-
-
 
 export const TEST_WORKFLOW = {
     failOnError: true,
-    include: ['@common' ],
-    vars: { },
+    include: ['@common'],
+    vars: {},
     workflowsMap: {
         wf1_init: [{
             actionType: 'setValue',
             object: '$dataModel',
-            propertyName: 'testProp1',
-            propertyValue: 'new property value'
+            propertyName: '$.testProp1',
+            propertyValue: 'new property value1'
+        },
+        {
+            actionType: 'setValues',
+            object: '$dataModel',
+            valuesList: {
+                '$.testProp2': 'new property value2',
+                '$.testProp3': 'new property value3',
+                '$.testProp4': 'new property value4',
+                '$.testProp5/sub1': 'sub1',
+            }
         }
         ]
     }
@@ -81,11 +88,15 @@ export const TEST_WORKFLOW = {
 describe('Workflow processor', async () => {
     beforeEach(() => { });
 
-    it('should be created', async () => {
-        const wf = JSON.parse(JSON.stringify(TEST_WORKFLOW));;
-        const dataModel = { testProp1: 'test' };
+    it('wf1_init: init values', async () => {
+        const wf = JSON.parse(JSON.stringify(TEST_WORKFLOW));
+        const dataModel = { testProp1: 'test' } as any;
         wf.vars.dataModel = dataModel;
-        await new WorkflowEngine().run(wf, 'wf1_init');
-        expect(dataModel.testProp1).toBe('new property value');
+        await new WorkflowEngine(wf).run(wf, 'wf1_init');
+        expect(dataModel.testProp1).toBe('new property value1');
+        expect(dataModel.testProp2).toBe('new property value2');
+        expect(dataModel.testProp3).toBe('new property value3');
+        expect(dataModel.testProp4).toBe('new property value4');
+        expect(dataModel.testProp5.sub1).toBe('sub1');
     });
 });

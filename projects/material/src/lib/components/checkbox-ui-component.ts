@@ -36,8 +36,7 @@ const example: ComponentExample<UIModel<CheckboxProperties>> = {
       dataModelPath: '$.accept'
     }
   },
-  dataModel: {},
-  actionsMap: {}
+  dataModel: {}
 };
 
 interface CheckboxUIComponentConstrutor {

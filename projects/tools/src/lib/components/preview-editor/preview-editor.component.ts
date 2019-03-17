@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild } from '@angular/core';
-import { UIModel, ActionsContainer, ActionsMap, UISelectorComponent } from '@ngx-dynamic-components/core';
+import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
@@ -16,7 +16,7 @@ enum Layout {
 })
 export class PreviewEditorComponent implements OnInit, OnChanges {
 
-  @Input() actionsMap: ActionsMap;
+  @Input() workflowEngine: WorkflowEngine;
   @Input() initUiModel: UIModel;
   @Input() initDataModel: any;
   @Input() title: string;
@@ -24,7 +24,6 @@ export class PreviewEditorComponent implements OnInit, OnChanges {
 
   uiModel$: Observable<UIModel>;
   dataModel$: Observable<any>;
-  actions: ActionsContainer;
 
   uiModelControl: FormControl;
   dataModelControl: FormControl;
@@ -85,8 +84,6 @@ export class PreviewEditorComponent implements OnInit, OnChanges {
   }
 
   private initUIPreview() {
-    this.actions = new ActionsContainer(this.actionsMap, this.initUiModel);
-
     const strUiModel = JSON.stringify(this.initUiModel, null, 4);
     const strDataModel = JSON.stringify(this.initDataModel, null, 4);
 

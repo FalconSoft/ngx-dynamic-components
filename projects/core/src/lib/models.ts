@@ -45,26 +45,14 @@ export abstract class DataModelProperties extends StyleProperties {
   dataModelPath?: string;
 }
 
-export interface ActionsMap {
-    [key: string]: UIAction;
-}
-
-
 export interface PropDescriptor {
   description: string;
   example: string;
 }
 
-export interface IActionsContainer {
-    actions: ActionsMap;
-    hasAction(actionName: string): boolean;
-    onRunAction(sender: UIModel, actionName: string, dataModel: any): void;
-}
-
 export interface ComponentExample<T = UIModel> {
   uiModel: T;
   dataModel;
-  actionsMap: ActionsMap;
   title: string;
 }
 

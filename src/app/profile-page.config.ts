@@ -1,25 +1,25 @@
-import { UIModel, AttributesMap, ActionsMap } from '@ngx-dynamic-components/core';
+import { UIModel, AttributesMap, WorkflowConfig } from '@ngx-dynamic-components/core';
 
 export const ProfileFormUIModel = {
     type: 'material:flex-container',
-    itemProperties: <AttributesMap>{
+    itemProperties: {
         fxLayout: 'column',
         width: '100%',
         height: '100%',
-    },
+    } as AttributesMap,
     children: [
         {
             type: 'material:text-input',
             containerProperties: {
                 width: '100%'
             },
-            itemProperties: <AttributesMap>{
+            itemProperties: {
                 isNumeric: false,
                 isDate: false,
                 format: '',
                 placeholder: 'Username',
                 dataModelPath: '$.user/userName',
-            }
+            } as AttributesMap
         },
         {
             type: 'material:flex-container',
@@ -171,12 +171,12 @@ export const ProfileCardUIModel = {
   containerProperties: {
     width: '100%'
   },
-  itemProperties: <AttributesMap>{
+  itemProperties: {
     header: {
       title: 'Profile form'
     },
     content: ProfileFormUIModel
-  }
+  } as AttributesMap
 };
 
 export const ProfileDataModel = {
@@ -185,35 +185,37 @@ export const ProfileDataModel = {
   }
 };
 
-export const ProfileActionsMap = {
-    consoleLog: (uiModel, dm) => console.log('consoleLog ->', dm, uiModel),
-    stateSelection_selectionChanged: (uiModel: UIModel, {country}, fullUIModel: UIModel) => {
-      const targetModel = getUIModelById(fullUIModel, 'citySelection');
-      targetModel.itemProperties.options = {
-        uk: [
-          {label: 'London', value: 'london'},
-          {label: 'Liverpool', value: 'liverpool'}
-        ],
-        ua: [
-          {label: 'Lviv', value: 'lviv'},
-          {label: 'Kyiv', value: 'kyiv'}
-        ]
-      }[country] || [];
-    }
-} as ActionsMap;
-
-// TODO make function reusable, move it to class UIModel or ActionsContainer.
-function getUIModelById(model: UIModel, id: string): UIModel {
-  if (model.id === id) {
-    return model;
-  }
-
-  if (model.children && model.children.length) {
-    for (const child of model.children) {
-      const uiModel = getUIModelById(child, id);
-      if (uiModel) {
-        return uiModel;
+export const ProfileWorkflowsMap =  {
+  failOnError: true,
+  include: ['@common'],
+  vars: {},
+  workflowsMap: {
+    stateSelection_selectionChanged: [{
+          actionType: 'setValue',
+          object: '$uiModel',
+          propertyName: '$(children:id=citySelection)/itemProperties/options',
+          propertyValue: [
+            {label: 'London', value: 'london'},
+            {label: 'Liverpool', value: 'liverpool'}
+          ]
       }
-    }
+      ]
   }
-}
+} as WorkflowConfig;
+
+// export const ProfileActionsMap = {
+//     consoleLog: (uiModel, dm) => console.log('consoleLog ->', dm, uiModel),
+//     stateSelection_selectionChanged: (uiModel: UIModel, {country}, fullUIModel: UIModel) => {
+//       const targetModel = getUIModelById(fullUIModel, 'citySelection');
+//       targetModel.itemProperties.options = {
+//         uk: [
+//           {label: 'London', value: 'london'},
+//           {label: 'Liverpool', value: 'liverpool'}
+//         ],
+//         ua: [
+//           {label: 'Lviv', value: 'lviv'},
+//           {label: 'Kyiv', value: 'kyiv'}
+//         ]
+//       }[country] || [];
+//     }
+// } as ActionsMap;

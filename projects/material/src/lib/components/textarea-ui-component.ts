@@ -45,8 +45,7 @@ const example: ComponentExample<UIModel<TextareaProperties>> = {
       dataModelPath: '$.info'
     }
   },
-  dataModel: {},
-  actionsMap: {}
+  dataModel: {}
 };
 
 interface TextareaUIComponentConstrutor {

@@ -62,7 +62,6 @@ const example: ComponentExample<UIModel<SelectProperties>> = {
     }
   },
   dataModel: {},
-  actionsMap: {},
   title: 'Basic select example'
 };
 

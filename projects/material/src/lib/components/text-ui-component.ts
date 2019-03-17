@@ -21,7 +21,6 @@ import { Categories, packageName } from '../constants';
     ]
 })
 export class TextUIComponent extends BaseUIComponent<TextProperties> {
-
 }
 
 export class TextProperties extends StyleProperties {
@@ -54,8 +53,7 @@ const example: ComponentExample<UIModel<TextProperties>> = {
       padding: '20px'
     }
   },
-  dataModel: {},
-  actionsMap: {}
+  dataModel: {}
 };
 
 export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, TextPropertiesConstrutor>  = {

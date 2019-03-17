@@ -46,8 +46,7 @@ const example: ComponentExample<UIModel<InputProperties>> = {
       dataModelPath: '$.name'
     }
   },
-  dataModel: {},
-  actionsMap: {}
+  dataModel: {}
 };
 
 interface InputUIComponentConstrutor {

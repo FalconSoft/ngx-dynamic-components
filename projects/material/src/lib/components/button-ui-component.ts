@@ -8,7 +8,7 @@ import { UIModel } from '@ngx-dynamic-components/core/lib/models';
     template: `
     <button mat-flat-button color="primary"
       [ngStyle]="itemStyles"
-      (click)="actions.onRunAction(uiModel, uiModel.itemProperties?.clickActionKey, dataModel)">
+      (click)="workflowEngine.run(uiModel.itemProperties?.clickActionKey)">
     {{uiModel.itemProperties?.label}}
     </button>
     `
@@ -44,10 +44,7 @@ const example: ComponentExample<UIModel<ButtonProperties>> = {
         clickActionKey: 'consoleLog'
     }
   },
-  dataModel: {},
-  actionsMap: {
-    consoleLog() { console.log('button clicked'); }
-  }
+  dataModel: {}
 };
 
 interface ButtonUIComponentConstrutor {

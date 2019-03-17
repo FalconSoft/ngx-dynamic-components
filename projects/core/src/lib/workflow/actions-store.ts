@@ -18,7 +18,7 @@ interface SetValuesConfig {
     valuesList: object;
 }
 
-interface switchActionConfig {
+interface SwitchActionConfig {
     object: object;
     valuesList: object;
 }
@@ -30,7 +30,11 @@ function getValueOrVariable(context: ExecutionContext, object: any) {
 
     if (typeof object === 'string') {
         let key = String(object);
-        if (key.startsWith('$')) { key = key.substring(1); }
+        if (key.startsWith('$')) {
+            key = key.substring(1);
+        } else {
+            return key;
+        }
 
         if (context.variables.has(key)) {
             return context.variables.get(key)

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, AttributesMap, UIModel, ActionsContainer, ComponentDescriptor,
+import { BaseUIComponent, AttributesMap, UIModel, ComponentDescriptor,
   propDescription, StyleProperties, ComponentExample } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
@@ -12,7 +12,7 @@ import { Categories, packageName } from '../constants';
           <dc-ui-selector
             [uiModel]='header.item'
             [dataModel]='header.dataModel'
-            [actions]='header.actions'></dc-ui-selector>
+            [workflowEngine]='header.workflowEngine'></dc-ui-selector>
             <ng-container *ngTemplateOutlet="headerTitle"></ng-container>
         </mat-card-header>
 
@@ -39,7 +39,7 @@ import { Categories, packageName } from '../constants';
             (changedDataModel)="changedDataModel.emit(this.dataModel)"
             [uiModel]='contentUIModel'
             [dataModel]='dataModel'
-            [actions]='actions'></dc-ui-selector>
+            [workflowEngine]='workflowEngine'></dc-ui-selector>
       </mat-card-content>
     </ng-container>
   </mat-card>`,
@@ -65,7 +65,6 @@ export class CardUIComponent extends BaseUIComponent<CardProperties> {
 interface HeaderConfig {
   item?: UIModel;
   dataModel?: any;
-  actions?: ActionsContainer;
   html?: string;
   title?: string;
 }
@@ -119,8 +118,7 @@ const example: ComponentExample<UIModel<CardProperties>> = {
       }
     }
   },
-  dataModel: {},
-  actionsMap: {}
+  dataModel: {}
 };
 
 interface CardUIComponentConstrutor {

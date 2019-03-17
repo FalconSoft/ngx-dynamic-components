@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileFormUIModel, ProfileActionsMap, ProfileDataModel } from '../profile-page.config';
+import { ProfileFormUIModel,  ProfileDataModel, ProfileWorkflowsMap } from '../profile-page.config';
+import { WorkflowEngine, WorkflowConfig } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-editor-page',
@@ -9,7 +10,7 @@ import { ProfileFormUIModel, ProfileActionsMap, ProfileDataModel } from '../prof
       title="Profile form example"
       [initUiModel]="defaultModel"
       [initDataModel]="defaultDataModel"
-      [actionsMap]="defaultActionsMap"></dc-preview-editor>
+      [workflowEngine]="workflowEngine"></dc-preview-editor>
   `,
   styles: [`
     dc-preview-editor {
@@ -21,10 +22,15 @@ export class EditorPageComponent implements OnInit {
 
   defaultModel = ProfileFormUIModel;
   defaultDataModel = ProfileDataModel;
-  defaultActionsMap = ProfileActionsMap;
+  workflowEngine: WorkflowEngine;
 
   constructor() { }
 
   ngOnInit() {
+    const wfConfig = JSON.parse(JSON.stringify(ProfileWorkflowsMap)) as WorkflowConfig;
+    wfConfig.vars.$uiModel = this.defaultModel;
+    wfConfig.vars.$dataModel = this.defaultDataModel;
+
+    this.workflowEngine = new WorkflowEngine(wfConfig);
   }
 }

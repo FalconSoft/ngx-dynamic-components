@@ -119,7 +119,8 @@ export class JSONUtils {
       if (!str) {
         return null;
       }
-      const { groups: {key, val} } = /(?<key>\w+)=(?<val>\w+)/.exec(str);
+      const { groups: {key, val} } = (new RegExp('(?<key>\\w+)=(?<val>\\w+)')).exec(str);
+//      const { groups: {key, val} } = /(?<key>\w+)=(?<val>\w+)/.exec(str);
       return { [key]: val };
     }
 

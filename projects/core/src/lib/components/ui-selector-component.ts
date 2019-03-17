@@ -13,7 +13,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
 
   private component: BaseUIComponent;
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.createComponent();
   }
 
@@ -39,7 +39,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
     this.containerRef.clear();
     const componentRef = this.containerRef.createComponent(componentFactory);
     this.component = componentRef.instance as BaseUIComponent;
-    this.component.actions = this.actions;
+    this.component.workflowEngine = this.workflowEngine;
     this.component.dataModel = this.dataModel;
     this.component.uiModel = this.uiModel;
     this.component.changedDataModel.subscribe(() => {

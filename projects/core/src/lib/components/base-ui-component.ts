@@ -1,21 +1,22 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { UIModel, IActionsContainer, PropDescriptor, AttributesMap, DataModelProperties } from '../models';
+import { UIModel, PropDescriptor, AttributesMap, DataModelProperties } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
+import { WorkflowEngine } from '../workflow/workflow.processor';
 
 export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
-    @Input() actions: IActionsContainer;
+    @Input() workflowEngine: WorkflowEngine;
 
     @Output()
     changedDataModel = new EventEmitter();
 
-    ngOnInit(): void {
-      this.triggerAction('_OnInit');
+    async ngOnInit(): Promise<void> {
+      await this.triggerAction('_OnInit');
     }
 
-    ngOnDestroy(): void {
-      this.triggerAction('_OnDestroy');
+    async ngOnDestroy(): Promise<void> {
+      await this.triggerAction('_OnDestroy');
     }
 
     get componentDataModel() {
@@ -33,10 +34,13 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
       }
     }
 
-    triggerAction(action: string): void {
-      const actionKey = this.uiModel.id + action;
-      if (this.actions && this.uiModel.id && this.actions.hasAction(actionKey)) {
-          this.actions.onRunAction(this.uiModel, actionKey, this.dataModel);
+    async triggerAction(action: string): Promise<void> {
+      if (!this.workflowEngine || !this.uiModel.id) { return; }
+
+      const workflowName = this.uiModel.id + action;
+
+      if (await this.workflowEngine.hasWorkflow(workflowName)) {
+        this.workflowEngine.run(workflowName);
       }
     }
 

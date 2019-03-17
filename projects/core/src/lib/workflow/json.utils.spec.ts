@@ -27,7 +27,7 @@ export const TEST_OBJECT = {
     }
 };
 
-fdescribe('JSON Utils', async () => {
+describe('JSON Utils', async () => {
     let testObject: any = null;
 
     beforeEach(() => {
@@ -100,7 +100,6 @@ fdescribe('JSON Utils', async () => {
 
         JSONUtils.setValue(inObject, '$.parent/someValue', 88);
         expect(inObject.parent.someValue).toBe(88);
-
     });
 
     it('setValue: $(children:name=name12)/itemProperties/options ', async () => {
