@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit } from '@angular/core';
 import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
@@ -100,5 +99,4 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
       startWith(strDataModel),
       map(str => JSON.parse(str)));
   }
-
 }

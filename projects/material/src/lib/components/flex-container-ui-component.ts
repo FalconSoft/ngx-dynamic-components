@@ -9,7 +9,7 @@ import { ComponentExample } from '@ngx-dynamic-components/core/lib/models';
     <div
         [fxLayout]="uiModel.itemProperties?.fxLayout || 'row'"
         [fxLayoutGap]="uiModel.itemProperties?.fxLayoutGap || '0'"
-        [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign"
+        [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign || 'flex-start'"
         [fxFlex]="uiModel.itemProperties?.fxFlex || 'initial'"
         [ngStyle]="itemStyles">
         <div *ngFor="let item of uiModel.children"
@@ -46,7 +46,7 @@ export class FlexContainerProperties extends StyleProperties {
 
   @propDescription({
     description: 'fxLayoutAlign (Angular Flex-Layout property)',
-    example: '10px',
+    example: 'stretch center',
   })
   fxLayoutAlign?: string;
 

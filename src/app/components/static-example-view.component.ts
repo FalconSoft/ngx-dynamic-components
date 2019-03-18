@@ -6,17 +6,13 @@ import { Observable } from 'rxjs';
 import { WorkflowEngine } from '@ngx-dynamic-components/core';
 
 @Component({
-  selector: 'dc-example',
+  selector: 'dc-static-example',
   template: `
-    <ng-container *ngIf="example | async as ex">
-      <dc-preview-editor
-          #editor
-          [title]="ex.name"
-          [initUiModel]="ex.uiModel"
-          [initDataModel]="ex.dataModel"
-          [workflowEngine]="ex.workflowEngine"></dc-preview-editor>
-      <h3 class="">Data Model: </h3>
-      <div dcJsonFormatter [json]="editor.dataModel$ | async"></div>
+    <ng-container *ngIf="ex">
+    <dc-ui-selector #dynamicComponent
+      [uiModel]='ex.uiModel'
+      [dataModel]='ex.dataModel'
+      [workflowEngine]='ex.workflowEngine'></dc-ui-selector>
     </ng-container>
   `,
   styles: [`
@@ -28,10 +24,14 @@ import { WorkflowEngine } from '@ngx-dynamic-components/core';
     }
   `]
 })
-export class ExampleViewComponent implements OnInit {
+export class StaticExampleViewComponent implements OnInit {
   example: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  ex;
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+
+  }
 
   ngOnInit() {
     this.example = this.route.params
@@ -46,10 +46,12 @@ export class ExampleViewComponent implements OnInit {
           return config;
         }));
 
+    this.example.subscribe(e => this.ex = e);
+
     this.route.params.subscribe(({example}) => {
       if (!example) {
         // Redirect to first example if it is not selected.
-        this.router.navigate(['examples', EXAMPLES_LIST[0].name]);
+        this.router.navigate(['static/examples', EXAMPLES_LIST[0].name]);
       }
     });
   }

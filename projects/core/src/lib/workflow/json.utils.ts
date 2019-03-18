@@ -52,7 +52,6 @@ export class JSONUtils {
      * JSONUtils.setValue(inObject, '$.parent/someValue', 55);
      */
     public static setValue(objectValue: object, path: string, value: any): void {
-
       // Parent path match
       const pMatch = path.match(JSONUtils.parentPathReg);
       if (pMatch) {
@@ -226,7 +225,6 @@ export class JSONUtils {
                   JSONUtils.setDataPathProp(prop, dataPath, value);
                 }
               });
-              JSONUtils.setDataPathProp(val, dataPath, value);
             } else if (JSONUtils.filterObj(o, filter)) {
               JSONUtils.setDataPathProp(val, dataPath, value);
             }

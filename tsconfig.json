@@ -19,11 +19,20 @@
       "dom"
     ],
     "paths": {
-      "@ngx-dynamic-components/core": ["dist/@ngx-dynamic-components/core"],
+      "@ngx-dynamic-components/core": [
+        "dist/@ngx-dynamic-components/core",
+        // "projects/core/src/public_api.ts"
+      ],
       "@ngx-dynamic-components/core/*": ["dist/@ngx-dynamic-components/core/*"],
-      "@ngx-dynamic-components/material": ["dist/@ngx-dynamic-components/material"],
+      "@ngx-dynamic-components/material": [
+        "dist/@ngx-dynamic-components/material",
+        // "projects/material/src/public_api.ts"
+      ],
       "@ngx-dynamic-components/material/*": ["dist/@ngx-dynamic-components/material/*"],
-      "@ngx-dynamic-components/tools": ["dist/@ngx-dynamic-components/tools"],
+      "@ngx-dynamic-components/tools": [
+        "dist/@ngx-dynamic-components/tools",
+        // "projects/tools/src/public_api.ts"
+      ],
       "@ngx-dynamic-components/tools/*": ["dist/@ngx-dynamic-components/tools/*"],
       "core": [
         "dist/@ngx-dynamic-components/core"

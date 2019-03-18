@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
         <a mat-button routerLink="/components/categories">Components</a>
         <a mat-button routerLink="/editor">Editor</a>
         <a mat-button routerLink="/examples">Examples</a>
+        <a mat-button routerLink="/static/examples">Static examples</a>
         <a mat-button routerLink="/guides">Guides</a>
       </mat-toolbar-row>
     </mat-toolbar>
