@@ -8,3 +8,6 @@ export * from './lib/components/ui-selector-component';
 export * from './lib/core.module';
 export * from './lib/models';
 export * from './lib/workflow/workflow.processor';
+export * from './lib/utils';
+export * from './lib/workflow/actions-store';
+export * from './lib/workflow/json.utils';

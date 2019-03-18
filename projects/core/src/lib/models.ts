@@ -1,4 +1,4 @@
-import { propDescription, BaseUIComponent } from './components/base-ui-component';
+import { BaseUIComponentConstructor, propDescription } from './utils';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 
@@ -45,19 +45,10 @@ export abstract class DataModelProperties extends StyleProperties {
   dataModelPath?: string;
 }
 
-export interface PropDescriptor {
-  description: string;
-  example: string;
-}
-
 export interface ComponentExample<T = UIModel> {
   uiModel: T;
   dataModel;
   title: string;
-}
-
-interface BaseUIComponentConstructor {
-  new (): BaseUIComponent;
 }
 
 interface AttributesMapConstructor {
