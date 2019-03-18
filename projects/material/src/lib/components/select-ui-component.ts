@@ -58,7 +58,7 @@ const example: ComponentExample<UIModel<SelectProperties>> = {
         {label: 'Ukraine', value: 'ua'}
       ],
       placeholder: 'Country',
-      dataModelPath: 'country'
+      dataModelPath: '$.country'
     }
   },
   dataModel: {},

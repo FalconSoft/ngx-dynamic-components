@@ -27,6 +27,7 @@ import { ItemPropertiesComponent } from './components/item-properties/item-prope
 import { JsonFormatterDirective } from './directives/json-formatter.directive';
 import { ExamplesPageComponent } from './components/examples-page/examples-page.component';
 import { ExampleViewComponent } from './components/example-view.component';
+import { SidenavLayoutComponent } from './components/sidenav-layout.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ExampleViewComponent } from './components/example-view.component';
     ItemPropertiesComponent,
     JsonFormatterDirective,
     ExamplesPageComponent,
-    ExampleViewComponent
+    ExampleViewComponent,
+    SidenavLayoutComponent
   ],
   imports: [
     BrowserModule,

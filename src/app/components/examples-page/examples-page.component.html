@@ -1,9 +1,4 @@
-<dc-page-header title="Examples"></dc-page-header>
-<mat-drawer-container fxFlex="1 1 auto" class="page-drawer">
-  <mat-drawer mode="side" opened>
-    <dc-side-bar [groups]="examples"></dc-side-bar>
-  </mat-drawer>
-  <mat-drawer-content fxLayout fxFlex>
-    <router-outlet></router-outlet>
-  </mat-drawer-content>
-</mat-drawer-container>
+<dc-sidenav-layout title="Examples" fxLayout="column" fxFlex="1 1 auto">
+  <dc-side-bar sidenav [groups]="examples"></dc-side-bar>
+  <router-outlet content></router-outlet>
+</dc-sidenav-layout>

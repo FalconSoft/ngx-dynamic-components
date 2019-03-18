@@ -1,10 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'dc-page-header',
   template: `
     <mat-toolbar color="primary">
       <mat-toolbar-row>
+        <button mat-icon-button (click)="open.emit(true)">
+          <mat-icon *ngIf="toggle">menu</mat-icon>
+        </button>
         <h1>{{title}}</h1>
       </mat-toolbar-row>
     </mat-toolbar>
@@ -26,6 +29,15 @@ export class PageHeaderComponent implements OnInit {
 
   @Input()
   title: string;
+
+  @Input()
+  toggle: boolean;
+
+  opened = false;
+
+  @Output()
+  open = new EventEmitter<boolean>();
+
   constructor() { }
 
   ngOnInit() {

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild } from '@angular/core';
+
+import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit } from '@angular/core';
 import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -14,7 +15,7 @@ enum Layout {
   templateUrl: './preview-editor.component.html',
   styleUrls: ['./preview-editor.component.scss']
 })
-export class PreviewEditorComponent implements OnInit, OnChanges {
+export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() workflowEngine: WorkflowEngine;
   @Input() initUiModel: UIModel;

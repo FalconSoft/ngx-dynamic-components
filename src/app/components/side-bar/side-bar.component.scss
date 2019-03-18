@@ -1,10 +1,15 @@
+@import '~@angular/flex-layout/mq';
 @import "src/_vars.scss";
+
 mat-accordion.side-bar {
   display: block;
   margin: $panelMargin;
   width: 240px;
   max-height: 75vh;
   overflow: auto;
+  @include layout-bp(xs) {
+    margin: 0;
+  }
 
   mat-expansion-panel {
     background-color: $gray;
@@ -69,3 +74,5 @@ mat-accordion.side-bar {
     }
   }
 }
+
+
