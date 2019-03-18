@@ -22,8 +22,8 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   @Input() title: string;
   @HostBinding('style.flex') flex = 'initial';
 
-  uiModel$: Observable<UIModel>;
-  dataModel$: Observable<any>;
+  uiModel: UIModel;
+  dataModel: any;
 
   uiModelControl: FormControl;
   dataModelControl: FormControl;
@@ -87,16 +87,29 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     const strUiModel = JSON.stringify(this.initUiModel, null, 4);
     const strDataModel = JSON.stringify(this.initDataModel, null, 4);
 
+    const refreshPreview = (uiModel: UIModel, dataModel: any) => {
+      this.uiModel = uiModel;
+      this.dataModel = dataModel;
+      this.workflowEngine.setVariable('uiModel', this.uiModel);
+      this.workflowEngine.setVariable('dataModel', this.dataModel);
+    }
+
     this.uiModelControl = new FormControl(strUiModel);
-    this.uiModel$ = this.uiModelControl.valueChanges.pipe(
-      filter(this.jsonValidFilter),
-      startWith(strUiModel),
-      map(str => JSON.parse(str)));
+    this.uiModelControl.valueChanges
+      .pipe(
+        filter(this.jsonValidFilter),
+        startWith(strUiModel),
+        map(str => JSON.parse(str))
+      )
+      .subscribe(uiModel => refreshPreview(uiModel, this.dataModel));
 
     this.dataModelControl = new FormControl(strDataModel);
-    this.dataModel$ = this.dataModelControl.valueChanges.pipe(
-      filter(this.jsonValidFilter),
-      startWith(strDataModel),
-      map(str => JSON.parse(str)));
+    this.dataModelControl.valueChanges
+      .pipe(
+        filter(this.jsonValidFilter),
+        startWith(strDataModel),
+        map(str => JSON.parse(str))
+      )
+      .subscribe(dataModel => refreshPreview(this.uiModel, dataModel));
   }
 }

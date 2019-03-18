@@ -24,11 +24,8 @@
     </ng-container>
 
     <div class="preview" fxFlex="1 1 auto">
-      <dc-ui-selector #dynamicComponent
-      (changedDataModel)="onDataModelChange($event)"
-      [uiModel]='uiModel$ | async'
-      [dataModel]='dataModel$ | async'
-      [workflowEngine]='workflowEngine'></dc-ui-selector>
+      <dc-ui-selector #dynamicComponent (changedDataModel)="onDataModelChange($event)" [uiModel]='uiModel'
+        [dataModel]='dataModel' [workflowEngine]='workflowEngine'></dc-ui-selector>
     </div>
 
   </mat-card-content>

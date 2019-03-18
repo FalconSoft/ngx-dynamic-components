@@ -79,7 +79,11 @@ export class WorkflowEngine {
         }
     }
 
-    async initialize() {
+    public setVariable(variableName: string, value: any): void {
+        this.context.variables.set(variableName, value);
+    }
+
+    public async initialize() {
         if (this.isInitialized) { return; }
 
         await this.loadExternals(this.context, this.workflowConfig.include);
@@ -88,7 +92,7 @@ export class WorkflowEngine {
         this.isInitialized = true;
     }
 
-    async hasWorkflow(workflowName: string): Promise<boolean> {
+    public async hasWorkflow(workflowName: string): Promise<boolean> {
         if (!this.isInitialized) {
             await this.initialize();
         }
@@ -96,7 +100,7 @@ export class WorkflowEngine {
         return this.context.workflows.has(workflowName);
     }
 
-    async run(workflowName: string, payload: any = null): Promise<any> {
+    public async run(workflowName: string, payload: any = null): Promise<any> {
         if (!this.isInitialized) {
             await this.initialize();
         }
