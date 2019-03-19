@@ -66,7 +66,7 @@ export const TEST_WORKFLOW = {
     vars: {},
     workflowsMap: {
         testWf: [],
-        stateSelection_selectionChanged: [
+        setValueMultistep: [
             {
                 id: 'findCities',
                 actionType: 'getValue',
@@ -85,7 +85,7 @@ export const TEST_WORKFLOW = {
             {
                 actionType: 'setValue',
                 object: '$uiModel',
-                propertyName: '$(children:id=citySelection)/itemProperties/options',
+                propertyName: '$.itemProperties/options',
                 propertyValue: '$findCities-returnValue'
             }
         ],
@@ -127,5 +127,19 @@ describe('Workflow processor', async () => {
         expect(dataModel.testProp3).toBe('new property value3');
         expect(dataModel.testProp4).toBe('new property value4');
         expect(dataModel.testProp5.sub1).toBe('sub1');
+    });
+
+    it('workflow: setValueMultistep', async () => {
+        const uiModel = {} as any;
+        const dataModel = { address: { country: 'ukraine' } } as any;
+        testWorkflow.vars.uiModel = uiModel;
+        testWorkflow.vars.dataModel = dataModel;
+        const wfEngine = new WorkflowEngine(testWorkflow);
+        await wfEngine.run('setValueMultistep');
+
+        const step1ReturnValue = wfEngine.getVariable('findCities-returnValue');
+
+        // expect(step1ReturnValue).toBe(uiModel.temProperties.options);
+        // expect(uiModel.temProperties.options[0].label).toBe('Lviv');
     });
 });

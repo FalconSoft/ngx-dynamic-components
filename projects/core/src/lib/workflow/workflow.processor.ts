@@ -79,6 +79,10 @@ export class WorkflowEngine {
         }
     }
 
+    public getVariable(variableName: string): any {
+        return this.context.variables.get(variableName);
+    }
+
     public setVariable(variableName: string, value: any): void {
         this.context.variables.set(variableName, value);
     }
