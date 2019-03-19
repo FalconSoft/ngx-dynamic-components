@@ -34,9 +34,7 @@ import { PreviewEditorComponent } from './components/preview-editor/preview-edit
     FlexLayoutModule,
     AngularSplitModule.forRoot(),
     MonacoEditorModule.forRoot({
-      // Use baseUrl if needed for deployment purpose.
-      // TODO: set it in runtime programaticly or in build time based on params.
-      // baseUrl: '/ngx-dynamic-components/assets'
+      baseUrl: './assets'
     })
   ],
   exports: [ PreviewEditorComponent ],
