@@ -65,6 +65,7 @@ export const TEST_WORKFLOW = {
     include: ['@common'],
     vars: {},
     workflowsMap: {
+        testWf: [],
         wf1_init: [{
             actionType: 'setValue',
             object: '$dataModel',
@@ -86,13 +87,17 @@ export const TEST_WORKFLOW = {
 } as WorkflowConfig;
 
 describe('Workflow processor', async () => {
-    beforeEach(() => { });
+    let testWorkflow: WorkflowConfig;
+
+    beforeEach(() => {
+        testWorkflow = JSON.parse(JSON.stringify(TEST_WORKFLOW));
+     });
 
     it('wf1_init: init values', async () => {
-        const wf = JSON.parse(JSON.stringify(TEST_WORKFLOW));
         const dataModel = { testProp1: 'test' } as any;
-        wf.vars.dataModel = dataModel;
-        await new WorkflowEngine(wf).run(wf, 'wf1_init');
+        testWorkflow.vars.dataModel = dataModel;
+        const wfEngine = new WorkflowEngine(testWorkflow);
+        await wfEngine.run('wf1_init');
         expect(dataModel.testProp1).toBe('new property value1');
         expect(dataModel.testProp2).toBe('new property value2');
         expect(dataModel.testProp3).toBe('new property value3');

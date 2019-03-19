@@ -192,43 +192,14 @@ export const ProfileWorkflowsMap = {
   workflowsMap: {
     stateSelection_selectionChanged: [
       {
-        id: 'findCities',
-        actionType: 'getValue',
-        object: {
-          uk: [
-            { label: 'London', value: 'london' },
-            { label: 'Liverpool', value: 'liverpool' }
-          ],
-          ua: [
-            { label: 'Lviv', value: 'lviv' },
-            { label: 'Kyiv', value: 'kyiv' }
-          ]
-        },
-        propertyName: '$dataModel/address/country'
-      },
-      {
         actionType: 'setValue',
         object: '$uiModel',
         propertyName: '$(children:id=citySelection)/itemProperties/options',
-        propertyValue: '$findCities-returnValue'
+        propertyValue: [
+          { label: 'Lviv', value: 'lviv' },
+          { label: 'Kyiv', value: 'kyiv' }
+        ]
       }
     ]
   }
 } as WorkflowConfig;
-
-// export const ProfileActionsMap = {
-//     consoleLog: (uiModel, dm) => console.log('consoleLog ->', dm, uiModel),
-//     stateSelection_selectionChanged: (uiModel: UIModel, {country}, fullUIModel: UIModel) => {
-//       const targetModel = getUIModelById(fullUIModel, 'citySelection');
-//       targetModel.itemProperties.options = {
-//         uk: [
-//           {label: 'London', value: 'london'},
-//           {label: 'Liverpool', value: 'liverpool'}
-//         ],
-//         ua: [
-//           {label: 'Lviv', value: 'lviv'},
-//           {label: 'Kyiv', value: 'kyiv'}
-//         ]
-//       }[country] || [];
-//     }
-// } as ActionsMap;

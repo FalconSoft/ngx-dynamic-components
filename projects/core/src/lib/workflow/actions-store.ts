@@ -28,7 +28,14 @@ interface SwitchActionConfig {
 }
 
 
-function getValueOrVariable(context: ExecutionContext, object: any) {
+/**
+ * this has to be more advanced method and has to resolve more complex grammar.
+ *  - $ prefix means it takes values from variable
+ *  - {{ expression }} like format in a string
+ * @param context 
+ * @param object 
+ */
+function resolveValue(context: ExecutionContext, object: any) {
     if (!object) { return null; }
     if (typeof object === 'object') { return object; }
 
@@ -53,16 +60,16 @@ function getValueOrVariable(context: ExecutionContext, object: any) {
 }
 
 const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
-    const objValue = getValueOrVariable(context, config.object);
-    const value = getValueOrVariable(context, config.propertyValue);
+    const objValue = resolveValue(context, config.object);
+    const value = resolveValue(context, config.propertyValue);
     JSONUtils.setValue(objValue, config.propertyName, value);
 };
 
 const setValuesAction = (context: ExecutionContext, config: SetValuesConfig) => {
     const propertyNames = Object.keys(config.valuesList).filter(f => !f.startsWith('_'));
-    const objValue = getValueOrVariable(context, config.object);
+    const objValue = resolveValue(context, config.object);
     for (const propertyName of propertyNames) {
-        const value = getValueOrVariable(context, config.valuesList[propertyName]);
+        const value = resolveValue(context, config.valuesList[propertyName]);
         JSONUtils.setValue(objValue, propertyName, value);
     }
 };
@@ -72,10 +79,9 @@ const switchAction = (context: ExecutionContext, config: SetValuesConfig) => {
 };
 
 const getValueAction = (context: ExecutionContext, config: GetValueConfig) => {
-    const objValue = getValueOrVariable(context, config.object);
-    const propertyName = getValueOrVariable(context, config.propertyName);
-
-    return JSONUtils.find(objValue,propertyName);
+    const objValue = resolveValue(context, config.object);
+    const propertyName = resolveValue(context, config.propertyName);
+    return JSONUtils.find(objValue, propertyName);
 };
 
 export const commonActionsMap = new Map<string, Function>([
