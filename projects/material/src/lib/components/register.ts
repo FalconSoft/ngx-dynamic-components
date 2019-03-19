@@ -7,6 +7,7 @@ import { checkboxDescriptor } from './checkbox-ui-component';
 import { flexContainerDescriptor } from './flex-container-ui-component';
 import { textDescriptor } from './text-ui-component';
 import { textareaDescriptor } from './textarea-ui-component';
+import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   selectDescriptor,
@@ -16,7 +17,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   checkboxDescriptor,
   flexContainerDescriptor,
   textDescriptor,
-  textareaDescriptor
+  textareaDescriptor,
+  radioGroupDescriptor
 ];
 
 // Register components.

@@ -45,7 +45,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   ngOnChanges({initUiModel}: SimpleChanges) {
-    if (!initUiModel.firstChange) {
+    if (initUiModel && !initUiModel.firstChange) {
       this.initUIPreview();
     }
   }

@@ -56,7 +56,7 @@ export const ProfileFormUIModel = {
           placeholder: 'Last Name',
           dataModelPath: '$.user/lastName'
         }
-      },
+      }
       ]
     },
     {

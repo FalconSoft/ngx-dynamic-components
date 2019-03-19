@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
-import { ComponentDescriptor } from '@ngx-dynamic-components/core';
+import { ComponentDescriptor, WorkflowEngine } from '@ngx-dynamic-components/core';
 
 export interface PeriodicElement {
   name: string;
@@ -43,6 +43,14 @@ export class ComponentPageComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.component$ = this.route.params.pipe(map(p => COMPONENTS_LIST.find((c: ComponentDescriptor) => c.name === p.component)));
+    this.component$ = this.route.params.pipe(map(p => {
+      const component = COMPONENTS_LIST.find((c: ComponentDescriptor) => c.name === p.component);
+      const config = component.example;
+      const wfConfig: any = {vars: {}};
+      wfConfig.vars.uiModel = config.uiModel;
+      wfConfig.vars.dataModel = config.dataModel;
+      (config as any).workflowEngine = new WorkflowEngine(wfConfig);
+      return component;
+     }));
   }
 }

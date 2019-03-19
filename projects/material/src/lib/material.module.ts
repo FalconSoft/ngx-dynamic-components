@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule ,
+  MatRadioModule } from '@angular/material';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
 
@@ -17,6 +18,7 @@ import { TextareaUIComponent } from './components/textarea-ui-component';
 import { CardUIComponent } from './components/card-ui-component';
 
 import { registerComponents } from './components/register';
+import { RadioGroupUIComponent } from './components/radio-group-ui/radio-group-ui.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,7 @@ import { registerComponents } from './components/register';
       SelectUIComponent,
       TextUIComponent,
       TextareaUIComponent,
+      RadioGroupUIComponent,
     ],
     imports: [
         CommonModule,
@@ -41,6 +44,7 @@ import { registerComponents } from './components/register';
         MatCheckboxModule,
         MatButtonModule,
         MatCardModule,
+        MatRadioModule,
         CoreModule
     ],
     exports: [
@@ -61,7 +65,8 @@ import { registerComponents } from './components/register';
       CheckboxUIComponent,
       SelectUIComponent,
       TextareaUIComponent,
-      CardUIComponent
+      CardUIComponent,
+      RadioGroupUIComponent
     ],
 })
 export class MaterialModule {
