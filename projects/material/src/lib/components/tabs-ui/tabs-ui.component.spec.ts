@@ -54,7 +54,7 @@ describe('TabsUiComponent', () => {
     }
   });
 
-  fit('should change data on input', () => {
+  it('should change data on input', () => {
     const tabsDE: DebugElement = fixture.debugElement;
     const tabsEl: HTMLElement = tabsDE.nativeElement;
     const input = tabsEl.querySelector('input.mat-input-element') as HTMLInputElement;

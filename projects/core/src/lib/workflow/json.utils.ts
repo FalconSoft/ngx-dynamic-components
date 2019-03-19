@@ -5,9 +5,9 @@
 export class JSONUtils {
 
     /** RegExp /\$\.(?<dataPath>\w+(\/\w+)*)/ */
-    public static parentPathReg = '\\$\\.(?<dataPath>\\w+(\\/\\w+)*)';
+    public static parentPathReg = '\\$\\.(?\<dataPath\>\\w+(\\/\\w+)*)';
     /** RegExp /\$\(((?<flattern>\w+)(\:(?<filter>\w+=\w+))?)\)\/?(?<dataPath>(\w+\/?\w+)*)?/ */
-    public static flatternPathReg = `\\$\\(((?<flattern>\\w+)(\\:(?<filter>\\w+=\\w+))?)\\)\\/?(?<dataPath>(\\w+\\/?\\w+)*)?`;
+    public static flatternPathReg = `\\$\\(((?\<flattern\>\\w+)(\\:(?\<filter\>\\w+=\\w+))?)\\)\\/?(?\<dataPath\>(\\w+\\/?\\w+)*)?`;
 
     /**
      * A utility method to find values in the JSON tree.
@@ -118,7 +118,7 @@ export class JSONUtils {
       if (!str) {
         return null;
       }
-      const { groups: {key, val} } = (new RegExp('(?<key>\\w+)=(?<val>\\w+)')).exec(str);
+      const { groups: {key, val} } = (new RegExp('(?\<key\>\\w+)=(?\<val\>\\w+)')).exec(str);
 //      const { groups: {key, val} } = /(?<key>\w+)=(?<val>\w+)/.exec(str);
       return { [key]: val };
     }

@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - "10"
+dist: trusty
+sudo: required
+
+branches:
+  only:
+  - _initial_
+
+before_script:
+  - npm install -g @angular/cli
+
+script:
+- ng test core --watch=false --browsers=ChromeHeadless
+- ng test material --watch=false --browsers=ChromeHeadless
+- npm run build:gh
+- cp dist/ngx-dynamic-components/index.html dist/ngx-dynamic-components/404.html
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/ngx-dynamic-components
+  on:
+    branch: _initial_
