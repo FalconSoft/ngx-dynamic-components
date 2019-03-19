@@ -1,4 +1,5 @@
 import { BaseUIComponentConstructor, propDescription } from './utils';
+import { WorkflowEngine } from './workflow/workflow.processor';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 
@@ -71,4 +72,12 @@ export abstract class UIModel<T = AttributesMap> {
   itemProperties: T;
   containerProperties: AttributesMap;
   children?: UIModel[];
+}
+
+
+
+export interface ComponentConfiguration {
+  uiModel: UIModel;
+  dataModel: any;
+  workflowEngine?: WorkflowEngine;
 }

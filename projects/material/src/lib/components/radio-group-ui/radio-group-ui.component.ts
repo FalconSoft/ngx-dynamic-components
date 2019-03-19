@@ -9,7 +9,7 @@ import { Categories, packageName } from '../../constants';
   template: `
     <label *ngIf="uiModel.itemProperties.label">{{uiModel.itemProperties.label}}</label>
     <mat-radio-group [ngStyle]="itemStyles"
-      (input)="changedDataModel.emit(dataModel)"
+      (input)="changedDataModel.emit(this.dataModel)"
       [(ngModel)]="componentDataModel">
       <mat-radio-button *ngFor="let option of uiModel.itemProperties.options" [value]="option.value"
         [ngStyle]="getStyles(uiModel.itemProperties.optionStyles)">
@@ -26,7 +26,7 @@ export class RadioGroupUIComponent extends BaseUIComponent<RadioGroupProperties>
 export class RadioGroupProperties extends DataModelProperties {
   @propDescription({
     description: 'Label',
-    example: 'Accept conditions.',
+    example: 'Select color',
   })
   label: string;
 
@@ -34,7 +34,7 @@ export class RadioGroupProperties extends DataModelProperties {
     description: 'Radio group options',
     example: '[{label: "One", value: 1}]',
   })
-  options: { label: string, value: string | number }[];
+  options: { label: string, value: string }[];
 
   @propDescription({
     description: 'Radio option styles',
@@ -43,7 +43,7 @@ export class RadioGroupProperties extends DataModelProperties {
   optionStyles?: AttributesMap;
 }
 
-const example: ComponentExample<UIModel<RadioGroupProperties>> = {
+export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   title: 'Radio group example',
   uiModel: {
     type: 'material:radio-group',
@@ -53,7 +53,7 @@ const example: ComponentExample<UIModel<RadioGroupProperties>> = {
       padding: '20px',
       margin: '40px',
       dataModelPath: '$.color',
-      options: [{label: 'White', value: 0}, {label: 'Black', value: 1}],
+      options: [{label: 'White', value: 'white'}, {label: 'Black', value: 'black'}],
       optionStyles: {
         padding: '10px'
       }

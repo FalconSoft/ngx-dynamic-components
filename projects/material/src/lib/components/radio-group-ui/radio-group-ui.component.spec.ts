@@ -1,25 +1,66 @@
+import { DebugElement } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatRadioModule } from '@angular/material';
+import { CoreModule } from '@ngx-dynamic-components/core';
 
-import { RadioGroupUiComponent } from './radio-group-ui.component';
+import { RadioGroupUIComponent, example } from './radio-group-ui.component';
 
 describe('RadioGroupUiComponent', () => {
-  let component: RadioGroupUiComponent;
-  let fixture: ComponentFixture<RadioGroupUiComponent>;
+  let component: RadioGroupUIComponent;
+  let fixture: ComponentFixture<RadioGroupUIComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RadioGroupUiComponent ]
-    })
-    .compileComponents();
+      declarations: [ RadioGroupUIComponent ],
+      imports: [CoreModule, NoopAnimationsModule, MatRadioModule, FormsModule],
+    });
+    TestBed.compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RadioGroupUiComponent);
+    fixture = TestBed.createComponent(RadioGroupUIComponent);
     component = fixture.componentInstance;
+    component.uiModel = example.uiModel;
+    component.dataModel = example.dataModel;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should have radio buttons', () => {
+    const groupDE: DebugElement = fixture.debugElement;
+    const gropuEl: HTMLElement = groupDE.nativeElement;
+    const labels = gropuEl.querySelectorAll('.mat-radio-label-content');
+
+    const options = example.uiModel.itemProperties.options;
+
+    expect(options.length).toEqual(options.length);
+
+    for (let i = 0; i < options.length; i++) {
+      expect(labels[i].textContent.trim()).toEqual(options[i].label);
+    }
+  });
+
+  it('should change data on select', () => {
+    const groupDE: DebugElement = fixture.debugElement;
+    const gropuEl: HTMLElement = groupDE.nativeElement;
+    const labels = gropuEl.querySelectorAll('.mat-radio-label');
+    const options = example.uiModel.itemProperties.options;
+
+    spyOn(component.changedDataModel, 'emit');
+
+    for (let i = 0; i < options.length; i++) {
+      (labels[i] as HTMLElement).click();
+      fixture.detectChanges();
+
+      const expectedData = {color: options[i].value};
+
+      expect(component.changedDataModel.emit).toHaveBeenCalledWith(expectedData);
+      expect(component.dataModel).toEqual(expectedData);
+    }
   });
 });

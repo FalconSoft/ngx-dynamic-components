@@ -8,6 +8,7 @@ import { flexContainerDescriptor } from './flex-container-ui-component';
 import { textDescriptor } from './text-ui-component';
 import { textareaDescriptor } from './textarea-ui-component';
 import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component';
+import { tabsDescriptor } from './tabs-ui/tabs-ui.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   selectDescriptor,
@@ -18,7 +19,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   flexContainerDescriptor,
   textDescriptor,
   textareaDescriptor,
-  radioGroupDescriptor
+  radioGroupDescriptor,
+  tabsDescriptor
 ];
 
 // Register components.
