@@ -18,9 +18,13 @@ interface SetValuesConfig {
     valuesList: object;
 }
 
+interface GetValueConfig {
+    object: object;
+    propertyName: string;
+}
+
 interface SwitchActionConfig {
     object: object;
-    valuesList: object;
 }
 
 
@@ -48,28 +52,36 @@ function getValueOrVariable(context: ExecutionContext, object: any) {
     throw new Error(`Can't resolve Object ${object}`);
 }
 
-const setValueAction = (context: ExecutionContext, payload: SetValueConfig) => {
-    const objValue = getValueOrVariable(context, payload.object);
-    const value = getValueOrVariable(context, payload.propertyValue);
-    JSONUtils.setValue(objValue, payload.propertyName, value);
+const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
+    const objValue = getValueOrVariable(context, config.object);
+    const value = getValueOrVariable(context, config.propertyValue);
+    JSONUtils.setValue(objValue, config.propertyName, value);
 };
 
-const setValuesAction = (context: ExecutionContext, payload: SetValuesConfig) => {
-    const propertyNames = Object.keys(payload.valuesList).filter(f => !f.startsWith('_'));
-    const objValue = getValueOrVariable(context, payload.object);
+const setValuesAction = (context: ExecutionContext, config: SetValuesConfig) => {
+    const propertyNames = Object.keys(config.valuesList).filter(f => !f.startsWith('_'));
+    const objValue = getValueOrVariable(context, config.object);
     for (const propertyName of propertyNames) {
-        const value = getValueOrVariable(context, payload.valuesList[propertyName]);
+        const value = getValueOrVariable(context, config.valuesList[propertyName]);
         JSONUtils.setValue(objValue, propertyName, value);
     }
 };
 
-const switchAction = (context: ExecutionContext, payload: SetValuesConfig) => {
+const switchAction = (context: ExecutionContext, config: SetValuesConfig) => {
 
+};
+
+const getValueAction = (context: ExecutionContext, config: GetValueConfig) => {
+    const objValue = getValueOrVariable(context, config.object);
+    const propertyName = getValueOrVariable(context, config.propertyName);
+
+    return JSONUtils.find(objValue,propertyName);
 };
 
 export const commonActionsMap = new Map<string, Function>([
     ['httpCall', (config: HttpCallConfig) => {}],
     ['switch', () => {}],
+    ['getValue', getValueAction],
     ['setValue', setValueAction],
     ['setValues', setValuesAction],
 ]);
