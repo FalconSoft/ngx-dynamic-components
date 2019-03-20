@@ -9,6 +9,7 @@ import { textDescriptor } from './text-ui-component';
 import { textareaDescriptor } from './textarea-ui-component';
 import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component';
 import { tabsDescriptor } from './tabs-ui/tabs-ui.component';
+import { datableDescriptor } from './datable-ui/datable-ui.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   selectDescriptor,
@@ -20,7 +21,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   textDescriptor,
   textareaDescriptor,
   radioGroupDescriptor,
-  tabsDescriptor
+  tabsDescriptor,
+  datableDescriptor
 ];
 
 // Register components.

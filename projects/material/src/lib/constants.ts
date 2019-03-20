@@ -4,5 +4,6 @@ export const enum Categories {
   Buttons = 'Buttons',
   Layout = 'Layout',
   FormControl = 'Form control',
-  Text = 'Text'
+  Text = 'Text',
+  DataTable = 'Data table'
 }
