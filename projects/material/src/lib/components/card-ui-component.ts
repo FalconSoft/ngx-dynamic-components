@@ -7,8 +7,8 @@ import { Categories, packageName } from '../constants';
   selector: 'dc-ui-card',
   template: `
   <mat-card [ngStyle]="itemStyles">
-    <mat-card-header *ngIf="header">
-      <dc-ui-selector
+    <mat-card-header>
+      <dc-ui-selector *ngIf="header"
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='header'
         [dataModel]='dataModel'

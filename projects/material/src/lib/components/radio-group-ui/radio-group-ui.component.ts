@@ -9,7 +9,7 @@ import { Categories, packageName } from '../../constants';
   template: `
     <label *ngIf="uiModel.itemProperties.label">{{uiModel.itemProperties.label}}</label>
     <mat-radio-group [ngStyle]="itemStyles"
-      (input)="changedDataModel.emit(this.dataModel)"
+      (change)="changedDataModel.emit(this.dataModel)"
       [(ngModel)]="componentDataModel">
       <mat-radio-button *ngFor="let option of uiModel.itemProperties.options" [value]="option.value"
         [ngStyle]="getStyles(uiModel.itemProperties.optionStyles)">

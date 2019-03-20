@@ -7,7 +7,7 @@ import { CoreModule } from '@ngx-dynamic-components/core';
 
 import { RadioGroupUIComponent, example } from './radio-group-ui.component';
 
-describe('RadioGroupUiComponent', () => {
+describe('RadioGroupUIComponent', () => {
   let component: RadioGroupUIComponent;
   let fixture: ComponentFixture<RadioGroupUIComponent>;
 
@@ -19,13 +19,13 @@ describe('RadioGroupUiComponent', () => {
     TestBed.compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(async(() => {
     fixture = TestBed.createComponent(RadioGroupUIComponent);
     component = fixture.componentInstance;
     component.uiModel = example.uiModel;
     component.dataModel = example.dataModel;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -50,15 +50,12 @@ describe('RadioGroupUiComponent', () => {
     const gropuEl: HTMLElement = groupDE.nativeElement;
     const labels = gropuEl.querySelectorAll('.mat-radio-label');
     const options = example.uiModel.itemProperties.options;
-
     spyOn(component.changedDataModel, 'emit');
 
     for (let i = 0; i < options.length; i++) {
       (labels[i] as HTMLElement).click();
       fixture.detectChanges();
-
       const expectedData = {color: options[i].value};
-
       expect(component.changedDataModel.emit).toHaveBeenCalledWith(expectedData);
       expect(component.dataModel).toEqual(expectedData);
     }

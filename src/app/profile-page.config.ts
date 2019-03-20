@@ -172,11 +172,9 @@ export const ProfileCardUIModel = {
     width: '100%'
   },
   itemProperties: {
-    header: {
-      title: 'Profile form'
-    },
-    content: ProfileFormUIModel
-  } as AttributesMap
+    title: 'Profile form',
+  } as AttributesMap,
+  children: [null, ProfileFormUIModel]
 };
 
 export const ProfileDataModel = {

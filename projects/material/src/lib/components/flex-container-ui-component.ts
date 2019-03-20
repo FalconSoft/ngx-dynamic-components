@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
+  propDescription, ComponentExample } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
-import { ComponentExample } from '@ngx-dynamic-components/core/lib/models';
 
 @Component({
     selector: 'dc-ui-flex-container',

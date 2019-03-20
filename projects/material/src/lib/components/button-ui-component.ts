@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, propDescription, StyleProperties, ComponentExample, ComponentDescriptor} from '@ngx-dynamic-components/core';
+import { BaseUIComponent, propDescription, StyleProperties, ComponentExample,
+  ComponentDescriptor, UIModel} from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
-import { UIModel } from '@ngx-dynamic-components/core/lib/models';
 
 @Component({
     selector: 'dc-ui-button',

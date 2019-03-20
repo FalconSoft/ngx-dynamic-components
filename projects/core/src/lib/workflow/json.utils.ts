@@ -9,7 +9,7 @@ export class JSONUtils {
     /** RegExp /\$\.(?<dataPath>\w+(\/\w+)*)/ */
     public static parentPathReg = '\\$\\.(\\w+(\\/\\w+)*)';
     /** RegExp /\$\(((?<flattern>\w+)(\:(?<filter>\w+=\w+))?)\)\/?(?<dataPath>(\w+\/?\w+)*)?/ */
-    public static flatternPathReg = `\\$\\(((?\<flattern\>\\w+)(\\:(?\<filter\>\\w+=\\w+))?)\\)\\/?(?\<dataPath\>(\\w+\\/?\\w+)*)?`;
+    public static flatternPathReg = `\\$\\(((\\w+)(\\:(\\w+=\\w+))?)\\)\\/?((\\w+\\/?\\w+)*)?`;
 
     /**
      * A utility method to find values in the JSON tree.
@@ -79,15 +79,11 @@ export class JSONUtils {
      * JSONUtils.setValue(inObject, '$.parent/someValue', 55);
      */
     public static setValue(objectValue: object, path: string, value: any): void {
-      // Parent path match
-      // const pMatch = path.match(JSONUtils.parentPathReg);
       const pMatch = JSONUtils.getParentPathMatch(path);
       if (pMatch) {
         JSONUtils.setDataPathProp(objectValue, pMatch.groups.dataPath, value);
       }
 
-      // Flattern path match
-      // const fMatch = path.match(JSONUtils.flatternPathReg);
       const fMatch = JSONUtils.getFlatternPathMatch(path);
       if (fMatch) {
         return JSONUtils.setFlatternProps(objectValue, fMatch.groups as any, value);

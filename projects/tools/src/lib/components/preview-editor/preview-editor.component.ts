@@ -92,7 +92,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
       this.dataModel = dataModel;
       this.workflowEngine.setVariable('uiModel', this.uiModel);
       this.workflowEngine.setVariable('dataModel', this.dataModel);
-    }
+    };
 
     this.uiModelControl = new FormControl(strUiModel);
     this.uiModelControl.valueChanges

@@ -12,10 +12,16 @@ before_script:
   - npm install -g @angular/cli
 
 script:
-- ng test core --watch=false --browsers=ChromeHeadless
-- ng test material --watch=false --browsers=ChromeHeadless
-- npm run build:gh
-- cp dist/ngx-dynamic-components/index.html dist/ngx-dynamic-components/404.html
+  - ng lint material
+  - ng lint tools
+  - ng lint ngx-dynamic-components
+  - ng test core --watch=false --browsers=ChromeHeadless
+  - ng build core
+  - ng test material --watch=false --browsers=ChromeHeadless
+  - ng build material
+  - ng build tools
+  - npm run build:gh
+  - cp dist/ngx-dynamic-components/index.html dist/ngx-dynamic-components/404.html
 
 deploy:
   provider: pages
