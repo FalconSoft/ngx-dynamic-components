@@ -186,17 +186,32 @@ export const ProfileDataModel = {
 export const ProfileWorkflowsMap = {
   failOnError: true,
   include: ['@common'],
-  vars: {},
+  vars: {
+    countryCityMap: {
+      uk: [
+        { label: 'London', value: 'london' },
+        { label: 'Liverpool', value: 'liverpool' }
+      ],
+      ua: [
+        { label: 'Lviv', value: 'lviv' },
+        { label: 'Kyiv', value: 'kyiv' }
+      ]
+    }
+  },
   workflowsMap: {
     stateSelection_selectionChanged: [
+      {
+        id: 'findCities',
+        actionType: 'getValue',
+        object: '$countryCityMap',
+        propertyName: '$.{{ $dataModel/address/country }}',
+        actionName: 'findCities'
+      },
       {
         actionType: 'setValue',
         object: '$uiModel',
         propertyName: '$(children:id=citySelection)/itemProperties/options',
-        propertyValue: [
-          { label: 'Lviv', value: 'lviv' },
-          { label: 'Kyiv', value: 'kyiv' }
-        ]
+        propertyValue: '$findCities-returnValue'
       }
     ]
   }

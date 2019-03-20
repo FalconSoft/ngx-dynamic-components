@@ -99,6 +99,7 @@ export class WorkflowEngine {
     public async hasWorkflow(workflowName: string): Promise<boolean> {
         if (!this.isInitialized) {
             await this.initialize();
+            this.isInitialized = true;
         }
 
         return this.context.workflows.has(workflowName);
@@ -107,6 +108,7 @@ export class WorkflowEngine {
     public async run(workflowName: string, payload: any = null): Promise<any> {
         if (!this.isInitialized) {
             await this.initialize();
+            this.isInitialized = true;
         }
 
         if (this.context.workflows.has(workflowName)) {

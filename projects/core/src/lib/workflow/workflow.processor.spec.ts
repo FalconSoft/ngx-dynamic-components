@@ -63,25 +63,26 @@ export const WORKFLOW_SPEC = {
 export const TEST_WORKFLOW = {
     failOnError: true,
     include: ['@common'],
-    vars: {},
+    vars: {
+        countryCityMap: {
+            uk: [
+                { label: 'London', value: 'london' },
+                { label: 'Liverpool', value: 'liverpool' }
+            ],
+            ua: [
+                { label: 'Lviv', value: 'lviv' },
+                { label: 'Kyiv', value: 'kyiv' }
+            ]
+        }
+    },
     workflowsMap: {
         testWf: [],
         setValueMultistep: [
             {
-                id: 'findCities',
                 actionType: 'getValue',
-                object: {
-                    uk: [
-                        { label: 'London', value: 'london' },
-                        { label: 'Liverpool', value: 'liverpool' }
-                    ],
-                    ua: [
-                        { label: 'Lviv', value: 'lviv' },
-                        { label: 'Kyiv', value: 'kyiv' }
-                    ]
-                },
+                actionName: 'findCities',
+                object: '$countryCityMap',
                 propertyName: '$.{{ $dataModel/address/country }}',
-                actionName: 'findCities'
             },
             {
                 actionType: 'setValue',
