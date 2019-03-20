@@ -46,6 +46,14 @@ export abstract class DataModelProperties extends StyleProperties {
   dataModelPath?: string;
 }
 
+export abstract class ContainerProperties extends StyleProperties {
+  @propDescription({
+    description: 'Array of children ui Models',
+    example: '[{type: \'text\', itemProperties: {}, containerProperties: {}}]',
+  })
+  children?: UIModel[];
+}
+
 export interface ComponentExample<T = UIModel> {
   uiModel: T;
   dataModel;
@@ -73,8 +81,6 @@ export abstract class UIModel<T = AttributesMap> {
   containerProperties: AttributesMap;
   children?: UIModel[];
 }
-
-
 
 export interface ComponentConfiguration {
   uiModel: UIModel;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, StyleProperties, UIModel, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor, propDescription } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 import { ComponentExample } from '@ngx-dynamic-components/core/lib/models';
 
@@ -31,7 +31,7 @@ export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerPrope
 
 }
 
-export class FlexContainerProperties extends StyleProperties {
+export class FlexContainerProperties extends ContainerProperties {
   @propDescription({
     description: 'fxLayout (Angular Flex-Layout property)',
     example: 'column',
@@ -55,12 +55,6 @@ export class FlexContainerProperties extends StyleProperties {
     example: '10px',
   })
   fxFlex?: string;
-
-  @propDescription({
-    description: 'Array of children ui Models',
-    example: '[{type: \'text\', itemProperties: {}, containerProperties: {}}]',
-  })
-  children?: UIModel[];
 }
 
 const example: ComponentExample<UIModel<FlexContainerProperties>> = {

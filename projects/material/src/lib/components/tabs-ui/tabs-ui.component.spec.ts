@@ -3,11 +3,13 @@ import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTabsModule, MatInputModule } from '@angular/material';
+import { MatTabsModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { CoreModule } from '@ngx-dynamic-components/core';
 import { TabsUIComponent, example } from './tabs-ui.component';
 import { registerComponents } from '../register';
 import { InputUIComponent } from '../input-ui-component';
+import { TextUIComponent } from '../text-ui-component';
+import { SelectUIComponent } from '../select-ui-component';
 
 describe('TabsUiComponent', () => {
   let component: TabsUIComponent;
@@ -15,13 +17,13 @@ describe('TabsUiComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TabsUIComponent, InputUIComponent ],
-      imports: [MatTabsModule, MatInputModule, CoreModule, NoopAnimationsModule, FormsModule],
+      declarations: [TabsUIComponent, InputUIComponent, TextUIComponent, SelectUIComponent],
+      imports: [MatTabsModule, MatInputModule, MatSelectModule, CoreModule, NoopAnimationsModule, FormsModule],
     });
 
     TestBed.overrideModule(BrowserDynamicTestingModule, {
       set: {
-        entryComponents: [InputUIComponent]
+        entryComponents: [InputUIComponent, TextUIComponent, SelectUIComponent]
       }
     });
     TestBed.compileComponents();
@@ -45,12 +47,12 @@ describe('TabsUiComponent', () => {
     const tabsEl: HTMLElement = tabsDE.nativeElement;
     const labels = tabsEl.querySelectorAll('.mat-tab-label-content');
 
-    const tabs = example.uiModel.itemProperties.tabs;
+    const tabs = example.uiModel.children;
 
     expect(tabs.length).toEqual(labels.length);
 
     for (let i = 0; i < tabs.length; i++) {
-      expect(labels[i].textContent).toEqual(tabs[i].label);
+      expect(labels[i].textContent).toEqual(tabs[i].itemProperties.label);
     }
   });
 
@@ -68,7 +70,7 @@ describe('TabsUiComponent', () => {
 
     fixture.detectChanges();
 
-    expect(component.changedDataModel.emit).toHaveBeenCalledWith(expectedData);
-    expect(component.dataModel).toEqual(expectedData);
+    expect(component.changedDataModel.emit).toHaveBeenCalledWith(jasmine.objectContaining(expectedData));
+    expect(component.dataModel).toEqual(jasmine.objectContaining(expectedData));
   });
 });
