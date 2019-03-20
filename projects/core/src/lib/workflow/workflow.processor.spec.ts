@@ -80,7 +80,8 @@ export const TEST_WORKFLOW = {
                         { label: 'Kyiv', value: 'kyiv' }
                     ]
                 },
-                propertyName: '$.{{ $dataModel/address/country }}'
+                propertyName: '$.{{ $dataModel/address/country }}',
+                actionName: 'findCities'
             },
             {
                 actionType: 'setValue',
@@ -129,9 +130,9 @@ describe('Workflow processor', async () => {
         expect(dataModel.testProp5.sub1).toBe('sub1');
     });
 
-    xit('workflow: setValueMultistep', async () => {
+    it('workflow: setValueMultistep', async () => {
         const uiModel = {} as any;
-        const dataModel = { address: { country: 'ukraine' } } as any;
+        const dataModel = { address: { country: 'ua' } } as any;
         testWorkflow.vars.uiModel = uiModel;
         testWorkflow.vars.dataModel = dataModel;
         const wfEngine = new WorkflowEngine(testWorkflow);
@@ -139,7 +140,7 @@ describe('Workflow processor', async () => {
 
         const step1ReturnValue = wfEngine.getVariable('findCities-returnValue');
 
-        expect(step1ReturnValue).toBe(uiModel.temProperties.options);
-        expect(uiModel.temProperties.options[0].label).toBe('Lviv');
+        expect(step1ReturnValue).toBe(uiModel.itemProperties.options);
+        expect(uiModel.itemProperties.options[0].label).toBe('Lviv');
     });
 });

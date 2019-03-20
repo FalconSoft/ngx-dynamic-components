@@ -27,13 +27,30 @@ interface SwitchActionConfig {
     object: object;
 }
 
+/**
+ * Resolves expression({{ expression }}) in key if contains.
+ * @param context - Execution context.
+ * @param key - string with posible expression
+ */
+function resolveExpression(context: ExecutionContext, key: string): string {
+  const re = /.*\{\{\s(.*)\s\}\}/;
+  const match = key.match(re);
+  if (match) {
+    const expressionKey = match[1];
+    const value = resolveValue(context, expressionKey);
+    const propertyPath = expressionKey.substring(expressionKey.indexOf('/') + 1);
+    return key.replace(/\{\{\s(.*)\s\}\}/, JSONUtils.find(value, `$.${propertyPath}`));
+  }
+  return key;
+}
+
 
 /**
  * this has to be more advanced method and has to resolve more complex grammar.
  *  - $ prefix means it takes values from variable
  *  - {{ expression }} like format in a string
- * @param context 
- * @param object 
+ * @param context - Execution context.
+ * @param object - payload object.
  */
 function resolveValue(context: ExecutionContext, object: any) {
     if (!object) { return null; }
@@ -41,14 +58,18 @@ function resolveValue(context: ExecutionContext, object: any) {
 
     if (typeof object === 'string') {
         let key = String(object);
-        if (key.startsWith('$')) {
-            key = key.substring(1);
+        key = resolveExpression(context, key);
+
+        // if starts with $property but not if $.property.
+        if (/^\$\w/.test(key)) {
+            // get root property path.
+            key = key.substring(1).replace(/\/.*/, '');
         } else {
             return key;
         }
 
         if (context.variables.has(key)) {
-            return context.variables.get(key)
+            return context.variables.get(key);
         } else {
             throw new Error(`Can't resolve Object by string ${key}`);
         }
@@ -84,7 +105,7 @@ const getValueAction = (context: ExecutionContext, config: GetValueConfig) => {
     return JSONUtils.find(objValue, propertyName);
 };
 
-export const commonActionsMap = new Map<string, Function>([
+export const commonActionsMap = new Map<string, (...args: any[]) => any>([
     ['httpCall', (config: HttpCallConfig) => {}],
     ['switch', () => {}],
     ['getValue', getValueAction],

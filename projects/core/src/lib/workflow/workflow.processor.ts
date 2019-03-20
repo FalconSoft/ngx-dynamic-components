@@ -11,7 +11,7 @@ export interface WorkflowConfig {
 export class ExecutionContext {
     public failOnError = false;
     public readonly variables = new Map<string, any>();
-    public readonly actions = new Map<string, Function>();
+    public readonly actions = new Map<string, (...args: any[]) => any>();
     public readonly workflows = new Map<string, any[]>();
     public readonly constants = new Map<string, any>();
 }

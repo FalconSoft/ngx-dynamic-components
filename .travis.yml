@@ -12,6 +12,7 @@ before_script:
   - npm install -g @angular/cli
 
 script:
+  - ng lint core
   - ng lint material
   - ng lint tools
   - ng lint ngx-dynamic-components
