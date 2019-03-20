@@ -34,6 +34,10 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
       }
     }
 
+    get properties() {
+      return this.uiModel.itemProperties;
+    }
+
     async triggerAction(action: string): Promise<void> {
       if (!this.workflowEngine || !this.uiModel.id) { return; }
 

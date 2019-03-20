@@ -52,7 +52,7 @@ describe('TabsUiComponent', () => {
     expect(tabs.length).toEqual(labels.length);
 
     for (let i = 0; i < tabs.length; i++) {
-      expect(labels[i].textContent).toEqual(tabs[i].itemProperties.label);
+      expect(labels[i].textContent).toEqual(tabs[i].containerProperties.label);
     }
   });
 

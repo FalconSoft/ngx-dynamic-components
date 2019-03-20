@@ -7,12 +7,12 @@ import { Categories, packageName } from '../../constants';
   selector: 'dc-tabs-ui',
   template: `
     <mat-tab-group >
-      <mat-tab *ngFor="let item of uiModel.children" [label]="item.itemProperties.label">
-      <dc-ui-selector
-        (changedDataModel)="changedDataModel.emit(dataModel)"
-        [uiModel]='item'
-        [dataModel]='dataModel'
-        [workflowEngine]='workflowEngine'></dc-ui-selector>
+      <mat-tab *ngFor="let item of uiModel.children; let i = index" [label]="item.containerProperties.label || 'Tab ' + (i + 1)">
+        <dc-ui-selector
+          (changedDataModel)="changedDataModel.emit(dataModel)"
+          [uiModel]='item'
+          [dataModel]='dataModel'
+          [workflowEngine]='workflowEngine'></dc-ui-selector>
       </mat-tab>
     </mat-tab-group>
   `,
@@ -34,10 +34,10 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
     children: [{
       type: 'material:text-input',
       containerProperties: {
-        width: '100%'
+        width: '100%',
+        label: 'Input tab',
       },
       itemProperties: {
-        label: 'Input tab',
         isNumeric: false,
         isDate: false,
         format: '',
@@ -47,17 +47,18 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
     }, {
       type: 'material:text',
       containerProperties: {
-        fxFlex: '1 1 auto'
+        fxFlex: '1 1 auto',
+        label: 'Text tab',
       },
       itemProperties: {
-        label: 'Text tab',
         text: 'Text information',
       }
     }, {
       type: 'material:select',
-      containerProperties: {},
-      itemProperties: {
+      containerProperties: {
         label: 'Country select',
+      },
+      itemProperties: {
         options: [
           {label: 'United Kingdom', value: 'uk'},
           {label: 'Ukraine', value: 'ua'}

@@ -1,47 +1,40 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, AttributesMap, UIModel, ComponentDescriptor,
-  propDescription, StyleProperties, ComponentExample } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, UIModel, ComponentDescriptor,
+  propDescription, ContainerProperties, ComponentExample } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-card',
-  template: `<mat-card [ngStyle]="itemStyles">
-    <ng-container *ngIf="uiModel.itemProperties.header as header">
-      <ng-container [ngSwitch]="getHeaderType(header)">
-        <mat-card-header *ngSwitchCase="'component'">
-          <dc-ui-selector
-            [uiModel]='header.item'
-            [dataModel]='header.dataModel'
-            [workflowEngine]='header.workflowEngine'></dc-ui-selector>
-            <ng-container *ngTemplateOutlet="headerTitle"></ng-container>
-        </mat-card-header>
+  template: `
+  <mat-card [ngStyle]="itemStyles">
+    <mat-card-header *ngIf="header">
+      <dc-ui-selector
+        (changedDataModel)="changedDataModel.emit(this.dataModel)"
+        [uiModel]='header'
+        [dataModel]='dataModel'
+        [workflowEngine]='workflowEngine'></dc-ui-selector>
+        <ng-container *ngTemplateOutlet="headerTitle"></ng-container>
+    </mat-card-header>
+    <ng-template #headerTitle>
+      <mat-card-title *ngIf="properties.title">{{properties.title}}</mat-card-title>
+      <mat-card-subtitle *ngIf="properties.subTitle">{{properties.subTitle}}</mat-card-subtitle>
+    </ng-template>
 
-        <mat-card-header *ngSwitchCase="'html'">
-          <div *ngIf="header.html" [innerHTML]="header.html"></div>
-          <ng-container *ngTemplateOutlet="headerTitle"></ng-container>
-        </mat-card-header>
-
-        <mat-card-header *ngSwitchDefault>
-          <ng-container *ngTemplateOutlet="headerTitle"></ng-container>
-        </mat-card-header>
-
-        <ng-template #headerTitle>
-          <mat-card-title *ngIf="header.title">{{header.title}}</mat-card-title>
-          <mat-card-subtitle *ngIf="header.subTitle">{{header.subTitle}}</mat-card-subtitle>
-        </ng-template>
-      </ng-container>
-    </ng-container>
-
-    <img *ngIf="uiModel.itemProperties.img as img" [src]="img" mat-card-image/>
-    <ng-container *ngIf="uiModel.itemProperties.content as contentUIModel">
-      <mat-card-content>
-        <dc-ui-selector
-            (changedDataModel)="changedDataModel.emit(this.dataModel)"
-            [uiModel]='contentUIModel'
-            [dataModel]='dataModel'
-            [workflowEngine]='workflowEngine'></dc-ui-selector>
-      </mat-card-content>
-    </ng-container>
+    <img *ngIf="properties.img as img" [src]="img" mat-card-image/>
+    <mat-card-content *ngIf="content">
+      <dc-ui-selector
+        (changedDataModel)="changedDataModel.emit(this.dataModel)"
+        [uiModel]='content'
+        [dataModel]='dataModel'
+        [workflowEngine]='workflowEngine'></dc-ui-selector>
+    </mat-card-content>
+    <mat-card-footer *ngIf="footer">
+      <dc-ui-selector
+        (changedDataModel)="changedDataModel.emit(this.dataModel)"
+        [uiModel]='footer'
+        [dataModel]='dataModel'
+        [workflowEngine]='workflowEngine'></dc-ui-selector>
+    </mat-card-footer>
   </mat-card>`,
   styles: [`
       mat-card-header ::ng-deep .mat-card-header-text {
@@ -51,49 +44,46 @@ import { Categories, packageName } from '../constants';
 })
 
 export class CardUIComponent extends BaseUIComponent<CardProperties> {
-  getHeaderType(content: HeaderConfig) {
-    if (content.item) {
-      return 'component';
-    }
+  get header() {
+    return this.getChildByIndex(0);
+  }
 
-    if (content.html) {
-      return 'html';
+  get content() {
+    return this.getChildByIndex(1);
+  }
+
+  get footer() {
+    return this.getChildByIndex(2);
+  }
+
+  private getChildByIndex(index: number): UIModel {
+    if (this.uiModel.children && this.uiModel.children[index]) {
+      return this.uiModel.children[index];
     }
   }
 }
 
-interface HeaderConfig {
-  item?: UIModel;
-  dataModel?: any;
-  html?: string;
-  title?: string;
-}
-
-export class CardProperties extends StyleProperties {
-  @propDescription({
-    description: 'Card header component',
-    example: '<h1>Header title</h1>',
-  })
-  header: HeaderConfig;
-
-  @propDescription({
-    description: 'Card content component.',
-    example: `{
-      type: 'text',
-      containerProperties: {},
-      itemProperties: {
-          text: 'Card content text',
-          width: '50%'
-      }
-    },`,
-  })
-  content: AttributesMap;
-
+export class CardProperties extends ContainerProperties {
   @propDescription({
     description: 'Card image url',
     example: 'logo.png',
   })
   img?: string;
+
+  title?: string;
+  subTitle?: string;
+
+  @propDescription({
+    description: 'Card can have 3 children, 1 - header, 2 - content, 3 - footer.',
+    example: `[null, {
+      type: 'material:text',
+      containerProperties: {},
+      itemProperties: {
+        text: 'Card content text',
+      }
+    }, null]`,
+  })
+  children?: [];
 }
 
 const example: ComponentExample<UIModel<CardProperties>> = {
@@ -102,21 +92,37 @@ const example: ComponentExample<UIModel<CardProperties>> = {
     type: 'material:card',
     containerProperties: {},
     itemProperties: {
-      padding: '20px',
-      height: '200px',
-      width: '50%',
-      header: {
-        title: 'Profile form'
-      },
-      content: {
-        type: 'material:text',
-        containerProperties: {},
-        itemProperties: {
-          text: 'Card content text',
-          width: '50%'
-        }
+      padding: '10px',
+      margin: '10px auto',
+      width: '80%'
+    },
+    children: [{
+      type: 'material:text',
+      containerProperties: {},
+      itemProperties: {
+        text: 'Card header text',
+        width: '100%'
       }
-    }
+    }, {
+      type: 'material:textarea',
+      containerProperties: {
+        width: '100%',
+      },
+      itemProperties: {
+        rows: 4,
+        placeholder: 'Type card information',
+        dataModelPath: '$.card/info'
+      }
+    }, {
+      type: 'material:button',
+      containerProperties: {},
+      itemProperties: {
+          label: 'Submit',
+          margin: '16px',
+          width: '50%',
+          clickActionKey: 'consoleLog'
+      }
+    }]
   },
   dataModel: {}
 };
