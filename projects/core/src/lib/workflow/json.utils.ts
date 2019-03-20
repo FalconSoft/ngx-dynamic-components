@@ -1,3 +1,5 @@
+import { getItemByIndex } from '../utils';
+
 /**
  * Provides utility classes to traverse JSON objects.
  *
@@ -5,7 +7,7 @@
 export class JSONUtils {
 
     /** RegExp /\$\.(?<dataPath>\w+(\/\w+)*)/ */
-    public static parentPathReg = '\\$\\.(?\<dataPath\>\\w+(\\/\\w+)*)';
+    public static parentPathReg = '\\$\\.(\\w+(\\/\\w+)*)';
     /** RegExp /\$\(((?<flattern>\w+)(\:(?<filter>\w+=\w+))?)\)\/?(?<dataPath>(\w+\/?\w+)*)?/ */
     public static flatternPathReg = `\\$\\(((?\<flattern\>\\w+)(\\:(?\<filter\>\\w+=\\w+))?)\\)\\/?(?\<dataPath\>(\\w+\\/?\\w+)*)?`;
 
@@ -27,19 +29,44 @@ export class JSONUtils {
         return objectValue;
       }
 
-      // Parent path match
-      const pMatch = path.match(new RegExp(JSONUtils.parentPathReg));
+      const pMatch = JSONUtils.getParentPathMatch(path);
       if (pMatch) {
         return JSONUtils.getDataPathProps(objectValue, pMatch.groups.dataPath, defaultValue);
       }
 
-      // Flattern path match
-      const fMatch = path.match(new RegExp(JSONUtils.flatternPathReg));
-
+      const fMatch = JSONUtils.getFlatternPathMatch(path);
       if (fMatch) {
         return JSONUtils.getFlatternMatch(objectValue, fMatch.groups as any, defaultValue);
       }
       return null;
+    }
+
+    /**
+     * Get patern path match.
+     * @param path - property path.
+     */
+    private static getParentPathMatch(path: string): RegExpMatchArray {
+      const pMatch = path.match(new RegExp(JSONUtils.parentPathReg));
+      if (pMatch) {
+        pMatch.groups = {dataPath: pMatch[1]};
+      }
+      return pMatch;
+    }
+
+    /**
+     * Gets flattern path match.
+     * @param path - property path.
+     */
+    private static getFlatternPathMatch(path: string): RegExpMatchArray {
+      const fMatch = path.match(new RegExp(JSONUtils.flatternPathReg));
+      if (fMatch) {
+        fMatch.groups = {
+          flattern: getItemByIndex(fMatch, 2),
+          filter: getItemByIndex(fMatch, 4),
+          dataPath: getItemByIndex(fMatch, 6)
+        };
+      }
+      return fMatch;
     }
 
     /**
@@ -53,13 +80,15 @@ export class JSONUtils {
      */
     public static setValue(objectValue: object, path: string, value: any): void {
       // Parent path match
-      const pMatch = path.match(JSONUtils.parentPathReg);
+      // const pMatch = path.match(JSONUtils.parentPathReg);
+      const pMatch = JSONUtils.getParentPathMatch(path);
       if (pMatch) {
         JSONUtils.setDataPathProp(objectValue, pMatch.groups.dataPath, value);
       }
 
       // Flattern path match
-      const fMatch = path.match(JSONUtils.flatternPathReg);
+      // const fMatch = path.match(JSONUtils.flatternPathReg);
+      const fMatch = JSONUtils.getFlatternPathMatch(path);
       if (fMatch) {
         return JSONUtils.setFlatternProps(objectValue, fMatch.groups as any, value);
       }
@@ -118,9 +147,10 @@ export class JSONUtils {
       if (!str) {
         return null;
       }
-      const { groups: {key, val} } = (new RegExp('(?\<key\>\\w+)=(?\<val\>\\w+)')).exec(str);
-//      const { groups: {key, val} } = /(?<key>\w+)=(?<val>\w+)/.exec(str);
-      return { [key]: val };
+      const match = str.match(/(\w+)=(\w+)/);
+      if (match) {
+        return { [match[1]]: match[2] };
+      }
     }
 
     /**

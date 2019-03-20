@@ -47,7 +47,6 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
     }, {
       type: 'material:text',
       containerProperties: {
-        fxFlex: '1 1 auto',
         label: 'Text tab',
       },
       itemProperties: {

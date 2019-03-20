@@ -129,7 +129,7 @@ describe('Workflow processor', async () => {
         expect(dataModel.testProp5.sub1).toBe('sub1');
     });
 
-    it('workflow: setValueMultistep', async () => {
+    xit('workflow: setValueMultistep', async () => {
         const uiModel = {} as any;
         const dataModel = { address: { country: 'ukraine' } } as any;
         testWorkflow.vars.uiModel = uiModel;
@@ -139,7 +139,7 @@ describe('Workflow processor', async () => {
 
         const step1ReturnValue = wfEngine.getVariable('findCities-returnValue');
 
-        // expect(step1ReturnValue).toBe(uiModel.temProperties.options);
-        // expect(uiModel.temProperties.options[0].label).toBe('Lviv');
+        expect(step1ReturnValue).toBe(uiModel.temProperties.options);
+        expect(uiModel.temProperties.options[0].label).toBe('Lviv');
     });
 });

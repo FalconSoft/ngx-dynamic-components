@@ -43,3 +43,9 @@ export function propDescription(description: PropDescriptor) {
   }
   return decorate;
 }
+
+export function getItemByIndex(arr: any, idx: number): any {
+  if (arr && arr.length > idx) {
+    return arr[idx];
+  }
+}
