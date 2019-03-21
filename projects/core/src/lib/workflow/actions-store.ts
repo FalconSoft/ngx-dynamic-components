@@ -102,7 +102,7 @@ function resolveValue(context: ExecutionContext, object: any) {
 const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
     const objValue = resolveValue(context, config.object);
     const value = resolveValue(context, config.propertyValue);
-    JSONUtils.setValue(objValue, config.propertyName, value);
+    return JSONUtils.setValue(objValue, config.propertyName, value);
 };
 
 const setValuesAction = (context: ExecutionContext, config: SetValuesConfig) => {
