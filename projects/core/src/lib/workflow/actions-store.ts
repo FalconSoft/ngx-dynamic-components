@@ -39,7 +39,7 @@ function resolveExpression(context: ExecutionContext, key: string): string {
     const expressionKey = match[1];
     const value = resolveValue(context, expressionKey);
     const propertyPath = expressionKey.substring(expressionKey.indexOf('/') + 1);
-    return key.replace(/\{\{\s(.*)\s\}\}/, JSONUtils.find(value, `$.${propertyPath}`));
+    return key.replace(/\{\{\s(.*)\s\}\}/, JSONUtils.find(value, `$.${propertyPath}`, null));
   }
   return key;
 }

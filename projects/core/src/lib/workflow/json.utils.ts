@@ -24,7 +24,7 @@ export class JSONUtils {
      * const newObject = { someObject: 11 };
      * const result = JSONUtils.find(testObject, '$.parent/newProperty', newObject);
      */
-    public static find(objectValue: object, path: string, defaultValue: any = null): any {
+    public static find(objectValue: object, path: string, defaultValue?: any): any {
       if (path === '$') {
         return objectValue;
       }
@@ -155,6 +155,9 @@ export class JSONUtils {
      * @param filter - flattern path filter string.
      */
     private static filterObj(obj, filter: string) {
+      if (!obj) {
+        return false;
+      }
       if (!filter) {
         return true;
       }
@@ -184,15 +187,10 @@ export class JSONUtils {
      * @param defaultValue - default value for requested property.
      */
     private static getPropsValue(obj, props: string[], defaultValue) {
-      function reducer(o, prop, index) {
-        if  (index === props.length - 1 && !o.hasOwnProperty(prop)) {
-          o[prop] = defaultValue;
-        } else if (!o.hasOwnProperty(prop)) {
-          o[prop] = {};
-        }
-        return o[prop];
+      if (defaultValue !== undefined) {
+        return createObjProperties(obj, props, defaultValue);
       }
-      return props.reduce(reducer, obj);
+      return getObjPropertyVal(obj, props);
     }
 
     /**
@@ -242,7 +240,7 @@ export class JSONUtils {
       const entries = Array.isArray(obj) ? obj : [obj];
       const {flattern, filter, dataPath} = groups;
 
-      entries.forEach(o => {
+      entries.filter(o => o !== null).forEach(o => {
         Object.entries(o).forEach(([key, val]) => {
           if (key === flattern) {
             if (Array.isArray(val)) {
@@ -261,4 +259,39 @@ export class JSONUtils {
         });
       });
     }
+}
+
+/**
+ * Creates Javascript object properties tree.
+ * @param obj - Javascript object.
+ * @param props - list of tree properties to be created.
+ * @param val - value for last property.
+ */
+function createObjProperties(obj, props: string[], val = null) {
+  function reducer(o, prop, index) {
+    if  (index === props.length - 1 && !o.hasOwnProperty(prop)) {
+      o[prop] = val;
+    } else if (!o.hasOwnProperty(prop)) {
+      o[prop] = {};
+    }
+    return o[prop];
+  }
+  return props.reduce(reducer, obj);
+}
+
+/**
+ * Get Javascript object property value.
+ * @param obj - Javascript object.
+ * @param props - list of tree properties to be created.
+ */
+function getObjPropertyVal(obj, props: string[]) {
+  let value;
+  for (const prop of props) {
+    if (obj.hasOwnProperty(prop)) {
+      value = obj[prop];
+    } else {
+      return;
+    }
+  }
+  return value;
 }
