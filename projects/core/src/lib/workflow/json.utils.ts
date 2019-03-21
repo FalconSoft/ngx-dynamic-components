@@ -285,12 +285,12 @@ function createObjProperties(obj, props: string[], val = null) {
  * @param props - list of tree properties to be created.
  */
 function getObjPropertyVal(obj, props: string[]) {
-  let value;
+  let value = obj;
   for (const prop of props) {
-    if (obj.hasOwnProperty(prop)) {
-      value = obj[prop];
+    if (value.hasOwnProperty(prop)) {
+      value = value[prop];
     } else {
-      return;
+      return null;
     }
   }
   return value;

@@ -33,17 +33,36 @@ interface SwitchActionConfig {
  * @param key - string with posible expression
  */
 function resolveExpression(context: ExecutionContext, key: string): string {
-  const re = /.*\{\{\s(.*)\s\}\}/;
-  const match = key.match(re);
-  if (match) {
-    const expressionKey = match[1];
-    const value = resolveValue(context, expressionKey);
-    const propertyPath = expressionKey.substring(expressionKey.indexOf('/') + 1);
-    return key.replace(/\{\{\s(.*)\s\}\}/, JSONUtils.find(value, `$.${propertyPath}`, null));
-  }
+  // Remove spaces in expressions.
+  key = key.replace(/\{\{\s*/g, '{{').replace(/\s*\}\}/g, '}}');
+  const expressions = getExpressions(key);
+  expressions.forEach(e => {
+    let value = resolveValue(context, e);
+    if (value && typeof value === 'object') {
+      const propertyPath = e.substring(e.indexOf('/') + 1);
+      value =  JSONUtils.find(value, `$.${propertyPath}`, null);
+    }
+    key = key.replace(`{{${e}}}`, value);
+  });
   return key;
 }
 
+/**
+ * Get expression keys in key string.
+ * @param key - path with possibles expressions.
+ */
+function getExpressions(key: string): string[] {
+  let expressions = [];
+  const re = /.*\{\{(.*)\}\}/;
+  const match = key.match(re);
+  if (match) {
+    const expression = match[1];
+    if (expression) {
+      expressions = [expression, ...getExpressions(key.replace(`{{${expression}}}`, ''))];
+    }
+  }
+  return expressions;
+}
 
 /**
  * this has to be more advanced method and has to resolve more complex grammar.

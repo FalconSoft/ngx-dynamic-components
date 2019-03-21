@@ -158,7 +158,7 @@ describe('Workflow processor', async () => {
         const wfEngine = new WorkflowEngine(testWorkflow);
         await wfEngine.run('workflow1');
 
-//        expect(wfEngine.getVariable('step1-returnValue').country).toBe('uk');
+        expect(wfEngine.getVariable('step1-returnValue').country).toBe('uk');
     });
 
     it('workflow step: getValue (country) based on property resolved run-time', async () => {
@@ -172,8 +172,23 @@ describe('Workflow processor', async () => {
         const wfEngine = new WorkflowEngine(testWorkflow);
         await wfEngine.run('workflow1');
         // get value sets value into [actionName]-returnValue
-//        expect(wfEngine.getVariable('step1-returnValue')).toBe('uk');
+        expect(wfEngine.getVariable('step1-returnValue')).toBe('uk');
     });
+
+    it('workflow step: getValue (country) based on two properties resolved run-time', async () => {
+      testWorkflow.vars.addressType = 'residence';
+      testWorkflow.vars.country = 'uk';
+      testWorkflow.workflowsMap.workflow1 = [{
+          actionType: 'getValue',
+          actionName: 'step1',
+          object: { address: { home: { country: 'ua' }, residence: { uk:  'United Kingdom'} } },
+          propertyName: '$.address/{{$addressType}}/{{$country}}',
+      }];
+      const wfEngine = new WorkflowEngine(testWorkflow);
+      await wfEngine.run('workflow1');
+      // get value sets value into [actionName]-returnValue
+      expect(wfEngine.getVariable('step1-returnValue')).toBe('United Kingdom');
+  });
 
 
     it('wf1_init: init values', async () => {
