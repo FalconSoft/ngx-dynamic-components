@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit } from '@angular/core';
 import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 enum Layout {
   horizontal = 'column',
@@ -27,6 +27,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
 
   uiModelControl: FormControl;
   dataModelControl: FormControl;
+  workflowControl: FormControl;
 
   @ViewChild('dynamicComponent') dynamicComponent: UISelectorComponent;
 
@@ -74,6 +75,53 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     this.dataModelControl.setValue(JSON.stringify(data, null, 4));
   }
 
+  private initUIPreview() {
+    const refreshPreview = (uiModel: UIModel, dataModel: any) => {
+      this.uiModel = uiModel;
+      this.dataModel = dataModel;
+      this.workflowEngine.setVariable('uiModel', this.uiModel);
+      this.workflowEngine.setVariable('dataModel', this.dataModel);
+      if (this.workflowControl) {
+        const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
+        this.workflowControl.setValue(strWorkflowConfig);
+      }
+    };
+
+    this.initUIModelControl().subscribe(uiModel => refreshPreview(uiModel, this.dataModel));
+    this.initDataModelControl().subscribe(dataModel => refreshPreview(this.uiModel, dataModel));
+    this.initWorkflowControl();
+  }
+
+  private initUIModelControl(): Observable<any> {
+    const strUiModel = JSON.stringify(this.initUiModel, null, 4);
+    this.uiModelControl = new FormControl(strUiModel);
+    return this.uiModelControl.valueChanges
+      .pipe(
+        filter(this.jsonValidFilter),
+        startWith(strUiModel),
+        map(str => JSON.parse(str)));
+  }
+
+  private initDataModelControl(): Observable<any> {
+    const strDataModel = JSON.stringify(this.initDataModel, null, 4);
+    this.dataModelControl = new FormControl(strDataModel);
+    return this.dataModelControl.valueChanges
+      .pipe(
+        filter(this.jsonValidFilter),
+        startWith(strDataModel),
+        map(str => JSON.parse(str)));
+  }
+
+  private initWorkflowControl() {
+    const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
+    this.workflowControl = new FormControl(strWorkflowConfig);
+    this.workflowControl.valueChanges.pipe(
+      filter(this.jsonValidFilter),
+      map(str => JSON.parse(str))).subscribe(wc => {
+        this.workflowEngine.loadContext(wc);
+      });
+  }
+
   private jsonValidFilter(jsonStr: string): boolean {
     try {
       JSON.parse(jsonStr);
@@ -81,35 +129,5 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     } catch {
       return false;
     }
-  }
-
-  private initUIPreview() {
-    const strUiModel = JSON.stringify(this.initUiModel, null, 4);
-    const strDataModel = JSON.stringify(this.initDataModel, null, 4);
-
-    const refreshPreview = (uiModel: UIModel, dataModel: any) => {
-      this.uiModel = uiModel;
-      this.dataModel = dataModel;
-      this.workflowEngine.setVariable('uiModel', this.uiModel);
-      this.workflowEngine.setVariable('dataModel', this.dataModel);
-    };
-
-    this.uiModelControl = new FormControl(strUiModel);
-    this.uiModelControl.valueChanges
-      .pipe(
-        filter(this.jsonValidFilter),
-        startWith(strUiModel),
-        map(str => JSON.parse(str))
-      )
-      .subscribe(uiModel => refreshPreview(uiModel, this.dataModel));
-
-    this.dataModelControl = new FormControl(strDataModel);
-    this.dataModelControl.valueChanges
-      .pipe(
-        filter(this.jsonValidFilter),
-        startWith(strDataModel),
-        map(str => JSON.parse(str))
-      )
-      .subscribe(dataModel => refreshPreview(this.uiModel, dataModel));
   }
 }

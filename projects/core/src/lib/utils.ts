@@ -44,8 +44,28 @@ export function propDescription(description: PropDescriptor) {
   return decorate;
 }
 
+/**
+ * Safe get item by index from array.
+ * @param arr - array.
+ * @param idx - index.
+ */
 export function getItemByIndex(arr: any, idx: number): any {
   if (arr && arr.length > idx) {
     return arr[idx];
   }
 }
+/**
+ * Convering Javascript string Map to object
+ * @param map - map to convert.
+ * @param excludeKeys - array of keys to exclude from result.
+ */
+export function mapToObj(map: Map<string, any>, excludeKeys: string[] = []): {[key: string]: any} {
+  const obj = {};
+  map.forEach((value, key) => {
+    if (!excludeKeys.includes(key)) {
+      obj[key] = value;
+    }
+  });
+  return obj;
+}
+

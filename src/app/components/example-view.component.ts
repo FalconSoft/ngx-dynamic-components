@@ -24,7 +24,10 @@ import { WorkflowEngine } from '@ngx-dynamic-components/core';
       padding: 25px;
       flex-grow: 1;
       display: flex;
-      min-height: 1000px;
+      min-height: 1200px;
+    }
+    dc-preview-editor ::ng-deep .mat-tab-body-wrapper {
+      min-height: 400px;
     }
   `]
 })

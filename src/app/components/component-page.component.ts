@@ -46,7 +46,7 @@ export class ComponentPageComponent implements OnInit {
     this.component$ = this.route.params.pipe(map(p => {
       const component = COMPONENTS_LIST.find((c: ComponentDescriptor) => c.name === p.component);
       const config = component.example;
-      const wfConfig: any = {vars: {}};
+      const wfConfig: any = {include: ['@common'], vars: {}};
       wfConfig.vars.uiModel = config.uiModel;
       wfConfig.vars.dataModel = config.dataModel;
       (config as any).workflowEngine = new WorkflowEngine(wfConfig);

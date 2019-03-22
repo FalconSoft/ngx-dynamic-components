@@ -16,6 +16,9 @@ import { WorkflowEngine, WorkflowConfig } from '@ngx-dynamic-components/core';
     dc-preview-editor {
       margin: 25px;
     }
+    :host ::ng-deep .mat-tab-body-wrapper {
+      min-height: 400px;
+    }
   `]
 })
 export class EditorPageComponent implements OnInit {

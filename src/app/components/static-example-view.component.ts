@@ -20,7 +20,6 @@ import { WorkflowEngine } from '@ngx-dynamic-components/core';
       padding: 25px;
       flex-grow: 1;
       display: flex;
-      min-height: 1000px;
     }
   `]
 })

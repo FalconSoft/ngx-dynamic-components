@@ -1,4 +1,5 @@
 import { commonActionsMap } from './actions-store';
+import { mapToObj } from '../utils';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -27,7 +28,20 @@ export class WorkflowEngine {
         workflowConfig.consts = workflowConfig.consts || {};
     }
 
-    private async loadContext(context: ExecutionContext, config: WorkflowConfig): Promise<void> {
+    get configuration() {
+      if (this.isInitialized) {
+        return {
+          vars: mapToObj(this.context.variables, ['uiModel', 'dataModel']),
+          consts: mapToObj(this.context.constants),
+          workflowsMap: mapToObj(this.context.workflows)
+        };
+      }
+      const {vars, consts, workflowsMap} = this.workflowConfig;
+      return {vars, consts, workflowsMap};
+    }
+
+    public async loadContext(config: WorkflowConfig): Promise<void> {
+        const context = this.context;
         context.failOnError = !!config.failOnError;
         for (const name of Object.keys(config.vars).filter(p => !p.startsWith('_'))) {
             context.variables.set(name, config.vars[name]);
@@ -91,7 +105,7 @@ export class WorkflowEngine {
         if (this.isInitialized) { return; }
 
         await this.loadExternals(this.context, this.workflowConfig.include);
-        await this.loadContext(this.context, this.workflowConfig);
+        await this.loadContext(this.workflowConfig);
 
         this.isInitialized = true;
     }
