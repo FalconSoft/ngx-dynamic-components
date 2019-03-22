@@ -4,6 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatRadioModule } from '@angular/material';
 import { CoreModule } from '@ngx-dynamic-components/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { RadioGroupUIComponent, example } from './radio-group-ui.component';
 
@@ -14,7 +15,7 @@ describe('RadioGroupUIComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RadioGroupUIComponent ],
-      imports: [CoreModule, NoopAnimationsModule, MatRadioModule, FormsModule],
+      imports: [CoreModule, NoopAnimationsModule, MatRadioModule, FormsModule, FlexLayoutModule],
     });
     TestBed.compileComponents();
   }));

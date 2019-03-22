@@ -9,6 +9,7 @@ import { Categories, packageName } from '../../constants';
   template: `
     <label *ngIf="uiModel.itemProperties.label">{{uiModel.itemProperties.label}}</label>
     <mat-radio-group [ngStyle]="itemStyles"
+      [fxLayout]="orientation"
       (change)="changedDataModel.emit(this.dataModel)"
       [(ngModel)]="componentDataModel">
       <mat-radio-button *ngFor="let option of uiModel.itemProperties.options" [value]="option.value"
@@ -20,7 +21,9 @@ import { Categories, packageName } from '../../constants';
   styles: []
 })
 export class RadioGroupUIComponent extends BaseUIComponent<RadioGroupProperties> {
-
+  get orientation() {
+    return this.properties.orientation === 'vertical' ? 'column' : 'row';
+  }
 }
 
 export class RadioGroupProperties extends DataModelProperties {
@@ -41,6 +44,12 @@ export class RadioGroupProperties extends DataModelProperties {
     example: '{ padding: \'10px\' }',
   })
   optionStyles?: AttributesMap;
+
+  @propDescription({
+    description: 'Radio options orientation (horizontal|vertical). Default - horizontal',
+    example: 'verical',
+  })
+  orientation?: string;
 }
 
 export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
@@ -50,9 +59,10 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
     containerProperties: {},
     itemProperties: {
       label: 'Select color',
-      padding: '20px',
-      margin: '40px',
+      padding: '5px 0',
+      margin: '10px 0',
       dataModelPath: '$.color',
+      orientation: 'vertical',
       options: [{label: 'White', value: 'white'}, {label: 'Black', value: 'black'}],
       optionStyles: {
         padding: '10px'
