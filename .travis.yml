@@ -17,6 +17,7 @@ script:
   - ng build core
   - ng test material --watch=false --browsers=ChromeHeadless
   - ng build material
+  - ng test tools --watch=false --browsers=ChromeHeadless
   - ng build tools
   - npm run build:gh
   - cp dist/ngx-dynamic-components/index.html dist/ngx-dynamic-components/404.html

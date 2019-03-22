@@ -226,7 +226,10 @@
           "options": {
             "main": "projects/tools/src/test.ts",
             "tsConfig": "projects/tools/tsconfig.spec.json",
-            "karmaConfig": "projects/tools/karma.conf.js"
+            "karmaConfig": "projects/tools/karma.conf.js",
+            "assets": [
+              { "glob": "**/*", "input": "node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" }
+            ]
           }
         },
         "lint": {

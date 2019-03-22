@@ -31,8 +31,8 @@ export class EditorPageComponent implements OnInit {
 
   ngOnInit() {
     const wfConfig = JSON.parse(JSON.stringify(ProfileWorkflowsMap)) as WorkflowConfig;
-    wfConfig.vars.$uiModel = this.defaultModel;
-    wfConfig.vars.$dataModel = this.defaultDataModel;
+    wfConfig.vars.uiModel = this.defaultModel;
+    wfConfig.vars.dataModel = this.defaultDataModel;
 
     this.workflowEngine = new WorkflowEngine(wfConfig);
   }
