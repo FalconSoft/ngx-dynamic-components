@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, UIModel, ComponentDescriptor,
-  propDescription, ContainerProperties, ComponentExample, getItemByIndex } from '@ngx-dynamic-components/core';
+  propDescription, ContainerProperties, ComponentExample, getItemByIndex, AttributesMap } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../constants';
 
 @Component({
@@ -56,7 +56,7 @@ export class CardUIComponent extends BaseUIComponent<CardProperties> {
     return this.getChildByIndex(2);
   }
 
-  private getChildByIndex(index: number): UIModel {
+  private getChildByIndex(index: number): UIModel<AttributesMap> {
     return getItemByIndex(this.uiModel.children, index);
   }
 }
