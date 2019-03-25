@@ -6,7 +6,7 @@ sudo: required
 
 branches:
   only:
-  - _initial_
+  - master
 
 before_script:
   - npm install -g @angular/cli
@@ -28,4 +28,4 @@ deploy:
   github_token: $GITHUB_TOKEN
   local_dir: dist/ngx-dynamic-components
   on:
-    branch: _initial_
+    branch: master
