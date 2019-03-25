@@ -72,7 +72,11 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   onDataModelChange(data: any) {
-    this.dataModelControl.setValue(JSON.stringify(data, null, 4));
+    if (data) {
+      this.dataModelControl.setValue(JSON.stringify(data, null, 4));
+    } else {
+      this.uiModelControl.setValue(JSON.stringify(this.uiModel, null, 4));
+    }
   }
 
   private initUIPreview() {
