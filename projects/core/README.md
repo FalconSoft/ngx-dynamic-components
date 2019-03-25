@@ -1,24 +1,15 @@
-# Core
+# ngx-dynamic-components
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
+NGX Dynamic Components is a dynamic configuration driven web page builder. It is designed to build anything from a single one form web page to more complex web app. 
 
-## Code scaffolding
+## Quick start
 
-Run `ng generate component component-name --project core` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project core`.
-> Note: Don't forget to add `--project core` or else it will be added to the default project in your `angular.json` file. 
+1. Create new project and install packages
 
-## Build
+```
+ng new my-dynamic-project
+cd my-dynamic-project
+npm install --save @angular/material @angular/cdk @angular/animations @angular/flex-layout @ngx-dynamic-components/core @ngx-dynamic-components/material
+```
 
-Run `ng build core` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build core`, go to the dist folder `cd dist/core` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test core` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+2.

@@ -1,6 +1,15 @@
 {
   "name": "ngx-dynamic-components",
   "version": "0.0.1",
+  "description": "NGX Dynamic Components is a dynamic configuration driven web page builder. It is designed to build anything from a single one form web page to more complex web app.",
+  "author": "FalconSoft Ltd",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FalconSoft/ngx-dynamic-components"
+  },
+  "homepage": "https://falconsoft.github.io/ngx-dynamic-components/",
+  "keywords": [],
+  "license": "MIT",
   "scripts": {
     "setup": "npm i && npm run build:libs",
     "ng": "ng",
@@ -13,7 +22,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "~7.2.0",
     "@angular/cdk": "~7.3.3",
