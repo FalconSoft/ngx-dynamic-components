@@ -9,10 +9,10 @@ import { WorkflowEngine } from '@ngx-dynamic-components/core';
   selector: 'dc-static-example',
   template: `
     <ng-container *ngIf="ex">
-    <dc-ui-selector #dynamicComponent
-      [uiModel]='ex.uiModel'
-      [dataModel]='ex.dataModel'
-      [workflowEngine]='ex.workflowEngine'></dc-ui-selector>
+      <ngx-dynamic-component #dynamicComponent
+        [uiModel]='ex.uiModel'
+        [dataModel]='ex.dataModel'
+        [workflow]='ex.workflowConfig'></ngx-dynamic-component>
     </ng-container>
   `,
   styles: [`
@@ -26,10 +26,9 @@ import { WorkflowEngine } from '@ngx-dynamic-components/core';
 export class StaticExampleViewComponent implements OnInit {
   example: Observable<any>;
 
-  ex;
+  ex: any;
 
   constructor(private route: ActivatedRoute, private router: Router) {
-
   }
 
   ngOnInit() {
@@ -38,10 +37,6 @@ export class StaticExampleViewComponent implements OnInit {
         filter(p => p.example),
         map(p => {
           const config = EXAMPLES_LIST.find(({name}) => p.example === name);
-          const wfConfig = config.workflowConfig;
-          wfConfig.vars.uiModel = config.uiModel;
-          wfConfig.vars.dataModel = config.dataModel;
-          (config as any).workflowEngine = new WorkflowEngine(wfConfig);
           return config;
         }));
 

@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/material",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "private": false,
   "description": "@ngx-dynamic-components/material is Angular 7+ library what contains a core interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/FalconSoft/ngx-dynamic-components"
   },
-  "homepage": "https://github.com/FalconSoft/ngx-dynamic-components#readme",
+  "homepage": "https://falconsoft.github.io/ngx-dynamic-components/",
   "license": "MIT",
   "keywords": [
     "angular",
