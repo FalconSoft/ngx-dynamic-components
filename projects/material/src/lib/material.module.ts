@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule ,
-  MatRadioModule, MatTabsModule, MatTableModule, MatTooltipModule } from '@angular/material';
+  MatRadioModule, MatTabsModule, MatTableModule, MatTooltipModule, MatIconModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
@@ -23,6 +23,8 @@ import { RadioGroupUIComponent } from './components/radio-group-ui/radio-group-u
 import { TabsUIComponent } from './components/tabs-ui/tabs-ui.component';
 import { DatableUIComponent } from './components/datable-ui/datable-ui.component';
 
+import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
+
 
 @NgModule({
     declarations: [
@@ -37,6 +39,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
       RadioGroupUIComponent,
       TabsUIComponent,
       DatableUIComponent,
+      PropertiesEditorComponent
     ],
     imports: [
         CommonModule,
@@ -54,6 +57,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         MatTabsModule,
         MatTableModule,
         MatTooltipModule,
+        MatIconModule,
         CoreModule,
         DragDropModule
     ],
@@ -66,6 +70,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         SelectUIComponent,
         TextareaUIComponent,
         TextUIComponent,
+        PropertiesEditorComponent
     ],
     entryComponents: [
       InputUIComponent,

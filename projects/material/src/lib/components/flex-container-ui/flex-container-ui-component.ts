@@ -18,19 +18,24 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
             [ngStyle]="getStyles(item.containerProperties)">
 
             <dc-ui-selector
-                (changedDataModel)="changedDataModel.emit(this.dataModel)"
+                (changedDataModel)="changedDataModel.emit($event)"
                 [uiModel]='item'
                 [dataModel]='dataModel'
                 [workflowEngine]='workflowEngine'
             ></dc-ui-selector>
 
-            <svg width="24px" cdkDragHandle
-              (mouseover)="onHover($event)" (mouseleave)="onMouseLeave($event)" [matTooltip]="getDragTooltip(item)"
-              fill="currentColor" viewBox="0 0 24 24">
-              <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
-            </svg>
-
+            <div class="edit-controls">
+              <dc-properties-editor [itemProperties]="item.itemProperties" [uiModel]="item"
+                (updatedProperty)="changedDataModel.emit(null)"></dc-properties-editor>
+              <button mat-icon-button [matTooltip]="getDragTooltip(item)" cdkDragHandle>
+                <svg width="24px" (mouseover)="onHover($event)" (mouseleave)="onMouseLeave($event)"
+                  fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                  </path>
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+              </button>
+            </div>
         </div>
     </div>
     `,

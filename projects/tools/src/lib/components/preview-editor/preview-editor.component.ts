@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit } from '@angular/core';
 import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
-import { filter, map, startWith } from 'rxjs/operators';
+import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 enum Layout {
@@ -116,6 +116,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     this.dataModelControl = new FormControl(strDataModel);
     return this.dataModelControl.valueChanges
       .pipe(
+        debounceTime(5e2),
         filter(this.jsonValidFilter),
         startWith(strDataModel),
         map(str => JSON.parse(str)));
