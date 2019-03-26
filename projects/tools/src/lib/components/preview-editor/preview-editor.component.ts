@@ -34,10 +34,15 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   layout: Layout = Layout.horizontal;
 
   sourceCode = false;
+  editMode = false;
   editorOptions = {
     language: 'json',
     automaticLayout: true
   };
+
+  get editorTooltip() {
+    return this.editMode ? 'Disable preview edit' : 'Enable preview edit';
+  }
 
   constructor() { }
 

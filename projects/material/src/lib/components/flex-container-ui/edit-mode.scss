@@ -1,0 +1,79 @@
+.cdk-drag {
+  position: relative;
+  border: 1px dashed rgba(0, 0, 0, 0);
+
+  &.drag-selected {
+    border-color: grey;
+    .cdk-drag-handle {
+      display: block;
+    }
+
+    ::ng-deep dc-ui-flex-container + .cdk-drag-handle {
+      color: rgba(0, 0, 0, .8);
+    }
+  }
+
+  &:hover {
+    ::ng-deep dc-ui-flex-container + .cdk-drag-handle {
+      color: rgba(0, 0, 0, .8);
+    }
+  }
+
+  ::ng-deep dc-ui-flex-container + .cdk-drag-handle {
+    left: -35px;
+  }
+
+  .cdk-drag-handle {
+    position: absolute;
+    color: rgba(0, 0, 0, .5);
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    z-index: 1;
+    display: none;
+    &:hover {
+      cursor: move;
+    }
+  }
+}
+
+.cdk-drop-list-dragging {
+  .cdk-drag {
+    &:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .cdk-drag-handle {
+      display: none;
+    }
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, .5);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  background: #eeeeee;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  position: relative;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder::after {
+  content: ' ';
+  top: 0;
+  display: block;
+  position: absolute;
+  background: #ccc;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}

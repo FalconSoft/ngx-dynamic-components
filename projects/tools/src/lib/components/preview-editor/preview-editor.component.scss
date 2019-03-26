@@ -20,6 +20,10 @@ $color: rgba(0, 0, 0, .5);
       height: 100%;
     }
   }
+
+  .edit-mode .cdk-drag:hover > .cdk-drag-handle {
+    display: block;
+  }
 }
 
 mat-card {

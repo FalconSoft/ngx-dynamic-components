@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule ,
-  MatRadioModule, MatTabsModule, MatTableModule } from '@angular/material';
+  MatRadioModule, MatTabsModule, MatTableModule, MatTooltipModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
@@ -12,7 +12,7 @@ import { CoreModule } from '@ngx-dynamic-components/core';
 import { InputUIComponent } from './components/input-ui-component';
 import { TextUIComponent } from './components/text-ui-component';
 import { ButtonUIComponent } from './components/button-ui-component';
-import { FlexContainerUIComponent } from './components/flex-container-ui-component';
+import { FlexContainerUIComponent } from './components/flex-container-ui/flex-container-ui-component';
 import { SelectUIComponent } from './components/select-ui-component';
 import { CheckboxUIComponent } from './components/checkbox-ui-component';
 import { TextareaUIComponent } from './components/textarea-ui-component';
@@ -53,6 +53,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         MatRadioModule,
         MatTabsModule,
         MatTableModule,
+        MatTooltipModule,
         CoreModule,
         DragDropModule
     ],
