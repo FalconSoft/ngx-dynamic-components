@@ -25,7 +25,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
             ></dc-ui-selector>
 
             <div class="edit-controls">
-              <dc-properties-editor [itemProperties]="item.itemProperties" [uiModel]="item"
+              <dc-properties-editor [uiModel]="item"
                 (updatedProperty)="changedDataModel.emit(null)"></dc-properties-editor>
               <button mat-icon-button [matTooltip]="getDragTooltip(item)" cdkDragHandle>
                 <svg width="24px" (mouseover)="onHover($event)" (mouseleave)="onMouseLeave($event)"

@@ -9,6 +9,10 @@ export interface PropDescriptor {
   example: string;
 }
 
+export interface ComponentProperty extends PropDescriptor {
+  name: string;
+}
+
 export function propDescription(description: PropDescriptor) {
   function decorate(target: any, key: string) {
     let properties = target.hasOwnProperty('properties') ? target.properties : [];

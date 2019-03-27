@@ -1,5 +1,5 @@
-import { Component, Input, HostListener, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
-import { AttributesMap, UIModel } from '@ngx-dynamic-components/core';
+import { Component, Input, HostListener, ViewChild, ElementRef, EventEmitter, Output, OnInit } from '@angular/core';
+import { ComponentProperty, UIModel, CoreService } from '@ngx-dynamic-components/core';
 import { MatButton } from '@angular/material';
 
 @Component({
@@ -32,12 +32,9 @@ import { MatButton } from '@angular/material';
     }
   `]
 })
-export class PropertiesEditorComponent {
+export class PropertiesEditorComponent implements OnInit {
   @Input()
   uiModel: UIModel;
-
-  @Input()
-  itemProperties: AttributesMap;
 
   @ViewChild('editorContainer')
   editorContainer: ElementRef;
@@ -48,6 +45,7 @@ export class PropertiesEditorComponent {
   @Output()
   updatedProperty = new EventEmitter();
 
+  itemProperties: ComponentProperty[] = [];
   properties = [];
 
   showEditor = false;
@@ -64,9 +62,10 @@ export class PropertiesEditorComponent {
       const clickedInside = this.editorContainer.nativeElement.contains(targetElement);
       if (!clickedInside && this.editBtn._elementRef.nativeElement.contains(targetElement)) {
         // Clicked on button.
-        this.properties = Object.entries({...this.itemProperties}).map(([name, value]) => {
-          return { name, value };
-        });
+        const itemProps = this.uiModel.itemProperties;
+        this.properties = this.itemProperties.map(({name}) => ({
+          name, value: itemProps[name] === undefined ? '' : itemProps[name]
+        }));
         this.showEditor = true;
       } else if (!clickedInside) {
         // Clicked outside.
@@ -74,6 +73,10 @@ export class PropertiesEditorComponent {
         this.updatedProperty.emit();
       }
     }
+  }
+
+  ngOnInit() {
+    this.itemProperties = CoreService.getComponentProperties(this.uiModel.type);
   }
 
   updateProperty(evt, prop) {
