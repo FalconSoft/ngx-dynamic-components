@@ -77,8 +77,8 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
 export abstract class UIModel<T = AttributesMap> {
   id?: string;
   type: string;
-  itemProperties: T;
-  containerProperties: AttributesMap;
+  itemProperties?: T;
+  containerProperties?: AttributesMap;
   children?: UIModel[];
 }
 
