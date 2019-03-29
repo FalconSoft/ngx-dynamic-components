@@ -3,6 +3,7 @@ import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-compo
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { FlexContainerUIComponent } from '@ngx-dynamic-components/material';
 
 enum Layout {
   horizontal = 'column',
@@ -93,6 +94,9 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
       if (this.workflowControl) {
         const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
         this.workflowControl.setValue(strWorkflowConfig);
+      }
+      if (this.dynamicComponent) {
+        (this.dynamicComponent.component as FlexContainerUIComponent).onUIModelUpdate();
       }
     };
 

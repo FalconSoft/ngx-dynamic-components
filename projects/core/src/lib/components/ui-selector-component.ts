@@ -11,7 +11,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
     super();
   }
 
-  private component: BaseUIComponent;
+  public component: BaseUIComponent;
 
   async ngOnInit(): Promise<void> {
     this.createComponent();

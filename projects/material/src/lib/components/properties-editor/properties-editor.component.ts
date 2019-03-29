@@ -63,9 +63,15 @@ export class PropertiesEditorComponent implements OnInit {
       if (!clickedInside && this.editBtn._elementRef.nativeElement.contains(targetElement)) {
         // Clicked on button.
         const itemProps = this.uiModel.itemProperties;
-        this.properties = this.itemProperties.map(({name}) => ({
-          name, value: itemProps[name] === undefined ? '' : itemProps[name]
-        }));
+        this.properties = this.itemProperties.map(({name}) => {
+          let value = itemProps[name];
+          if (value === undefined) {
+            value = '';
+          } else if (typeof value === 'object') {
+            value = JSON.stringify(value);
+          }
+          return {name, value};
+        });
         this.showEditor = true;
       } else if (!clickedInside) {
         // Clicked outside.
@@ -80,6 +86,11 @@ export class PropertiesEditorComponent implements OnInit {
   }
 
   updateProperty(evt, prop) {
-    this.uiModel.itemProperties[prop] = evt.target.value;
+    try {
+      // If property value is an object or an array.
+      this.uiModel.itemProperties[prop] = JSON.parse(evt.target.value);
+    } catch {
+      this.uiModel.itemProperties[prop] = evt.target.value;
+    }
   }
 }

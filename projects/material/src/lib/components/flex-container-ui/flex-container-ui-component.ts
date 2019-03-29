@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
-  propDescription, ComponentExample } from '@ngx-dynamic-components/core';
+  propDescription, ComponentExample, UISelectorComponent } from '@ngx-dynamic-components/core';
 import { Categories, packageName } from '../../constants';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, DragRef, transferArrayItem, DropListRef } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'dc-ui-flex-container',
     template: `
-    <div (cdkDropListDropped)="drop($event)" cdkDropList [cdkDropListOrientation]="dragOrientation"
+    <div #container="cdkDropList" cdkDropList
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListOrientation]="dragOrientation"
+        [cdkDropListData]="uiModel.children"
         [fxLayout]="uiModel.itemProperties?.fxLayout || 'row'"
         [fxLayoutGap]="uiModel.itemProperties?.fxLayoutGap || '0'"
         [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign || 'flex-start'"
         [fxFlex]="uiModel.itemProperties?.fxFlex || 'initial'"
         [ngStyle]="itemStyles">
-        <div *ngFor="let item of uiModel.children" cdkDrag
+
+        <div *ngFor="let item of uiModel.children" #items cdkDrag
             [fxFlex]="item.containerProperties?.fxFlex || 'initial'"
             [ngStyle]="getStyles(item.containerProperties)">
 
             <dc-ui-selector
+                #dropLists
                 (changedDataModel)="changedDataModel.emit($event)"
                 [uiModel]='item'
                 [dataModel]='dataModel'
@@ -41,15 +46,80 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
     `,
     styleUrls: ['./edit-mode.scss'],
 })
-export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
+export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> implements OnInit, AfterViewInit {
+
+  @Output()
+  listCreated = new EventEmitter<CdkDropList>();
+
+  @ViewChild('container')
+  container: CdkDropList;
+
+  @ViewChildren('items')
+  items: QueryList<ElementRef>;
+
+  connectedListsTo: CdkDropList[] = [];
+
+  get childContainers(): FlexContainerUIComponent[] {
+    if (this.dropLists) {
+      return this.dropLists.filter(dL => dL.component.hasOwnProperty('container')) // Verify type instead.
+        .map(dL => dL.component) as FlexContainerUIComponent[];
+    }
+    return [];
+  }
+
+  drags: DragRef[] = [];
+
+  @ViewChildren('dropLists')
+  dropLists: QueryList<UISelectorComponent>;
 
   get dragOrientation() {
     return this.uiModel.itemProperties.fxLayout === 'row' ? 'horizontal' : 'vertical';
   }
 
+  onUIModelUpdate() {
+    setTimeout(() => {
+      this.connectLists();
+    });
+  }
+
+  connectLists() {
+    this.connectedListsTo = [this.container];
+    this.getConnectedLists(this.childContainers);
+
+    // Connect lists;
+    this.connectedListsTo.forEach(dL => {
+      dL.connectedTo = this.connectedListsTo;
+      dL._dropListRef.connectedTo(this.connectedListsTo.map(c => c._dropListRef).reverse());
+    });
+  }
+
+  getConnectedLists(childContainers: FlexContainerUIComponent[]) {
+    childContainers.forEach(child => {
+      this.connectedListsTo.push(child.container);
+      this.getConnectedLists(child.childContainers);
+    });
+  }
+
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.uiModel.children, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+    // Emit changedDataModel to sync Monaco UI Model editor.
     this.changedDataModel.emit();
+  }
+
+  ngAfterViewInit() {
+    // Override default _getSiblingContainerFromPosition method, to use all lists as possible siblings,
+    // which are overriden in by _syncInputs.
+    this.container._dropListRef._getSiblingContainerFromPosition = (item: DragRef, x: number, y: number): DropListRef | undefined => {
+      const lists = (this.container.connectedTo as CdkDropList[]).map(c => c._dropListRef);
+      return lists.reverse().find(sibling => sibling._canReceive(item, x, y));
+    };
   }
 
   onHover(evt) {
