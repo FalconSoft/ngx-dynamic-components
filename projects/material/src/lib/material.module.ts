@@ -12,7 +12,7 @@ import { CoreModule } from '@ngx-dynamic-components/core';
 import { InputUIComponent } from './components/input-ui-component';
 import { TextUIComponent } from './components/text-ui-component';
 import { ButtonUIComponent } from './components/button-ui-component';
-import { FlexContainerUIComponent } from './components/flex-container-ui/flex-container-ui-component';
+import { FlexContainerUIComponent } from './components/flex-container-dr-ui/flex-container-ui-component';
 import { SelectUIComponent } from './components/select-ui-component';
 import { CheckboxUIComponent } from './components/checkbox-ui-component';
 import { TextareaUIComponent } from './components/textarea-ui-component';
@@ -24,6 +24,8 @@ import { TabsUIComponent } from './components/tabs-ui/tabs-ui.component';
 import { DatableUIComponent } from './components/datable-ui/datable-ui.component';
 
 import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
+
+import { DragulaModule } from 'ng2-dragula';
 
 
 @NgModule({
@@ -59,7 +61,8 @@ import { PropertiesEditorComponent } from './components/properties-editor/proper
         MatTooltipModule,
         MatIconModule,
         CoreModule,
-        DragDropModule
+        DragDropModule,
+        DragulaModule.forRoot()
     ],
     exports: [
         ButtonUIComponent,

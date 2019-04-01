@@ -4,4 +4,4 @@
 
 export * from './lib/material.module';
 export { COMPONENTS_LIST, getCategories } from './lib/components/register';
-export { FlexContainerUIComponent } from './lib/components/flex-container-ui/flex-container-ui-component';
+export { FlexContainerUIComponent } from './lib/components/flex-container-dr-ui/flex-container-ui-component';
