@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
-import { filter, map, startWith } from 'rxjs/operators';
+import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { DragDropService } from '../../services/drag-drop.service';
 
 enum Layout {
   horizontal = 'column',
@@ -12,7 +14,7 @@ enum Layout {
 @Component({
   selector: 'dc-preview-editor',
   templateUrl: './preview-editor.component.html',
-  styleUrls: ['./preview-editor.component.scss']
+  styleUrls: ['./preview-editor.component.scss', './edit-mode.scss']
 })
 export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit {
 
@@ -34,12 +36,17 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   layout: Layout = Layout.horizontal;
 
   sourceCode = false;
+  editMode = false;
   editorOptions = {
     language: 'json',
     automaticLayout: true
   };
 
-  constructor() { }
+  get editorTooltip() {
+    return this.editMode ? 'Disable preview edit' : 'Enable preview edit';
+  }
+
+  constructor(private container: ElementRef, private dragService: DragDropService) { }
 
   ngOnInit() {
     this.initUIPreview();
@@ -72,7 +79,15 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   onDataModelChange(data: any) {
-    this.dataModelControl.setValue(JSON.stringify(data, null, 4));
+    if (data) {
+      this.dataModelControl.setValue(JSON.stringify(data, null, 4));
+    } else {
+      this.uiModelControl.setValue(JSON.stringify(this.uiModel, null, 4));
+    }
+  }
+
+  get dropContainers() {
+    return this.container.nativeElement.querySelectorAll('dc-ui-flex-container .container');
   }
 
   private initUIPreview() {
@@ -85,11 +100,17 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
         const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
         this.workflowControl.setValue(strWorkflowConfig);
       }
+
+      setTimeout(() => {
+        this.dragService.init(this.dropContainers, uiModel);
+      });
     };
 
     this.initUIModelControl().subscribe(uiModel => refreshPreview(uiModel, this.dataModel));
     this.initDataModelControl().subscribe(dataModel => refreshPreview(this.uiModel, dataModel));
     this.initWorkflowControl();
+    this.dragService.init(this.dropContainers, this.uiModel);
+    this.dragService.drop$.subscribe(() => this.onDataModelChange(null));
   }
 
   private initUIModelControl(): Observable<any> {
@@ -107,6 +128,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     this.dataModelControl = new FormControl(strDataModel);
     return this.dataModelControl.valueChanges
       .pipe(
+        debounceTime(5e2),
         filter(this.jsonValidFilter),
         startWith(strDataModel),
         map(str => JSON.parse(str)));

@@ -4,14 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule ,
-  MatRadioModule, MatTabsModule, MatTableModule } from '@angular/material';
+  MatRadioModule, MatTabsModule, MatTableModule, MatTooltipModule, MatIconModule } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
 
 import { InputUIComponent } from './components/input-ui-component';
 import { TextUIComponent } from './components/text-ui-component';
 import { ButtonUIComponent } from './components/button-ui-component';
-import { FlexContainerUIComponent } from './components/flex-container-ui-component';
+import { FlexContainerUIComponent } from './components/flex-container-ui/flex-container-ui-component';
 import { SelectUIComponent } from './components/select-ui-component';
 import { CheckboxUIComponent } from './components/checkbox-ui-component';
 import { TextareaUIComponent } from './components/textarea-ui-component';
@@ -21,6 +22,9 @@ import { registerComponents } from './components/register';
 import { RadioGroupUIComponent } from './components/radio-group-ui/radio-group-ui.component';
 import { TabsUIComponent } from './components/tabs-ui/tabs-ui.component';
 import { DatableUIComponent } from './components/datable-ui/datable-ui.component';
+
+import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
+
 
 @NgModule({
     declarations: [
@@ -35,6 +39,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
       RadioGroupUIComponent,
       TabsUIComponent,
       DatableUIComponent,
+      PropertiesEditorComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +56,10 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         MatRadioModule,
         MatTabsModule,
         MatTableModule,
-        CoreModule
+        MatTooltipModule,
+        MatIconModule,
+        CoreModule,
+        DragDropModule
     ],
     exports: [
         ButtonUIComponent,
@@ -62,6 +70,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         SelectUIComponent,
         TextareaUIComponent,
         TextUIComponent,
+        PropertiesEditorComponent
     ],
     entryComponents: [
       InputUIComponent,

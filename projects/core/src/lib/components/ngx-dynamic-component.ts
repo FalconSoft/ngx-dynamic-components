@@ -3,7 +3,7 @@ import { WorkflowConfig, WorkflowEngine } from '../workflow/workflow.processor';
 import { UIModel } from '../models';
 
 @Component({
-    selector: 'ngx-dynamic-component',
+    selector: 'ngx-dynamic-component', // tslint:disable-line
     template: `
     <dc-ui-selector
         [uiModel]='uiModel'
