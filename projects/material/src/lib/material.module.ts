@@ -25,8 +25,6 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
 
 import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
 
-import { DragulaModule } from 'ng2-dragula';
-
 
 @NgModule({
     declarations: [
@@ -61,8 +59,7 @@ import { DragulaModule } from 'ng2-dragula';
         MatTooltipModule,
         MatIconModule,
         CoreModule,
-        DragDropModule,
-        DragulaModule.forRoot()
+        DragDropModule
     ],
     exports: [
         ButtonUIComponent,

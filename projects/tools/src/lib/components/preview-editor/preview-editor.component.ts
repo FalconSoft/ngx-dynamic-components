@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { FlexContainerUIComponent } from '@ngx-dynamic-components/material';
+
+import { DragDropService } from '../../services/drag-drop.service';
 
 enum Layout {
   horizontal = 'column',
@@ -13,7 +14,7 @@ enum Layout {
 @Component({
   selector: 'dc-preview-editor',
   templateUrl: './preview-editor.component.html',
-  styleUrls: ['./preview-editor.component.scss']
+  styleUrls: ['./preview-editor.component.scss', './edit-mode.scss']
 })
 export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit {
 
@@ -45,7 +46,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     return this.editMode ? 'Disable preview edit' : 'Enable preview edit';
   }
 
-  constructor() { }
+  constructor(private container: ElementRef, private dragService: DragDropService) { }
 
   ngOnInit() {
     this.initUIPreview();
@@ -85,6 +86,10 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     }
   }
 
+  get dropContainers() {
+    return this.container.nativeElement.querySelectorAll('dc-ui-flex-container .container')
+  }
+
   private initUIPreview() {
     const refreshPreview = (uiModel: UIModel, dataModel: any) => {
       this.uiModel = uiModel;
@@ -95,14 +100,17 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
         const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
         this.workflowControl.setValue(strWorkflowConfig);
       }
-      if (this.dynamicComponent) {
-        (this.dynamicComponent.component as FlexContainerUIComponent).onUIModelUpdate();
-      }
+
+      setTimeout(() => {
+        this.dragService.init(this.dropContainers, uiModel);
+      });
     };
 
     this.initUIModelControl().subscribe(uiModel => refreshPreview(uiModel, this.dataModel));
     this.initDataModelControl().subscribe(dataModel => refreshPreview(this.uiModel, dataModel));
     this.initWorkflowControl();
+    this.dragService.init(this.dropContainers, this.uiModel);
+    this.dragService.drop$.subscribe(() => this.onDataModelChange(null));
   }
 
   private initUIModelControl(): Observable<any> {

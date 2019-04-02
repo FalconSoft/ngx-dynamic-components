@@ -14,6 +14,8 @@ import { MaterialModule } from '@ngx-dynamic-components/material';
 import { ToolbarComponent } from './components/toolbar.component';
 import { PreviewEditorComponent } from './components/preview-editor/preview-editor.component';
 
+import { DragulaModule } from 'ng2-dragula';
+
 @NgModule({
   declarations: [
     ToolbarComponent, PreviewEditorComponent
@@ -35,7 +37,8 @@ import { PreviewEditorComponent } from './components/preview-editor/preview-edit
     AngularSplitModule.forRoot(),
     MonacoEditorModule.forRoot({
       baseUrl: './assets'
-    })
+    }),
+    DragulaModule.forRoot()
   ],
   exports: [ PreviewEditorComponent ],
 })
