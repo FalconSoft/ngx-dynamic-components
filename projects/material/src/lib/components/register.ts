@@ -4,7 +4,7 @@ import { selectDescriptor } from './select-ui-component';
 import { buttonDescriptor } from './button-ui-component';
 import { cardDescriptor } from './card-ui-component';
 import { checkboxDescriptor } from './checkbox-ui-component';
-import { flexContainerDescriptor } from './flex-container-dr-ui/flex-container-ui-component';
+import { flexContainerDescriptor } from './flex-container-ui/flex-container-ui-component';
 import { textDescriptor } from './text-ui-component';
 import { textareaDescriptor } from './textarea-ui-component';
 import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component';

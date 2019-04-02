@@ -7,23 +7,31 @@ $border: 1px dashed rgba(0, 0, 0, 0);
   &.drag-selected {
     border-color: grey;
     .edit-controls {
-      display: block;
+      display: block !important;
     }
   }
 
-  ::ng-deep dc-ui-flex-container + .edit-controls > .cdk-drag-handle {
+  dc-ui-flex-container + .edit-controls > .handle {
     color: rgba(0, 0, 0, .75);
   }
 
   &:hover {
-    ::ng-deep dc-ui-flex-container + .edit-controls > .cdk-drag-handle {
+    dc-ui-flex-container + .edit-controls > .handle {
       color: rgba(0, 0, 0, .8);
     }
   }
 
-  ::ng-deep dc-ui-flex-container + .edit-controls {
+  dc-ui-flex-container + .edit-controls {
     left: -65px;
   }
+
+  .active {
+    border: $border;
+    border-color: grey;
+  }
+}
+
+::ng-deep {
 
   .edit-controls {
     position: absolute;
@@ -38,14 +46,7 @@ $border: 1px dashed rgba(0, 0, 0, 0);
       color: rgba(0, 0, 0, .75);
     }
   }
-}
 
-.dragging .active {
-  border: $border;
-  border-color: grey;
-}
-
-.preview ::ng-deep {
   /* in-flight clone */
   .gu-mirror {
     position: fixed !important;
@@ -61,6 +62,10 @@ $border: 1px dashed rgba(0, 0, 0, 0);
                 0 8px 10px 1px rgba(0, 0, 0, 0.14),
                 0 3px 14px 2px rgba(0, 0, 0, 0.12);
     background: #eeeeee;
+
+    .edit-controls {
+      display: block !important;
+    }
   }
   /* high-performance display:none; helper */
   .gu-hide {

@@ -87,7 +87,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   get dropContainers() {
-    return this.container.nativeElement.querySelectorAll('dc-ui-flex-container .container')
+    return this.container.nativeElement.querySelectorAll('dc-ui-flex-container .container');
   }
 
   private initUIPreview() {

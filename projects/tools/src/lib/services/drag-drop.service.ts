@@ -64,6 +64,14 @@ export class DragDropService {
     this.drake.on('drag', (el: any, source: any) => {
       this.dragIndex = this.domIndexOf(el, source);
     });
+
+    this.drake.on('over', (el, container: HTMLElement) => {
+      container.classList.add('active');
+    });
+
+    this.drake.on('out', (el, container: HTMLElement) => {
+      container.classList.remove('active');
+    });
   }
 
   /**
