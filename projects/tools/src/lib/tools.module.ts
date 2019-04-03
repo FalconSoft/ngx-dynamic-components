@@ -4,21 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
 import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule, MatCardModule, MatIconModule,
-  MatTooltipModule } from '@angular/material';
+  MatTooltipModule, MatInputModule, MatFormFieldModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { DragulaModule } from 'ng2-dragula';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
 
-import { ToolbarComponent } from './components/toolbar.component';
 import { PreviewEditorComponent } from './components/preview-editor/preview-editor.component';
-
-import { DragulaModule } from 'ng2-dragula';
+import { ControlEditorComponent } from './components/control-editor/control-editor.component';
+import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
 
 @NgModule({
   declarations: [
-    ToolbarComponent, PreviewEditorComponent
+    PreviewEditorComponent, ControlEditorComponent, PropertiesEditorComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +31,8 @@ import { DragulaModule } from 'ng2-dragula';
     MatCardModule,
     MatIconModule,
     MatTooltipModule,
+    MatInputModule,
+    MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
@@ -41,5 +43,6 @@ import { DragulaModule } from 'ng2-dragula';
     DragulaModule.forRoot()
   ],
   exports: [ PreviewEditorComponent ],
+  entryComponents: [ControlEditorComponent],
 })
 export class ToolsModule { }
