@@ -2,7 +2,7 @@ import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewCh
 import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { DragDropService } from '../../services/drag-drop.service';
 
@@ -14,7 +14,7 @@ enum Layout {
 @Component({
   selector: 'dc-preview-editor',
   templateUrl: './preview-editor.component.html',
-  styleUrls: ['./preview-editor.component.scss', './edit-mode.scss']
+  styleUrls: ['./preview-editor.component.scss']
 })
 export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit {
 
@@ -36,20 +36,27 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   layout: Layout = Layout.horizontal;
 
   sourceCode = false;
-  editMode = false;
+  editMode$ = new BehaviorSubject<boolean>(false);
   editorOptions = {
     language: 'json',
     automaticLayout: true
   };
 
-  get editorTooltip() {
-    return this.editMode ? 'Disable preview edit' : 'Enable preview edit';
+  get editorTooltip$() {
+    return this.editMode$.pipe(map(edit => edit ? 'Disable preview edit' : 'Enable preview edit'));
   }
 
   constructor(private container: ElementRef, private dragService: DragDropService) { }
 
   ngOnInit() {
     this.initUIPreview();
+    this.editMode$.subscribe(editMode => {
+      if (editMode) {
+        this.dragService.init(this.dropContainers, this.uiModel);
+      } else {
+        this.dragService.cleanUpEditor();
+      }
+    });
   }
 
   ngOnChanges({initUiModel}: SimpleChanges) {
@@ -101,16 +108,17 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
         this.workflowControl.setValue(strWorkflowConfig);
       }
 
-      setTimeout(() => {
-        this.dragService.init(this.dropContainers, uiModel);
-      });
+      if (this.editMode$.value) {
+        setTimeout(() => {
+          this.dragService.init(this.dropContainers, uiModel);
+        });
+      }
     };
 
     this.initUIModelControl().subscribe(uiModel => refreshPreview(uiModel, this.dataModel));
     this.initDataModelControl().subscribe(dataModel => refreshPreview(this.uiModel, dataModel));
     this.initWorkflowControl();
-    this.dragService.init(this.dropContainers, this.uiModel);
-    this.dragService.drop$.subscribe(() => this.onDataModelChange(null));
+    this.dragService.uiModelUpdates$.subscribe(() => this.onDataModelChange(null));
   }
 
   private initUIModelControl(): Observable<any> {

@@ -23,47 +23,12 @@ import { Categories, packageName } from '../../constants';
                 [dataModel]='dataModel'
                 [workflowEngine]='workflowEngine'
             ></dc-ui-selector>
-
-            <div class="edit-controls">
-              <dc-properties-editor [uiModel]="item"
-                (updatedProperty)="changedDataModel.emit(null)"></dc-properties-editor>
-              <button mat-icon-button [matTooltip]="getDragTooltip(item)" class="handle">
-                <svg width="24px" (mouseover)="onHover($event)" (mouseleave)="onMouseLeave($event)"
-                  fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
-                  </path>
-                  <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-              </button>
-            </div>
         </div>
     </div>
     `
 })
 export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> implements OnInit {
 
-  onHover(evt) {
-    const dragEl = this.getParentDrag(evt.target as HTMLElement);
-    dragEl.classList.add('drag-selected');
-  }
-
-  onMouseLeave(evt: Event) {
-    const dragEl = this.getParentDrag(evt.target as HTMLElement);
-    dragEl.classList.remove('drag-selected');
-  }
-
-  getDragTooltip(item: UIModel) {
-    return item.type === 'material:flex-container' ? 'Drag container' : 'Drag component';
-  }
-
-  private getParentDrag(el: HTMLElement): HTMLElement {
-    let dragEl = el;
-
-    while (!Array.from(dragEl.classList).includes('item')) {
-      dragEl = dragEl.parentNode as HTMLElement;
-    }
-    return dragEl;
-  }
 }
 
 export class FlexContainerProperties extends ContainerProperties {

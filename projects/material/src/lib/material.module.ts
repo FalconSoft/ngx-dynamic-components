@@ -23,9 +23,6 @@ import { RadioGroupUIComponent } from './components/radio-group-ui/radio-group-u
 import { TabsUIComponent } from './components/tabs-ui/tabs-ui.component';
 import { DatableUIComponent } from './components/datable-ui/datable-ui.component';
 
-import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
-
-
 @NgModule({
     declarations: [
       ButtonUIComponent,
@@ -38,8 +35,7 @@ import { PropertiesEditorComponent } from './components/properties-editor/proper
       TextareaUIComponent,
       RadioGroupUIComponent,
       TabsUIComponent,
-      DatableUIComponent,
-      PropertiesEditorComponent
+      DatableUIComponent
     ],
     imports: [
         CommonModule,
@@ -69,8 +65,7 @@ import { PropertiesEditorComponent } from './components/properties-editor/proper
         InputUIComponent,
         SelectUIComponent,
         TextareaUIComponent,
-        TextUIComponent,
-        PropertiesEditorComponent
+        TextUIComponent
     ],
     entryComponents: [
       InputUIComponent,

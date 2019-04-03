@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef, Injector, EmbeddedViewRef, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 
 import { dragula } from 'ng2-dragula';
 import { UIModel } from '@ngx-dynamic-components/core';
 import { Subject } from 'rxjs';
+import { ControlEditorComponent } from '../components/control-editor/control-editor.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DragDropService {
 
-  constructor() { }
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private appRef: ApplicationRef,
+    private injector: Injector
+  ) { }
 
   private dragIndex = 0;
   private dropIndex = 0;
@@ -18,7 +23,9 @@ export class DragDropService {
 
   drake;
 
-  drop$ = new Subject<UIModel>();
+  uiModelUpdates$ = new Subject<UIModel>();
+
+  controls: ComponentRef<ControlEditorComponent>[] = [];
 
   public init(elements, uiModel: UIModel) {
     const arrElements = Array.from(elements);
@@ -29,6 +36,42 @@ export class DragDropService {
     } else {
       this.drake.containers = arrElements;
     }
+    this.initEditor();
+  }
+
+  public cleanUpEditor() {
+    this.controls.forEach(componentRef => {
+      this.appRef.detachView(componentRef.hostView);
+      componentRef.destroy();
+    });
+    this.controls = [];
+  }
+
+  private initEditor() {
+    this.cleanUpEditor();
+    this.drake.containers.forEach((container, index) => {
+      Array.from((container as HTMLElement).children).forEach((element, i) => {
+        const uiModel = this.getChildrenByIndex(this.uiModel.children, index)[i];
+        this.appendControlEditor(element as HTMLElement, uiModel);
+      });
+    });
+  }
+
+  appendControlEditor(element: HTMLElement, uiModel: UIModel) {
+    const componentRef = this.componentFactoryResolver
+      .resolveComponentFactory(ControlEditorComponent)
+      .create(this.injector);
+
+    componentRef.instance.uiModel = uiModel;
+    componentRef.instance.uiModelChanged.subscribe(() => {
+      this.uiModelUpdates$.next(uiModel);
+    });
+
+    this.appRef.attachView(componentRef.hostView);
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+
+    element.appendChild(domElem);
+    this.controls.push(componentRef);
   }
 
   private initDrake(elements) {
@@ -58,7 +101,7 @@ export class DragDropService {
         targetModel.splice(this.dropIndex, 0, item);
       }
 
-      setTimeout(() => this.drop$.next(item));
+      setTimeout(() => this.uiModelUpdates$.next(item));
     });
 
     this.drake.on('drag', (el: any, source: any) => {
