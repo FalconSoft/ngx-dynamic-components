@@ -1,6 +1,16 @@
 $border: 1px dashed rgba(0, 0, 0, 0);
 
-::ng-deep .preview .container .item {
+::ng-deep .preview dc-container dc-container-row.row {
+  min-height: 100px;
+  &.active {
+    border: $border;
+    border-color: grey;
+  }
+}
+
+::ng-deep .preview dc-container .item,
+// ::ng-deep .preview dc-container.container dc-container-row.row,
+::ng-deep .preview dc-container dc-container-row.row > div[class*="col-"] {
   &:hover > dc-control-editor {
     display: block;
   }
@@ -28,11 +38,10 @@ $border: 1px dashed rgba(0, 0, 0, 0);
   dc-ui-flex-container + dc-control-editor {
     left: -65px;
   }
+}
 
-  .active {
-    border: $border;
-    border-color: grey;
-  }
+::ng-deep .preview dc-container.container dc-container-row.row > dc-control-editor {
+  left: -65px;
 }
 
 ::ng-deep {

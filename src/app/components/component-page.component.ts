@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 
 import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
 import { ComponentDescriptor, WorkflowEngine } from '@ngx-dynamic-components/core';
+import * as bs from '@ngx-dynamic-components/bootstrap';
+// import * as bs from 'projects/bootstrap/src/public-api';
 
 export interface PeriodicElement {
   name: string;
@@ -44,7 +46,7 @@ export class ComponentPageComponent implements OnInit {
 
   ngOnInit() {
     this.component$ = this.route.params.pipe(map(p => {
-      const component = COMPONENTS_LIST.find((c: ComponentDescriptor) => c.name === p.component);
+      const component = [...bs.COMPONENTS_LIST, ...COMPONENTS_LIST].find((c: ComponentDescriptor) => c.name === p.component);
       const config = component.example;
       const wfConfig: any = {include: ['@common'], vars: {}, workflowsMap: {}};
       wfConfig.vars.uiModel = config.uiModel;

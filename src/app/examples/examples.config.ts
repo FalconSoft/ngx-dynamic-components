@@ -1,4 +1,5 @@
 import { ProfileFormUIModel, ProfileCardUIModel, ProfileDataModel, ProfileWorkflowsMap } from './profile-page.config';
+import { dashboardConfig } from './dashboard.config';
 
 export const EXAMPLES_LIST = [{
   type: 'Form Controls',
@@ -12,7 +13,7 @@ export const EXAMPLES_LIST = [{
   uiModel: ProfileCardUIModel,
   dataModel: ProfileDataModel,
   workflowConfig: ProfileWorkflowsMap
-}];
+}, dashboardConfig];
 
 export function getGroupedExamples(): {name: string, examples: []}[] {
   const groups = EXAMPLES_LIST.reduce((map, ex) => {

@@ -25,7 +25,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                "output": "./assets/monaco/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -228,7 +232,11 @@
             "tsConfig": "projects/tools/tsconfig.spec.json",
             "karmaConfig": "projects/tools/karma.conf.js",
             "assets": [
-              { "glob": "**/*", "input": "node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                "output": "./assets/monaco/"
+              }
             ]
           }
         },
@@ -238,6 +246,41 @@
             "tsConfig": [
               "projects/tools/tsconfig.lib.json",
               "projects/tools/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "bootstrap": {
+      "root": "projects/bootstrap",
+      "sourceRoot": "projects/bootstrap/src",
+      "projectType": "library",
+      "prefix": "dc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/bootstrap/tsconfig.lib.json",
+            "project": "projects/bootstrap/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/bootstrap/src/test.ts",
+            "tsConfig": "projects/bootstrap/tsconfig.spec.json",
+            "karmaConfig": "projects/bootstrap/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/bootstrap/tsconfig.lib.json",
+              "projects/bootstrap/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -41,9 +41,10 @@ export class ControlEditorComponent {
   private getParentDrag(el: HTMLElement): HTMLElement {
     let dragEl = el;
 
-    while (!Array.from(dragEl.classList).includes('item')) {
+    while (['item', 'row', 'col-sm'].every(c => Array.from(dragEl.classList).includes(c))) {
       dragEl = dragEl.parentNode as HTMLElement;
     }
+
     return dragEl;
   }
 

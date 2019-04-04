@@ -5,7 +5,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule ,
   MatRadioModule, MatTabsModule, MatTableModule, MatTooltipModule, MatIconModule } from '@angular/material';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
 
@@ -54,8 +53,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         MatTableModule,
         MatTooltipModule,
         MatIconModule,
-        CoreModule,
-        DragDropModule
+        CoreModule
     ],
     exports: [
         ButtonUIComponent,

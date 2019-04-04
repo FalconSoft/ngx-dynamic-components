@@ -50,11 +50,15 @@ export class DragDropService {
   private initEditor() {
     this.cleanUpEditor();
     this.drake.containers.forEach((container, index) => {
-      Array.from((container as HTMLElement).children).forEach((element, i) => {
+      this.getContainerItems(container).forEach((element, i) => {
         const uiModel = this.getChildrenByIndex(this.uiModel.children, index)[i];
         this.appendControlEditor(element as HTMLElement, uiModel);
       });
     });
+  }
+
+  private getContainerItems(container: HTMLElement): Element[] {
+    return Array.from(container.children).filter(item => item.tagName !== 'DC-CONTROL-EDITOR');
   }
 
   appendControlEditor(element: HTMLElement, uiModel: UIModel) {

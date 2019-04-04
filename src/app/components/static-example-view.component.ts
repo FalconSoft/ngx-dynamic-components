@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EXAMPLES_LIST } from '../examples.config';
+import { EXAMPLES_LIST } from '../examples/examples.config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { WorkflowEngine } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-static-example',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getGroupedExamples } from '../../examples.config';
+import { getGroupedExamples } from '../../examples/examples.config';
 import { GroupItem } from '../side-bar/side-bar.component';
 
 @Component({

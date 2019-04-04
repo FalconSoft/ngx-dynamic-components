@@ -93,8 +93,15 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     }
   }
 
-  get dropContainers() {
-    return this.container.nativeElement.querySelectorAll('dc-ui-flex-container .container');
+  /**
+   * Gets containers for drag&drop functionality.
+   */
+  get dropContainers(): NodeList {
+    return this.container.nativeElement.querySelectorAll(`
+      dc-ui-flex-container .container,
+      dc-container,
+      dc-container-row.row
+    `);
   }
 
   private initUIPreview() {
@@ -111,7 +118,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
       if (this.editMode$.value) {
         setTimeout(() => {
           this.dragService.init(this.dropContainers, uiModel);
-        });
+        }, 1e3);
       }
     };
 

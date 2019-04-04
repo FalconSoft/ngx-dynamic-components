@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileFormUIModel,  ProfileDataModel, ProfileWorkflowsMap } from '../profile-page.config';
+import { ProfileFormUIModel,  ProfileDataModel, ProfileWorkflowsMap } from '../examples/profile-page.config';
 import { WorkflowEngine, WorkflowConfig } from '@ngx-dynamic-components/core';
 
 @Component({
