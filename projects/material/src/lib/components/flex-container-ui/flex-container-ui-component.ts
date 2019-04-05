@@ -70,7 +70,7 @@ const example: ComponentExample<UIModel<FlexContainerProperties>> = {
       fxLayout: 'row',
       fxLayoutGap: '1rem',
       fxFlex: '0 1 auto',
-      width: '20%',
+      width: '50%',
       padding: '10px'
     },
     children: [{

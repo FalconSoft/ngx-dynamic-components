@@ -62,7 +62,14 @@ export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, 
   description: 'Button component',
   itemProperties: ButtonProperties,
   component: ButtonUIComponent,
-  example
+  example,
+  defaultModel: {
+    type: `${packageName}:button`,
+    itemProperties: {
+      label: 'Butten'
+    },
+    containerProperties: {}
+  }
 };
 
 

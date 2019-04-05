@@ -14,13 +14,14 @@ export const dashboardUIModel = {
   children: [{
     type: 'bootstrap:bs-row',
     containerProperties: {},
+    itemProperties: {},
     children: [
       ['Widget 1', '#187da0'], ['Widget 2', '#2eadd3'], ['Widget 3', '#c69500'], ['Widget 4', '#f5302e']
     ].map(([t, c]) => getCardWidget(null, t, c))
   }, {
       type: 'bootstrap:bs-row',
-      containerProperties: {
-      },
+      containerProperties: {},
+      itemProperties: {},
       children: [{
         type: 'material:card',
         containerProperties: {},
@@ -44,6 +45,7 @@ export const dashboardUIModel = {
   }, {
     type: 'bootstrap:bs-row',
     containerProperties: {},
+    itemProperties: {},
     children: [
       ['First', 'Second Widget 1', 'lightblue'],
       ['Second', 'Second Widget 2', 'aliceblue'],
@@ -51,8 +53,8 @@ export const dashboardUIModel = {
       ['Forth', 'Second Widget 4', 'aliceblue']].map(([h, c, col]) => getCardWidget(h, c, col))
   }, {
     type: 'bootstrap:bs-row',
-    containerProperties: {
-    },
+    containerProperties: {},
+    itemProperties: {},
     children: [{
       type: 'material:card',
       containerProperties: {},
@@ -85,6 +87,7 @@ export const dashboardUIModel = {
         children: [{
           type: 'bootstrap:bs-row',
           containerProperties: {},
+          itemProperties: {},
           children: [{
             type: 'material:card',
             containerProperties: {},
@@ -123,6 +126,7 @@ export const dashboardUIModel = {
         }, {
           type: 'bootstrap:bs-row',
           containerProperties: {},
+          itemProperties: {},
           children: [table.example.uiModel]
         }]
       }*/

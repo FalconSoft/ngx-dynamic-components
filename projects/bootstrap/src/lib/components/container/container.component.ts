@@ -5,7 +5,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
 @Component({
   selector: 'dc-container',
   template: `
-    <dc-container-row *ngFor="let item of uiModel.children"
+    <dc-container-row *ngFor="let item of uiModel.children" [ngStyle]="getStyles(item.itemProperties)"
       (changedDataModel)="changedDataModel.emit($event)"
       [uiModel]='item'
       [dataModel]='dataModel'
@@ -18,7 +18,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
     }
   `]
 })
-export class ContainerComponent extends BaseUIComponent<BSContainerProperties> {
+export class ContainerComponent extends BaseUIComponent<BSContainerProperties> implements OnInit {
   @HostBinding('class.container') isContainer = true;
   @HostBinding('class.container-fluid') isFluidContainer = false;
 

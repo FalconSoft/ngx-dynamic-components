@@ -52,7 +52,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     this.initUIPreview();
     this.editMode$.subscribe(editMode => {
       if (editMode) {
-        this.dragService.init(this.dropContainers, this.uiModel);
+        this.dragService.init(this.container, this.uiModel);
       } else {
         this.dragService.cleanUpEditor();
       }
@@ -85,6 +85,17 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     this.layout = this.layout === Layout.horizontal ? Layout.vertical : Layout.horizontal;
   }
 
+  addRow() {
+    this.uiModel.children.unshift({
+      type: 'bootstrap:bs-row',
+      containerProperties: {},
+      itemProperties: {},
+      children: []
+    });
+    this.refreshPreview(this.uiModel, this.dataModel);
+    this.onDataModelChange(null);
+  }
+
   onDataModelChange(data: any) {
     if (data) {
       this.dataModelControl.setValue(JSON.stringify(data, null, 4));
@@ -93,39 +104,28 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     }
   }
 
-  /**
-   * Gets containers for drag&drop functionality.
-   */
-  get dropContainers(): NodeList {
-    return this.container.nativeElement.querySelectorAll(`
-      dc-ui-flex-container .container,
-      dc-container,
-      dc-container-row.row
-    `);
-  }
-
   private initUIPreview() {
-    const refreshPreview = (uiModel: UIModel, dataModel: any) => {
-      this.uiModel = uiModel;
-      this.dataModel = dataModel;
-      this.workflowEngine.setVariable('uiModel', this.uiModel);
-      this.workflowEngine.setVariable('dataModel', this.dataModel);
-      if (this.workflowControl) {
-        const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
-        this.workflowControl.setValue(strWorkflowConfig);
-      }
-
-      if (this.editMode$.value) {
-        setTimeout(() => {
-          this.dragService.init(this.dropContainers, uiModel);
-        }, 1e3);
-      }
-    };
-
-    this.initUIModelControl().subscribe(uiModel => refreshPreview(uiModel, this.dataModel));
-    this.initDataModelControl().subscribe(dataModel => refreshPreview(this.uiModel, dataModel));
+    this.initUIModelControl().subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
+    this.initDataModelControl().subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel));
     this.initWorkflowControl();
     this.dragService.uiModelUpdates$.subscribe(() => this.onDataModelChange(null));
+  }
+
+  private refreshPreview(uiModel: UIModel, dataModel: any) {
+    this.uiModel = uiModel;
+    this.dataModel = dataModel;
+    this.workflowEngine.setVariable('uiModel', this.uiModel);
+    this.workflowEngine.setVariable('dataModel', this.dataModel);
+    if (this.workflowControl) {
+      const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
+      this.workflowControl.setValue(strWorkflowConfig);
+    }
+
+    if (this.editMode$.value) {
+      setTimeout(() => {
+        this.dragService.init(this.container, uiModel);
+      }, 1e1);
+    }
   }
 
   private initUIModelControl(): Observable<any> {

@@ -17,6 +17,7 @@ script:
   - ng build core
   - ng test material --watch=false --browsers=ChromeHeadless
   - ng build material
+  - ng build bootstrap
   - ng test tools --watch=false --browsers=ChromeHeadless
   - ng build tools
   - npm run build:gh

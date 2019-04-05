@@ -32,7 +32,7 @@ const example: ComponentExample<UIModel<BSContainerRowProperties>> = {
       width: '100%'
     },
     itemProperties: {
-      width: '20%',
+      width: '50%',
       padding: '10px'
     },
     children: [{

@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
-import { MatTabsModule, MatIconModule, MatTooltipModule, MatCardModule, MatDividerModule } from '@angular/material';
+import { MatTabsModule, MatIconModule, MatTooltipModule, MatCardModule, MatDividerModule, MatListModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { CoreModule, WorkflowEngine, JSONUtils, UIModel } from '@ngx-dynamic-components/core';
+import { CoreModule, WorkflowEngine, UIModel } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
-import { ProfileFormUIModel, ProfileDataModel, ProfileWorkflowsMap } from 'src/app/profile-page.config';
+import { ProfileFormUIModel, ProfileDataModel, ProfileWorkflowsMap } from 'src/app/examples/profile-page.config';
 import { PreviewEditorComponent } from './preview-editor.component';
 import { DebugElement } from '@angular/core';
 
@@ -23,6 +23,7 @@ describe('PreviewEditorComponent', () => {
       imports: [
         CoreModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,
         MatCardModule, MatTabsModule, MatIconModule, MatTooltipModule, MatDividerModule,
+        MatListModule,
         MonacoEditorModule.forRoot({baseUrl: './assets'})
       ]
     })

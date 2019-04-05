@@ -63,5 +63,11 @@ export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, Text
   description: 'Text component',
   itemProperties: TextProperties,
   component: TextUIComponent,
-  example
+  example,
+  defaultModel: {
+    type: `${packageName}:text`,
+    itemProperties: {
+      text: 'Text example'
+    }
+  }
 };
