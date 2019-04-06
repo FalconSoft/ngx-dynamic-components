@@ -1,0 +1,10 @@
+{
+  "name": "@ngx-dynamic-components/bootstrap",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@ngx-dynamic-components/core": ">=0.0.3",
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0",
+    "ngx-bootstrap": "^4.0.0"
+  }
+}

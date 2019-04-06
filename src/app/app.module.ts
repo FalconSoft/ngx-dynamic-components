@@ -9,6 +9,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from '@ngx-dynamic-components/core';
 import { ToolsModule } from '@ngx-dynamic-components/tools';
 import { MaterialModule } from '@ngx-dynamic-components/material';
+import { BootstrapModule } from '@ngx-dynamic-components/bootstrap';
+// import { BootstrapModule } from 'projects/bootstrap/src/public-api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,6 +58,7 @@ import { StaticExampleViewComponent } from './components/static-example-view.com
     CoreModule,
     ToolsModule,
     MaterialModule,
+    BootstrapModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatToolbarModule,

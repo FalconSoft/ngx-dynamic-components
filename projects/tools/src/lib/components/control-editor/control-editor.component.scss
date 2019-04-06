@@ -1,6 +1,36 @@
 $border: 1px dashed rgba(0, 0, 0, 0);
 
-::ng-deep .preview .container .item {
+::ng-deep .preview dc-container dc-container-row.row {
+  min-height: 100px;
+  border: $border;
+  &.active {
+    border-color: grey;
+  }
+}
+
+::ng-deep .preview.edit-mode {
+  dc-container dc-container-row.row {
+    border-color: rgba(0, 0, 0, .25);
+    > dc-control-editor {
+      left: -50px;
+      .handle {
+        display: none;
+      }
+
+      .add-component {
+        display: inline-block;
+      }
+    }
+    .col-sm dc-ui-flex-container + dc-control-editor {
+      left: 60px;
+    }
+  }
+}
+
+::ng-deep .preview dc-ui-flex-container .item,
+::ng-deep .preview dc-container .item,
+::ng-deep .preview dc-container dc-container-row.row,
+::ng-deep .preview dc-container dc-container-row.row > div[class*="col-"] {
   &:hover > dc-control-editor {
     display: block;
   }
@@ -26,13 +56,12 @@ $border: 1px dashed rgba(0, 0, 0, 0);
   }
 
   dc-ui-flex-container + dc-control-editor {
-    left: -65px;
+    left: -50px;
   }
+}
 
-  .active {
-    border: $border;
-    border-color: grey;
-  }
+::ng-deep .preview dc-container.container dc-container-row.row > dc-control-editor {
+  left: -50px;
 }
 
 ::ng-deep {
@@ -57,7 +86,7 @@ $border: 1px dashed rgba(0, 0, 0, 0);
     }
 
     > dc-ui-flex-container + dc-control-editor {
-      left: -65px;
+      left: -50px;
     }
   }
   /* high-performance display:none; helper */
@@ -101,10 +130,22 @@ $border: 1px dashed rgba(0, 0, 0, 0);
   top: 0;
   right: 0;
   z-index: 2;
-  max-width: 80px;
+  max-width: 105px;
   display: none;
+  background: rgba(0, 0, 0, .25);
+  border-radius: 4px;
   &:hover {
     cursor: move;
     color: rgba(0, 0, 0, .75);
+  }
+
+  ::ng-deep button {
+    height: 35px;
+    line-height: 35px;
+    width: 35px;
+  }
+
+  .add-component {
+    display: none;
   }
 }

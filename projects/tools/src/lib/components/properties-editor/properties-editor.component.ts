@@ -62,7 +62,7 @@ export class PropertiesEditorComponent implements OnInit {
       const clickedInside = this.editorContainer.nativeElement.contains(targetElement);
       if (!clickedInside && this.editBtn._elementRef.nativeElement.contains(targetElement)) {
         // Clicked on button.
-        const itemProps = this.uiModel.itemProperties;
+        const itemProps = this.uiModel.itemProperties || {};
         this.properties = this.itemProperties.map(({name}) => {
           let value = itemProps[name];
           if (value === undefined) {

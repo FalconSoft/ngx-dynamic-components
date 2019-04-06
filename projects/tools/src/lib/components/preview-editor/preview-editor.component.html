@@ -1,6 +1,9 @@
 <mat-card *ngIf="initUiModel" fxLayout="column">
   <mat-card-header fxLayoutAlign="start center">
     <span fxFlex="1 1 auto">{{title}}</span>
+    <button mat-icon-button matTooltip="Add row" *ngIf="editMode$ | async" (click)="addRow()">
+      <mat-icon>add_box</mat-icon>
+    </button>
     <button mat-icon-button [matTooltip]="editorTooltip$ | async" (click)="editMode$.next(!editMode$.value)">
       <mat-icon [ngStyle]="{opacity: (editMode$ | async) ? 1 : 0.5}">edit</mat-icon>
     </button>
@@ -28,7 +31,7 @@
       <mat-divider *ngIf="isHorizontal"></mat-divider>
     </ng-container>
 
-    <div class="preview" fxFlex="1 1 auto">
+    <div class="preview" fxFlex="1 1 auto" [ngClass]="{'edit-mode': editMode$ | async}">
       <dc-ui-selector #dynamicComponent (changedDataModel)="onDataModelChange($event)" [uiModel]='uiModel'
         [dataModel]='dataModel' [workflowEngine]='workflowEngine'></dc-ui-selector >
     </div>
