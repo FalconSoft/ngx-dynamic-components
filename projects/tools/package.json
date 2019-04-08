@@ -23,6 +23,9 @@
     "@angular/core": "^7.2.0",
     "@angular/flex-layout": "^7.0.0-beta.23",
     "@angular/material": "^7.3.3",
+    "@ngx-dynamic-components/bootstrap": ">=0.0.3",
+    "@ngx-dynamic-components/core": ">=0.0.3",
+    "@ngx-dynamic-components/material": ">=0.0.3",
     "angular-split": "^2.0.1",
     "ngx-monaco-editor": "^7.0.0"
   }

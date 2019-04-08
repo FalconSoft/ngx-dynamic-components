@@ -1,6 +1,6 @@
 import { Injectable, ApplicationRef, Injector, EmbeddedViewRef, ComponentFactoryResolver, ComponentRef, ElementRef } from '@angular/core';
 import { dragula } from 'ng2-dragula';
-import { UIModel } from '@ngx-dynamic-components/core';
+import { UIModel, AttributesMap } from '@ngx-dynamic-components/core';
 import { Subject } from 'rxjs';
 import { ControlEditorComponent } from '../components/control-editor/control-editor.component';
 
@@ -18,7 +18,7 @@ export class DragDropService {
   private dragIndex = 0;
   private dropIndex = 0;
 
-  uiModel: UIModel;
+  uiModel: UIModel<AttributesMap>;
 
   drake;
 
