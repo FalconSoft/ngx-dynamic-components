@@ -20,6 +20,7 @@ export class NGXDynamicComponent implements OnInit {
     workflowEngine: WorkflowEngine = null;
 
     async ngOnInit(): Promise<void> {
+        this.workflow.vars = this.workflow.vars || {};
         this.workflow.vars.uiModel = this.uiModel;
         this.workflow.vars.dataModel = this.dataModel;
         this.workflowEngine = new WorkflowEngine(this.workflow);
