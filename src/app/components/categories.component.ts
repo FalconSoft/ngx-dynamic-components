@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentDescriptor } from '@ngx-dynamic-components/core';
-import { getCategories } from '@ngx-dynamic-components/material';
-import { getSlugFromStr } from '../utils';
+import { getSlugFromStr, getCategories } from '../utils';
 
 @Component({
   selector: 'dc-categories',
@@ -28,9 +27,9 @@ export class CategoriesComponent implements OnInit {
   ngOnInit() {
     this.categories = getCategories()
       .map(c => ({
-        header: c.name,
+        header: `${c.packageName} ${c.name}`,
         content: this.getComponentsNames(c.components),
-        link: [getSlugFromStr(c.name)]
+        link: [c.packageName, getSlugFromStr(c.name)]
       }));
   }
 

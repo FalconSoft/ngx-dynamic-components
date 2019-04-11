@@ -20,8 +20,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: ComponentsComponent },
       { path: 'categories', component: CategoriesComponent },
-      { path: 'categories/:category', component: ComponentsComponent },
-      { path: ':component', component: ComponentPageComponent },
+      { path: 'categories/:packageName/:category', component: ComponentsComponent },
+      { path: ':packageName/:component', component: ComponentPageComponent },
     ]
   },
   { path: 'examples', component: ExamplesPageComponent,

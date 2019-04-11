@@ -1,6 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
   propDescription, ComponentExample } from '@ngx-dynamic-components/core';
+import { packageName, Categories } from '../../constants';
 
 @Component({
   selector: 'dc-container',
@@ -38,7 +39,7 @@ export class BSContainerProperties extends ContainerProperties {
   fullWidth?: boolean;
 }
 
-const example: ComponentExample<UIModel<BSContainerProperties>> = {
+export const example: ComponentExample<UIModel<BSContainerProperties>> = {
   title: 'Bootstrap container example',
   uiModel: {
     type: 'bootstrap:container',
@@ -51,44 +52,40 @@ const example: ComponentExample<UIModel<BSContainerProperties>> = {
     },
     children: [{
       type: 'bootstrap:bs-row',
-      containerProperties: {
-      },
       children: [{
-        type: 'material:text',
-        containerProperties: {
-          fxFlex: '1 1 auto'
-        },
+        type: 'bootstrap:text-input',
+        containerProperties: {},
         itemProperties: {
-          text: 'Row 1 / Item 1',
+          label: 'Input-1',
+          placeholder: 'Name first section',
+          dataModelPath: '$.first'
         }
       }, {
-        type: 'material:text',
-        containerProperties: {
-          fxFlex: '1 1 auto'
-        },
+        type: 'bootstrap:text-input',
+        containerProperties: {},
         itemProperties: {
-          text: 'Row 1 / Item 2',
+          label: 'Input-2',
+          placeholder: 'Name second section',
+          dataModelPath: '$.second'
         }
       }]
     }, {
       type: 'bootstrap:bs-row',
-      containerProperties: {
-      },
       children: [{
-        type: 'material:text',
-        containerProperties: {
-          fxFlex: '1 1 auto'
-        },
+        type: 'bootstrap:text-input',
+        containerProperties: {},
         itemProperties: {
-          text: 'Row 2 / Item 1',
+          label: 'Input-11',
+          placeholder: 'Name third section',
+          dataModelPath: '$.third'
         }
       }, {
-        type: 'material:text',
-        containerProperties: {
-          fxFlex: '1 1 auto'
-        },
+        type: 'bootstrap:text-input',
+        containerProperties: {},
         itemProperties: {
-          text: 'Row 2 / Item 2',
+          label: 'Input-22',
+          placeholder: 'Name fourth section',
+          dataModelPath: '$.forth'
         }
       }]
     }]
@@ -106,8 +103,8 @@ interface ContainerPropertiesConstrutor {
 
 export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrutor, ContainerPropertiesConstrutor> = {
   name: 'container',
-  packageName: 'bootstrap',
-  category: 'Layout',
+  packageName,
+  category: Categories.Layout,
   description: 'Bootstrap container',
   itemProperties: BSContainerProperties,
   component: ContainerComponent,
