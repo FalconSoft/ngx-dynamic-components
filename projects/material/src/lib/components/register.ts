@@ -10,6 +10,7 @@ import { textareaDescriptor } from './textarea-ui-component';
 import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component';
 import { tabsDescriptor } from './tabs-ui/tabs-ui.component';
 import { datableDescriptor } from './datable-ui/datable-ui.component';
+import { packageName } from '../constants';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   selectDescriptor,
@@ -30,7 +31,7 @@ export function registerComponents() {
   COMPONENTS_LIST.forEach(component => CoreService.registerComponent(component));
 }
 
-export function getCategories(): {name: string, components: ComponentDescriptor[]}[] {
+export function getCategories(): {name: string, packageName: string, components: ComponentDescriptor[]}[] {
   const categories = COMPONENTS_LIST.reduce((map, desc) => {
     map[desc.category] = map[desc.category] || [];
     map[desc.category].push(desc);
@@ -40,7 +41,8 @@ export function getCategories(): {name: string, components: ComponentDescriptor[
   return Object.entries(categories).map(([key, val]: [string, ComponentDescriptor[]]) => {
     return {
       name: key,
-      components: val
+      components: val,
+      packageName
     };
   });
 }

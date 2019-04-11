@@ -3,10 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
 import { ComponentDescriptor, WorkflowEngine } from '@ngx-dynamic-components/core';
-import * as bs from '@ngx-dynamic-components/bootstrap';
-// import * as bs from 'projects/bootstrap/src/public-api';
+import { COMPONENTS_LIST } from '../utils';
 
 export interface PeriodicElement {
   name: string;
@@ -46,7 +44,7 @@ export class ComponentPageComponent implements OnInit {
 
   ngOnInit() {
     this.component$ = this.route.params.pipe(map(p => {
-      const component = [...bs.COMPONENTS_LIST, ...COMPONENTS_LIST].find((c: ComponentDescriptor) => c.name === p.component);
+      const component = COMPONENTS_LIST.find((c: ComponentDescriptor) => c.name === p.component && c.packageName === p.packageName);
       const config = component.example;
       const wfConfig: any = {include: ['@common'], vars: {}, workflowsMap: {}};
       wfConfig.vars.uiModel = config.uiModel;

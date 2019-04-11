@@ -5,7 +5,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
 @Component({
   selector: 'dc-container-row',
   template: `
-    <div *ngFor="let item of uiModel.children" class="col-sm p-4">
+    <div *ngFor="let item of uiModel.children" class="col-sm" [ngStyle]="getStyles(item.containerProperties)">
       <dc-ui-selector
           (changedDataModel)="changedDataModel.emit($event)"
           [uiModel]='item'
@@ -24,7 +24,7 @@ export class BSContainerRowProperties extends ContainerProperties {
 
 }
 
-const example: ComponentExample<UIModel<BSContainerRowProperties>> = {
+export const example: ComponentExample<UIModel<BSContainerRowProperties>> = {
   title: 'Bootstrap container row example',
   uiModel: {
     type: 'bootstrap:bs-row',
@@ -36,20 +36,20 @@ const example: ComponentExample<UIModel<BSContainerRowProperties>> = {
       padding: '10px'
     },
     children: [{
-      type: 'material:text',
-      containerProperties: {
-        fxFlex: '1 1 auto'
-      },
+      type: 'bootstrap:text-input',
+      containerProperties: {},
       itemProperties: {
-        text: 'Text line 1',
+        label: 'Input-1',
+        placeholder: 'Name first section',
+        dataModelPath: '$.first'
       }
     }, {
-      type: 'material:text',
-      containerProperties: {
-        fxFlex: '1 1 auto'
-      },
+      type: 'bootstrap:text-input',
+      containerProperties: {},
       itemProperties: {
-        text: 'Text line 2',
+        label: 'Input2',
+        placeholder: 'Name second section',
+        dataModelPath: '$.second'
       }
     }]
   },

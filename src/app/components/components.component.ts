@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
 import { ComponentDescriptor } from '@ngx-dynamic-components/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { getSlugFromStr } from '../utils';
+import { getSlugFromStr, COMPONENTS_LIST } from '../utils';
 
 @Component({
   selector: 'dc-components',
@@ -26,9 +25,15 @@ export class ComponentsComponent implements OnInit {
   category$: Observable<string>;
 
   constructor(private route: ActivatedRoute) {
+    const filterComponents = (p) => {
+      return (c: ComponentDescriptor) => (!p.category || getSlugFromStr(c.category) === p.category) && c.packageName === p.packageName;
+    };
     this.components$ = this.route.params.pipe(
-      map(p => COMPONENTS_LIST.filter((c: ComponentDescriptor) => !p.category || getSlugFromStr(c.category) === p.category)
-                              .map(c => ({header: c.name, content: c.description, link: ['/components', c.name]}))));
+      map(p => COMPONENTS_LIST.filter(filterComponents(p))
+                              .map(c => ({
+                                header: `${c.packageName} ${c.name}`,
+                                content: c.description,
+                                link: ['/components', c.packageName, c.name]}))));
 
     this.category$ = this.route.params.pipe(
       map(p => p.category ? p.category.replace(/-/g, ' ') : 'all categories'));

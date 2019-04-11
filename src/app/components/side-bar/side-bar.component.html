@@ -7,7 +7,7 @@
     </mat-expansion-panel-header>
     <mat-list role="list">
       <mat-list-item role="listitem" *ngFor="let item of group.list">
-        <a [routerLink]="[item.name]" routerLinkActive="active">{{item.name}}</a>
+        <a [routerLink]="getUrl(group, item)" routerLinkActive="active">{{item.name}}</a>
       </mat-list-item>
     </mat-list>
   </mat-expansion-panel>

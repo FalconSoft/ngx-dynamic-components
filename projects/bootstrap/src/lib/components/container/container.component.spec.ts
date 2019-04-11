@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
-import { ContainerComponent } from './container.component';
+import { UISelectorComponent } from '@ngx-dynamic-components/core';
+import { ContainerComponent, example } from './container.component';
+import { ContainerRowComponent } from '../container-row/container-row.component';
+import { InputUIComponent } from '../input-ui/input-ui.component';
+import { registerComponents } from '../register';
+import { FormsModule } from '@angular/forms';
 
 describe('ContainerComponent', () => {
   let component: ContainerComponent;
@@ -8,14 +14,25 @@ describe('ContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContainerComponent ]
-    })
-    .compileComponents();
+      declarations: [ ContainerComponent, ContainerRowComponent, UISelectorComponent, InputUIComponent ],
+      imports: [ FormsModule ]
+    });
+
+    TestBed.overrideModule(BrowserDynamicTestingModule, {
+      set: {
+        entryComponents: [InputUIComponent]
+      }
+    });
+
+    TestBed.compileComponents();
+    registerComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ContainerComponent);
     component = fixture.componentInstance;
+    component.uiModel = example.uiModel;
+    component.dataModel = example.dataModel;
     fixture.detectChanges();
   });
 

@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, propDescription, StyleProperties, ComponentExample,
   ComponentDescriptor, UIModel} from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../constants';
+import { Categories, packageName } from '../../constants';
 
 @Component({
-    selector: 'dc-ui-button',
-    template: `
-    <button mat-flat-button color="primary"
-      [ngStyle]="itemStyles"
-      (click)="workflowEngine.run(uiModel.itemProperties?.clickActionKey)">
-    {{uiModel.itemProperties?.label}}
-    </button>
-    `
+  selector: 'dc-button-ui',
+  template: `
+    <button class="btn " [ngClass]="properties.btnClass || 'btn-primary'"
+      [type]="properties.type">{{properties.label}}</button>
+  `,
+  styles: []
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
 
@@ -29,12 +27,24 @@ export class ButtonProperties extends StyleProperties {
     example: 'submit',
   })
   clickActionKey: string;
+
+  @propDescription({
+    description: 'Bootstrap predefined button class',
+    example: 'btn-secondary',
+  })
+  btnClass?: string;
+
+  @propDescription({
+    description: 'Button type: button|submit|reset. Default: button',
+    example: 'submit',
+  })
+  type?: string;
 }
 
-const example: ComponentExample<UIModel<ButtonProperties>> = {
+export const example: ComponentExample<UIModel<ButtonProperties>> = {
   title: 'Basic button example',
   uiModel: {
-    type: 'material:button',
+    type: `${packageName}:button`,
     containerProperties: {},
     itemProperties: {
         label: 'SUBMIT',
@@ -62,14 +72,5 @@ export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, 
   description: 'Button component',
   itemProperties: ButtonProperties,
   component: ButtonUIComponent,
-  example,
-  defaultModel: {
-    type: `${packageName}:button`,
-    itemProperties: {
-      label: 'Button'
-    },
-    containerProperties: {}
-  }
+  example
 };
-
-

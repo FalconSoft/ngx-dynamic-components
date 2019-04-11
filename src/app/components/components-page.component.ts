@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getCategories } from '@ngx-dynamic-components/material';
-import * as bootstrap from '@ngx-dynamic-components/bootstrap';
-// import * as bootstrap from 'projects/bootstrap/src/public-api';
+import { getPackageCategories } from '../utils';
 import { GroupItem } from './side-bar/side-bar.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -11,15 +9,23 @@ import { map } from 'rxjs/operators';
   selector: 'dc-components-page',
   template: `
     <dc-sidenav-layout title="Components" fxLayout="column" fxFlex="1 1 auto">
-      <dc-side-bar *ngFor="let categories of sections" sidenav [groups]="categories"></dc-side-bar>
+      <ng-container sidenav *ngFor="let section of sections">
+        <h3 class="mat-h3">{{section.packageName}}</h3>
+        <dc-side-bar [groups]="section.categories"></dc-side-bar>
+      </ng-container>
       <router-outlet content></router-outlet>
     </dc-sidenav-layout>
-  `
+  `,
+  styles: [`
+    h3 {
+      margin-left: 25px;
+      margin-bottom: -25px;
+    }
+  `]
 })
 export class ComponentsPageComponent implements OnInit {
 
-  sections: GroupItem[][] = [];
-  categories: GroupItem[];
+  sections = [];
 
   isHandSet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
 
@@ -30,13 +36,12 @@ export class ComponentsPageComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
-    this.sections = [bootstrap.getCategories(), getCategories()].map(categories => {
-      return categories.map(({name, components}) => {
-        return { name, list: components };
-      });
+    const mapToGroup = ({name, components, packageName}) => ({name, list: components, url: [packageName]});
+    this.sections = getPackageCategories().map(({packageName, categories}) => {
+      return {
+        packageName,
+        categories: categories.map(mapToGroup)
+      };
     });
-    // this.categories = getCategories().map(({name, components}) => {
-    //   return { name, list: components };
-    // });
   }
 }
