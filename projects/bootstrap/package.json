@@ -1,9 +1,6 @@
 {
   "name": "@ngx-dynamic-components/bootstrap",
-<<<<<<< HEAD
   "version": "0.0.8",
-=======
-  "version": "0.0.7",
   "private": false,
   "description": "@ngx-dynamic-components/bootstrap is Angular 7+ library what contains a bootstrap interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -21,7 +18,6 @@
     "json forms",
     "form library"
   ],
->>>>>>> Upgraded version
   "peerDependencies": {
     "@ngx-dynamic-components/core": ">=0.0.8",
     "@angular/common": "^7.2.0",
