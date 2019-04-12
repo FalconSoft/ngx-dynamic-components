@@ -27,6 +27,12 @@ interface SwitchActionConfig {
     object: object;
 }
 
+interface AddItemConfig {
+  object: object;
+  propertyName: string;
+  itemName: string;
+}
+
 /**
  * Resolves expression({{ expression }}) in key if contains.
  * @param context - Execution context.
@@ -124,10 +130,28 @@ const getValueAction = (context: ExecutionContext, config: GetValueConfig) => {
     return JSONUtils.find(objValue, propertyName);
 };
 
+const addItemToArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
+  const objValue = resolveValue(context, config.object);
+  const propertyName = config.propertyName;
+  const children = JSONUtils.find(objValue, propertyName);
+  children.push(context.variables.get(config.itemName));
+  return children;
+};
+
+const popArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
+  const objValue = resolveValue(context, config.object);
+  const propertyName = config.propertyName;
+  const children = JSONUtils.find(objValue, propertyName);
+  children.pop();
+  return children;
+};
+
 export const commonActionsMap = new Map<string, (...args: any[]) => any>([
     ['httpCall', (config: HttpCallConfig) => {}],
     ['switch', () => {}],
     ['getValue', getValueAction],
     ['setValue', setValueAction],
     ['setValues', setValuesAction],
+    ['addItemToArray', addItemToArrayAction],
+    ['popArray', popArrayAction]
 ]);

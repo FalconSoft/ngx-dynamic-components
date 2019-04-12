@@ -87,6 +87,11 @@ describe('JSON Utils', async () => {
         expect(result).toBe(testObject.parent.children[0].children[1].itemProperties.options);
     });
 
+    it('find: $(children:name=name1)', async () => {
+      const result = JSONUtils.find(testObject, '$(children:name=name1)');
+      expect(result).toBe(testObject.parent.children[0]);
+  });
+
     it('setValue: $.parent ', async () => {
         const inObject: any = {};
         JSONUtils.setValue(inObject, '$.parent', 55);

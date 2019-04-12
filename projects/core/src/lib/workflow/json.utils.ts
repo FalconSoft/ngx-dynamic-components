@@ -121,11 +121,14 @@ export class JSONUtils {
     private static getFlatternProps(obj, flattern: string): any[] {
       let props = [];
       const entries = Array.isArray(obj) ? obj : [obj];
-
       entries.forEach(o => {
         Object.entries(o).forEach(([key, val]) => {
           if (key === flattern) {
-            props.push(val);
+            if (Array.isArray(val)) {
+              props = props.concat(...val);
+            } else {
+              props.push(val);
+            }
           }
           if (typeof val === 'object') {
             props = props.concat(...JSONUtils.getFlatternProps(val, flattern));

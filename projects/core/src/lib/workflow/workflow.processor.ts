@@ -60,8 +60,8 @@ export class WorkflowEngine {
                 commonActionsMap.forEach((func, key) => context.actions.set(key, func));
             }
         }
-
     }
+
     private resolveProperties(context: ExecutionContext, step: any): any {
         const payload = Object.assign({}, step);
         delete payload.actionType;
@@ -124,7 +124,6 @@ export class WorkflowEngine {
             await this.initialize();
             this.isInitialized = true;
         }
-
         if (this.context.workflows.has(workflowName)) {
             await this.executeFlow(this.context, this.context.workflows.get(workflowName));
         } else {
