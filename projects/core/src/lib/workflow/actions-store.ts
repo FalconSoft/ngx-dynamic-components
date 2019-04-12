@@ -30,7 +30,8 @@ interface SwitchActionConfig {
 interface AddItemConfig {
   object: object;
   propertyName: string;
-  itemName: string;
+  itemPropertyName: string;
+  wrapName: string;
 }
 
 /**
@@ -130,20 +131,29 @@ const getValueAction = (context: ExecutionContext, config: GetValueConfig) => {
     return JSONUtils.find(objValue, propertyName);
 };
 
-const addItemToArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
+const getListFromContext = (context: ExecutionContext, config: AddItemConfig) => {
   const objValue = resolveValue(context, config.object);
   const propertyName = config.propertyName;
-  const children = JSONUtils.find(objValue, propertyName);
-  children.push(context.variables.get(config.itemName));
-  return children;
+  const list = JSONUtils.find(objValue, propertyName);
+  if (Array.isArray(list)) {
+    return list;
+  }
+
+  throw new Error(`Property ${propertyName} in ${config.object} is not an array.`);
+};
+
+const addItemToArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
+  const list = getListFromContext(context, config);
+  const objValue = resolveValue(context, config.object);
+  const item = JSONUtils.find(objValue, config.itemPropertyName);
+  list.push({[config.wrapName]: item});
+  return list;
 };
 
 const popArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
-  const objValue = resolveValue(context, config.object);
-  const propertyName = config.propertyName;
-  const children = JSONUtils.find(objValue, propertyName);
-  children.pop();
-  return children;
+  const list = getListFromContext(context, config);
+  list.pop();
+  return list;
 };
 
 export const commonActionsMap = new Map<string, (...args: any[]) => any>([

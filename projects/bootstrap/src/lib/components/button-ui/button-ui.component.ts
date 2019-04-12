@@ -8,12 +8,15 @@ import { Categories, packageName } from '../../constants';
   template: `
     <button class="btn " [ngClass]="properties.btnClass || 'btn-primary'"
       [type]="properties.type"
-      (click)="workflowEngine.run(properties.clickActionKey)">{{properties.label}}</button>
+      (click)="onClick()">{{properties.label}}</button>
   `,
   styles: []
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
-
+  onClick() {
+    this.workflowEngine.run(this.properties.clickActionKey);
+    this.changedDataModel.emit(this.dataModel);
+  }
 }
 
 export class ButtonProperties extends StyleProperties {

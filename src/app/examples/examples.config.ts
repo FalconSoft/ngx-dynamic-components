@@ -2,6 +2,7 @@ import { ProfileFormUIModel, ProfileCardUIModel, ProfileDataModel, ProfileWorkfl
 import { dashboardConfig } from './dashboard.config';
 import { bsFormConfig } from './profile-bs.config';
 import { itemsListConfig } from './items-list.config';
+import { itemsTableConfig } from './items-table.config';
 
 export const EXAMPLES_LIST = [{
   type: 'Form Controls',
@@ -15,7 +16,7 @@ export const EXAMPLES_LIST = [{
   uiModel: ProfileCardUIModel,
   dataModel: ProfileDataModel,
   workflowConfig: ProfileWorkflowsMap
-}, dashboardConfig, bsFormConfig, itemsListConfig];
+}, dashboardConfig, bsFormConfig, itemsListConfig, itemsTableConfig];
 
 export function getGroupedExamples(): {name: string, examples: []}[] {
   const groups = EXAMPLES_LIST.reduce((map, ex) => {
