@@ -139,6 +139,11 @@ const getListFromContext = (context: ExecutionContext, config: AddItemConfig) =>
     return list;
   }
 
+  if (list === null) {
+    JSONUtils.setValue(objValue, propertyName, []);
+    return JSONUtils.find(objValue, propertyName);
+  }
+
   throw new Error(`Property ${propertyName} in ${config.object} is not an array.`);
 };
 
@@ -147,13 +152,14 @@ const addItemToArrayAction = (context: ExecutionContext, config: AddItemConfig) 
   const objValue = resolveValue(context, config.object);
   const item = JSONUtils.find(objValue, config.itemPropertyName);
   list.push({[config.wrapName]: item});
-  return list;
+  JSONUtils.setValue(objValue, config.propertyName, [...list]);
 };
 
 const popArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
   const list = getListFromContext(context, config);
   list.pop();
-  return list;
+  const objValue = resolveValue(context, config.object);
+  JSONUtils.setValue(objValue, config.propertyName, [...list]);
 };
 
 export const commonActionsMap = new Map<string, (...args: any[]) => any>([
