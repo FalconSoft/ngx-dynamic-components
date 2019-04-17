@@ -42,7 +42,6 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
       if (!this.workflowEngine || !this.uiModel.id) { return; }
 
       const workflowName = this.uiModel.id + action;
-
       if (await this.workflowEngine.hasWorkflow(workflowName)) {
         this.workflowEngine.run(workflowName);
       }

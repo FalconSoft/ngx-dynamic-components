@@ -16,6 +16,7 @@ export class NGXDynamicComponent implements OnInit {
     @Input() workflow: WorkflowConfig;
     @Input() dataModel: any;
     @Input() uiModel: UIModel<any>;
+    @Input() appContext: any;
 
     workflowEngine: WorkflowEngine = null;
 
@@ -24,5 +25,8 @@ export class NGXDynamicComponent implements OnInit {
         this.workflow.vars.uiModel = this.uiModel;
         this.workflow.vars.dataModel = this.dataModel;
         this.workflowEngine = new WorkflowEngine(this.workflow);
+        if (this.appContext && this.uiModel.id) {
+          this.appContext[this.uiModel.id] = this.workflowEngine;
+        }
     }
 }

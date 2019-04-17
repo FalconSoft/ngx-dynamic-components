@@ -34,6 +34,14 @@ interface AddItemConfig {
   wrapName: string;
 }
 
+interface PushItemConfig {
+  object: object;
+  target: object;
+  propertyName: string;
+  targetPropertyName: string;
+  wrapName: string;
+}
+
 /**
  * Resolves expression({{ expression }}) in key if contains.
  * @param context - Execution context.
@@ -131,7 +139,7 @@ const getValueAction = (context: ExecutionContext, config: GetValueConfig) => {
     return JSONUtils.find(objValue, propertyName);
 };
 
-const getListFromContext = (context: ExecutionContext, config: AddItemConfig) => {
+const getListFromContext = (context: ExecutionContext, config: AddItemConfig | PushItemConfig) => {
   const objValue = resolveValue(context, config.object);
   const propertyName = config.propertyName;
   const list = JSONUtils.find(objValue, propertyName);
@@ -155,6 +163,14 @@ const addItemToArrayAction = (context: ExecutionContext, config: AddItemConfig) 
   JSONUtils.setValue(objValue, config.propertyName, [...list]);
 };
 
+const pushItemToArrayAction = (context: ExecutionContext, config: PushItemConfig) => {
+  const list = getListFromContext(context, config);
+  const objValue = resolveValue(context, config.object);
+  const targetValue = resolveValue(context, config.target);
+  list.push({[config.wrapName]: targetValue});
+  JSONUtils.setValue(objValue, config.propertyName, [...list]);
+};
+
 const popArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
   const list = getListFromContext(context, config);
   list.pop();
@@ -169,5 +185,6 @@ export const commonActionsMap = new Map<string, (...args: any[]) => any>([
     ['setValue', setValueAction],
     ['setValues', setValuesAction],
     ['addItemToArray', addItemToArrayAction],
-    ['popArray', popArrayAction]
+    ['popArray', popArrayAction],
+    ['pushItemToArray', pushItemToArrayAction]
 ]);

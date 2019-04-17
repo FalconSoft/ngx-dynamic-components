@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule,
@@ -39,7 +39,6 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
     imports: [
         CommonModule,
         FormsModule,
-        BrowserAnimationsModule,
         FlexLayoutModule,
         ReactiveFormsModule,
         MatInputModule,

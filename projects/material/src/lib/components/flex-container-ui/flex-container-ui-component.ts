@@ -27,7 +27,7 @@ import { Categories, packageName } from '../../constants';
     </div>
     `
 })
-export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> implements OnInit {
+export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
 
 }
 
