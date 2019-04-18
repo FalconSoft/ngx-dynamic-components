@@ -42,6 +42,13 @@ interface PushItemConfig {
   wrapName: string;
 }
 
+interface TransferDataConfig {
+  from: string;
+  fromPropertyName: string;
+  to: object;
+  toPropertyName: string;
+}
+
 /**
  * Resolves expression({{ expression }}) in key if contains.
  * @param context - Execution context.
@@ -86,7 +93,7 @@ function getExpressions(key: string): string[] {
  * @param context - Execution context.
  * @param object - payload object.
  */
-function resolveValue(context: ExecutionContext, object: any) {
+export function resolveValue(context: ExecutionContext, object: any) {
     if (!object) { return null; }
     if (typeof object === 'object') { return object; }
 
@@ -159,23 +166,27 @@ const addItemToArrayAction = (context: ExecutionContext, config: AddItemConfig) 
   const list = getListFromContext(context, config);
   const objValue = resolveValue(context, config.object);
   const item = JSONUtils.find(objValue, config.itemPropertyName);
-  list.push({[config.wrapName]: item});
-  JSONUtils.setValue(objValue, config.propertyName, [...list]);
+  return JSONUtils.setValue(objValue, config.propertyName, [...list, {[config.wrapName]: item}]);
 };
 
 const pushItemToArrayAction = (context: ExecutionContext, config: PushItemConfig) => {
   const list = getListFromContext(context, config);
   const objValue = resolveValue(context, config.object);
   const targetValue = resolveValue(context, config.target);
-  list.push({[config.wrapName]: targetValue});
-  JSONUtils.setValue(objValue, config.propertyName, [...list]);
+  return JSONUtils.setValue(objValue, config.propertyName, [...list, {[config.wrapName]: targetValue}]);
 };
 
 const popArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
   const list = getListFromContext(context, config);
-  list.pop();
   const objValue = resolveValue(context, config.object);
-  JSONUtils.setValue(objValue, config.propertyName, [...list]);
+  return JSONUtils.setValue(objValue, config.propertyName, [...list.slice(0, list.length - 1)]);
+};
+
+const transferDataAction = (context: ExecutionContext, config: TransferDataConfig) => {
+  const fromObj = resolveValue(context, config.from);
+  const value = JSONUtils.find(fromObj, config.fromPropertyName);
+  const toObj = resolveValue(context, config.to);
+  return JSONUtils.setValue(toObj, config.toPropertyName, value);
 };
 
 export const commonActionsMap = new Map<string, (...args: any[]) => any>([
@@ -186,5 +197,6 @@ export const commonActionsMap = new Map<string, (...args: any[]) => any>([
     ['setValues', setValuesAction],
     ['addItemToArray', addItemToArrayAction],
     ['popArray', popArrayAction],
-    ['pushItemToArray', pushItemToArrayAction]
+    ['pushItemToArray', pushItemToArrayAction],
+    ['transferData', transferDataAction]
 ]);

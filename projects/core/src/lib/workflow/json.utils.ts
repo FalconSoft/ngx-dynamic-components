@@ -81,7 +81,7 @@ export class JSONUtils {
     public static setValue(objectValue: object, path: string, value: any): void {
       const pMatch = JSONUtils.getParentPathMatch(path);
       if (pMatch) {
-        JSONUtils.setDataPathProp(objectValue, pMatch.groups.dataPath, value);
+        return JSONUtils.setDataPathProp(objectValue, pMatch.groups.dataPath, value);
       }
 
       const fMatch = JSONUtils.getFlatternPathMatch(path);

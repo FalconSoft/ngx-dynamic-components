@@ -82,7 +82,6 @@ export class WorkflowEngine {
             }
 
             const payload = this.resolveProperties(context, step);
-
             const returnValue = await context.actions.get(step.actionType)(context, payload);
 
             // set return value if step has a name

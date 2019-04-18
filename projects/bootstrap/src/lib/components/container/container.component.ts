@@ -24,6 +24,7 @@ export class ContainerComponent extends BaseUIComponent<BSContainerProperties> i
   @HostBinding('class.container-fluid') isFluidContainer = false;
 
   async ngOnInit() {
+    await super.ngOnInit();
     if (this.uiModel.itemProperties.fullWidth) {
       this.isFluidContainer = true;
       this.isContainer = false;
