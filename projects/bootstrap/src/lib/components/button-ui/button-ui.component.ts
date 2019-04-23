@@ -7,7 +7,7 @@ import { Categories, packageName } from '../../constants';
   selector: 'dc-button-ui',
   template: `
     <button class="btn " [ngClass]="properties.btnClass || 'btn-primary'"
-      [type]="properties.type"
+      [type]="properties.type" [ngStyle]="itemStyles"
       (click)="onClick()">{{properties.label}}</button>
   `,
   styles: []

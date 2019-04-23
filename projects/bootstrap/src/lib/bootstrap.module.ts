@@ -12,10 +12,11 @@ import { CheckboxUIComponent } from './components/checkbox-ui/checkbox-ui.compon
 import { RadioGroupUIComponent } from './components/radio-group-ui/radio-group-ui.component';
 import { TextareaUIComponent } from './components/textarea-ui/textarea-ui.component';
 import { ButtonUIComponent } from './components/button-ui/button-ui.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,
-    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent],
+    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent],
   imports: [
     CoreModule,
     CommonModule,
@@ -23,7 +24,7 @@ import { ButtonUIComponent } from './components/button-ui/button-ui.component';
   ],
   exports: [ContainerComponent, ContainerRowComponent, InputUIComponent],
   entryComponents: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,
-    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent]
+    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent]
 })
 export class BootstrapModule {
   constructor() {

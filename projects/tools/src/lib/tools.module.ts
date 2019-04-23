@@ -12,7 +12,6 @@ import { DragulaModule } from 'ng2-dragula';
 import { CoreModule } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
 import { BootstrapModule } from '@ngx-dynamic-components/bootstrap';
-// import { BootstrapModule } from 'projects/bootstrap/src/public-api';
 
 import { PreviewEditorComponent } from './components/preview-editor/preview-editor.component';
 import { ControlEditorComponent } from './components/control-editor/control-editor.component';

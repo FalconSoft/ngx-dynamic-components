@@ -1,6 +1,5 @@
 import * as mat from '@ngx-dynamic-components/material';
 import * as bs from '@ngx-dynamic-components/bootstrap';
-// import * as bs from 'projects/bootstrap/src/public-api';
 
 export function getSlugFromStr(str: string): string {
   return str.replace(/ /g, '-').toLocaleLowerCase();

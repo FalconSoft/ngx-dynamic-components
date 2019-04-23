@@ -8,6 +8,7 @@ import { checkboxDescriptor } from './checkbox-ui/checkbox-ui.component';
 import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component';
 import { textareaDescriptor } from './textarea-ui/textarea-ui.component';
 import { buttonDescriptor } from './button-ui/button-ui.component';
+import { cardDescriptor } from './card/card.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   containerDescriptor,
@@ -17,7 +18,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   checkboxDescriptor,
   radioGroupDescriptor,
   textareaDescriptor,
-  buttonDescriptor
+  buttonDescriptor,
+  cardDescriptor
 ];
 
 // Register components.

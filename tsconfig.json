@@ -35,7 +35,7 @@
       ],
       "@ngx-dynamic-components/bootstrap": [
         "dist/@ngx-dynamic-components/bootstrap",
-        // "projects/bootstrap/src/public_api.ts"
+        // "projects/bootstrap/src/public-api.ts"
       ],
       "@ngx-dynamic-components/bootstrap/*": [
         "dist/@ngx-dynamic-components/bootstrap/*"
