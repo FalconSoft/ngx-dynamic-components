@@ -5,7 +5,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
 @Component({
   selector: 'dc-container-row',
   template: `
-    <div *ngFor="let item of uiModel.children" class="col-sm" [ngStyle]="getStyles(item.containerProperties)">
+    <div *ngFor="let item of uiModel.children" class="col" [ngStyle]="getStyles(item.containerProperties)" [ngClass]="bsClasses">
       <dc-ui-selector
           (changedDataModel)="changedDataModel.emit($event)"
           [uiModel]='item'
@@ -16,12 +16,33 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
   `,
   styles: []
 })
-export class ContainerRowComponent extends BaseUIComponent<BSContainerRowProperties> {
+export class ContainerRowComponent extends BaseUIComponent<BSContainerRowProperties> implements OnInit {
   @HostBinding('class.row') readonly isRow = true;
+  @HostBinding('class.flex-column') isColumn = false;
+  get bsClasses() {
+    if (this.properties) {
+      return this.properties.bsClasses;
+    }
+  }
+
+  async ngOnInit() {
+    await super.ngOnInit();
+    this.isColumn = this.properties && this.properties.direction === 'column';
+  }
 }
 
 export class BSContainerRowProperties extends ContainerProperties {
+  @propDescription({
+    description: 'Bootstrap row child classes',
+    example: 'col-9'
+  })
+  bsClasses?: string[];
 
+  @propDescription({
+    description: 'Flex direction',
+    example: 'column'
+  })
+  direction?: 'column' | 'row';
 }
 
 export const example: ComponentExample<UIModel<BSContainerRowProperties>> = {

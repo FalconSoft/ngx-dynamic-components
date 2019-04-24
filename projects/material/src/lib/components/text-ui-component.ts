@@ -6,12 +6,10 @@ import { Categories, packageName } from '../constants';
 @Component({
     selector: 'dc-ui-text',
     template: `
-    <span [ngStyle]="itemStyles">{{uiModel.itemProperties?.text}}
-    </span>
+    <span [ngStyle]="txtBoxStyles">{{uiModel.itemProperties?.text}}</span>
     `,
     styles: [
       `   span {
-              border-bottom: 2px solid black;
               display: inline-block;
               margin-bottom: 1.25rem;
               margin-top: 1rem;
@@ -21,6 +19,12 @@ import { Categories, packageName } from '../constants';
     ]
 })
 export class TextUIComponent extends BaseUIComponent<TextProperties> {
+  get txtBoxStyles() {
+    return {
+      ...this.itemStyles,
+      'border-bottom': this.properties.border ? '2px solid black' : 'none'
+    };
+  }
 }
 
 export class TextProperties extends StyleProperties {
@@ -29,6 +33,8 @@ export class TextProperties extends StyleProperties {
     example: 'Text information',
   })
   text: string;
+
+  border?: boolean;
 }
 
 interface TextUIComponentConstrutor {
