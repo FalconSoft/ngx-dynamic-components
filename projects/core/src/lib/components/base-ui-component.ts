@@ -56,7 +56,7 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     }
 
     getStyles(properties: AttributesMap = {}): {[key: string]: string} {
-      const styleProperties = ['width', 'height', 'padding', 'margin', 'background'];
+      const styleProperties = ['width', 'height', 'padding', 'margin', 'background', 'max-height'];
       return styleProperties.reduce((styles, prop) => {
         if (properties.hasOwnProperty(prop)) {
           styles[prop] = properties[prop];

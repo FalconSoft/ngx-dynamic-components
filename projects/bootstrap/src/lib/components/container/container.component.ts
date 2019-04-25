@@ -22,12 +22,17 @@ import { packageName, Categories } from '../../constants';
 export class ContainerComponent extends BaseUIComponent<BSContainerProperties> implements OnInit {
   @HostBinding('class.container') isContainer = true;
   @HostBinding('class.container-fluid') isFluidContainer = false;
+  @HostBinding('style.height') height = 'auto';
 
   async ngOnInit() {
     await super.ngOnInit();
-    if (this.uiModel.itemProperties.fullWidth) {
+    if (this.properties.fullWidth) {
       this.isFluidContainer = true;
       this.isContainer = false;
+    }
+
+    if (this.properties.height) {
+      this.height = this.properties.height;
     }
   }
 }
