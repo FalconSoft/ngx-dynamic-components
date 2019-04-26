@@ -5,7 +5,8 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
 @Component({
   selector: 'dc-container-row',
   template: `
-    <div *ngFor="let item of uiModel.children" class="col" [ngStyle]="getStyles(item.containerProperties)" [ngClass]="bsClasses">
+    <div *ngFor="let item of uiModel.children" class="col" [ngStyle]="getStyles(item.containerProperties)"
+      [ngClass]="item.containerProperties?.bsClasses">
       <dc-ui-selector
           (changedDataModel)="changedDataModel.emit($event)"
           [uiModel]='item'
@@ -19,11 +20,6 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
 export class ContainerRowComponent extends BaseUIComponent<BSContainerRowProperties> implements OnInit {
   @HostBinding('class.row') readonly isRow = true;
   @HostBinding('class.flex-column') isColumn = false;
-  get bsClasses() {
-    if (this.properties) {
-      return this.properties.bsClasses;
-    }
-  }
 
   async ngOnInit() {
     await super.ngOnInit();
