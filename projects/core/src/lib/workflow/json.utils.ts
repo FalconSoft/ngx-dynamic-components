@@ -290,7 +290,7 @@ function createObjProperties(obj, props: string[], val = null) {
 function getObjPropertyVal(obj, props: string[]) {
   let value = obj;
   for (const prop of props) {
-    if (value.hasOwnProperty(prop)) {
+    if (value && value.hasOwnProperty(prop)) {
       value = value[prop];
     } else {
       return null;

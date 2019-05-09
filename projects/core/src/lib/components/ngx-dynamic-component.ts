@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { WorkflowConfig, WorkflowEngine } from '../workflow/workflow.processor';
 import { UIModel } from '../models';
 
@@ -8,7 +8,8 @@ import { UIModel } from '../models';
     <dc-ui-selector
         [uiModel]='uiModel'
         [dataModel]='dataModel'
-        [workflowEngine]='workflowEngine'>
+        [workflowEngine]='workflowEngine'
+        (render)="render.emit($event)">
     </dc-ui-selector>
       `
 })
@@ -17,6 +18,7 @@ export class NGXDynamicComponent implements OnInit {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<any>;
     @Input() appContext: any;
+    @Output() render = new EventEmitter();
 
     workflowEngine: WorkflowEngine = null;
 
