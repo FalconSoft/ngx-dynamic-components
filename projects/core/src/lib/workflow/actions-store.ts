@@ -86,6 +86,7 @@ function getExpressions(key: string): string[] {
   return expressions;
 }
 
+// todo: this function should not be here. it has to be moved out to utils and then exported from there
 /**
  * this has to be more advanced method and has to resolve more complex grammar.
  *  - $ prefix means it takes values from variable
