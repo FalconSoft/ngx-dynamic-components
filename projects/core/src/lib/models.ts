@@ -44,6 +44,12 @@ export abstract class DataModelProperties extends StyleProperties {
     example: 'name'
   })
   dataModelPath?: string;
+
+  @propDescription({
+    description: 'Component Data Source.',
+    example: '{{responseContext}}/dataset'
+  })
+  dataSource?: string;
 }
 
 export abstract class ContainerProperties extends StyleProperties {

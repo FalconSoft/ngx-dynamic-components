@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { WorkflowConfig, WorkflowEngine } from '../workflow/workflow.processor';
 import { UIModel } from '../models';
 
@@ -13,7 +13,7 @@ import { UIModel } from '../models';
     </dc-ui-selector>
       `
 })
-export class NGXDynamicComponent implements OnInit {
+export class NGXDynamicComponent implements OnInit, OnChanges {
     @Input() workflow: WorkflowConfig;
     @Input() dataModel: any;
     @Input() uiModel: UIModel<any>;
@@ -23,12 +23,23 @@ export class NGXDynamicComponent implements OnInit {
     workflowEngine: WorkflowEngine = null;
 
     async ngOnInit(): Promise<void> {
-        this.workflow.vars = this.workflow.vars || {};
-        this.workflow.vars.uiModel = this.uiModel;
-        this.workflow.vars.dataModel = this.dataModel;
-        this.workflowEngine = new WorkflowEngine(this.workflow);
-        if (this.appContext && this.uiModel.id) {
-          this.appContext[this.uiModel.id] = this.workflowEngine;
-        }
+      this.initWorkflow();
+    }
+
+    ngOnChanges({workflow}: SimpleChanges) {
+      if (!workflow.firstChange && workflow.currentValue !== workflow.previousValue) {
+        this.initWorkflow(workflow.currentValue);
+      }
+    }
+
+    private initWorkflow(workflow = this.workflow) {
+      this.workflow = workflow;
+      this.workflow.vars = this.workflow.vars || {};
+      this.workflow.vars.uiModel = this.uiModel;
+      this.workflow.vars.dataModel = this.dataModel;
+      this.workflowEngine = new WorkflowEngine(this.workflow);
+      if (this.appContext && this.uiModel.id) {
+        this.appContext[this.uiModel.id] = this.workflowEngine;
+      }
     }
 }

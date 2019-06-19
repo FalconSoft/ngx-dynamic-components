@@ -7,9 +7,9 @@ import { getItemByIndex } from '../utils';
 export class JSONUtils {
 
     /** RegExp /\$\.(?<dataPath>\w+(\/\w+)*)/ */
-    public static parentPathReg = '\\$\\.(\\w+(\\/\\w+)*)';
+    public static parentPathReg = '\\$\\.([\\w\\-]+(\\/[\\w\\-]+)*)';
     /** RegExp /\$\(((?<flattern>\w+)(\:(?<filter>\w+=\w+))?)\)\/?(?<dataPath>(\w+\/?\w+)*)?/ */
-    public static flatternPathReg = `\\$\\(((\\w+)(\\:(\\w+=\\w+))?)\\)\\/?((\\w+\\/?\\w+)*)?`;
+    public static flatternPathReg = `\\$\\((([\\w\\-]+)(\\:([\\w\\-]+=[\\w\\-]+))?)\\)\\/?(([\\w\\-]+\\/?[\\w\\-]+)*)?`;
 
     /**
      * A utility method to find values in the JSON tree.

@@ -20,6 +20,11 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     }
 
     get componentDataModel() {
+      if (this.uiModel.itemProperties.hasOwnProperty('dataSource')) {
+        const dataSourcePath = (this.uiModel.itemProperties as DataModelProperties).dataSource.replace('{{', '').replace('}}', '');
+        return JSONUtils.find(this.dataModel, `$.${dataSourcePath}`);
+      }
+
       if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
         return null;
       }
@@ -43,7 +48,10 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
 
       const workflowName = this.uiModel.id + action;
       if (await this.workflowEngine.hasWorkflow(workflowName)) {
+        console.log(`Executes Workflow: ${workflowName}`);
         this.workflowEngine.run(workflowName);
+      } else {
+        console.error(`WorkflowName ${workflowName} not found`);
       }
     }
 

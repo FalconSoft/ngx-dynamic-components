@@ -183,6 +183,16 @@ const popArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
   return JSONUtils.setValue(objValue, config.propertyName, [...list.slice(0, list.length - 1)]);
 };
 
+/**
+ * @example
+ * {
+ *  "actionType": "transferData",
+ *  "from": "$step1-returnValue",
+ *  "fromPropertyName": "$",
+ *  "to": "$dataModel",
+ *  "toPropertyName": "$.transfered"
+ * }
+ */
 const transferDataAction = (context: ExecutionContext, config: TransferDataConfig) => {
   const fromObj = resolveValue(context, config.from);
   const value = JSONUtils.find(fromObj, config.fromPropertyName);

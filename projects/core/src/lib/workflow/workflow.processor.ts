@@ -1,5 +1,6 @@
 import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
+import { UIModel } from '../models';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -82,14 +83,29 @@ export class WorkflowEngine {
             }
 
             const payload = this.resolveProperties(context, step);
+            console.log(`Execute ${step.actionType}`);
             const returnValue = await context.actions.get(step.actionType)(context, payload);
 
             // set return value if step has a name
             if (step.actionName) {
                 context.variables.set(`${step.actionName}-returnValue`, returnValue);
             }
-
+            this.resolveDataModel(context, payload.target || `${step.actionName}-returnValue`, returnValue);
         }
+    }
+
+    private resolveDataModel(context, prop, value) {
+      const uiModel = context.variables.get('uiModel') as UIModel;
+      const dataSource = uiModel.itemProperties.dataSource;
+      const res = /^{{(.*)}}/.exec(dataSource);
+      if (res && res[1]) {
+        const name = res[1];
+        if (name === prop) {
+          const dataModel = context.variables.get('dataModel');
+          dataModel[prop] = value;
+          context.variables.set('dataModel', dataModel);
+        }
+      }
     }
 
     public getVariable(variableName: string): any {

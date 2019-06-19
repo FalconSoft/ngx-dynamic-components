@@ -25,7 +25,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
         const shouldInit = !this.component || this.component.uiModel.id !== this.uiModel.id;
         // Recreate component with new type.
         this.createComponent();
-        if (shouldInit) {
+        if (shouldInit && Object.values(changes).some(c => c.firstChange === false)) {
           await this.triggerAction('_OnInit');
         }
       } else {
