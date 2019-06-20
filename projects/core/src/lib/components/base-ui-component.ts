@@ -51,7 +51,7 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
         console.log(`Executes Workflow: ${workflowName}`);
         this.workflowEngine.run(workflowName);
       } else {
-        console.error(`WorkflowName ${workflowName} not found`);
+        console.warn(`WorkflowName ${workflowName} not found`);
       }
     }
 

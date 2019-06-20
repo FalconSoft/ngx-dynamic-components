@@ -1,6 +1,7 @@
 import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
 import { UIModel } from '../models';
+import { JSONUtils } from './json.utils';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -88,24 +89,30 @@ export class WorkflowEngine {
 
             // set return value if step has a name
             if (step.actionName) {
-                context.variables.set(`${step.actionName}-returnValue`, returnValue);
+                const name = `${step.actionName}-returnValue`;
+                context.variables.set(name, returnValue);
+                this.setDataModelDependencies(context, name, returnValue);
             }
-            this.resolveDataModel(context, payload.target || `${step.actionName}-returnValue`, returnValue);
         }
     }
 
-    private resolveDataModel(context, prop, value) {
+    private setDataModelDependencies(context: ExecutionContext, prop: string, value: any) {
       const uiModel = context.variables.get('uiModel') as UIModel;
-      const dataSource = uiModel.itemProperties.dataSource;
-      const res = /^{{(.*)}}/.exec(dataSource);
-      if (res && res[1]) {
-        const name = res[1];
-        if (name === prop) {
-          const dataModel = context.variables.get('dataModel');
-          dataModel[prop] = value;
-          context.variables.set('dataModel', dataModel);
-        }
+      if (!uiModel) {
+        return;
       }
+      const list = [uiModel.itemProperties.dataSource, ...JSONUtils.find(uiModel, '$(children)/itemProperties/dataSource')];
+      list.forEach(dataSource => {
+        const res = /^{{(.*)}}/.exec(dataSource);
+        if (res && res[1]) {
+          const name = res[1];
+          if (name === prop) {
+            const dataModel = context.variables.get('dataModel');
+            dataModel[prop] = value;
+            context.variables.set('dataModel', dataModel);
+          }
+        }
+      });
     }
 
     public getVariable(variableName: string): any {

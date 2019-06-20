@@ -10,7 +10,6 @@ export class JSONUtils {
     public static parentPathReg = '\\$\\.([\\w\\-]+(\\/[\\w\\-]+)*)';
     /** RegExp /\$\(((?<flattern>\w+)(\:(?<filter>\w+=\w+))?)\)\/?(?<dataPath>(\w+\/?\w+)*)?/ */
     public static flatternPathReg = `\\$\\((([\\w\\-]+)(\\:([\\w\\-]+=[\\w\\-]+))?)\\)\\/?(([\\w\\-]+\\/?[\\w\\-]+)*)?`;
-
     /**
      * A utility method to find values in the JSON tree.
      * It is similar as JSONPath (or XML Path). But it

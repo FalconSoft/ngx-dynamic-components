@@ -1,6 +1,12 @@
 import { ExecutionContext } from './workflow.processor';
 import { JSONUtils } from './json.utils';
 
+export interface SetVariableConfig {
+  object: string;
+  sourceValue: string;
+  variableName: string;
+}
+
 interface HttpCallConfig {
     method: string;
     url: string;
@@ -122,6 +128,44 @@ export function resolveValue(context: ExecutionContext, object: any) {
     throw new Error(`Can't resolve Object ${object}`);
 }
 
+export function resolveVariable(context: ExecutionContext, object: any) {
+  if (!object) { return null; }
+  if (typeof object === 'object') { return object; }
+
+  if (typeof object === 'string') {
+    const { name, key } = resolvePath(object);
+    if (context.variables.has(key)) {
+        const value = context.variables.get(key);
+        return {value, name};
+    } else {
+        throw new Error(`Can't resolve Object by string ${name}`);
+    }
+
+    return;
+  }
+
+  throw new Error(`Can't resolve Object ${object}`);
+}
+
+export function resolvePath(key: string) {
+  const res = key.match(/^{{([\w-]+)}}.*/);
+
+  if (res && res[1]) {
+    const prop = res[1];
+    if (key.indexOf('}}/') !== -1) {
+      return {
+        name: key.replace(`{{${prop}}}/`, '$.'),
+        key: prop
+      };
+    } else {
+      return {
+        name: key.replace(`{{${prop}}}`, '$'),
+        key: prop
+      };
+    }
+  }
+}
+
 const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
     const objValue = resolveValue(context, config.object);
     const value = resolveValue(context, config.propertyValue);
@@ -183,6 +227,21 @@ const popArrayAction = (context: ExecutionContext, config: AddItemConfig) => {
   return JSONUtils.setValue(objValue, config.propertyName, [...list.slice(0, list.length - 1)]);
 };
 
+const setLocalVariableAction = (context: ExecutionContext, config: SetVariableConfig) => {
+  try {
+    const resolved = resolveVariable(context, config.sourceValue);
+    if (!resolved) {
+      throw new Error(`Local variable ${config.sourceValue} is not resolved`);
+    }
+    const value = JSONUtils.find(resolved.value as object, resolved.name);
+    context.variables.set(config.variableName, value);
+    return value;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+ };
+
 /**
  * @example
  * {
@@ -209,5 +268,6 @@ export const commonActionsMap = new Map<string, (...args: any[]) => any>([
     ['addItemToArray', addItemToArrayAction],
     ['popArray', popArrayAction],
     ['pushItemToArray', pushItemToArrayAction],
-    ['transferData', transferDataAction]
+    ['transferData', transferDataAction],
+    ['setLocalVariable', setLocalVariableAction]
 ]);
