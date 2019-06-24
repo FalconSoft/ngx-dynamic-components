@@ -9,6 +9,7 @@ export interface WorkflowConfig {
     vars: any;
     consts: any;
     workflowsMap: any;
+    globalVariables?: any;
 }
 
 export class ExecutionContext {
@@ -21,6 +22,7 @@ export class ExecutionContext {
 
 export class WorkflowEngine {
 
+    public globalVariables;
     private readonly context: ExecutionContext = null;
     private isInitialized = false;
 
@@ -28,6 +30,7 @@ export class WorkflowEngine {
         this.context = new ExecutionContext();
         workflowConfig.vars = workflowConfig.vars || {};
         workflowConfig.consts = workflowConfig.consts || {};
+        this.globalVariables = workflowConfig.globalVariables;
     }
 
     get configuration() {
