@@ -94,3 +94,8 @@ export interface ComponentConfiguration {
   dataModel: any;
   workflowEngine?: WorkflowEngine;
 }
+
+export interface IVariableResolver {
+  resolve: (obj: object) => object;
+  resolveString: (str: string, vars?: object) => object|string;
+}

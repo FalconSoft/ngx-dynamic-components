@@ -1,6 +1,6 @@
 import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
-import { UIModel } from '../models';
+import { UIModel, IVariableResolver } from '../models';
 import { JSONUtils } from './json.utils';
 
 export interface WorkflowConfig {
@@ -9,7 +9,7 @@ export interface WorkflowConfig {
     vars: any;
     consts: any;
     workflowsMap: any;
-    globalVariables?: any;
+    variableResolver?: IVariableResolver;
 }
 
 export class ExecutionContext {
@@ -22,7 +22,7 @@ export class ExecutionContext {
 
 export class WorkflowEngine {
 
-    public globalVariables;
+    public variableResolver: IVariableResolver;
     private readonly context: ExecutionContext = null;
     private isInitialized = false;
 
@@ -30,7 +30,7 @@ export class WorkflowEngine {
         this.context = new ExecutionContext();
         workflowConfig.vars = workflowConfig.vars || {};
         workflowConfig.consts = workflowConfig.consts || {};
-        this.globalVariables = workflowConfig.globalVariables;
+        this.variableResolver = workflowConfig.variableResolver;
     }
 
     get configuration() {
@@ -87,35 +87,15 @@ export class WorkflowEngine {
             }
 
             const payload = this.resolveProperties(context, step);
-            console.log(`Execute ${step.actionType}`);
+            console.log(`Execute ${step.actionType} with config:`, payload);
             const returnValue = await context.actions.get(step.actionType)(context, payload);
 
             // set return value if step has a name
             if (step.actionName) {
                 const name = `${step.actionName}-returnValue`;
                 context.variables.set(name, returnValue);
-                this.setDataModelDependencies(context, name, returnValue);
             }
         }
-    }
-
-    private setDataModelDependencies(context: ExecutionContext, prop: string, value: any) {
-      const uiModel = context.variables.get('uiModel') as UIModel;
-      if (!uiModel) {
-        return;
-      }
-      const list = [uiModel.itemProperties.dataSource, ...JSONUtils.find(uiModel, '$(children)/itemProperties/dataSource')];
-      list.forEach(dataSource => {
-        const res = /^{{(.*)}}/.exec(dataSource);
-        if (res && res[1]) {
-          const name = res[1];
-          if (name === prop) {
-            const dataModel = context.variables.get('dataModel');
-            dataModel[prop] = value;
-            context.variables.set('dataModel', dataModel);
-          }
-        }
-      });
     }
 
     public getVariable(variableName: string): any {

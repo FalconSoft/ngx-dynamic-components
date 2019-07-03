@@ -31,7 +31,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   dataModelControl: FormControl;
   workflowControl: FormControl;
 
-  @ViewChild('dynamicComponent') dynamicComponent: UISelectorComponent;
+  @ViewChild('dynamicComponent', {static: false}) dynamicComponent: UISelectorComponent;
 
   layout: Layout = Layout.horizontal;
 

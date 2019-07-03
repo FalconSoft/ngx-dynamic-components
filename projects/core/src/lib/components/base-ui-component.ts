@@ -20,9 +20,13 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     }
 
     get componentDataModel() {
-      if (this.uiModel.itemProperties.hasOwnProperty('dataSource')) {
-        const dataSourcePath = (this.uiModel.itemProperties as DataModelProperties).dataSource.replace('{{', '').replace('}}', '');
-        return JSONUtils.find(this.dataModel, `$.${dataSourcePath}`);
+      if (this.properties.hasOwnProperty('dataSource')) {
+        const value = (this.properties as DataModelProperties).dataSource;
+        if (typeof value === 'object') { // Value already resolved with variableresolvber.
+          return value;
+        } else if (typeof value === 'string') { // Value not resolved. Resolve value with workflow variables.
+          return this.workflowEngine.variableResolver.resolveString(value, this.workflowEngine.configuration.vars);
+        }
       }
 
       if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {

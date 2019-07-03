@@ -23,6 +23,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
     workflowEngine: WorkflowEngine = null;
 
     async ngOnInit(): Promise<void> {
+      this.resolveVariables();
       this.initWorkflow();
     }
 
@@ -40,6 +41,12 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       this.workflowEngine = new WorkflowEngine(this.workflow);
       if (this.appContext && this.uiModel.id) {
         this.appContext[this.uiModel.id] = this.workflowEngine;
+      }
+    }
+
+    private resolveVariables() {
+      if (this.workflow.variableResolver) {
+        this.uiModel = this.workflow.variableResolver.resolve(this.uiModel) as UIModel;
       }
     }
 }

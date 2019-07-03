@@ -36,10 +36,10 @@ export class PropertiesEditorComponent implements OnInit {
   @Input()
   uiModel: UIModel;
 
-  @ViewChild('editorContainer')
+  @ViewChild('editorContainer', {static: false})
   editorContainer: ElementRef;
 
-  @ViewChild('editBtn')
+  @ViewChild('editBtn', {static: false})
   editBtn: MatButton;
 
   @Output()
