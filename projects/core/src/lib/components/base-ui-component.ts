@@ -25,7 +25,13 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
         if (typeof value === 'object') { // Value already resolved with variableresolvber.
           return value;
         } else if (typeof value === 'string') { // Value not resolved. Resolve value with workflow variables.
-          return this.workflowEngine.variableResolver.resolveString(value, this.workflowEngine.configuration.vars);
+          if (this.workflowEngine.variableResolver) {
+            const resolved = this.workflowEngine.variableResolver.resolveString(value, this.workflowEngine.configuration.vars);
+            if (typeof resolved === 'object') {
+              return resolved;
+            }
+          }
+          return [];
         }
       }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { ComponentDescriptor } from './models';
-import { BaseUIComponentConstructor, ComponentProperty } from './utils';
+import { ComponentDescriptor } from '../models';
+import { BaseUIComponentConstructor, ComponentProperty } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +38,9 @@ export class CoreService {
     } catch (e) {
       throw e;
     }
+  }
+
+  public static getListOfComponents(): Array<ComponentDescriptor> {
+    return Array.from(CoreService.COMPONENTS_REGISTER.values());
   }
 }

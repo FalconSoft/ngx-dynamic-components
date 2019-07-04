@@ -114,5 +114,17 @@ export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrut
   description: 'Bootstrap container',
   itemProperties: BSContainerProperties,
   component: ContainerComponent,
-  example
+  example,
+  defaultModel: {
+    type: 'bootstrap:container',
+    containerProperties: {
+      height: '100%',
+      width: '100%'
+    },
+    itemProperties: {
+      height: '100%',
+      width: '100%'
+    },
+    children: []
+  }
 };

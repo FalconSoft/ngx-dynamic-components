@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
   SimpleChanges, OnChanges, EventEmitter, Output } from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
-import { CoreService } from '../core.service';
+import { CoreService } from '../services/core.service';
 
 @Component({
     selector: 'dc-ui-selector',

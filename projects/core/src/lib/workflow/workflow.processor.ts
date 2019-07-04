@@ -1,7 +1,6 @@
 import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
-import { UIModel, IVariableResolver } from '../models';
-import { JSONUtils } from './json.utils';
+import { IVariableResolver } from '../models';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -76,6 +75,7 @@ export class WorkflowEngine {
 
     private async executeFlow(context: ExecutionContext, steps: any[]) {
         steps = steps || [];
+        steps = this.variableResolver.resolve(steps) as [];
         for (const step of steps) {
             if (!context.actions.has(step.actionType)) {
                 if (context.failOnError) {

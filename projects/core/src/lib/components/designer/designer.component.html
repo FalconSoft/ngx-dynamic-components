@@ -1,0 +1,8 @@
+<div class="row h-100 preview edit-mode ml-2">
+  <ngx-dynamic-component class="col h-100 flex-fill" *ngIf="uiModelVal" [uiModel]='uiModelVal' [dataModel]='{}' [workflow]='workflow'></ngx-dynamic-component>
+  <div class="components-list col h-100 overflow-auto">
+    <div *ngFor="let item of components" class="component p-2 my-1 handle" id="{{item.packageName}}:{{item.name}}">
+      {{item.packageName}}:{{item.name}}
+    </div>
+  </div>
+</div>

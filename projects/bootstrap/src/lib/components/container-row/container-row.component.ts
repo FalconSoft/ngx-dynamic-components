@@ -88,5 +88,17 @@ export const containerRowDescriptor: ComponentDescriptor<ContainerRowComponentCo
   description: 'Bootstrap row container',
   itemProperties: BSContainerRowProperties,
   component: ContainerRowComponent,
-  example
+  example,
+  defaultModel: {
+    type: 'bootstrap:bs-row',
+    containerProperties: {
+      height: '100%',
+      width: '100%'
+    },
+    itemProperties: {
+      height: '100%',
+      width: '100%'
+    },
+    children: []
+  }
 };

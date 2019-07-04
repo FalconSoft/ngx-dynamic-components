@@ -1,0 +1,12 @@
+.components-list {
+  width: 250px;
+
+  > div {
+    border: 1px dashed rgba(0, 0, 0, .25);
+    cursor: pointer;
+  }
+}
+
+ngx-dynamic-component {
+  max-width: calc(100% - 250px);
+}
