@@ -20,6 +20,7 @@ export class DragDropService {
   container: ElementRef;
 
   uiModelUpdates$ = new Subject<UIModel>();
+  selectedComponent$ =  new Subject<UIModel>();
 
   controls: ComponentRef<ControlEditorComponent>[] = [];
 
@@ -73,8 +74,8 @@ export class DragDropService {
       this.containerUIModelMap.set(container, childrenUIModel);
       arrElements = arrElements.concat(this.mapChildren(container, childrenUIModel));
     }));
-    const wrapper = this.container.nativeElement.querySelector('.preview .components-list');
-    arrElements.push(wrapper);
+    const controlPanelGroups = this.container.nativeElement.querySelectorAll('.preview .components-list');
+    arrElements = [...arrElements, ...Array.from(controlPanelGroups)];
     return arrElements as HTMLElement[];
   }
 
@@ -108,7 +109,7 @@ export class DragDropService {
     return Array.from(container.children).filter(item => item.tagName !== 'DC-CONTROL-EDITOR');
   }
 
-  appendControlEditor(element: HTMLElement, children, i) {
+  appendControlEditor(element: HTMLElement, children: UIModel[], i: number) {
     const uiModel = children[i];
     const componentRef = this.componentFactoryResolver
       .resolveComponentFactory(ControlEditorComponent)
@@ -124,11 +125,26 @@ export class DragDropService {
       this.uiModelUpdates$.next(this.uiModel);
     });
 
+    const el = element.tagName === 'DC-CONTAINER-ROW' ? element : element.querySelector('dc-ui-selector + *');
+    el.addEventListener('click', evt => {
+      evt.stopImmediatePropagation();
+      evt.preventDefault();
+      this.deselect();
+      el.classList.add('active-component');
+      this.selectedComponent$.next(uiModel);
+    });
+
     this.appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-
     element.appendChild(domElem);
     this.controls.push(componentRef);
+  }
+
+  deselect() {
+    const active = this.container.nativeElement.querySelector('.active-component');
+    if (active) {
+      active.classList.remove('active-component');
+    }
   }
 
   private initDrake(elements) {
@@ -165,7 +181,6 @@ export class DragDropService {
       }
       setTimeout(() => this.uiModelUpdates$.next(this.uiModel));
     });
-
     this.drake.on('drag', (el: any, source: any) => {
       this.dragIndex = this.domIndexOf(el, source);
     });

@@ -35,7 +35,7 @@ $border: 1px dashed rgba(0, 0, 0, 0);
 ::ng-deep .preview dc-container .item,
 ::ng-deep .preview dc-container dc-container-row.row,
 ::ng-deep .preview dc-container dc-container-row.row > div[class*="col"] {
-  &:hover > dc-control-editor {
+  .active-component + dc-control-editor {
     display: block;
   }
 
@@ -53,7 +53,7 @@ $border: 1px dashed rgba(0, 0, 0, 0);
     color: rgba(0, 0, 0, .75);
   }
 
-  &:hover {
+  .active-component + {
     dc-ui-flex-container + dc-control-editor > .handle {
       color: rgba(0, 0, 0, .8);
     }
@@ -131,8 +131,8 @@ $border: 1px dashed rgba(0, 0, 0, 0);
 :host {
   position: absolute;
   color: rgba(0, 0, 0, .5);
-  top: 0;
-  right: 0;
+  top: -23px;
+  right: -33px;
   z-index: 2;
   max-width: 105px;
   display: none;

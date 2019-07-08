@@ -1,0 +1,14 @@
+<accordion class="d-flex flex-fill flex-column p-0 m-0 w-100">
+  <accordion-group *ngFor="let g of groups" isOpen="true">
+    <div class="header" accordion-heading>
+      <i class="fa text-center fa-chevron-down"></i>
+      <i class="fa text-center fa-chevron-right"></i>
+      {{g.value}}
+    </div>
+    <ul class="d-flex flex-fill flex-column p-0 m-0 components-list">
+      <li class="component p-2 m-1 handle d-flex align-items-baseline cursor-pointer" *ngFor="let item of g.list" id="{{item.packageName}}:{{item.name}}">
+        {{item.name}}
+      </li>
+    </ul>
+  </accordion-group>
+</accordion>

@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ElementRef, AfterViewInit } from '@angular/core';
-import { UIModel, ComponentDescriptor } from '../../models';
+import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { UIModel } from '../../models';
 import { WorkflowConfig } from '../../workflow/workflow.processor';
-import { CoreService } from '../../services/core.service';
 import { DragDropService } from '../../services/drag-drop.service';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line
@@ -13,6 +13,9 @@ export class DesignerComponent implements OnInit, AfterViewInit {
 
   @Input() uiModel: UIModel;
   @Input() workflow: WorkflowConfig;
+  @ViewChild('tabset', {static: false}) tabs: TabsetComponent;
+
+  uiModelToEdit: UIModel;
   workflowConfig: WorkflowConfig = {
     failOnError: true,
     include: ['@common'],
@@ -21,12 +24,10 @@ export class DesignerComponent implements OnInit, AfterViewInit {
     consts: {}
   };
   uiModelVal: UIModel;
-  components: Array<ComponentDescriptor> = [];
   constructor(private container: ElementRef, private dragDropService: DragDropService) { }
 
   ngOnInit() {
     this.uiModelVal = this.uiModel;
-    this.components = CoreService.getListOfComponents();
     this.dragDropService.uiModelUpdates$.subscribe(uiModel => {
       setTimeout(() => {
         this.uiModelVal = uiModel;
@@ -36,11 +37,33 @@ export class DesignerComponent implements OnInit, AfterViewInit {
       });
       this.uiModelVal = null;
     });
+
+    this.dragDropService.selectedComponent$.subscribe(uiModel => {
+      this.uiModelToEdit = uiModel;
+      window.requestAnimationFrame(() => {
+        this.tabs.tabs[1].active = true;
+      });
+    });
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.dragDropService.init(this.container, this.uiModelVal);
+    });
+  }
+
+  onComponentsTabSelect() {
+    this.uiModelToEdit = null;
+    this.dragDropService.deselect();
+  }
+
+  onPropertyChange() {
+    this.uiModelVal = null;
+    window.requestAnimationFrame(() => {
+      this.uiModelVal = this.uiModel;
+      setTimeout(() => {
+        this.dragDropService.init(this.container, this.uiModelVal);
+      });
     });
   }
 }

@@ -24,7 +24,11 @@ import { Categories, packageName } from '../../constants';
     </ng-template>
   </div>
   `,
-  styles: []
+  styles: [`
+    :host {
+      display: inline-block;
+    }
+  `]
 })
 export class InputUIComponent extends BaseUIComponent<InputProperties> {
   get id() {

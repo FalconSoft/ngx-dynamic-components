@@ -1,0 +1,48 @@
+:host {
+  border: 1px solid #e4e7ea;
+  border-radius: 4px;
+  flex-direction: column;
+}
+
+ul {
+  li {
+    list-style: none;
+  }
+}
+
+.no-group-list {
+  background: white;
+}
+
+accordion-group ::ng-deep {
+  .panel.card {
+    border: none;
+    margin-bottom: 0;
+  }
+
+  .panel-heading {
+    padding: .25rem;
+    cursor: pointer;
+  }
+
+  .panel-body.card-block.card-body {
+    padding: 0;
+  }
+
+  [aria-expanded="false"] .fa-chevron-down {
+    display: none;
+  }
+
+  [aria-expanded="true"] .fa-chevron-right {
+    display: none;
+  }
+}
+
+.fa-chevron-right {
+  width: 14px;
+}
+
+.component {
+  border: 1px dashed rgba(0, 0, 0, .25);
+  cursor: pointer;
+}

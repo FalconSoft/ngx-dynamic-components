@@ -4,7 +4,6 @@ import { UIModel } from '../../models';
 @Component({
   selector: 'dc-control-editor',
   template: `
-    <dc-properties-editor [uiModel]="uiModel" (updatedProperty)="uiModelChanged.emit()" class="mr-1"></dc-properties-editor>
     <button class="btn btn-light btn-sm handle px-1 py-0 mr-1"
      (mouseover)="onHover($event)" (mouseleave)="onMouseLeave($event)">
       <svg width="14px" fill="currentColor" viewBox="0 0 24 24">
@@ -29,16 +28,12 @@ export class ControlEditorComponent {
 
   onHover(evt) {
     const dragEl = this.getParentDrag(evt.target as HTMLElement);
-    dragEl.classList.add('drag-selected');
+    // dragEl.classList.add('drag-selected');
   }
 
   onMouseLeave(evt: Event) {
     const dragEl = this.getParentDrag(evt.target as HTMLElement);
-    dragEl.classList.remove('drag-selected');
-  }
-
-  getDragTooltip() {
-    return this.uiModel.type === 'material:flex-container' ? 'Drag container' : 'Drag component';
+    // dragEl.classList.remove('drag-selected');
   }
 
   private getParentDrag(el: HTMLElement): HTMLElement {
