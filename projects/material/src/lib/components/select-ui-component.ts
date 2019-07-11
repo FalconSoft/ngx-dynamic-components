@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentDescriptor,
-  UIModel, ComponentExample, propDescription } from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../constants';
+  UIModel, ComponentExample, propDescription, Categories } from '@ngx-dynamic-components/core';
+import { packageName } from '../constants';
 
 @Component({
   selector: 'dc-ui-select',
@@ -68,7 +68,8 @@ const example: ComponentExample<UIModel<SelectProperties>> = {
 export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
   name: 'select',
   packageName,
-  category: Categories.FormControl,
+  label: 'Dropdown (Material)',
+  category: Categories.Basic,
   description: 'Select component',
   itemProperties: SelectProperties,
   component: SelectUIComponent,

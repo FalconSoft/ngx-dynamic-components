@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, ComponentExample, ComponentDescriptor, UIModel, ContainerProperties } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, ComponentExample, ComponentDescriptor, UIModel, ContainerProperties,
+  Categories } from '@ngx-dynamic-components/core';
 
-import { Categories, packageName } from '../../constants';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-tabs-ui',
@@ -80,8 +81,9 @@ interface TabsPropertiesConstrutor {
 
 export const tabsDescriptor: ComponentDescriptor<TabsUIComponentConstrutor, TabsPropertiesConstrutor> = {
   name: 'tabs-group',
+  label: 'Tabs container (Material)',
   packageName,
-  category: Categories.Layout,
+  category: Categories.Containers,
   description: 'Tabs group component',
   itemProperties: TabsProperties,
   component: TabsUIComponent,

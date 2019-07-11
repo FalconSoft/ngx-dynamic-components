@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { BaseUIComponent, propDescription, StyleProperties, ComponentExample,
-  ComponentDescriptor, UIModel} from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../../constants';
+  ComponentDescriptor, UIModel, Categories} from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-button-ui',
@@ -13,6 +13,7 @@ import { Categories, packageName } from '../../constants';
   styles: []
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
+  @HostBinding('style.display') display = 'inline-block';
   onClick() {
     this.workflowEngine.run(this.properties.clickActionKey);
     this.changedDataModel.emit(this.dataModel);
@@ -51,11 +52,11 @@ export const example: ComponentExample<UIModel<ButtonProperties>> = {
     type: `${packageName}:button`,
     containerProperties: {},
     itemProperties: {
-        label: 'SUBMIT',
-        width: '50%',
-        margin: '15px',
-        padding: '10px 5px 10px 0px',
-        clickActionKey: 'consoleLog'
+      label: 'SUBMIT',
+      width: '50%',
+      margin: '15px',
+      padding: '10px 5px 10px 0px',
+      clickActionKey: 'consoleLog'
     }
   },
   dataModel: {}
@@ -71,10 +72,19 @@ interface ButtonPropertiesConstrutor {
 
 export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, ButtonPropertiesConstrutor> = {
   name: 'button',
+  label: 'Button',
   packageName,
-  category: Categories.Buttons,
+  category: Categories.Basic,
   description: 'Button component',
   itemProperties: ButtonProperties,
   component: ButtonUIComponent,
-  example
+  example,
+  defaultModel: {
+    type: `${packageName}:button`,
+    containerProperties: {},
+    itemProperties: {
+      label: 'Label',
+      clickActionKey: 'consoleLog'
+    }
+  }
 };

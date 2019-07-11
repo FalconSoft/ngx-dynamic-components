@@ -30,14 +30,10 @@ export class DragDropService {
     private componentFactoryResolver: ComponentFactoryResolver,
     private appRef: ApplicationRef,
     private injector: Injector
-  ) {
-    const components = CoreService.getListOfComponents();
-    components.forEach(c => {
-      this.containerUIModelMap.set(`${c.packageName}:${c.name}`, c.defaultModel || c.example.uiModel);
-    });
-  }
+  ) {}
 
   public init(container, uiModel: UIModel) {
+    this.cleanUpEditor();
     this.container = container;
     this.uiModel = uiModel;
 
@@ -61,43 +57,48 @@ export class DragDropService {
    * Gets containers for drag&drop functionality.
    */
   get elements(): HTMLElement[] {
-    // this.containerUIModelMap.clear();
+    this.containerUIModelMap.clear();
+    CoreService.getListOfComponents().forEach(c => {
+      this.containerUIModelMap.set(`${c.packageName}:${c.name}`, c.defaultModel || c.example.uiModel);
+    });
     const elements = this.container.nativeElement.querySelectorAll(`
-      .preview dc-container,
-      .preview dc-container>dc-container-row.row,
-      .preview dc-ui-flex-container .container
+      #empty-container,
+      ngx-dynamic-component>[drop-container],
+      ngx-dynamic-component>dc-ui-flex-container>[drop-container]
     `);
-    let arrElements = Array.from(elements);
+    let arrElements = Array.from(elements) as HTMLElement[];
 
-    arrElements.forEach(((container: HTMLElement, index: number) => {
+    arrElements.filter(e => !e.id).forEach(((container: HTMLElement, index: number) => {
       const childrenUIModel = this.getChildrenByIndex(this.uiModel.children, index);
-      this.containerUIModelMap.set(container, childrenUIModel);
+      container.id = `container-${index}`;
+      this.containerUIModelMap.set(container.id, childrenUIModel);
+      this.appendControlEditor(container, [this.uiModel], index, true);
       arrElements = arrElements.concat(this.mapChildren(container, childrenUIModel));
     }));
-    const controlPanelGroups = this.container.nativeElement.querySelectorAll('.preview .components-list');
-    arrElements = [...arrElements, ...Array.from(controlPanelGroups)];
+    const controlPanelGroups = Array.from(this.container.nativeElement.querySelectorAll('.preview .components-list')) as HTMLElement[];
+    arrElements = [...arrElements, ...controlPanelGroups];
     return arrElements as HTMLElement[];
   }
 
   private mapChildren(container, childrenUIModel) {
     let children = Array.from(container.querySelectorAll(`
-        :scope>div>dc-container,
-        :scope>div>dc-container>dc-container-row.row,
-        :scope>div>dc-ui-flex-container .container
-    `));
+        :scope>div>[drop-container],
+        :scope>[drop-container],
+        :scope>div>dc-ui-flex-container>[drop-container]
+    `)) as HTMLElement[];
     children.forEach((childContainer, i) => {
       const uiModelChildren = this.getChildrenByIndex(childrenUIModel, i + 1);
-      this.containerUIModelMap.set(childContainer, uiModelChildren);
+      childContainer.id = `${container.id}-child-${i}`;
+      this.containerUIModelMap.set(childContainer.id, uiModelChildren);
       children = children.concat(this.mapChildren(childContainer, uiModelChildren));
     });
     return children;
   }
 
   private initEditor() {
-    this.cleanUpEditor();
     this.drake.containers.forEach((container, index) => {
       this.getContainerItems(container).forEach((element, i) => {
-        const childrenUIModels = this.containerUIModelMap.get(container);
+        const childrenUIModels = this.containerUIModelMap.get(container.id);
         if (childrenUIModels) {
           this.appendControlEditor(element as HTMLElement, childrenUIModels, i);
         }
@@ -109,34 +110,42 @@ export class DragDropService {
     return Array.from(container.children).filter(item => item.tagName !== 'DC-CONTROL-EDITOR');
   }
 
-  appendControlEditor(element: HTMLElement, children: UIModel[], i: number) {
+  appendControlEditor(element: HTMLElement, children: UIModel[], i: number, isRoot = false) {
     const uiModel = children[i];
     const componentRef = this.componentFactoryResolver
       .resolveComponentFactory(ControlEditorComponent)
       .create(this.injector);
 
-    componentRef.instance.uiModel = uiModel;
+    // componentRef.instance.uiModel = uiModel;
     componentRef.instance.uiModelChanged.subscribe(() => {
       this.uiModelUpdates$.next(this.uiModel);
     });
 
     componentRef.instance.uiModelRemoved.subscribe(() => {
-      children.splice(i, 1);
+      if (isRoot) {
+        this.uiModel = null;
+      } else {
+        children.splice(i, 1);
+      }
       this.uiModelUpdates$.next(this.uiModel);
     });
 
-    const el = element.tagName === 'DC-CONTAINER-ROW' ? element : element.querySelector('dc-ui-selector + *');
+    console.log('uiModel', uiModel, i);
+
+    // TODO: Clean up condition
+    // const el = (['DC-CONTAINER-ROW', 'DC-CONTAINER'].includes(element.tagName) || element.className === 'container') ? element : element.querySelector('dc-ui-selector + *');
+    const el = element.attributes.hasOwnProperty('drop-container') ? element : element.querySelector('dc-ui-selector + *');
     el.addEventListener('click', evt => {
       evt.stopImmediatePropagation();
       evt.preventDefault();
       this.deselect();
       el.classList.add('active-component');
+      console.log(el);
       this.selectedComponent$.next(uiModel);
     });
-
     this.appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-    element.appendChild(domElem);
+    el.appendChild(domElem);
     this.controls.push(componentRef);
   }
 
@@ -155,28 +164,36 @@ export class DragDropService {
       direction: 'horizontal',
     });
 
+    // TODO: Clean up callback.
     this.drake.on('drop', (el: Element, target: Element, source: Element) => {
+      // debugger;
       let item: UIModel;
-      const targetModel = this.containerUIModelMap.get(target);
-      if (!targetModel) {
-        return null;
-      }
-      this.dropIndex = this.domIndexOf(el, target);
-      if (el.id) {
-        item = this.containerUIModelMap.get(el.id);
-        targetModel.splice(this.dropIndex, 0, item);
+
+      if (target.id === 'empty-container') {
+        this.uiModel = JSON.parse(JSON.stringify(this.containerUIModelMap.get(el.id)));
+        // this.uiModelUpdates$.next(this.uiModel);
       } else {
-        const sourceModel = this.containerUIModelMap.get(source);
-        if (target === source) {
-          // Same containers. Replace item position.
-          item = sourceModel.splice(this.dragIndex, 1)[0];
-          sourceModel.splice(this.dropIndex, 0, item);
-        } else {
-          // Different containers.
-          // Remove item from previous container.
-          item = sourceModel.splice(this.dragIndex, 1)[0];
-          // Add item into next container.
+        const targetModel = this.containerUIModelMap.get(target.id);
+        if (!targetModel) {
+          return null;
+        }
+        this.dropIndex = this.domIndexOf(el, target);
+        if (el.id) {
+          item = JSON.parse(JSON.stringify(this.containerUIModelMap.get(el.id)));
           targetModel.splice(this.dropIndex, 0, item);
+        } else {
+          const sourceModel = this.containerUIModelMap.get(source.id);
+          if (target === source) {
+            // Same containers. Replace item position.
+            item = sourceModel.splice(this.dragIndex, 1)[0];
+            sourceModel.splice(this.dropIndex, 0, item);
+          } else {
+            // Different containers.
+            // Remove item from previous container.
+            item = sourceModel.splice(this.dragIndex, 1)[0];
+            // Add item into next container.
+            targetModel.splice(this.dropIndex, 0, item);
+          }
         }
       }
       setTimeout(() => this.uiModelUpdates$.next(this.uiModel));

@@ -8,19 +8,18 @@ import { CoreService } from '../../services/core.service';
   styleUrls: ['./controls-panel.component.scss']
 })
 export class ControlsPanelComponent implements OnInit {
-
-
-  groups = [];
+  groups: {list: [], value: string}[] = [];
   components: Array<ComponentDescriptor> = [];
-
-  constructor() { }
+  private readonly COMPONENTS_LIST = [
+    'bootstrap:button', 'bootstrap:text-input',
+    'material:flex-container', 'material:text'];
 
   ngOnInit() {
-    this.components = CoreService.getListOfComponents();
-    this.groups = this.getGroups();
+    this.components = CoreService.getListOfComponents().filter(c => this.COMPONENTS_LIST.includes(`${c.packageName}:${c.name}`));
+    this.initGroups();
   }
 
-  private getGroups(): {list: [], value: string}[] {
+  initGroups() {
     const groups = {};
     this.components.forEach((item) => {
       const groupValue = item.category;
@@ -29,6 +28,6 @@ export class ControlsPanelComponent implements OnInit {
         groups[groupValue].list.push(item);
       }
     });
-    return Object.values(groups);
+    this.groups =  Object.values(groups);
   }
 }

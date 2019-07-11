@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { BaseUIComponent, propDescription, ComponentDescriptor, StyleProperties,
-  ComponentExample, UIModel } from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../constants';
+  ComponentExample, UIModel, Categories } from '@ngx-dynamic-components/core';
+import { packageName } from '../constants';
 
 @Component({
     selector: 'dc-ui-text',
@@ -19,6 +19,7 @@ import { Categories, packageName } from '../constants';
     ]
 })
 export class TextUIComponent extends BaseUIComponent<TextProperties> {
+  @HostBinding('style.display') display = 'inline-block';
   get txtBoxStyles() {
     return {
       ...this.itemStyles,
@@ -65,7 +66,8 @@ const example: ComponentExample<UIModel<TextProperties>> = {
 export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, TextPropertiesConstrutor>  = {
   name: 'text',
   packageName,
-  category: Categories.Text,
+  label: 'Paragraph',
+  category: Categories.Basic,
   description: 'Text component',
   itemProperties: TextProperties,
   component: TextUIComponent,

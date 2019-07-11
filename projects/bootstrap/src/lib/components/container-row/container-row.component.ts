@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
-  propDescription, ComponentExample } from '@ngx-dynamic-components/core';
+  propDescription, ComponentExample, Categories } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-container-row',
@@ -20,6 +20,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
 export class ContainerRowComponent extends BaseUIComponent<BSContainerRowProperties> implements OnInit {
   @HostBinding('class.row') readonly isRow = true;
   @HostBinding('class.flex-column') isColumn = false;
+  @HostBinding('attr.drop-container') dropContainer = true;
 
   async ngOnInit() {
     await super.ngOnInit();
@@ -83,8 +84,9 @@ interface ContainerPropertiesConstrutor {
 
 export const containerRowDescriptor: ComponentDescriptor<ContainerRowComponentConstrutor, ContainerPropertiesConstrutor> = {
   name: 'bs-row',
+  label: 'Row',
   packageName: 'bootstrap',
-  category: 'Layout',
+  category: Categories.Containers,
   description: 'Bootstrap row container',
   itemProperties: BSContainerRowProperties,
   component: ContainerRowComponent,
@@ -92,11 +94,11 @@ export const containerRowDescriptor: ComponentDescriptor<ContainerRowComponentCo
   defaultModel: {
     type: 'bootstrap:bs-row',
     containerProperties: {
-      height: '100%',
+      height: 'auto',
       width: '100%'
     },
     itemProperties: {
-      height: '100%',
+      height: '100px',
       width: '100%'
     },
     children: []

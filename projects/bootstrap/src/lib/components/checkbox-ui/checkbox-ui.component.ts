@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentExample,
-  propDescription, ComponentDescriptor, UIModel } from '@ngx-dynamic-components/core';
+  propDescription, ComponentDescriptor, UIModel, Categories } from '@ngx-dynamic-components/core';
 
-import { Categories, packageName } from '../../constants';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-checkbox-ui',
@@ -62,7 +62,8 @@ interface CheckboxPropertiesConstrutor {
 export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrutor, CheckboxPropertiesConstrutor> = {
   name: 'checkbox',
   packageName,
-  category: Categories.FormControl,
+  label: 'Multi-choice boxes',
+  category: Categories.Basic,
   description: 'Checkbox component',
   itemProperties: CheckboxProperties,
   component: CheckboxUIComponent,

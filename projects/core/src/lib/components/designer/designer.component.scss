@@ -2,17 +2,27 @@ tabset {
   width: 250px;
 }
 
-ngx-dynamic-component {
+ngx-dynamic-component, #empty-container {
   max-width: calc(100% - 250px);
+  position: relative;
 }
 
 .preview.edit-mode ngx-dynamic-component ::ng-deep {
-  dc-ui-selector + * {
+  dc-ui-selector + dc-ui-flex-container > .container,
+  dc-ui-selector + *:not(dc-ui-flex-container) {
     cursor: pointer;
     border: 1px dashed gray;
   }
 
-  .active-component {
-    border: 1px solid gray;
+  dc-ui-selector + dc-ui-flex-container.active-component > .container,
+  dc-ui-selector + dc-ui-flex-container > .active-component.container {
+    border-style: solid;
+  }
+
+  .active-component:not(dc-ui-flex-container) {
+    border-style: solid;
+    > dc-control-editor {
+      display: block;
+    }
   }
 }

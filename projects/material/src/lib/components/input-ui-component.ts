@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription,
-  ComponentExample, UIModel } from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../constants';
+  ComponentExample, UIModel, Categories } from '@ngx-dynamic-components/core';
+import { packageName } from '../constants';
 
 @Component({
     selector: 'dc-ui-input',
@@ -59,8 +59,9 @@ interface InputPropertiesConstrutor {
 
 export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, InputPropertiesConstrutor> = {
   name: 'text-input',
+  label: 'Text Input (Material)',
   packageName,
-  category: Categories.FormControl,
+  category: Categories.Basic,
   description: 'Input component',
   itemProperties: InputProperties,
   component: InputUIComponent,

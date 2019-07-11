@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, UIModel, ComponentDescriptor,
-  propDescription, ContainerProperties, ComponentExample, getItemByIndex, AttributesMap } from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../../constants';
+  propDescription, ContainerProperties, ComponentExample, getItemByIndex, AttributesMap, Categories } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-card',
@@ -114,8 +114,9 @@ interface CardPropertiesConstrutor {
 
 export const cardDescriptor: ComponentDescriptor<CardComponentConstrutor, CardPropertiesConstrutor> = {
   name: 'card',
+  label: 'Card',
   packageName,
-  category: Categories.Layout,
+  category: Categories.Containers,
   description: 'Card layout component',
   itemProperties: CardProperties,
   component: CardComponent,

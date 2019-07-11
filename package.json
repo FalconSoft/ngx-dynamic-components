@@ -39,7 +39,7 @@
     "hammerjs": "^2.0.8",
     "json-formatter-js": "^2.2.1",
     "ng2-dragula": "^2.1.1",
-    "ngx-bootstrap": "^5.0.0",
+    "ngx-bootstrap": "^5.1.0",
     "ngx-monaco-editor": "^7.0.0",
     "rxjs": "~6.5.2",
     "tslib": "^1.10.0",

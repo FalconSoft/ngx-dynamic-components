@@ -13,3 +13,4 @@ export * from './lib/workflow/workflow.processor';
 export * from './lib/utils';
 export * from './lib/workflow/actions-store';
 export * from './lib/workflow/json.utils';
+export * from './lib/constants';

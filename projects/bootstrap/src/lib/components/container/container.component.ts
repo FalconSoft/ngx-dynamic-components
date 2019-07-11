@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
-  propDescription, ComponentExample } from '@ngx-dynamic-components/core';
-import { packageName, Categories } from '../../constants';
+  propDescription, ComponentExample, Categories } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-container',
@@ -23,6 +23,7 @@ export class ContainerComponent extends BaseUIComponent<BSContainerProperties> i
   @HostBinding('class.container') isContainer = true;
   @HostBinding('class.container-fluid') isFluidContainer = false;
   @HostBinding('style.height') height = 'auto';
+  @HostBinding('attr.drop-container') dropContainer = true;
 
   async ngOnInit() {
     await super.ngOnInit();
@@ -109,8 +110,9 @@ interface ContainerPropertiesConstrutor {
 
 export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrutor, ContainerPropertiesConstrutor> = {
   name: 'container',
+  label: 'Container',
   packageName,
-  category: Categories.Layout,
+  category: Categories.Containers,
   description: 'Bootstrap container',
   itemProperties: BSContainerProperties,
   component: ContainerComponent,

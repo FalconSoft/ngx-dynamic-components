@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, propDescription, StyleProperties, ComponentExample,
-  ComponentDescriptor, UIModel} from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../constants';
+  ComponentDescriptor, UIModel, Categories} from '@ngx-dynamic-components/core';
+import { packageName } from '../constants';
 
 @Component({
     selector: 'dc-ui-button',
@@ -57,8 +57,9 @@ interface ButtonPropertiesConstrutor {
 
 export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, ButtonPropertiesConstrutor> = {
   name: 'button',
+  label: 'Button (Material)',
   packageName,
-  category: Categories.Buttons,
+  category: Categories.Basic,
   description: 'Button component',
   itemProperties: ButtonProperties,
   component: ButtonUIComponent,

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, ComponentExample, DataModelProperties,
-  propDescription, ComponentDescriptor, UIModel } from '@ngx-dynamic-components/core';
+  propDescription, ComponentDescriptor, UIModel, Categories } from '@ngx-dynamic-components/core';
 
-import { Categories, packageName } from '../../constants';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-datable-ui',
@@ -83,8 +83,9 @@ interface DatablePropertiesConstrutor {
 
 export const datableDescriptor: ComponentDescriptor<DatableUIComponentConstrutor, DatablePropertiesConstrutor> = {
   name: 'datable',
+  label: 'Material Table',
   packageName,
-  category: Categories.DataTable,
+  category: Categories.Data,
   description: 'Datable component',
   itemProperties: DatableProperties,
   component: DatableUIComponent,

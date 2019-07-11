@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, propDescription,
-  ComponentDescriptor, ComponentExample, UIModel } from '@ngx-dynamic-components/core';
-import { packageName, Categories } from '../../constants';
+  ComponentDescriptor, ComponentExample, UIModel, Categories } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-textarea-ui',
@@ -65,8 +65,9 @@ interface TextareaPropertiesConstrutor {
 
 export const textareaDescriptor: ComponentDescriptor<TextareaUIComponentConstrutor, TextareaPropertiesConstrutor> = {
   name: 'textarea',
+  label: 'Text Area',
   packageName,
-  category: Categories.FormControl,
+  category: Categories.Basic,
   description: 'Text area component',
   itemProperties: TextareaProperties,
   component: TextareaUIComponent,

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentDescriptor, propDescription,
-  ComponentExample, UIModel } from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../../constants';
+  ComponentExample, UIModel, Categories } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-input-ui',
@@ -30,7 +30,15 @@ import { Categories, packageName } from '../../constants';
     }
   `]
 })
-export class InputUIComponent extends BaseUIComponent<InputProperties> {
+export class InputUIComponent extends BaseUIComponent<InputProperties> implements OnInit {
+  @HostBinding('style.width') width: string;
+
+  async ngOnInit() {
+    if (this.properties.width) {
+      this.width = this.properties.width;
+    }
+  }
+
   get id() {
     return 'input-id-' + this.properties.label.replace(/ /g, '-').toLowerCase();
   }
@@ -42,6 +50,10 @@ export class InputProperties extends DataModelProperties {
     example: 'Type your name',
   })
   placeholder?: string;
+  @propDescription({
+    description: 'Label',
+    example: 'Username',
+  })
   label?: string;
   type?: string;
 }
@@ -52,7 +64,7 @@ export const example: ComponentExample<UIModel<InputProperties>> = {
     type: `${packageName}:text-input`,
     containerProperties: {},
     itemProperties: {
-      label: 'Name',
+      label: 'Label',
       placeholder: 'Enter your name',
       dataModelPath: '$.name'
     }
@@ -70,8 +82,9 @@ interface InputPropertiesConstrutor {
 
 export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, InputPropertiesConstrutor> = {
   name: 'text-input',
+  label: 'Text Input',
   packageName,
-  category: Categories.FormControl,
+  category: Categories.Basic,
   description: 'Input component',
   itemProperties: InputProperties,
   component: InputUIComponent,

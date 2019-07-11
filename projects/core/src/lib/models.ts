@@ -72,6 +72,7 @@ interface AttributesMapConstructor {
 
 export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor, PropertiesType = AttributesMapConstructor> {
   packageName: string;
+  label: string;
   category: string;
   name: string;
   description: string;
@@ -99,3 +100,5 @@ export interface IVariableResolver {
   resolve: (obj: object) => object;
   resolveString: (str: string, vars?: object) => object|string;
 }
+
+export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'background', 'max-height'];

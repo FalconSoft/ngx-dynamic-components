@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
-  propDescription, ComponentExample } from '@ngx-dynamic-components/core';
-import { Categories, packageName } from '../../constants';
+import { Component } from '@angular/core';
+import { BaseUIComponent, UIModel, ComponentDescriptor, propDescription, ComponentExample,
+  Categories, StyleProperties } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
     selector: 'dc-ui-flex-container',
     template: `
-    <div class="container"
+    <div class="container" drop-container
         [fxLayout]="uiModel.itemProperties?.fxLayout || 'row'"
         [fxLayoutGap]="uiModel.itemProperties?.fxLayoutGap || '0'"
         [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign || 'flex-start'"
@@ -31,7 +31,7 @@ export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerPrope
 
 }
 
-export class FlexContainerProperties extends ContainerProperties {
+export class FlexContainerProperties extends StyleProperties {
   @propDescription({
     description: 'fxLayout (Angular Flex-Layout property)',
     example: 'column',
@@ -105,9 +105,26 @@ interface FlexContainerPropertiesConstrutor {
 export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUIComponentConstrutor, FlexContainerPropertiesConstrutor> = {
   name: 'flex-container',
   packageName,
-  category: Categories.Layout,
+  label: 'Panel',
+  category: Categories.Containers,
   description: 'Flex layout component',
   itemProperties: FlexContainerProperties,
   component: FlexContainerUIComponent,
-  example
+  example,
+  defaultModel: {
+    type: `${packageName}:flex-container`,
+    containerProperties: {
+      width: '100%',
+      height: '100px'
+    },
+    itemProperties: {
+      fxLayout: 'row',
+      fxLayoutGap: '1rem',
+      fxFlex: '0 1 auto',
+      width: '100%',
+      padding: '0',
+      height: '100px'
+    },
+    children: []
+  }
 };

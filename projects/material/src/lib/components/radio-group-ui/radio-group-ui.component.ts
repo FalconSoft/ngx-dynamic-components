@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentExample,
-  propDescription, ComponentDescriptor, UIModel, AttributesMap } from '@ngx-dynamic-components/core';
+  propDescription, ComponentDescriptor, UIModel, AttributesMap, Categories } from '@ngx-dynamic-components/core';
 
-import { Categories, packageName } from '../../constants';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-radio-group-ui',
@@ -82,8 +82,9 @@ interface RadioGroupPropertiesConstrutor {
 
 export const radioGroupDescriptor: ComponentDescriptor<RadioGroupUIComponentConstrutor, RadioGroupPropertiesConstrutor> = {
   name: 'radio-group',
+  label: 'Single choice boxes',
   packageName,
-  category: Categories.FormControl,
+  category: Categories.Basic,
   description: 'Radio group component',
   itemProperties: RadioGroupProperties,
   component: RadioGroupUIComponent,

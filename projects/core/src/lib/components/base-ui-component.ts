@@ -1,5 +1,5 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { UIModel, AttributesMap, DataModelProperties } from '../models';
+import { UIModel, AttributesMap, DataModelProperties, StylePropertiesList } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
 import { WorkflowEngine } from '../workflow/workflow.processor';
 
@@ -74,7 +74,7 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
     }
 
     getStyles(properties: AttributesMap = {}): {[key: string]: string} {
-      const styleProperties = ['width', 'height', 'padding', 'margin', 'background', 'max-height'];
+      const styleProperties = StylePropertiesList;
       return styleProperties.reduce((styles, prop) => {
         if (properties.hasOwnProperty(prop)) {
           styles[prop] = properties[prop];

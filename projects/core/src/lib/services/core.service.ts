@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ComponentDescriptor } from '../models';
+import { ComponentDescriptor, StyleProperties } from '../models';
 import { BaseUIComponentConstructor, ComponentProperty } from '../utils';
 
 @Injectable({

@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UIModel } from '../../models';
 import { WorkflowConfig } from '../../workflow/workflow.processor';
 import { DragDropService } from '../../services/drag-drop.service';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line
@@ -13,7 +14,9 @@ export class DesignerComponent implements OnInit, AfterViewInit {
 
   @Input() uiModel: UIModel;
   @Input() workflow: WorkflowConfig;
-  @ViewChild('tabset', {static: false}) tabs: TabsetComponent;
+  @Output() uiModelUpdated = new EventEmitter<UIModel>();
+  @ViewChild('tabset', {static: false}) tabset: TabsetComponent;
+  @ViewChild('controlsPanel', {static: false}) controlsPanel: ControlsPanelComponent;
 
   uiModelToEdit: UIModel;
   workflowConfig: WorkflowConfig = {
@@ -24,6 +27,7 @@ export class DesignerComponent implements OnInit, AfterViewInit {
     consts: {}
   };
   uiModelVal: UIModel;
+
   constructor(private container: ElementRef, private dragDropService: DragDropService) { }
 
   ngOnInit() {
@@ -31,6 +35,8 @@ export class DesignerComponent implements OnInit, AfterViewInit {
     this.dragDropService.uiModelUpdates$.subscribe(uiModel => {
       setTimeout(() => {
         this.uiModelVal = uiModel;
+        this.uiModelUpdated.emit(uiModel);
+        this.controlsPanel.initGroups();
         setTimeout(() => {
           this.dragDropService.init(this.container, this.uiModelVal);
         });
@@ -41,7 +47,11 @@ export class DesignerComponent implements OnInit, AfterViewInit {
     this.dragDropService.selectedComponent$.subscribe(uiModel => {
       this.uiModelToEdit = uiModel;
       window.requestAnimationFrame(() => {
-        this.tabs.tabs[1].active = true;
+        try {
+          this.tabset.tabs[1].active = true;
+        } catch (e) {
+          console.error(e);
+        }
       });
     });
   }
