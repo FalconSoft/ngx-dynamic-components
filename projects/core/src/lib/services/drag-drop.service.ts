@@ -21,6 +21,7 @@ export class DragDropService {
 
   uiModelUpdates$ = new Subject<UIModel>();
   selectedComponent$ =  new Subject<UIModel>();
+  componentRemoved$ = new Subject<UIModel>();
 
   controls: ComponentRef<ControlEditorComponent>[] = [];
 
@@ -123,24 +124,21 @@ export class DragDropService {
 
     componentRef.instance.uiModelRemoved.subscribe(() => {
       if (isRoot) {
+        this.componentRemoved$.next(null);
         this.uiModel = null;
       } else {
+        this.componentRemoved$.next(children[i]);
         children.splice(i, 1);
       }
       this.uiModelUpdates$.next(this.uiModel);
     });
 
-    console.log('uiModel', uiModel, i);
-
-    // TODO: Clean up condition
-    // const el = (['DC-CONTAINER-ROW', 'DC-CONTAINER'].includes(element.tagName) || element.className === 'container') ? element : element.querySelector('dc-ui-selector + *');
     const el = element.attributes.hasOwnProperty('drop-container') ? element : element.querySelector('dc-ui-selector + *');
     el.addEventListener('click', evt => {
       evt.stopImmediatePropagation();
       evt.preventDefault();
       this.deselect();
       el.classList.add('active-component');
-      console.log(el);
       this.selectedComponent$.next(uiModel);
     });
     this.appRef.attachView(componentRef.hostView);

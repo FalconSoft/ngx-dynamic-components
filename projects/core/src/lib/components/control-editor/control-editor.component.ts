@@ -10,7 +10,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
         <path d="M0 0h24v24H0z" fill="none"></path>
       </svg>
     </button>
-    <button class="btn btn-light btn-sm px-1 py-0" tooltip="Remove" (click)="uiModelRemoved.emit()">
+    <button class="btn btn-light btn-sm px-1 py-0" tooltip="Remove" (click)="onRemove($event)">
       <i class="fa fa-remove"></i>
     </button>
   `,
@@ -19,4 +19,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class ControlEditorComponent {
   @Output() uiModelChanged = new EventEmitter();
   @Output() uiModelRemoved = new EventEmitter();
+
+  onRemove(evt) {
+    evt.stopPropagation();
+    this.uiModelRemoved.emit();
+  }
 }

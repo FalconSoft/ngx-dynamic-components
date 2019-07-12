@@ -1,7 +1,7 @@
-<div class="row h-100 preview edit-mode ml-2">
+<div class="row h-100 preview edit-mode m-0 w-100">
   <ngx-dynamic-component class="h-100 flex-fill" *ngIf="uiModelVal" [uiModel]='uiModelVal' [dataModel]='{}' [workflow]='workflow'></ngx-dynamic-component>
   <div id="empty-container" class="w-100" *ngIf="!uiModelVal"></div>
-  <tabset #tabset class="tabset-fx px-3 ml-auto">
+  <tabset #tabset class="tabset-fx pl-2 ml-auto">
     <tab heading="Components" (selectTab)="onComponentsTabSelect()">
       <dc-controls-panel #controlsPanel class="h-100 overflow-auto"></dc-controls-panel>
     </tab>

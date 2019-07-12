@@ -46,13 +46,11 @@ export class DesignerComponent implements OnInit, AfterViewInit {
 
     this.dragDropService.selectedComponent$.subscribe(uiModel => {
       this.uiModelToEdit = uiModel;
-      window.requestAnimationFrame(() => {
-        try {
-          this.tabset.tabs[1].active = true;
-        } catch (e) {
-          console.error(e);
-        }
-      });
+      this.tabSelect(1);
+    });
+
+    this.dragDropService.componentRemoved$.subscribe(() => {
+      this.tabSelect(0);
     });
   }
 
@@ -68,12 +66,23 @@ export class DesignerComponent implements OnInit, AfterViewInit {
   }
 
   onPropertyChange() {
+    const model = this.uiModelVal;
     this.uiModelVal = null;
     window.requestAnimationFrame(() => {
-      this.uiModelVal = this.uiModel;
+      this.uiModelVal = model;
       setTimeout(() => {
         this.dragDropService.init(this.container, this.uiModelVal);
       });
+    });
+  }
+
+  private tabSelect(i: number) {
+    window.requestAnimationFrame(() => {
+      try {
+        this.tabset.tabs[i].active = true;
+      } catch (e) {
+        console.error(e);
+      }
     });
   }
 }

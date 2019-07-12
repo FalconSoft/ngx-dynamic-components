@@ -24,8 +24,12 @@ import { packageName } from '../../constants';
                 [workflowEngine]='workflowEngine'
             ></dc-ui-selector>
         </div>
-    </div>
-    `
+    </div>`,
+    styles: [`
+      :host {
+        height: 100%;
+      }
+    `]
 })
 export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
 

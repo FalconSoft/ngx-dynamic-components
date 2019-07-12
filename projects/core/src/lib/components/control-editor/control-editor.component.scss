@@ -26,10 +26,6 @@ $border: 1px dashed rgba(0, 0, 0, 0);
       display: block;
     }
   }
-
-  dc-ui-flex-container>.container.active-component>dc-control-editor {
-    display: block;
-  }
 }
 
 ::ng-deep .preview dc-ui-flex-container .item,
@@ -47,16 +43,6 @@ $border: 1px dashed rgba(0, 0, 0, 0);
     border-color: grey;
     dc-control-editor {
       display: block !important;
-    }
-  }
-
-  dc-ui-flex-container + dc-control-editor > .handle {
-    color: rgba(0, 0, 0, .75);
-  }
-
-  .active-component + {
-    dc-ui-flex-container + dc-control-editor > .handle {
-      color: rgba(0, 0, 0, .8);
     }
   }
 }
@@ -118,8 +104,6 @@ $border: 1px dashed rgba(0, 0, 0, 0);
     }
   }
 }
-
-
 
 :host {
   position: absolute;

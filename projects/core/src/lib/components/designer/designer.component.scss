@@ -25,4 +25,7 @@ ngx-dynamic-component, #empty-container {
       display: block;
     }
   }
+  dc-ui-selector + dc-ui-flex-container.active-component > .container + dc-control-editor {
+    display: block;
+  }
 }

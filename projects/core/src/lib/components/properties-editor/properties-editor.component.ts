@@ -5,12 +5,12 @@ import { CoreService } from '../../services/core.service';
 @Component({
   selector: 'dc-properties-editor',
   template: `
-    <div class="editor-container" #editorContainer fxLayout="column">
+    <div class="editor-container" #editorContainer fxLayout="column" (keyup.enter)="onSave()">
       <h5>{{label}}</h5>
       <div class="form-group mb-2" *ngFor="let property of properties">
         <label for="prop-{{property.name}}" class="col-form-label px-0 py-1">{{property.name}}</label>
         <div class="flex-fill">
-          <input type="text" class="form-control" placeholder="Enter value" [value]="property.value"
+          <input type="text" class="form-control" placeholder="Enter value" [value]="property.value" (blur)="onSave()"
             [name]="property.name" required id="prop-{{property.name}}" (input)="updateProperty($event, property.name)">
         </div>
       </div>
@@ -18,7 +18,7 @@ import { CoreService } from '../../services/core.service';
         <label for="container-prop-{{property.name}}" class="col-form-label px-0 py-1">Container {{property.name}}</label>
         <div class="flex-fill">
           <input type="text" class="form-control" placeholder="Enter value" [value]="property.value"
-            [name]="property.name" required id="container-prop-{{property.name}}"
+            [name]="property.name" required id="container-prop-{{property.name}}" (blur)="onSave()"
             (input)="updateProperty($event, property.name, updatedContainerProperties)">
         </div>
       </div>
