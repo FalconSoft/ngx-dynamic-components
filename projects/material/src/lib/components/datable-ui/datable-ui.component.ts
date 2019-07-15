@@ -45,16 +45,16 @@ export const example: ComponentExample<UIModel<DatableProperties>> = {
     type: 'material:datable',
     containerProperties: {},
     itemProperties: {
-        width: '90%',
-        margin: '15px auto',
-        padding: '20px 5px',
         displayedProperties: [
           {title: 'No.', dataProperty: 'position'},
           {title: 'Name', dataProperty: 'name'},
           {title: 'Weight', dataProperty: 'weight'},
           {title: 'Symbol', dataProperty: 'symbol'},
         ],
-        dataModelPath: '$.tableData'
+        dataModelPath: '$.tableData',
+        width: '90%',
+        margin: '15px auto',
+        padding: '20px 5px',
     }
   },
   dataModel: {

@@ -103,13 +103,12 @@ const example: ComponentExample<UIModel<CardProperties>> = {
       }
     }, {
       type: 'material:textarea',
-      containerProperties: {
-        width: '100%',
-      },
+      containerProperties: {},
       itemProperties: {
         rows: 4,
         placeholder: 'Type card information',
-        dataModelPath: '$.card/info'
+        dataModelPath: '$.card/info',
+        width: '100%',
       }
     }, {
       type: 'material:button',

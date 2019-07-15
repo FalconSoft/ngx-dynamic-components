@@ -7,7 +7,7 @@ import { packageName } from '../../constants';
 @Component({
   selector: 'dc-checkbox-ui',
   template: `
-    <div class="form-check" [ngClass]="{'form-check-inline': properties.inline}" [ngStyle]="containerStyles">
+    <div class="form-check" [ngClass]="{'form-check-inline': properties.inline}">
       <input class="form-check-input" type="checkbox"
       [ngStyle]="itemStyles"
       (change)="changedDataModel.emit(this.dataModel)"
@@ -42,8 +42,6 @@ export const example: ComponentExample<UIModel<CheckboxProperties>> = {
     containerProperties: {},
     itemProperties: {
       label: 'Accept conditions',
-      padding: '10px',
-      margin: '20px',
       dataModelPath: '$.accept',
       inline: true
     }

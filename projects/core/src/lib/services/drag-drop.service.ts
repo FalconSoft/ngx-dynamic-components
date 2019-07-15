@@ -179,6 +179,8 @@ export class DragDropService {
         if (el.id) {
           item = JSON.parse(JSON.stringify(this.containerUIModelMap.get(el.id)));
           targetModel.splice(this.dropIndex, 0, item);
+          console.log('item', item);
+          this.selectedComponent$.next(item);
         } else {
           const sourceModel = this.containerUIModelMap.get(source.id);
           if (target === source) {

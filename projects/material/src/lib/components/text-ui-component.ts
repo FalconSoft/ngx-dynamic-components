@@ -7,16 +7,7 @@ import { packageName } from '../constants';
     selector: 'dc-ui-text',
     template: `
     <span [ngStyle]="txtBoxStyles">{{uiModel.itemProperties?.text}}</span>
-    `,
-    styles: [
-      `   span {
-              display: inline-block;
-              margin-bottom: 1.25rem;
-              margin-top: 1rem;
-              padding: .5rem 0;
-          }
-      `
-    ]
+    `
 })
 export class TextUIComponent extends BaseUIComponent<TextProperties> {
   @HostBinding('style.display') display = 'inline-block';
@@ -75,7 +66,9 @@ export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, Text
   defaultModel: {
     type: `${packageName}:text`,
     itemProperties: {
-      text: 'Text example'
-    }
+      text: 'Text example',
+      padding: '.5rem'
+    },
+    containerProperties: {}
   }
 };

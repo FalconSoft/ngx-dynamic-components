@@ -52,8 +52,6 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
     containerProperties: {},
     itemProperties: {
       label: 'Select color',
-      padding: '5px 20px',
-      margin: '10px 0',
       dataModelPath: '$.color',
       options: [{label: 'White', value: 'white'}, {label: 'Black', value: 'black'}],
     }

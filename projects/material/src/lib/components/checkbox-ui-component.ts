@@ -31,8 +31,6 @@ const example: ComponentExample<UIModel<CheckboxProperties>> = {
     containerProperties: {},
     itemProperties: {
       label: 'Accept conditions',
-      padding: '20px',
-      margin: '40px',
       dataModelPath: '$.accept'
     }
   },

@@ -1,17 +1,23 @@
-import { OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { UIModel, AttributesMap, DataModelProperties, StylePropertiesList } from '../models';
+import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding } from '@angular/core';
+import { UIModel, AttributesMap, DataModelProperties, StylePropertiesList, StyleProperties } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
 import { WorkflowEngine } from '../workflow/workflow.processor';
 
-export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
+export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
     @Input() workflowEngine: WorkflowEngine;
+    @HostBinding('style.width') width: string;
+    @HostBinding('style.height') height: string;
+    @HostBinding('style.padding') padding: string;
+    @HostBinding('style.margin') margin: string;
+    @HostBinding('style.display') display = 'inherit';
 
     @Output()
     changedDataModel = new EventEmitter();
 
     async ngOnInit(): Promise<void> {
+      this.setHostStyles();
       await this.triggerAction('_OnInit');
     }
 
@@ -69,10 +75,6 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
       return this.getStyles(this.uiModel.itemProperties);
     }
 
-    get containerStyles() {
-      return this.getStyles(this.uiModel.containerProperties);
-    }
-
     getStyles(properties: AttributesMap = {}): {[key: string]: string} {
       const styleProperties = StylePropertiesList;
       return styleProperties.reduce((styles, prop) => {
@@ -81,5 +83,24 @@ export class BaseUIComponent<T = AttributesMap> implements OnInit, OnDestroy {
         }
         return styles;
       }, {});
+    }
+
+    private setHostStyles() {
+      const props = this.properties as StyleProperties;
+      if (props.width) {
+        this.width = props.width;
+      }
+
+      if (props.height) {
+        this.height = props.height;
+      }
+
+      if (props.padding) {
+        this.padding = props.padding;
+      }
+
+      if (props.margin) {
+        this.margin = props.margin;
+      }
     }
 }

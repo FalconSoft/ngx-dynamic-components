@@ -8,7 +8,7 @@
         {{g.value}}
       </div>
       <ul class="d-flex flex-fill flex-column p-0 m-0">
-        <li class="pl-1 d-flex align-items-baseline cursor-pointer" *ngFor="let item of g.list">
+        <li class="pl-1 my-1 d-flex align-items-baseline cursor-pointer" *ngFor="let item of g.list">
         <label for="container-prop-{{item.name}}" [title]="item.label" class="col-form-label px-0 py-1">{{item.label}}</label>
         <div class="flex-fill">
           <input type="text" class="form-control" placeholder="Enter value" [value]="item.value"

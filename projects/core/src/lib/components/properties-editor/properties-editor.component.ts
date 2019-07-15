@@ -35,7 +35,6 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     } catch {
       updatedProperties[name] = evt.target.value;
     }
-    console.log('this.containerProperties', this.containerProperties);
   }
 
   private initPropertyGroups(properties: ComponentPropertyValue[]) {

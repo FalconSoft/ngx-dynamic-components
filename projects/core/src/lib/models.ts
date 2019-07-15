@@ -38,13 +38,16 @@ export abstract class StyleProperties implements AttributesMap {
   margin?: string;
 }
 
-export abstract class DataModelProperties extends StyleProperties {
+
+export abstract class BindingProperties extends StyleProperties {
   @propDescription({
     description: 'Path to id in data model.',
     example: 'name'
   })
   dataModelPath?: string;
+}
 
+export abstract class DataModelProperties extends BindingProperties {
   @propDescription({
     description: 'Component Data Source.',
     example: '{{responseContext}}/dataset'

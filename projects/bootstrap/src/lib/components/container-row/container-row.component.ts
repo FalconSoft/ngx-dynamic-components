@@ -46,9 +46,7 @@ export const example: ComponentExample<UIModel<BSContainerRowProperties>> = {
   title: 'Bootstrap container row example',
   uiModel: {
     type: 'bootstrap:bs-row',
-    containerProperties: {
-      width: '100%'
-    },
+    containerProperties: {},
     itemProperties: {
       width: '50%',
       padding: '10px'
@@ -93,10 +91,7 @@ export const containerRowDescriptor: ComponentDescriptor<ContainerRowComponentCo
   example,
   defaultModel: {
     type: 'bootstrap:bs-row',
-    containerProperties: {
-      height: 'auto',
-      width: '100%'
-    },
+    containerProperties: {},
     itemProperties: {
       height: '100px',
       width: '100%'

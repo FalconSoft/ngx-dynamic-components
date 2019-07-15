@@ -6,7 +6,7 @@ import { packageName } from '../../constants';
 @Component({
   selector: 'dc-select-ui',
   template: `
-    <div class="form-group" [ngStyle]="containerStyles">
+    <div class="form-group">
       <label *ngIf="properties.label" selected>{{properties.label}}</label>
       <select class="form-control" [ngStyle]="itemStyles"
         (change)="onSelect()"

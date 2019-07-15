@@ -6,7 +6,7 @@ import { packageName } from '../constants';
 @Component({
   selector: 'dc-ui-select',
   template: `
-    <mat-form-field [ngStyle]="containerStyles">
+    <mat-form-field>
       <mat-select [ngStyle]="itemStyles"
         [placeholder]="uiModel.itemProperties?.placeholder"
         (selectionChange)="onSelect()"

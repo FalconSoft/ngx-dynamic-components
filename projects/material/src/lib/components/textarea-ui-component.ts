@@ -6,7 +6,7 @@ import { packageName } from '../constants';
 @Component({
     selector: 'dc-ui-textarea',
     template: `
-        <mat-form-field [ngStyle]="containerStyles">
+        <mat-form-field>
             <textarea matInput [placeholder]="uiModel?.itemProperties?.placeholder"
                 [rows]="uiModel?.itemProperties?.rows"
                 [ngStyle]="itemStyles"

@@ -9,14 +9,7 @@ import { packageName } from '../../constants';
     <button class="btn " [ngClass]="properties.btnClass || 'btn-primary'"
       [type]="properties.type" [ngStyle]="itemStyles"
       (click)="onClick()">{{properties.label}}</button>
-  `,
-  styles: [`
-    :host {
-      display: inherit;
-      height: 100%;
-      width: 100%;
-    }
-  `]
+  `
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
   onClick() {

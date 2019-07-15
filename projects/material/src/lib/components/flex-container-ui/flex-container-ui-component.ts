@@ -9,13 +9,15 @@ import { packageName } from '../../constants';
     <div class="container" drop-container
         [fxLayout]="uiModel.itemProperties?.fxLayout || 'row'"
         [fxLayoutGap]="uiModel.itemProperties?.fxLayoutGap || '0'"
-        [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign || 'flex-start'"
-        [fxFlex]="uiModel.itemProperties?.fxFlex || 'initial'"
+        [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign || ''"
         [ngStyle]="itemStyles">
 
         <div *ngFor="let item of uiModel.children" class="item"
             [fxFlex]="item.containerProperties?.fxFlex || 'initial'"
-            [ngStyle]="getStyles(item.containerProperties)">
+            [fxFlexOrder]="item.containerProperties?.fxFlexOrder || 0"
+            [fxFlexOffset]="item.containerProperties?.fxFlexOffset || '0%'"
+            [fxFlexAlign]="item.containerProperties?.fxFlexAlign || 'unset'"
+            [attr.fxFill]="item.containerProperties?.fxFill || false">
 
             <dc-ui-selector
                 (changedDataModel)="changedDataModel.emit($event)"
@@ -24,16 +26,9 @@ import { packageName } from '../../constants';
                 [workflowEngine]='workflowEngine'
             ></dc-ui-selector>
         </div>
-    </div>`,
-    styles: [`
-      :host {
-        height: 100%;
-      }
-    `]
+    </div>`
 })
-export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
-
-}
+export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {}
 
 export class FlexContainerProperties extends StyleProperties {
   @propDescription({
@@ -53,26 +48,17 @@ export class FlexContainerProperties extends StyleProperties {
     example: 'stretch center',
   })
   fxLayoutAlign?: string;
-
-  @propDescription({
-    description: 'fxFlex (Angular Flex-Layout property)',
-    example: '10px',
-  })
-  fxFlex?: string;
 }
 
 const example: ComponentExample<UIModel<FlexContainerProperties>> = {
   title: 'Flex example',
   uiModel: {
     type: 'material:flex-container',
-    containerProperties: {
-      width: '100%'
-    },
+    containerProperties: {},
     itemProperties: {
       fxLayout: 'row',
-      fxLayoutGap: '1rem',
-      fxFlex: '0 1 auto',
-      width: '50%',
+      fxLayoutGap: '10px',
+      width: '100%',
       padding: '10px'
     },
     children: [{
@@ -115,17 +101,12 @@ export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUICompone
   example,
   defaultModel: {
     type: `${packageName}:flex-container`,
-    containerProperties: {
-      width: '100%',
-      height: '100px'
-    },
+    containerProperties: {},
     itemProperties: {
       fxLayout: 'row',
-      fxLayoutGap: '1rem',
-      fxFlex: '0 1 auto',
+      fxLayoutGap: '10px',
       width: '100%',
-      padding: '0',
-      height: '100px'
+      height: '100%'
     },
     children: []
   }

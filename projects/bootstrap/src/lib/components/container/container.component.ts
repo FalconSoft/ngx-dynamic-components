@@ -50,13 +50,8 @@ export const example: ComponentExample<UIModel<BSContainerProperties>> = {
   title: 'Bootstrap container example',
   uiModel: {
     type: 'bootstrap:container',
-    containerProperties: {
-      width: '100%'
-    },
-    itemProperties: {
-      width: '20%',
-      padding: '10px'
-    },
+    containerProperties: {},
+    itemProperties: {},
     children: [{
       type: 'bootstrap:bs-row',
       children: [{
@@ -123,10 +118,7 @@ export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrut
       height: '100%',
       width: '100%'
     },
-    itemProperties: {
-      height: '100%',
-      width: '100%'
-    },
+    itemProperties: {},
     children: []
   }
 };

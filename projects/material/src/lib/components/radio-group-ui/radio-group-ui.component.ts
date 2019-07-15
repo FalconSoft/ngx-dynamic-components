@@ -56,11 +56,12 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   title: 'Radio group example',
   uiModel: {
     type: 'material:radio-group',
-    containerProperties: {},
-    itemProperties: {
-      label: 'Select color',
+    containerProperties: {
       padding: '5px 0',
       margin: '10px 0',
+    },
+    itemProperties: {
+      label: 'Select color',
       dataModelPath: '$.color',
       orientation: 'vertical',
       options: [{label: 'White', value: 'white'}, {label: 'Black', value: 'black'}],
