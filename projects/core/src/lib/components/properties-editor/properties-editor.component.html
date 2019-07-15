@@ -1,0 +1,22 @@
+<div class="editor-container" fxLayout="column" (keyup.enter)="onSave()">
+  <h5>{{label}}</h5>
+  <accordion class="d-flex flex-fill flex-column p-0 m-0 w-100">
+    <accordion-group *ngFor="let g of groups" isOpen="true">
+      <div class="header" accordion-heading>
+        <i class="fa text-center fa-chevron-down"></i>
+        <i class="fa text-center fa-chevron-right"></i>
+        {{g.value}}
+      </div>
+      <ul class="d-flex flex-fill flex-column p-0 m-0">
+        <li class="pl-1 d-flex align-items-baseline cursor-pointer" *ngFor="let item of g.list">
+        <label for="container-prop-{{item.name}}" [title]="item.label" class="col-form-label px-0 py-1">{{item.label}}</label>
+        <div class="flex-fill">
+          <input type="text" class="form-control" placeholder="Enter value" [value]="item.value"
+            [name]="item.name" required id="container-prop-{{item.name}}" (blur)="onSave()"
+            (input)="updateProperty($event, item)">
+        </div>
+        </li>
+      </ul>
+    </accordion-group>
+  </accordion>
+</div>

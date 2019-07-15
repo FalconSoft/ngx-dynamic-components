@@ -1,41 +1,20 @@
-import { Component, Input, ViewChild, ElementRef, EventEmitter, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
-import { UIModel, StylePropertiesList } from '../../models';
+import { Component, Input, EventEmitter, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
+import { UIModel } from '../../models';
+import { ControlProperties, ComponentProperty, ComponentPropertyValue, PropertyCategories, ContainerControlProperties } from './model';
 import { CoreService } from '../../services/core.service';
 
 @Component({
   selector: 'dc-properties-editor',
-  template: `
-    <div class="editor-container" #editorContainer fxLayout="column" (keyup.enter)="onSave()">
-      <h5>{{label}}</h5>
-      <div class="form-group mb-2" *ngFor="let property of properties">
-        <label for="prop-{{property.name}}" class="col-form-label px-0 py-1">{{property.name}}</label>
-        <div class="flex-fill">
-          <input type="text" class="form-control" placeholder="Enter value" [value]="property.value" (blur)="onSave()"
-            [name]="property.name" required id="prop-{{property.name}}" (input)="updateProperty($event, property.name)">
-        </div>
-      </div>
-      <div class="form-group mb-2" *ngFor="let property of containerProperties">
-        <label for="container-prop-{{property.name}}" class="col-form-label px-0 py-1">Container {{property.name}}</label>
-        <div class="flex-fill">
-          <input type="text" class="form-control" placeholder="Enter value" [value]="property.value"
-            [name]="property.name" required id="container-prop-{{property.name}}" (blur)="onSave()"
-            (input)="updateProperty($event, property.name, updatedContainerProperties)">
-        </div>
-      </div>
-      <button class="btn btn-light" (click)="onSave()">Save</button>
-    </div>
-  `
+  templateUrl: './properties-editor.component.html',
+  styleUrls: ['./properties-editor.component.scss', '../../styles/accordion.scss']
 })
 export class PropertiesEditorComponent implements OnInit, OnChanges {
   @Input() uiModel: UIModel;
-  @ViewChild('editorContainer', {static: false}) editorContainer: ElementRef;
-  @ViewChild('editBtn', {static: false}) editBtn: ElementRef;
   @Output() updatedProperty = new EventEmitter();
   label: string;
-  properties = [];
-  containerProperties = [];
-  private updatedProperties = {};
-  updatedContainerProperties = {};
+  groups: {list: ComponentPropertyValue[], value: string}[] = [];
+  private containerProperties = {};
+  private itemProperties = {};
 
   ngOnInit() {
     this.updateProperties();
@@ -47,20 +26,35 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     }
   }
 
-  updateProperty(evt, prop, updatedProperties = this.updatedProperties) {
+  updateProperty(evt, item: ComponentProperty) {
+    const {name, isContainerProperty} = item;
+    const updatedProperties = isContainerProperty ? this.containerProperties : this.itemProperties;
     try {
       // If property value is an object or an array.
-      updatedProperties[prop] = JSON.parse(evt.target.value);
+      updatedProperties[name] = JSON.parse(evt.target.value);
     } catch {
-      updatedProperties[prop] = evt.target.value;
+      updatedProperties[name] = evt.target.value;
     }
+    console.log('this.containerProperties', this.containerProperties);
+  }
+
+  private initPropertyGroups(properties: ComponentPropertyValue[]) {
+    const groups = {};
+    properties.forEach((item) => {
+      const groupValue = item.category;
+      if (groupValue) {
+        groups[groupValue] = groups[groupValue] || {value: groupValue, list: []};
+        groups[groupValue].list.push(item);
+      }
+    });
+    this.groups =  Object.values(groups);
   }
 
   onSave() {
-    Object.entries(this.updatedProperties).forEach(([key, val]) => {
+    Object.entries(this.itemProperties).forEach(([key, val]) => {
       this.uiModel.itemProperties[key] = val;
     });
-    Object.entries(this.updatedContainerProperties).forEach(([key, val]) => {
+    Object.entries(this.containerProperties).forEach(([key, val]) => {
       this.uiModel.containerProperties[key] = val;
     });
     this.updatedProperty.emit();
@@ -69,19 +63,24 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
   private updateProperties() {
     this.label = CoreService.getListOfComponents().find(c => `${c.packageName}:${c.name}` === this.uiModel.type).label;
     const props = CoreService.getComponentProperties(this.uiModel.type);
-    this.containerProperties = StylePropertiesList.map(name => {
-      const val = this.uiModel.containerProperties ? this.uiModel.containerProperties[name] : null;
-      return {name, value: val || ''};
-    });
     const itemProps = this.uiModel.itemProperties || {};
-    this.properties = props.map(({name}) => {
+    const iProps = props.map(({name}) => {
+      const controlProp = ControlProperties.get(name) || {name, label: name, category: PropertyCategories.Common};
       let value = itemProps[name];
       if (value === undefined) {
         value = '';
       } else if (typeof value === 'object') {
         value = JSON.stringify(value);
       }
-      return {name, value};
+      return {...controlProp, value};
     });
+
+    const containerProps = this.uiModel.containerProperties || {};
+    const cProps = Array.from(ContainerControlProperties.values()).map(prop => {
+      const val = containerProps[prop.name];
+      const value = val === undefined ? '' : val;
+      return {...prop, value, isContainerProperty: true};
+    });
+    this.initPropertyGroups([...cProps, ...iProps]);
   }
 }

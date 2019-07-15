@@ -59,8 +59,6 @@ export class FlexContainerProperties extends StyleProperties {
     example: '10px',
   })
   fxFlex?: string;
-
-  mode?: string;
 }
 
 const example: ComponentExample<UIModel<FlexContainerProperties>> = {

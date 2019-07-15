@@ -5,7 +5,7 @@ import { CoreService } from '../../services/core.service';
 @Component({
   selector: 'dc-controls-panel',
   templateUrl: './controls-panel.component.html',
-  styleUrls: ['./controls-panel.component.scss']
+  styleUrls: ['./controls-panel.component.scss', '../../styles/accordion.scss']
 })
 export class ControlsPanelComponent implements OnInit {
   groups: {list: [], value: string}[] = [];

@@ -10,10 +10,15 @@ import { packageName } from '../../constants';
       [type]="properties.type" [ngStyle]="itemStyles"
       (click)="onClick()">{{properties.label}}</button>
   `,
-  styles: []
+  styles: [`
+    :host {
+      display: inherit;
+      height: 100%;
+      width: 100%;
+    }
+  `]
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
-  @HostBinding('style.display') display = 'inline-block';
   onClick() {
     this.workflowEngine.run(this.properties.clickActionKey);
     this.changedDataModel.emit(this.dataModel);

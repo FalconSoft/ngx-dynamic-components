@@ -1,0 +1,27 @@
+accordion-group ::ng-deep {
+  .panel.card {
+    border: none;
+    margin-bottom: 0;
+  }
+
+  .panel-heading {
+    padding: .25rem;
+    cursor: pointer;
+  }
+
+  .panel-body.card-block.card-body {
+    padding: 0;
+  }
+
+  [aria-expanded="false"] .fa-chevron-down {
+    display: none;
+  }
+
+  [aria-expanded="true"] .fa-chevron-right {
+    display: none;
+  }
+}
+
+.fa-chevron-right {
+  width: 14px;
+}

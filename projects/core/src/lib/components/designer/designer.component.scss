@@ -1,9 +1,4 @@
-tabset {
-  width: 250px;
-}
-
 ngx-dynamic-component, #empty-container {
-  max-width: calc(100% - 250px);
   position: relative;
 }
 
@@ -17,6 +12,7 @@ ngx-dynamic-component, #empty-container {
   dc-ui-selector + dc-ui-flex-container.active-component > .container,
   dc-ui-selector + dc-ui-flex-container > .active-component.container {
     border-style: solid;
+    position: relative;
   }
 
   .active-component:not(dc-ui-flex-container) {
