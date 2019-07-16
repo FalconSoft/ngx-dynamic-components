@@ -73,3 +73,23 @@ export function mapToObj(map: Map<string, any>, excludeKeys: string[] = []): {[k
   return obj;
 }
 
+export function getCssPath(el: Node, parent: Element) {
+  if (el instanceof Element) {
+    const path = [];
+    while (el !== parent) {
+      let selector = el.nodeName.toLowerCase();
+      let sib: Node = el;
+      let nth = 1;
+      while (sib && sib !== parent) {
+        sib = sib.previousSibling;
+        if (sib instanceof Element) {
+          nth++;
+        }
+      }
+      selector += `:nth-child(${nth})`;
+      path.unshift(selector);
+      el = el.parentNode;
+    }
+    return path.join(' > ');
+  }
+}

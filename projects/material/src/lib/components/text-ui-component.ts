@@ -67,7 +67,7 @@ export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, Text
     type: `${packageName}:text`,
     itemProperties: {
       text: 'Text example',
-      padding: '.5rem'
+      padding: '.5rem 0'
     },
     containerProperties: {}
   }

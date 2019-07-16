@@ -20,7 +20,7 @@ export abstract class StyleProperties implements AttributesMap {
   width?: string;
 
   @propDescription({
-    description: 'Element\'s width.',
+    description: 'Element\'s height.',
     example: '100%'
   })
   height?: string;
@@ -36,8 +36,19 @@ export abstract class StyleProperties implements AttributesMap {
     example: '5px 3px 5px 10px'
   })
   margin?: string;
-}
 
+  @propDescription({
+    description: 'Element\'s min width.',
+    example: '10px'
+  })
+  'min-width'?: string;
+
+  @propDescription({
+    description: 'Element\'s min height.',
+    example: '10px'
+  })
+  'min-height'?: string;
+}
 
 export abstract class BindingProperties extends StyleProperties {
   @propDescription({
@@ -104,4 +115,9 @@ export interface IVariableResolver {
   resolveString: (str: string, vars?: object) => object|string;
 }
 
-export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'background', 'max-height'];
+export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'min-height', 'min-width'];
+
+export interface SelectedComponent {
+  uiModel: UIModel;
+  cssPath: string;
+}

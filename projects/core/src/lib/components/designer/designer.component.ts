@@ -44,7 +44,7 @@ export class DesignerComponent implements OnInit, AfterViewInit {
       this.uiModelVal = null;
     });
 
-    this.dragDropService.selectedComponent$.subscribe(uiModel => {
+    this.dragDropService.selectedComponent$.subscribe(({uiModel}) => {
       this.uiModelToEdit = uiModel;
       this.tabSelect(1);
     });
@@ -74,6 +74,14 @@ export class DesignerComponent implements OnInit, AfterViewInit {
         this.dragDropService.init(this.container, this.uiModelVal);
       });
     });
+  }
+
+  onParentSelect() {
+    this.dragDropService.selectParent();
+  }
+
+  onClone() {
+    this.dragDropService.cloneSelected();
   }
 
   private tabSelect(i: number) {

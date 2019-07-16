@@ -1,5 +1,6 @@
 export enum PropertyCategories {
   Layout = 'Layout',
+  ContainerLayout = 'Container Layout',
   Common = 'Common',
   Appearance = 'Appearance'
 }
@@ -19,11 +20,11 @@ export interface ComponentPropertyValue extends ComponentProperty {
  * Container properties related to each component.
  */
 export const ContainerControlProperties = new Map<string, ComponentProperty>([
-  ['fxFlex', {name: 'fxFlex', label: 'Flex', category: PropertyCategories.Layout}],
-  ['fxFlexOrder', {name: 'fxFlexOrder', label: 'Order', category: PropertyCategories.Layout}],
-  ['fxFlexOffset', {name: 'fxFlexOffset', label: 'Flex Offset', category: PropertyCategories.Layout}],
-  ['fxFlexAlign', {name: 'fxFlexAlign', label: 'Flex Align', category: PropertyCategories.Layout}],
-  ['fxFlexFill', {name: 'fxFlexFill', label: 'Flex Fill', category: PropertyCategories.Layout}]
+  ['fxFlex', {name: 'fxFlex', label: 'Flex', category: PropertyCategories.ContainerLayout}],
+  ['fxFlexOrder', {name: 'fxFlexOrder', label: 'Order', category: PropertyCategories.ContainerLayout}],
+  ['fxFlexOffset', {name: 'fxFlexOffset', label: 'Flex Offset', category: PropertyCategories.ContainerLayout}],
+  ['fxFlexAlign', {name: 'fxFlexAlign', label: 'Flex Align', category: PropertyCategories.ContainerLayout}],
+  ['fxFlexFill', {name: 'fxFlexFill', label: 'Flex Fill', category: PropertyCategories.ContainerLayout}]
 ]);
 
 /**
@@ -33,6 +34,8 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   // General Component properties
   ['width', {name: 'width', label: 'Width', category: PropertyCategories.Layout}],
   ['height', {name: 'height', label: 'Height', category: PropertyCategories.Layout}],
+  ['min-width', {name: 'min-width', label: 'Min width', category: PropertyCategories.Layout}],
+  ['min-height', {name: 'min-height', label: 'Min height', category: PropertyCategories.Layout}],
   ['margin', {name: 'margin', label: 'Margin', category: PropertyCategories.Layout}],
   ['padding', {name: 'padding', label: 'Padding', category: PropertyCategories.Layout}],
 

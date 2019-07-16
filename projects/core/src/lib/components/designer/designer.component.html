@@ -11,7 +11,8 @@
         <dc-controls-panel #controlsPanel class="h-100 overflow-auto"></dc-controls-panel>
       </tab>
       <tab heading="Properties" [disabled]="!uiModelToEdit">
-        <dc-properties-editor class="h-100 overflow-auto" *ngIf="uiModelToEdit" (updatedProperty)="onPropertyChange()" [uiModel]="uiModelToEdit"></dc-properties-editor>
+        <dc-properties-editor class="h-100 overflow-auto" *ngIf="uiModelToEdit"
+          (updatedProperty)="onPropertyChange()" (selectParent)="onParentSelect()" (clone)="onClone()" [uiModel]="uiModelToEdit"></dc-properties-editor>
       </tab>
     </tabset>
   </as-split-area>

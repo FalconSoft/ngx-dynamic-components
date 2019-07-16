@@ -3,15 +3,19 @@ ngx-dynamic-component, #empty-container {
 }
 
 .preview.edit-mode ngx-dynamic-component ::ng-deep {
-  dc-ui-selector + dc-ui-flex-container > .container,
+  dc-ui-selector + dc-ui-flex-container > [drop-container],
   dc-ui-selector + *:not(dc-ui-flex-container) {
     cursor: pointer;
     border: 1px dashed gray;
     box-sizing: initial;
   }
 
-  dc-ui-selector + dc-ui-flex-container.active-component > .container,
-  dc-ui-selector + dc-ui-flex-container > .active-component.container {
+  dc-ui-selector + * {
+    position: relative;
+  }
+
+  dc-ui-selector + dc-ui-flex-container.active-component > [drop-container],
+  dc-ui-selector + dc-ui-flex-container > .active-component[drop-container] {
     border-style: solid;
     position: relative;
   }
@@ -22,7 +26,7 @@ ngx-dynamic-component, #empty-container {
       display: block;
     }
   }
-  dc-ui-selector + dc-ui-flex-container.active-component > .container + dc-control-editor {
+  dc-ui-selector + dc-ui-flex-container.active-component > [drop-container] + dc-control-editor {
     display: block;
   }
 }

@@ -11,6 +11,8 @@ import { CoreService } from '../../services/core.service';
 export class PropertiesEditorComponent implements OnInit, OnChanges {
   @Input() uiModel: UIModel;
   @Output() updatedProperty = new EventEmitter();
+  @Output() selectParent = new EventEmitter();
+  @Output() clone = new EventEmitter();
   label: string;
   groups: {list: ComponentPropertyValue[], value: string}[] = [];
   private containerProperties = {};
@@ -60,6 +62,8 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
   }
 
   private updateProperties() {
+    this.containerProperties = {};
+    this.itemProperties = {};
     this.label = CoreService.getListOfComponents().find(c => `${c.packageName}:${c.name}` === this.uiModel.type).label;
     const props = CoreService.getComponentProperties(this.uiModel.type);
     const itemProps = this.uiModel.itemProperties || {};

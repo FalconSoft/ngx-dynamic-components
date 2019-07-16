@@ -1,9 +1,12 @@
 import { Injectable, ApplicationRef, Injector, EmbeddedViewRef, ComponentFactoryResolver, ComponentRef, ElementRef } from '@angular/core';
 import { dragula } from 'ng2-dragula';
-import { UIModel, AttributesMap } from '../models';
+import { UIModel, AttributesMap, SelectedComponent } from '../models';
 import { Subject } from 'rxjs';
 import { ControlEditorComponent } from '../components/control-editor/control-editor.component';
 import { CoreService } from './core.service';
+import { getCssPath } from '../utils';
+
+const ACTIVE_CLASS = 'active-component';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +23,11 @@ export class DragDropService {
   container: ElementRef;
 
   uiModelUpdates$ = new Subject<UIModel>();
-  selectedComponent$ =  new Subject<UIModel>();
+  selectedComponent$ =  new Subject<SelectedComponent>();
   componentRemoved$ = new Subject<UIModel>();
-
   controls: ComponentRef<ControlEditorComponent>[] = [];
-
   containerUIModelMap = new Map();
+  private selectedComponent: SelectedComponent;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -42,6 +44,7 @@ export class DragDropService {
       this.initDrake(this.elements);
     } else {
       this.drake.containers = this.elements;
+      this.selectCurrentComponent();
     }
     this.initEditor();
   }
@@ -105,10 +108,33 @@ export class DragDropService {
         }
       });
     });
+    this.selectedComponent$.subscribe(c => this.selectedComponent = c);
   }
 
   private getContainerItems(container: HTMLElement): Element[] {
     return Array.from(container.children).filter(item => item.tagName !== 'DC-CONTROL-EDITOR');
+  }
+
+  selectParent() {
+    if (this.selectCurrentComponent) {
+      this.container.nativeElement.querySelector(this.selectedComponent.cssPath).parentNode.click();
+    }
+  }
+
+  cloneSelected() {
+    if (this.selectCurrentComponent) {
+      let el = this.container.nativeElement.querySelector(this.selectedComponent.cssPath) as HTMLElement;
+      while (!el.hasAttribute('drop-container')) {
+        if ( el.tagName.toLowerCase() === 'ngx-dynamic-component') {
+          return;
+        }
+        el = el.parentNode as HTMLElement;
+      }
+      const targetModel = this.containerUIModelMap.get(el.id);
+      const item = JSON.parse(JSON.stringify(this.selectedComponent.uiModel));
+      targetModel.push(item);
+      setTimeout(() => this.uiModelUpdates$.next(this.uiModel));
+    }
   }
 
   appendControlEditor(element: HTMLElement, children: UIModel[], i: number, isRoot = false) {
@@ -117,7 +143,6 @@ export class DragDropService {
       .resolveComponentFactory(ControlEditorComponent)
       .create(this.injector);
 
-    // componentRef.instance.uiModel = uiModel;
     componentRef.instance.uiModelChanged.subscribe(() => {
       this.uiModelUpdates$.next(this.uiModel);
     });
@@ -137,9 +162,9 @@ export class DragDropService {
     el.addEventListener('click', evt => {
       evt.stopImmediatePropagation();
       evt.preventDefault();
-      this.deselect();
-      el.classList.add('active-component');
-      this.selectedComponent$.next(uiModel);
+      this.selectedComponent$.next({uiModel, cssPath: getCssPath(el, this.container.nativeElement)});
+      this.selectCurrentComponent();
+
     });
     this.appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
@@ -148,13 +173,26 @@ export class DragDropService {
   }
 
   deselect() {
-    const active = this.container.nativeElement.querySelector('.active-component');
+    const active = this.container.nativeElement.querySelector(`.${ACTIVE_CLASS}`);
     if (active) {
-      active.classList.remove('active-component');
+      active.classList.remove(ACTIVE_CLASS);
+    }
+  }
+
+  selectCurrentComponent(i = 0) {
+    this.deselect();
+    const el = this.container.nativeElement.querySelector(this.selectedComponent.cssPath);
+    if (el) {
+      el.classList.add(ACTIVE_CLASS);
+    } else if (i < 10) {
+      setTimeout(() => {
+        this.selectCurrentComponent(i + 1);
+      }, 2e1);
     }
   }
 
   private initDrake(elements) {
+    this.selectedComponent = null;
     this.drake = dragula(elements, {
       moves: (el, container, handle: HTMLElement): boolean => {
         return this.isMoveElement(handle);
@@ -164,12 +202,10 @@ export class DragDropService {
 
     // TODO: Clean up callback.
     this.drake.on('drop', (el: Element, target: Element, source: Element) => {
-      // debugger;
       let item: UIModel;
 
       if (target.id === 'empty-container') {
         this.uiModel = JSON.parse(JSON.stringify(this.containerUIModelMap.get(el.id)));
-        // this.uiModelUpdates$.next(this.uiModel);
       } else {
         const targetModel = this.containerUIModelMap.get(target.id);
         if (!targetModel) {
@@ -179,8 +215,13 @@ export class DragDropService {
         if (el.id) {
           item = JSON.parse(JSON.stringify(this.containerUIModelMap.get(el.id)));
           targetModel.splice(this.dropIndex, 0, item);
-          console.log('item', item);
-          this.selectedComponent$.next(item);
+          const targetPath = getCssPath(target, this.container.nativeElement);
+          const itemPath = `${targetPath}>*:nth-child(${this.dropIndex + 1}) > dc-ui-selector + *`;
+          this.selectedComponent$.next({uiModel: item, cssPath: itemPath});
+          // Select component after being rerendered.
+          setTimeout(() => {
+            this.container.nativeElement.querySelector(itemPath).classList.add(ACTIVE_CLASS);
+          }, 2e2);
         } else {
           const sourceModel = this.containerUIModelMap.get(source.id);
           if (target === source) {
@@ -237,8 +278,8 @@ export class DragDropService {
     }
   }
 
-  private domIndexOf(child: any, parent: any): any {
-    return Array.from(parent.children).indexOf(child);
+  private domIndexOf(child: any, parent: Element): any {
+    return Array.from(parent.children).filter(c => c.tagName !== 'DC-CONTROL-EDITOR').indexOf(child);
   }
 
   /**

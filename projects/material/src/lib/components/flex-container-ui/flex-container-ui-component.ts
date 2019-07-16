@@ -6,7 +6,7 @@ import { packageName } from '../../constants';
 @Component({
     selector: 'dc-ui-flex-container',
     template: `
-    <div class="container" drop-container
+    <div drop-container
         [fxLayout]="uiModel.itemProperties?.fxLayout || 'row'"
         [fxLayoutGap]="uiModel.itemProperties?.fxLayoutGap || '0'"
         [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign || ''"
@@ -104,9 +104,11 @@ export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUICompone
     containerProperties: {},
     itemProperties: {
       fxLayout: 'row',
-      fxLayoutGap: '10px',
+      fxLayoutGap: '8px',
       width: '100%',
-      height: '100%'
+      height: '100%',
+      'min-height': '10px',
+      'min-width': '10px'
     },
     children: []
   }
