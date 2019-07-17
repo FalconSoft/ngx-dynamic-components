@@ -121,3 +121,8 @@ export interface SelectedComponent {
   uiModel: UIModel;
   cssPath: string;
 }
+
+export interface OptionValue {
+  label: string;
+  value: any;
+}

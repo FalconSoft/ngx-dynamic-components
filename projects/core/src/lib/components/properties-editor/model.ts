@@ -1,7 +1,9 @@
+import { OptionValue } from '../../models';
+
 export enum PropertyCategories {
-  Layout = 'Layout',
-  ContainerLayout = 'Container Layout',
-  Common = 'Common',
+  Layout = 'Layout Properties',
+  Container = 'Container Properties',
+  Main = 'Main Properties',
   Appearance = 'Appearance'
 }
 
@@ -10,6 +12,8 @@ export interface ComponentProperty {
   label: string;
   category: PropertyCategories;
   isContainerProperty?: boolean;
+  options?: OptionValue[];
+  combo?: Array<string[]>;
 }
 
 export interface ComponentPropertyValue extends ComponentProperty {
@@ -20,11 +24,13 @@ export interface ComponentPropertyValue extends ComponentProperty {
  * Container properties related to each component.
  */
 export const ContainerControlProperties = new Map<string, ComponentProperty>([
-  ['fxFlex', {name: 'fxFlex', label: 'Flex', category: PropertyCategories.ContainerLayout}],
-  ['fxFlexOrder', {name: 'fxFlexOrder', label: 'Order', category: PropertyCategories.ContainerLayout}],
-  ['fxFlexOffset', {name: 'fxFlexOffset', label: 'Flex Offset', category: PropertyCategories.ContainerLayout}],
-  ['fxFlexAlign', {name: 'fxFlexAlign', label: 'Flex Align', category: PropertyCategories.ContainerLayout}],
-  ['fxFlexFill', {name: 'fxFlexFill', label: 'Flex Fill', category: PropertyCategories.ContainerLayout}]
+  ['fxFlex', {name: 'fxFlex', label: 'Flex', category: PropertyCategories.Container}],
+  ['fxFlexOrder', {name: 'fxFlexOrder', label: 'Order', category: PropertyCategories.Container}],
+  ['fxFlexOffset', {name: 'fxFlexOffset', label: 'Flex Offset', category: PropertyCategories.Container}],
+  ['fxFlexAlign', {name: 'fxFlexAlign', label: 'Flex Align', category: PropertyCategories.Container,
+    combo: [['start', 'baseline', 'center', 'end']]
+  }],
+  ['fxFlexFill', {name: 'fxFlexFill', label: 'Flex Fill', category: PropertyCategories.Container}]
 ]);
 
 /**
@@ -40,17 +46,24 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   ['padding', {name: 'padding', label: 'Padding', category: PropertyCategories.Layout}],
 
   // Flex Container properties
-  ['fxLayout', {name: 'fxLayout', label: 'Layout', category: PropertyCategories.Common}],
-  ['fxLayoutAlign', {name: 'fxLayoutAlign', label: 'Align', category: PropertyCategories.Common}],
-  ['fxLayoutGap', {name: 'fxLayoutGap', label: 'Gap', category: PropertyCategories.Common}],
+  ['fxLayout', {name: 'fxLayout', label: 'Layout', category: PropertyCategories.Main,
+    options: [{label: 'Row', value: 'row'}, {label: 'Column', value: 'column'}]
+  }],
+  ['fxLayoutAlign', {name: 'fxLayoutAlign', label: 'Layout Align', category: PropertyCategories.Main,
+    combo: [['start', 'center', 'end', 'space-around', 'space-between', 'space-evenly'],
+    ['start', 'center', 'end', 'space-around', 'space-between', 'stretch', 'baseline']]
+  }],
+  ['fxLayoutGap', {name: 'fxLayoutGap', label: 'Gap', category: PropertyCategories.Main}],
 
   // Field Input
-  ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Common}],
-  ['labelOrientation', {name: 'labelOrientation', label: 'Label Orientation', category: PropertyCategories.Common}],
-  ['label', {name: 'label', label: 'Label', category: PropertyCategories.Common}],
-  ['dataModelPath', {name: 'dataModelPath', label: 'Binding', category: PropertyCategories.Common}],
-  ['enabled', {name: 'enabled', label: 'Enabled', category: PropertyCategories.Common}],
-  ['visible', {name: 'visible', label: 'Visible', category: PropertyCategories.Common}],
+  ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Main}],
+  ['labelOrientation', {name: 'labelOrientation', label: 'Label Orientation', category: PropertyCategories.Main,
+    combo: [['horizontal', 'vertical']]
+  }],
+  ['label', {name: 'label', label: 'Label', category: PropertyCategories.Main}],
+  ['dataModelPath', {name: 'dataModelPath', label: 'Binding', category: PropertyCategories.Main}],
+  ['enabled', {name: 'enabled', label: 'Enabled', category: PropertyCategories.Main}],
+  ['visible', {name: 'visible', label: 'Visible', category: PropertyCategories.Main}],
   ['inputWidth', {name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout}],
   ['labelWidth', {name: 'labelWidth', label: 'Label Width', category: PropertyCategories.Layout}],
 ]);

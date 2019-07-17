@@ -17,7 +17,7 @@ import { packageName } from '../../constants';
             [fxFlexOrder]="item.containerProperties?.fxFlexOrder || 0"
             [fxFlexOffset]="item.containerProperties?.fxFlexOffset || '0%'"
             [fxFlexAlign]="item.containerProperties?.fxFlexAlign || 'unset'"
-            [attr.fxFill]="item.containerProperties?.fxFill || false">
+            [attr.fxFlexFill]="item.containerProperties?.fxFill || false">
 
             <dc-ui-selector
                 (changedDataModel)="changedDataModel.emit($event)"
@@ -107,8 +107,8 @@ export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUICompone
       fxLayoutGap: '8px',
       width: '100%',
       height: '100%',
-      'min-height': '10px',
-      'min-width': '10px'
+      'min-height': '50px',
+      'min-width': '50px'
     },
     children: []
   }

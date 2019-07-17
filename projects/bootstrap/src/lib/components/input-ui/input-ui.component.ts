@@ -6,11 +6,12 @@ import { packageName } from '../../constants';
 @Component({
   selector: 'dc-input-ui',
   template: `
-  <div class="form-group" [ngClass]="cssClasses" [ngStyle]="itemStyles">
+  <div class="form-group align-items-baseline" [fxLayout]="layout" [ngClass]="cssClasses" [ngStyle]="itemStyles">
     <ng-container *ngIf="properties.label; else noLabel">
-      <label class="mr-1" [for]="id" [style.width]="properties.labelWidth || '80px'">{{properties.label}}</label>
+      <label class="mr-1" [for]="id"
+        [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
       <input [id]="id" [type]="properties.type || 'text'" class="form-control"
-        [style.width]="properties.inputWidth || '100%'"
+        [fxFlex]="properties.inputWidth"
         [placeholder]="properties.placeholder"
         [disabled]="!properties.enabled"
         (input)="changedDataModel.emit(this.dataModel)"
@@ -18,7 +19,7 @@ import { packageName } from '../../constants';
     </ng-container>
     <ng-template #noLabel>
       <input [type]="properties.type || 'text'" class="form-control"
-        [style.width]="properties.inputWidth || '100%'"
+        [fxFlex]="properties.inputWidth"
         [placeholder]="properties.placeholder"
         [disabled]="!properties.enabled"
         (input)="changedDataModel.emit(this.dataModel)"
@@ -38,10 +39,13 @@ export class InputUIComponent extends BaseUIComponent<InputProperties> {
     return 'input-id-' + this.properties.label.replace(/ /g, '-').toLowerCase();
   }
 
+  get layout() {
+    return (this.properties.labelOrientation || '').toLowerCase() === 'horizontal' ? 'row' : 'column';
+  }
+
   get cssClasses() {
     return {
-      'd-flex align-items-baseline': (this.properties.labelOrientation || '').toLowerCase() === 'horizontal',
-      'invisible': !this.properties.visible
+      invisible: !this.properties.visible
     };
   }
 }

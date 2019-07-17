@@ -3,6 +3,7 @@ import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { CoreModule } from '@ngx-dynamic-components/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ContainerComponent } from './components/container/container.component';
 import { registerComponents } from './components/register';
 import { ContainerRowComponent } from './components/container-row/container-row.component';
@@ -20,7 +21,8 @@ import { CardComponent } from './components/card/card.component';
   imports: [
     CoreModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ],
   exports: [ContainerComponent, ContainerRowComponent, InputUIComponent],
   entryComponents: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,

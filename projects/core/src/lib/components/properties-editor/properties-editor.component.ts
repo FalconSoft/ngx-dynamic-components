@@ -28,14 +28,25 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     }
   }
 
-  updateProperty(evt, item: ComponentProperty) {
+  updateProperty(value, item: ComponentProperty) {
     const {name, isContainerProperty} = item;
     const updatedProperties = isContainerProperty ? this.containerProperties : this.itemProperties;
     try {
       // If property value is an object or an array.
-      updatedProperties[name] = JSON.parse(evt.target.value);
+      updatedProperties[name] = JSON.parse(value);
     } catch {
-      updatedProperties[name] = evt.target.value;
+      updatedProperties[name] = value;
+    }
+  }
+
+  onSelect(value, item: ComponentProperty) {
+    this.updateProperty(value, item);
+    this.onSave();
+  }
+
+  selectedOption(item: ComponentPropertyValue) {
+    if (item.options && item.hasOwnProperty('value')) {
+      return item.options.find(i => i.value === item.value);
     }
   }
 
@@ -61,6 +72,10 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     this.updatedProperty.emit();
   }
 
+  strToKebabCase(str: string) {
+    return str.toLowerCase().replace(/\s{1,}/g, '-');
+  }
+
   private updateProperties() {
     this.containerProperties = {};
     this.itemProperties = {};
@@ -68,7 +83,7 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     const props = CoreService.getComponentProperties(this.uiModel.type);
     const itemProps = this.uiModel.itemProperties || {};
     const iProps = props.map(({name}) => {
-      const controlProp = ControlProperties.get(name) || {name, label: name, category: PropertyCategories.Common};
+      const controlProp = ControlProperties.get(name) || {name, label: name, category: PropertyCategories.Main};
       let value = itemProps[name];
       if (value === undefined) {
         value = '';

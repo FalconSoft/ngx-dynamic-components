@@ -1,0 +1,4 @@
+<div class="d-flex">
+  <ng-select *ngFor="let prop of properties; let i = index" [items]="prop" [clearable]="false" class="property flex-fill"
+    (change)="onSelect($event, i)" [ngModel]="result[i]"></ng-select>
+</div>

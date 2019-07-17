@@ -1,24 +1,34 @@
 <div class="editor-container" fxLayout="column" (keyup.enter)="onSave()">
   <div class="d-flex align-items-baseline justify-content-between">
     <h5>{{label}}</h5>
-    <button class="btn btn-sm btn-light" (click)="selectParent.emit()">select parent</button>
-    <button class="btn btn-sm btn-light" (click)="clone.emit()">clone</button>
+    <div class="btn-group">
+      <button class="btn btn-light" (click)="selectParent.emit()" title="Select parent">
+          <i class="fa fa-arrow-up fa-lg"></i>
+      </button>
+      <button class="btn btn-light" (click)="clone.emit()" title="Clone component">
+          <i class="fa fa-clone fa-lg"></i>
+      </button>
+    </div>
   </div>
   <accordion class="d-flex flex-fill flex-column p-0 m-0 w-100">
-    <accordion-group *ngFor="let g of groups" isOpen="true">
+    <accordion-group *ngFor="let g of groups" isOpen="true" class="mt-1 {{strToKebabCase(g.value)}}">
       <div class="header" accordion-heading>
         <i class="fa text-center fa-chevron-down"></i>
         <i class="fa text-center fa-chevron-right"></i>
         {{g.value}}
       </div>
       <ul class="d-flex flex-fill flex-column p-0 m-0">
-        <li class="pl-1 mt-1 d-flex align-items-baseline cursor-pointer" *ngFor="let item of g.list">
-        <label for="container-prop-{{item.name}}" [title]="item.label" class="col-form-label px-0 py-1">{{item.label}}</label>
-        <div class="flex-fill">
-          <input type="text" class="form-control" placeholder="Enter value" [value]="item.value"
-            [name]="item.name" required id="container-prop-{{item.name}}" (blur)="onSave()"
-            (input)="updateProperty($event, item)">
-        </div>
+        <li class="pl-1 mt-1 d-flex align-items-baseline cursor-pointer {{item.name}}" *ngFor="let item of g.list">
+          <label for="container-prop-{{item.name}}" [title]="item.label" class="col-form-label px-0 py-1">{{item.label}}</label>
+          <div class="flex-fill">
+            <dc-combo-property [properties]="item.combo" [value]="item.value" *ngIf="item.combo"
+              (change)="onSelect($event, item)"></dc-combo-property>
+            <ng-select *ngIf="item.options" [items]="item.options" [clearable]="false" class="property"
+              (change)="onSelect($event.value, item)" [ngModel]="selectedOption(item)"></ng-select>
+            <input *ngIf="!item.options && !item.combo" type="text" class="form-control" [value]="item.value"
+              [name]="item.name" required id="container-prop-{{item.name}}" (blur)="onSave()"
+              (input)="updateProperty($event.target.value, item)">
+          </div>
         </li>
       </ul>
     </accordion-group>

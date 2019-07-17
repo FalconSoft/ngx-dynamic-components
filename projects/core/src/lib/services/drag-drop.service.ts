@@ -122,13 +122,14 @@ export class DragDropService {
   }
 
   cloneSelected() {
-    if (this.selectCurrentComponent) {
+    if (this.selectedComponent) {
       let el = this.container.nativeElement.querySelector(this.selectedComponent.cssPath) as HTMLElement;
+      el = el.parentElement;
       while (!el.hasAttribute('drop-container')) {
         if ( el.tagName.toLowerCase() === 'ngx-dynamic-component') {
           return;
         }
-        el = el.parentNode as HTMLElement;
+        el = el.parentElement;
       }
       const targetModel = this.containerUIModelMap.get(el.id);
       const item = JSON.parse(JSON.stringify(this.selectedComponent.uiModel));
