@@ -7,9 +7,9 @@ import { packageName } from '../../constants';
     selector: 'dc-ui-flex-container',
     template: `
     <div drop-container
-        [fxLayout]="uiModel.itemProperties?.fxLayout || 'row'"
-        [fxLayoutGap]="uiModel.itemProperties?.fxLayoutGap || '0'"
-        [fxLayoutAlign]="uiModel.itemProperties?.fxLayoutAlign || ''"
+        [fxLayout]="properties.fxLayout || 'row'"
+        [fxLayoutGap]="properties.fxLayoutGap || '0'"
+        [fxLayoutAlign]="getStrValue(properties.fxLayoutAlign)"
         [ngStyle]="itemStyles">
 
         <div *ngFor="let item of uiModel.children" class="item"
@@ -28,7 +28,14 @@ import { packageName } from '../../constants';
         </div>
     </div>`
 })
-export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {}
+export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
+  getStrValue(value: string) {
+    if (value) {
+      return value.split('|').join(' ');
+    }
+    return '';
+  }
+}
 
 export class FlexContainerProperties extends StyleProperties {
   @propDescription({

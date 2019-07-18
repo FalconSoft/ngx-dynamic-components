@@ -2,6 +2,7 @@ import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding } from '@an
 import { UIModel, AttributesMap, DataModelProperties, StylePropertiesList, StyleProperties } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
 import { WorkflowEngine } from '../workflow/workflow.processor';
+import { kebabStrToCamel } from '../utils';
 
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
     @Input() dataModel: any;
@@ -12,11 +13,15 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
     @HostBinding('style.padding') padding: string;
     @HostBinding('style.margin') margin: string;
     @HostBinding('style.display') display = 'inherit';
+    @HostBinding('style.border-left') borderLeft: string;
+    @HostBinding('style.border-top') borderTop: string;
+    @HostBinding('style.border-right') borderRight: string;
+    @HostBinding('style.border-bottom') borderBottom: string;
 
-    @Output()
-    changedDataModel = new EventEmitter();
+    @Output() changedDataModel = new EventEmitter();
 
     private readonly hostBindings = ['width', 'height', 'padding', 'margin'];
+    private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
@@ -80,7 +85,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
     getStyles(properties: AttributesMap = {}, stylesList = StylePropertiesList): {[key: string]: string} {
       return stylesList.reduce((styles, prop) => {
         if (properties.hasOwnProperty(prop)) {
-          styles[prop] = properties[prop];
+          styles[prop] = this.getPropValue(properties, prop);
         }
         return styles;
       }, {});
@@ -91,5 +96,31 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
       this.hostBindings.forEach(b => {
         this[b] = props[b];
       });
+      this.setBorder();
+    }
+
+    private getPropValue(properties: AttributesMap, prop: string) {
+      const val = properties[prop];
+      if (prop === 'font-size') {
+        if (!isNaN(properties[prop])) {
+          return `${val}px`;
+        }
+      }
+      return val;
+    }
+
+    private setBorder() {
+      const border = (this.properties as StyleProperties).border;
+      if (typeof border === 'string') {
+        const [prop, value] = border.split('|');
+        console.log('ddd', prop, kebabStrToCamel(prop));
+        if (prop === 'border') {
+          this.borders.forEach(b => {
+            this[kebabStrToCamel(b)] = value;
+          });
+        } else {
+          this[kebabStrToCamel(prop)] = value;
+        }
+      }
     }
 }

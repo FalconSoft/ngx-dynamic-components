@@ -180,12 +180,16 @@ export class DragDropService {
     }
   }
 
+  /**
+   * Adds selected active class to current component.
+   * setTimout is used to handle component rerender case. after uiModel update.
+   */
   selectCurrentComponent(i = 0) {
     this.deselect();
     const el = this.container.nativeElement.querySelector(this.selectedComponent.cssPath);
     if (el) {
       el.classList.add(ACTIVE_CLASS);
-    } else if (i < 10) {
+    } else if (i < 20) {
       setTimeout(() => {
         this.selectCurrentComponent(i + 1);
       }, 2e1);
@@ -220,9 +224,7 @@ export class DragDropService {
           const itemPath = `${targetPath}>*:nth-child(${this.dropIndex + 1}) > dc-ui-selector + *`;
           this.selectedComponent$.next({uiModel: item, cssPath: itemPath});
           // Select component after being rerendered.
-          setTimeout(() => {
-            this.container.nativeElement.querySelector(itemPath).classList.add(ACTIVE_CLASS);
-          }, 2e2);
+          this.selectCurrentComponent();
         } else {
           const sourceModel = this.containerUIModelMap.get(source.id);
           if (target === source) {

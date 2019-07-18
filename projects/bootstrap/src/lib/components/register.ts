@@ -9,6 +9,7 @@ import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component'
 import { textareaDescriptor } from './textarea-ui/textarea-ui.component';
 import { buttonDescriptor } from './button-ui/button-ui.component';
 import { cardDescriptor } from './card/card.component';
+import { textDescriptor } from './text-ui/text-ui.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   containerDescriptor,
@@ -19,7 +20,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   radioGroupDescriptor,
   textareaDescriptor,
   buttonDescriptor,
-  cardDescriptor
+  cardDescriptor,
+  textDescriptor
 ];
 
 // Register components.

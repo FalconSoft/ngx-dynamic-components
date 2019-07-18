@@ -14,10 +14,11 @@ import { RadioGroupUIComponent } from './components/radio-group-ui/radio-group-u
 import { TextareaUIComponent } from './components/textarea-ui/textarea-ui.component';
 import { ButtonUIComponent } from './components/button-ui/button-ui.component';
 import { CardComponent } from './components/card/card.component';
+import { TextUIComponent } from './components/text-ui/text-ui.component';
 
 @NgModule({
   declarations: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,
-    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent],
+    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent, TextUIComponent],
   imports: [
     CoreModule,
     CommonModule,
@@ -26,7 +27,7 @@ import { CardComponent } from './components/card/card.component';
   ],
   exports: [ContainerComponent, ContainerRowComponent, InputUIComponent],
   entryComponents: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,
-    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent]
+    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent, TextUIComponent]
 })
 export class BootstrapModule {
   constructor() {

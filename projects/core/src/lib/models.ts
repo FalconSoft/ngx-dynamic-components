@@ -78,6 +78,12 @@ export abstract class StyleProperties implements AttributesMap {
     example: '100%'
   })
   'font-style'?: string;
+
+  @propDescription({
+    description: 'Element\'s border.',
+    example: '100%'
+  })
+  border?: string;
 }
 
 export abstract class BindingProperties extends StyleProperties {
@@ -94,6 +100,24 @@ export abstract class DataModelProperties extends BindingProperties {
     example: '{{responseContext}}/dataset'
   })
   dataSource?: string;
+}
+
+export abstract class LabelProperties extends BindingProperties {
+  @propDescription({
+    description: 'Label orientation',
+    example: 'bottom',
+  })
+  labelPosition?: string;
+  @propDescription({
+    description: 'Label',
+    example: 'Username',
+  })
+  label?: string;
+  @propDescription({
+    description: 'Label width',
+    example: '80px',
+  })
+  labelWidth?: string;
 }
 
 export abstract class ContainerProperties extends StyleProperties {
@@ -163,7 +187,7 @@ export enum PropertyCategories {
   Layout = 'Layout Properties',
   Container = 'Container Properties',
   Main = 'Main Properties',
-  Appearance = 'Appearance'
+  Appearance = 'Appearance Properties'
 }
 
 export interface ComponentProperty {
@@ -172,7 +196,7 @@ export interface ComponentProperty {
   category: PropertyCategories;
   isContainerProperty?: boolean;
   options?: OptionValue[];
-  combo?: Array<(string|number)[]|OptionValue[]>;
+  combo?: Array<(string|number)[]|OptionValue[]|string>;
 }
 
 export interface ComponentPropertyValue extends ComponentProperty {

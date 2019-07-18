@@ -1,38 +1,60 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, ComponentExample,
-  propDescription, ComponentDescriptor, UIModel, Categories } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, ComponentExample,
+  ComponentDescriptor, UIModel, Categories, LabelProperties } from '@ngx-dynamic-components/core';
 
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-checkbox-ui',
   template: `
-    <div class="form-check" [ngClass]="{'form-check-inline': properties.inline}">
-      <input class="form-check-input" type="checkbox"
-      [ngStyle]="itemStyles"
-      (change)="changedDataModel.emit(this.dataModel)"
-      [(ngModel)]="componentDataModel">
-      <label *ngIf="properties.label" class="form-check-label">{{properties.label}}</label>
+    <div [fxLayout]="layout" [fxLayoutAlign]="align" [ngStyle]="itemStyles">
+      <label *ngIf="hasLabel" [for]="id"  class="{{properties.labelPosition}} my-0"
+      [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
+      <input type="checkbox" class="mx-0" [attr.id]="id"
+        (change)="changedDataModel.emit(this.dataModel)"
+        [(ngModel)]="componentDataModel">
     </div>
   `,
-  styles: []
+  styles: [`
+    label.right, label.bottom {
+      order: 1;
+    }
+
+    label.bottom, label.top {
+      margin: 0;
+    }
+
+    label.right {
+      margin-left: 5px;
+    }
+
+    label.left {
+      margin-right: 5px;
+    }
+  `]
 })
 export class CheckboxUIComponent extends BaseUIComponent<CheckboxProperties> {
+  get id() {
+    if (this.hasLabel) {
+      return 'check-id-' + this.properties.label.replace(/ /g, '-').toLowerCase();
+    }
+  }
 
+  get hasLabel() {
+    return this.properties.labelPosition && this.properties.labelPosition !== 'none';
+  }
+
+  get layout() {
+    return ['left', 'right', 'none'].includes(this.properties.labelPosition) ? 'row' : 'column';
+  }
+
+  get align() {
+    return this.layout === 'row' ? 'start center' : 'center start';
+  }
 }
 
-export class CheckboxProperties extends DataModelProperties {
-  @propDescription({
-    description: 'Label',
-    example: 'Accept conditions.',
-  })
-  label: string;
+export class CheckboxProperties extends LabelProperties {
 
-  @propDescription({
-    description: 'Inline',
-    example: 'true',
-  })
-  inline?: boolean;
 }
 
 export const example: ComponentExample<UIModel<CheckboxProperties>> = {
@@ -43,7 +65,7 @@ export const example: ComponentExample<UIModel<CheckboxProperties>> = {
     itemProperties: {
       label: 'Accept conditions',
       dataModelPath: '$.accept',
-      inline: true
+      labelPosition: 'right'
     }
   },
   dataModel: {}
@@ -65,6 +87,15 @@ export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrut
   description: 'Checkbox component',
   itemProperties: CheckboxProperties,
   component: CheckboxUIComponent,
-  example
+  example,
+  defaultModel: {
+    type: `${packageName}:checkbox`,
+    containerProperties: {},
+    itemProperties: {
+      label: 'Accept conditions',
+      dataModelPath: '$.accept',
+      labelPosition: 'left'
+    }
+  }
 };
 

@@ -93,3 +93,9 @@ export function getCssPath(el: Node, parent: Element) {
     return path.join(' > ');
   }
 }
+
+export const kebabStrToCamel = (s: string) => {
+  return s.replace(/([-][a-z])/ig, ($1) => {
+    return $1.toUpperCase().replace('-', '');
+  });
+};

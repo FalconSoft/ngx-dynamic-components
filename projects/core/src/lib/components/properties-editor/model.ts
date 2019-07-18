@@ -37,6 +37,10 @@ export const ControlProperties = new Map<string, ComponentProperty>([
 
   // Field properties
   ['label', {name: 'label', label: 'Label', category: PropertyCategories.Main}],
+  ['labelPosition', {name: 'labelPosition', label: 'Label Position', category: PropertyCategories.Main,
+    combo: [['left', 'top', 'right', 'bottom', 'none']]
+  }],
+  ['labelWidth', {name: 'labelWidth', label: 'Label Width', category: PropertyCategories.Layout}],
   ['dataModelPath', {name: 'dataModelPath', label: 'Binding', category: PropertyCategories.Main}],
   ['enabled', {name: 'enabled', label: 'Enabled', category: PropertyCategories.Main}],
   ['visible', {name: 'visible', label: 'Visible', category: PropertyCategories.Main}],
@@ -47,8 +51,14 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   ['font-weight', {name: 'font-weight', label: 'Font weight', category: PropertyCategories.Appearance,
     combo: [['bold', 'bolder', 'lighter', 100, 200, 300, 400, 500, 600, 700, 800, 900, 'none']]
   }],
-  ['font-size', {name: 'font-size', label: 'Font size', category: PropertyCategories.Appearance}],
+  ['font-size', {name: 'font-size', label: 'Font size', category: PropertyCategories.Appearance,
+    combo: [['large', 'larger', 'medium', 'small', 'smaller', 'x-large', 'xx-large', 'x-small', 'xx-small']]
+  }],
   ['font-style', {name: 'font-style', label: 'Font style', category: PropertyCategories.Appearance,
     combo: [['italic', 'oblique', 'normal', 'none']]
+  }],
+  ['border', {name: 'border', label: 'Border', category: PropertyCategories.Appearance,
+    combo: [[{label: 'all', value: 'border'}, {label: 'top', value: 'border-top'}, {label: 'left', value: 'border-left'},
+      {label: 'right', value: 'border-right'}, {label: 'bottom', value: 'border-bottom'}, {label: 'none', value: ''}], 'border-value']
   }],
 ]);

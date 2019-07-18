@@ -20,7 +20,8 @@ label {
   }
 }
 
-.form-control {
+.form-control,
+::ng-deep .form-control {
   height: calc(1em + 0.75rem + 2px);
 }
 
@@ -32,22 +33,26 @@ label {
   order: 1;
 }
 
-.container-properties {
+.appearance-properties {
   order: 2;
 }
 
+.container-properties {
+  order: 3;
+}
+
 ul {
-  .height, .width {
+  .prop-height, .prop-width {
     order: 0;
   }
-  .min-height, .min-width, .clickActionKey {
+  .prop-min-height, .prop-min-width, .prop-clickActionKey {
     order: 1;
   }
-  .padding, .margin, .btnClass {
+  .prop-padding, .prop-margin, .prop-btnClass {
     order: 2;
   }
 
-  .inputWidth, .labelWidth {
+  .prop-inputWidth, .prop-labelWidth {
     order: 3;
   }
 }
