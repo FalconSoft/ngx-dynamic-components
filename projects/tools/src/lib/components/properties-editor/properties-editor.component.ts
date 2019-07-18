@@ -1,5 +1,5 @@
 import { Component, Input, HostListener, ViewChild, ElementRef, EventEmitter, Output, OnInit } from '@angular/core';
-import { ComponentProperty, UIModel, CoreService } from '@ngx-dynamic-components/core';
+import { UIModelProperty, UIModel, CoreService } from '@ngx-dynamic-components/core';
 import { MatButton } from '@angular/material';
 
 @Component({
@@ -45,7 +45,7 @@ export class PropertiesEditorComponent implements OnInit {
   @Output()
   updatedProperty = new EventEmitter();
 
-  itemProperties: ComponentProperty[] = [];
+  itemProperties: UIModelProperty[] = [];
   properties = [];
 
   showEditor = false;

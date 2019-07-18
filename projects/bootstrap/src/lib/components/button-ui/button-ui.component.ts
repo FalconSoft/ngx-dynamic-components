@@ -1,12 +1,12 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseUIComponent, propDescription, StyleProperties, ComponentExample,
-  ComponentDescriptor, UIModel, Categories} from '@ngx-dynamic-components/core';
+  ComponentDescriptor, UIModel, Categories, PropertyCategories} from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-button-ui',
   template: `
-    <button class="btn " [ngClass]="properties.btnClass || 'btn-primary'"
+    <button [ngClass]="btnClass"
       [type]="properties.type" [ngStyle]="itemStyles"
       (click)="onClick()">{{properties.label}}</button>
   `
@@ -15,6 +15,12 @@ export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
   onClick() {
     this.workflowEngine.run(this.properties.clickActionKey);
     this.changedDataModel.emit(this.dataModel);
+  }
+
+  get btnClass() {
+    return {
+      [`btn ${this.properties.btnClass}`]: this.properties.btnClass
+    };
   }
 }
 
@@ -54,7 +60,8 @@ export const example: ComponentExample<UIModel<ButtonProperties>> = {
       width: '50%',
       margin: '15px',
       padding: '10px 5px 10px 0px',
-      clickActionKey: 'consoleLog'
+      clickActionKey: 'consoleLog',
+      type: 'button'
     }
   },
   dataModel: {}
@@ -82,7 +89,18 @@ export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, 
     containerProperties: {},
     itemProperties: {
       label: 'Label',
-      clickActionKey: 'consoleLog'
+      clickActionKey: 'consoleLog',
+      btnClass: 'btn-primary',
+      type: 'button'
     }
-  }
+  },
+  propertiesDescriptor: [
+    ['type', {name: 'type', label: 'Type', category: PropertyCategories.Main,
+      combo: [['button', 'submit', 'reset']]
+    }],
+    ['btnClass', {name: 'btnClass', label: 'CSS Class', category: PropertyCategories.Main,
+      combo: [['btn-primary', 'btn-secondary', 'btn-light', 'btn-success', 'btn-danger',
+        'btn-warning', 'btn-info', 'btn-dark', 'btn-link', 'none']]
+    }],
+  ]
 };

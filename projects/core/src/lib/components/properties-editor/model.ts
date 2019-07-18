@@ -1,24 +1,4 @@
-import { OptionValue } from '../../models';
-
-export enum PropertyCategories {
-  Layout = 'Layout Properties',
-  Container = 'Container Properties',
-  Main = 'Main Properties',
-  Appearance = 'Appearance'
-}
-
-export interface ComponentProperty {
-  name: string;
-  label: string;
-  category: PropertyCategories;
-  isContainerProperty?: boolean;
-  options?: OptionValue[];
-  combo?: Array<string[]>;
-}
-
-export interface ComponentPropertyValue extends ComponentProperty {
-  value: any;
-}
+import { ComponentProperty, PropertyCategories } from '../../models';
 
 /**
  * Container properties related to each component.
@@ -32,7 +12,7 @@ export const ContainerControlProperties = new Map<string, ComponentProperty>([
   }],
   ['fxFlexFill', {name: 'fxFlexFill', label: 'Flex Fill', category: PropertyCategories.Container}]
 ]);
-
+// background, color, font
 /**
  * Item properties can be used in any component.
  */
@@ -55,15 +35,20 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   }],
   ['fxLayoutGap', {name: 'fxLayoutGap', label: 'Gap', category: PropertyCategories.Main}],
 
-  // Field Input
-  ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Main}],
-  ['labelOrientation', {name: 'labelOrientation', label: 'Label Orientation', category: PropertyCategories.Main,
-    combo: [['horizontal', 'vertical']]
-  }],
+  // Field properties
   ['label', {name: 'label', label: 'Label', category: PropertyCategories.Main}],
   ['dataModelPath', {name: 'dataModelPath', label: 'Binding', category: PropertyCategories.Main}],
   ['enabled', {name: 'enabled', label: 'Enabled', category: PropertyCategories.Main}],
   ['visible', {name: 'visible', label: 'Visible', category: PropertyCategories.Main}],
-  ['inputWidth', {name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout}],
-  ['labelWidth', {name: 'labelWidth', label: 'Label Width', category: PropertyCategories.Layout}],
+
+  // Appearence
+  ['background', {name: 'background', label: 'Background', category: PropertyCategories.Appearance}],
+  ['color', {name: 'color', label: 'Color', category: PropertyCategories.Appearance}],
+  ['font-weight', {name: 'font-weight', label: 'Font weight', category: PropertyCategories.Appearance,
+    combo: [['bold', 'bolder', 'lighter', 100, 200, 300, 400, 500, 600, 700, 800, 900, 'none']]
+  }],
+  ['font-size', {name: 'font-size', label: 'Font size', category: PropertyCategories.Appearance}],
+  ['font-style', {name: 'font-style', label: 'Font style', category: PropertyCategories.Appearance,
+    combo: [['italic', 'oblique', 'normal', 'none']]
+  }],
 ]);

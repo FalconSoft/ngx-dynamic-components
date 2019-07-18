@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, ComponentDescriptor, propDescription,
-  ComponentExample, UIModel, Categories, BindingProperties } from '@ngx-dynamic-components/core';
+  ComponentExample, UIModel, Categories, BindingProperties, PropertyCategories } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-input-ui',
   template: `
   <div class="form-group align-items-baseline" [fxLayout]="layout" [ngClass]="cssClasses" [ngStyle]="itemStyles">
-    <ng-container *ngIf="properties.label; else noLabel">
-      <label class="mr-1" [for]="id"
+    <ng-container *ngIf="properties.labelOrientation !== 'none'; else noLabel">
+      <label class="mr-1 {{properties.labelOrientation}}" [for]="id"
         [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-      <input [id]="id" [type]="properties.type || 'text'" class="form-control"
+      <input [id]="id" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
         [fxFlex]="properties.inputWidth"
         [placeholder]="properties.placeholder"
         [disabled]="!properties.enabled"
@@ -18,7 +18,7 @@ import { packageName } from '../../constants';
         [(ngModel)]="componentDataModel">
     </ng-container>
     <ng-template #noLabel>
-      <input [type]="properties.type || 'text'" class="form-control"
+      <input [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
         [fxFlex]="properties.inputWidth"
         [placeholder]="properties.placeholder"
         [disabled]="!properties.enabled"
@@ -31,6 +31,9 @@ import { packageName } from '../../constants';
     :host {
       display: inline-block;
     }
+    label.right, label.down {
+      order: 1;
+    }
   `]
 })
 export class InputUIComponent extends BaseUIComponent<InputProperties> {
@@ -40,13 +43,17 @@ export class InputUIComponent extends BaseUIComponent<InputProperties> {
   }
 
   get layout() {
-    return (this.properties.labelOrientation || '').toLowerCase() === 'horizontal' ? 'row' : 'column';
+    return ['left', 'right', 'none'].includes(this.properties.labelOrientation) ? 'row' : 'column';
   }
 
   get cssClasses() {
     return {
       invisible: !this.properties.visible
     };
+  }
+
+  get inputStyles() {
+    return this.getStyles(this.uiModel.itemProperties, ['background', 'color']);
   }
 }
 
@@ -137,7 +144,18 @@ export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, In
       labelWidth: '80px',
       width: '200px',
       margin: '0',
-      labelOrientation: 'horizontal'
+      type: 'text',
+      labelOrientation: 'none'
     }
-  }
+  },
+  propertiesDescriptor: [
+    ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Main,
+      combo: [['text', 'number', 'email', 'file', 'url', 'date', 'time', 'datetime-local']]
+    }],
+    ['labelOrientation', {name: 'labelOrientation', label: 'Label Orientation', category: PropertyCategories.Main,
+      combo: [['left', 'top', 'right', 'down', 'none']]
+    }],
+    ['inputWidth', {name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout}],
+    ['labelWidth', {name: 'labelWidth', label: 'Label Width', category: PropertyCategories.Layout}]
+  ]
 };

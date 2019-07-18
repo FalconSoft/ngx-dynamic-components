@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
-import { UIModel } from '../../models';
-import { ControlProperties, ComponentProperty, ComponentPropertyValue, PropertyCategories, ContainerControlProperties } from './model';
+import { UIModel, ComponentProperty, ComponentPropertyValue, PropertyCategories } from '../../models';
+import { ControlProperties, ContainerControlProperties } from './model';
 import { CoreService } from '../../services/core.service';
 
 @Component({
@@ -31,6 +31,9 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
   updateProperty(value, item: ComponentProperty) {
     const {name, isContainerProperty} = item;
     const updatedProperties = isContainerProperty ? this.containerProperties : this.itemProperties;
+    if (value === 'none') {
+      value = undefined;
+    }
     try {
       // If property value is an object or an array.
       updatedProperties[name] = JSON.parse(value);
@@ -83,7 +86,7 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     const props = CoreService.getComponentProperties(this.uiModel.type);
     const itemProps = this.uiModel.itemProperties || {};
     const iProps = props.map(({name}) => {
-      const controlProp = ControlProperties.get(name) || {name, label: name, category: PropertyCategories.Main};
+      const controlProp = this.getProperty(name);
       let value = itemProps[name];
       if (value === undefined) {
         value = '';
@@ -100,5 +103,10 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
       return {...prop, value, isContainerProperty: true};
     });
     this.initPropertyGroups([...cProps, ...iProps]);
+  }
+
+  private getProperty(name: string) {
+    return ControlProperties.get(`${this.uiModel.type}:${name}`) || ControlProperties.get(name) ||
+      {name, label: name, category: PropertyCategories.Main};
   }
 }

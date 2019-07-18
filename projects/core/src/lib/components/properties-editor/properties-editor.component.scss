@@ -40,10 +40,10 @@ ul {
   .height, .width {
     order: 0;
   }
-  .min-height, .min-width {
+  .min-height, .min-width, .clickActionKey {
     order: 1;
   }
-  .padding, .margin {
+  .padding, .margin, .btnClass {
     order: 2;
   }
 

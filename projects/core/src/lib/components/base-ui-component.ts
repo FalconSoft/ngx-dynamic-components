@@ -16,6 +16,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
     @Output()
     changedDataModel = new EventEmitter();
 
+    private readonly hostBindings = ['width', 'height', 'padding', 'margin'];
+
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
       await this.triggerAction('_OnInit');
@@ -75,9 +77,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
       return this.getStyles(this.uiModel.itemProperties);
     }
 
-    getStyles(properties: AttributesMap = {}): {[key: string]: string} {
-      const styleProperties = StylePropertiesList;
-      return styleProperties.reduce((styles, prop) => {
+    getStyles(properties: AttributesMap = {}, stylesList = StylePropertiesList): {[key: string]: string} {
+      return stylesList.reduce((styles, prop) => {
         if (properties.hasOwnProperty(prop)) {
           styles[prop] = properties[prop];
         }
@@ -87,20 +88,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
 
     private setHostStyles() {
       const props = this.properties as StyleProperties;
-      if (props.width) {
-        this.width = props.width;
-      }
-
-      if (props.height) {
-        this.height = props.height;
-      }
-
-      if (props.padding) {
-        this.padding = props.padding;
-      }
-
-      if (props.margin) {
-        this.margin = props.margin;
-      }
+      this.hostBindings.forEach(b => {
+        this[b] = props[b];
+      });
     }
 }

@@ -48,6 +48,36 @@ export abstract class StyleProperties implements AttributesMap {
     example: '10px'
   })
   'min-height'?: string;
+
+  @propDescription({
+    description: 'Element\'s background.',
+    example: '100%'
+  })
+  background?: string;
+
+  @propDescription({
+    description: 'Element\'s color.',
+    example: '100%'
+  })
+  color?: string;
+
+  @propDescription({
+    description: 'Element\'s font weight.',
+    example: '100%'
+  })
+  'font-weight'?: string;
+
+  @propDescription({
+    description: 'Element\'s font size.',
+    example: '100%'
+  })
+  'font-size'?: string;
+
+  @propDescription({
+    description: 'Element\'s font style.',
+    example: '100%'
+  })
+  'font-style'?: string;
 }
 
 export abstract class BindingProperties extends StyleProperties {
@@ -94,6 +124,7 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
   component: ComponentType;
   example?: ComponentExample;
   defaultModel?: UIModel;
+  propertiesDescriptor?: any[];
 }
 
 export abstract class UIModel<T = AttributesMap> {
@@ -115,7 +146,8 @@ export interface IVariableResolver {
   resolveString: (str: string, vars?: object) => object|string;
 }
 
-export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'min-height', 'min-width'];
+export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'min-height', 'min-width', 'background', 'color',
+  'font-size', 'font-weight', 'font-style'];
 
 export interface SelectedComponent {
   uiModel: UIModel;
@@ -124,5 +156,25 @@ export interface SelectedComponent {
 
 export interface OptionValue {
   label: string;
+  value: any;
+}
+
+export enum PropertyCategories {
+  Layout = 'Layout Properties',
+  Container = 'Container Properties',
+  Main = 'Main Properties',
+  Appearance = 'Appearance'
+}
+
+export interface ComponentProperty {
+  name: string;
+  label: string;
+  category: PropertyCategories;
+  isContainerProperty?: boolean;
+  options?: OptionValue[];
+  combo?: Array<(string|number)[]|OptionValue[]>;
+}
+
+export interface ComponentPropertyValue extends ComponentProperty {
   value: any;
 }

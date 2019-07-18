@@ -9,7 +9,7 @@ export interface PropDescriptor {
   example: string;
 }
 
-export interface ComponentProperty extends PropDescriptor {
+export interface UIModelProperty extends PropDescriptor {
   name: string;
 }
 
