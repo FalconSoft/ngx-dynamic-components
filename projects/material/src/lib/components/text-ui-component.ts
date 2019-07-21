@@ -41,10 +41,7 @@ const example: ComponentExample<UIModel<TextProperties>> = {
     type: 'material:text',
     containerProperties: {},
     itemProperties: {
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+      text: ``,
       width: '50%',
       padding: '20px'
     }
@@ -55,7 +52,7 @@ const example: ComponentExample<UIModel<TextProperties>> = {
 export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, TextPropertiesConstrutor>  = {
   name: 'text',
   packageName,
-  label: 'Paragraph',
+  label: 'Text',
   category: Categories.Basic,
   description: 'Text component',
   itemProperties: TextProperties,
@@ -64,8 +61,8 @@ export const textDescriptor: ComponentDescriptor<TextUIComponentConstrutor, Text
   defaultModel: {
     type: `${packageName}:text`,
     itemProperties: {
-      text: 'Text example',
-      padding: '.5rem 0'
+      text: 'Enter text here',
+      width: '100%'
     },
     containerProperties: {}
   }

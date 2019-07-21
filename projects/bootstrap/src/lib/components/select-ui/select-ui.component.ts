@@ -91,7 +91,7 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
 
 export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
   name: 'select',
-  label: 'Dropdown',
+  label: 'UI Select Input',
   packageName,
   category: Categories.Basic,
   description: 'Select component',
@@ -106,6 +106,7 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
         {label: 'First option', value: '1'},
         {label: 'second option', value: '2'}
       ],
+      width: '200px',
       label: 'Select option',
       dataModelPath: '$.option'
     }

@@ -105,7 +105,7 @@ interface InputPropertiesConstrutor {
 
 export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, InputPropertiesConstrutor> = {
   name: 'text-input',
-  label: 'Text Input',
+  label: 'Input field',
   packageName,
   category: Categories.Basic,
   description: 'Input component',

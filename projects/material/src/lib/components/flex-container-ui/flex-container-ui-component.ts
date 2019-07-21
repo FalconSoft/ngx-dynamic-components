@@ -100,7 +100,7 @@ interface FlexContainerPropertiesConstrutor {
 export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUIComponentConstrutor, FlexContainerPropertiesConstrutor> = {
   name: 'flex-container',
   packageName,
-  label: 'Panel',
+  label: 'Flex Panel',
   category: Categories.Containers,
   description: 'Flex layout component',
   itemProperties: FlexContainerProperties,

@@ -82,7 +82,7 @@ interface CheckboxPropertiesConstrutor {
 export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrutor, CheckboxPropertiesConstrutor> = {
   name: 'checkbox',
   packageName,
-  label: 'Multi-choice boxes',
+  label: 'Checkbox',
   category: Categories.Basic,
   description: 'Checkbox component',
   itemProperties: CheckboxProperties,
@@ -93,6 +93,7 @@ export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrut
     containerProperties: {},
     itemProperties: {
       label: 'Accept conditions',
+      width: "200px",
       dataModelPath: '$.accept',
       labelPosition: 'left'
     }
