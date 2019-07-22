@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, ComponentExample,
+import { LabeledComponent, ComponentExample,
   ComponentDescriptor, UIModel, Categories, LabelProperties } from '@ngx-dynamic-components/core';
 
 import { packageName } from '../../constants';
@@ -15,11 +15,8 @@ import { packageName } from '../../constants';
         [(ngModel)]="componentDataModel">
     </div>
   `,
+  styleUrls: ['../../styles/label.scss'],
   styles: [`
-    label.right, label.bottom {
-      order: 1;
-    }
-
     label.bottom, label.top {
       margin: 0;
     }
@@ -33,21 +30,7 @@ import { packageName } from '../../constants';
     }
   `]
 })
-export class CheckboxUIComponent extends BaseUIComponent<CheckboxProperties> {
-  get id() {
-    if (this.hasLabel) {
-      return 'check-id-' + this.properties.label.replace(/ /g, '-').toLowerCase();
-    }
-  }
-
-  get hasLabel() {
-    return this.properties.labelPosition;
-  }
-
-  get layout() {
-    return ['left', 'right'].includes(this.properties.labelPosition) ? 'row' : 'column';
-  }
-
+export class CheckboxUIComponent extends LabeledComponent<CheckboxProperties> {
   get align() {
     return this.layout === 'row' ? 'start center' : 'center start';
   }

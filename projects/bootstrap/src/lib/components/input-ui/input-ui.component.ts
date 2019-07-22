@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, ComponentDescriptor, propDescription,
+import { LabeledComponent, ComponentDescriptor, propDescription,
   ComponentExample, UIModel, Categories, LabelProperties, PropertyCategories } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
@@ -7,8 +7,8 @@ import { packageName } from '../../constants';
   selector: 'dc-input-ui',
   template: `
   <div class="form-group align-items-baseline" [fxLayout]="layout" [ngClass]="cssClasses" [ngStyle]="itemStyles">
-  <label class="mr-1 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
-    [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
+    <label class="mr-1 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
+      [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
     <input [attr.id]="id" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
       [fxFlex]="properties.inputWidth"
       [placeholder]="properties.placeholder"
@@ -17,31 +17,14 @@ import { packageName } from '../../constants';
       [(ngModel)]="componentDataModel">
   </div>
   `,
+  styleUrls: ['../../styles/label.scss'],
   styles: [`
     :host {
       display: inline-block;
     }
-    label.right, label.bottom {
-      order: 1;
-    }
   `]
 })
-export class InputUIComponent extends BaseUIComponent<InputProperties> {
-
-  get id() {
-    if (this.hasLabel) {
-      return 'input-id-' + this.properties.label.replace(/ /g, '-').toLowerCase();
-    }
-  }
-
-  get hasLabel() {
-    return this.properties.labelPosition;
-  }
-
-  get layout() {
-    return ['left', 'right'].includes(this.properties.labelPosition) ? 'row' : 'column';
-  }
-
+export class InputUIComponent extends LabeledComponent<InputProperties> {
   get cssClasses() {
     return {
       invisible: !this.properties.visible

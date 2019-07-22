@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, ComponentExample,
-  propDescription, ComponentDescriptor, UIModel, Categories } from '@ngx-dynamic-components/core';
+import { LabeledComponent, LabelProperties, ComponentExample,
+  propDescription, ComponentDescriptor, UIModel, Categories, OptionValue } from '@ngx-dynamic-components/core';
 
 import { packageName } from '../../constants';
 
@@ -8,41 +8,32 @@ import { packageName } from '../../constants';
   selector: 'dc-radio-group-ui',
   template: `
     <div class="form-check" *ngFor="let option of properties.options"
-      [ngClass]="{'form-check-inline': properties.inline}" [ngStyle]="itemStyles">
-      <input class="form-check-input" type="radio"
-      (change)="onChange(option)"
-      [name]="properties.dataModelPath" [value]="option.value">
-      <label class="form-check-label">{{option.label}}</label>
+      [fxLayout]="layout" [fxLayoutAlign]="align" [ngStyle]="itemStyles">
+      <label class="mb-0 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
+        [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{option.label}}</label>
+      <input type="radio"
+        (change)="onChange(option)"
+        [name]="properties.dataModelPath" [value]="option.value">
     </div>
   `,
-  styles: []
+  styleUrls: ['../../styles/label.scss']
 })
-export class RadioGroupUIComponent extends BaseUIComponent<RadioGroupProperties> {
-
+export class RadioGroupUIComponent extends LabeledComponent<RadioGroupProperties> {
+  get align() {
+    return this.layout === 'row' ? 'start center' : 'center start';
+  }
   onChange(option) {
     this.componentDataModel = option.value;
     this.changedDataModel.emit(this.dataModel);
   }
 }
 
-export class RadioGroupProperties extends DataModelProperties {
-  @propDescription({
-    description: 'Label',
-    example: 'Select color',
-  })
-  label: string;
-
+export class RadioGroupProperties extends LabelProperties {
   @propDescription({
     description: 'Radio group options',
     example: '[{label: "One", value: 1}]',
   })
-  options: { label: string, value: string }[];
-
-  @propDescription({
-    description: 'Radio options inline',
-    example: 'true',
-  })
-  inline?: string;
+  options: OptionValue[];
 }
 
 export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
@@ -75,5 +66,14 @@ export const radioGroupDescriptor: ComponentDescriptor<RadioGroupUIComponentCons
   description: 'Radio group component',
   itemProperties: RadioGroupProperties,
   component: RadioGroupUIComponent,
-  example
+  example,
+  defaultModel: {
+    type: `${packageName}:radio-group`,
+    containerProperties: {},
+    itemProperties: {
+      label: 'Select option',
+      dataModelPath: '$.radioGroup',
+      options: [{label: 'Option 1', value: '1'}, {label: 'Option 2', value: 'black'}],
+    }
+  }
 };

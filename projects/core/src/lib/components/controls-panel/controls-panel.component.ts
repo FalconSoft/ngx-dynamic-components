@@ -11,8 +11,10 @@ export class ControlsPanelComponent implements OnInit {
   groups: {list: [], value: string}[] = [];
   components: Array<ComponentDescriptor> = [];
   private readonly COMPONENTS_LIST = [
-    'bootstrap:button', 'bootstrap:text-input',
-    'material:flex-container', 'bootstrap:text', 'bootstrap:checkbox', 'bootstrap:select'];
+    'bootstrap:button', 'bootstrap:text-input', 'bootstrap:textarea', 'bootstrap:radio-group',
+    'material:flex-container', 'bootstrap:text', 'bootstrap:checkbox', 'bootstrap:select',
+    'wijmo:grid', 'rest-client:grid-object-explorer'
+  ];
 
   ngOnInit() {
     this.components = CoreService.getListOfComponents().filter(c => this.COMPONENTS_LIST.includes(`${c.packageName}:${c.name}`));

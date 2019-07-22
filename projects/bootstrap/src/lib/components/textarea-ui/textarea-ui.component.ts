@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, propDescription,
-  ComponentDescriptor, ComponentExample, UIModel, Categories } from '@ngx-dynamic-components/core';
+import { LabeledComponent, propDescription,
+  ComponentDescriptor, ComponentExample, UIModel, Categories, LabelProperties } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-textarea-ui',
   template: `
-    <div class="form-group" [ngStyle]="itemStyles">
-      <label *ngIf="properties.label">{{properties.label}}</label>
-      <textarea class="form-control"
+    <div class="form-group" [ngStyle]="itemStyles"  [fxLayout]="layout">
+      <label *ngIf="hasLabel" [class]="properties.labelPosition" [for]="id"
+        [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
+      <textarea [attr.id]="id" class="form-control"
         [rows]="properties.rows"
         [placeholder]="properties.placeholder"
         [ngStyle]="itemStyles"
@@ -16,12 +17,12 @@ import { packageName } from '../../constants';
         [(ngModel)]="componentDataModel"></textarea>
     </div>
   `,
-  styles: []
+  styleUrls: ['../../styles/label.scss']
 })
-export class TextareaUIComponent extends BaseUIComponent<TextareaProperties> {
+export class TextareaUIComponent extends LabeledComponent<TextareaProperties> {
 }
 
-export class TextareaProperties extends DataModelProperties {
+export class TextareaProperties extends LabelProperties {
   @propDescription({
     description: 'Number of rows in textarea',
     example: '5',
@@ -33,12 +34,6 @@ export class TextareaProperties extends DataModelProperties {
     example: 'Type about yourself',
   })
   placeholder: string;
-
-  @propDescription({
-    description: 'Text area label',
-    example: 'Type about yourself',
-  })
-  label?: string;
 }
 
 export const example: ComponentExample<UIModel<TextareaProperties>> = {
@@ -71,5 +66,15 @@ export const textareaDescriptor: ComponentDescriptor<TextareaUIComponentConstrut
   description: 'Text area component',
   itemProperties: TextareaProperties,
   component: TextareaUIComponent,
-  example
+  example,
+  defaultModel: {
+    type: `${packageName}:textarea`,
+    containerProperties: {},
+    itemProperties: {
+      label: 'Label',
+      rows: 5,
+      placeholder: 'Placeholder text',
+      dataModelPath: '$.textarea'
+    }
+  }
 };

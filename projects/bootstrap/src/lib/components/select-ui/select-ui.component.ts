@@ -1,27 +1,22 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, LabelProperties, ComponentDescriptor,
+import { LabelProperties, ComponentDescriptor, LabeledComponent,
   UIModel, ComponentExample, propDescription, Categories } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-select-ui',
   template: `
-  <div class="form-group mb-0" [fxLayout]="layout" [ngStyle]="itemStyles">
-      <label selected *ngIf="hasLabel" [class]="properties.labelPosition"
+    <div class="form-group mb-0" [fxLayout]="layout" [ngStyle]="itemStyles">
+      <label selected *ngIf="hasLabel" [for]="id" [class]="properties.labelPosition"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
       <ng-select [items]="properties.options" (change)="onSelect()"
       [(ngModel)]="componentDataModel" [attr.disabled]="disabled"></ng-select>
     </div>`,
-  styles: [`
-    label.right, label.bottom {
-      order: 1;
-    }
-  `]
+  styleUrls: ['../../styles/label.scss']
 })
 
-export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
+export class SelectUIComponent extends LabeledComponent<SelectProperties> {
   onSelect() {
-    console.log('this.dataModel', this.dataModel);
     this.changedDataModel.emit(this.dataModel);
     this.triggerAction('_selectionChanged');
   }
@@ -29,20 +24,6 @@ export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
   get disabled() {
     const options = this.properties.options;
     return options && options.length ? null : 'disabled';
-  }
-
-  get id() {
-    if (this.hasLabel) {
-      return 'input-id-' + this.properties.label.replace(/ /g, '-').toLowerCase();
-    }
-  }
-
-  get hasLabel() {
-    return this.properties.labelPosition;
-  }
-
-  get layout() {
-    return ['left', 'right'].includes(this.properties.labelPosition) ? 'row' : 'column';
   }
 }
 
