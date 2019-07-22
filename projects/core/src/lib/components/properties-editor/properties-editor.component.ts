@@ -79,8 +79,10 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     this.label = CoreService.getListOfComponents().find(c => `${c.packageName}:${c.name}` === this.uiModel.type).label;
     const props = CoreService.getComponentProperties(this.uiModel.type);
     const itemProps = this.uiModel.itemProperties || {};
-    const iProps = props.map(({name}) => {
+    const iProps = props.map((prop) => {
+      const name = prop.name;
       const controlProp = this.getProperty(name);
+      controlProp.description = prop.description;
       let value = itemProps[name];
       if (value === undefined) {
         value = '';

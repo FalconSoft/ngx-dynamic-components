@@ -25,7 +25,7 @@
       </div>
       <ul class="d-flex flex-fill flex-column p-0 m-0">
         <li class="pl-1 mt-1 d-flex cursor-pointer prop-{{item.name}}" *ngFor="let item of g.list">
-          <label for="container-prop-{{item.name}}" [title]="item.label" class="col-form-label px-0 py-1">{{item.label}}</label>
+          <label for="container-prop-{{item.name}}" [popover]="item.description" triggers="mouseenter:mouseleave" class="col-form-label px-0 py-1">{{item.label}}</label>
           <div class="flex-fill">
             <dc-combo-property [properties]="item.combo" [value]="item.value" *ngIf="item.combo"
               (change)="onSelect($event, item)"></dc-combo-property>

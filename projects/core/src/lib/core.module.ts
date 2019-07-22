@@ -5,6 +5,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 import { AngularSplitModule } from 'angular-split';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UISelectorComponent } from './components/ui-selector-component';
@@ -25,6 +26,7 @@ import { ComboPropertyComponent } from './components/combo-property/combo-proper
     CollapseModule.forRoot(),
     AccordionModule.forRoot(),
     TabsModule.forRoot(),
+    PopoverModule.forRoot(),
     AngularSplitModule,
     NgSelectModule,
     FormsModule

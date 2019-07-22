@@ -196,6 +196,7 @@ export interface ComponentProperty {
   category: PropertyCategories;
   isContainerProperty?: boolean;
   combo?: Array<(string|number|OptionValue)[]|string>;
+  description?: string;
 }
 
 export interface ComponentPropertyValue extends ComponentProperty {

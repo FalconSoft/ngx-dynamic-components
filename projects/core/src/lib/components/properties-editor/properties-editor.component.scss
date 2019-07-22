@@ -21,7 +21,7 @@ label {
 }
 
 .form-control,
-::ng-deep .form-control {
+.editor-container::ng-deep .form-control {
   height: calc(1em + 0.75rem + 2px);
 }
 
