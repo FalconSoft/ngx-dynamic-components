@@ -29,10 +29,8 @@
           <div class="flex-fill">
             <dc-combo-property [properties]="item.combo" [value]="item.value" *ngIf="item.combo"
               (change)="onSelect($event, item)"></dc-combo-property>
-            <ng-select *ngIf="item.options" [items]="item.options" [clearable]="false" class="property"
-              (change)="onSelect($event.value, item)" [ngModel]="selectedOption(item)"></ng-select>
-            <input *ngIf="!item.options && !item.combo" type="text" class="form-control" [value]="item.value"
-              [name]="item.name" required id="container-prop-{{item.name}}" (blur)="onSave()"
+            <input *ngIf="!item.combo" type="text" class="form-control" [value]="item.value"
+              [name]="item.name" id="container-prop-{{item.name}}" (blur)="onSave()"
               (input)="updateProperty($event.target.value, item)">
           </div>
         </li>

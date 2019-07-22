@@ -165,7 +165,6 @@ export class DragDropService {
       evt.preventDefault();
       this.selectedComponent$.next({uiModel, cssPath: getCssPath(el, this.container.nativeElement)});
       this.selectCurrentComponent();
-
     });
     this.appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;

@@ -113,7 +113,6 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
       const border = (this.properties as StyleProperties).border;
       if (typeof border === 'string') {
         const [prop, value] = border.split('|');
-        console.log('ddd', prop, kebabStrToCamel(prop));
         if (prop === 'border') {
           this.borders.forEach(b => {
             this[kebabStrToCamel(b)] = value;

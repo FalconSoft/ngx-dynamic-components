@@ -1,16 +1,18 @@
-import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { UIModel } from '../../models';
 import { WorkflowConfig } from '../../workflow/workflow.processor';
 import { DragDropService } from '../../services/drag-drop.service';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line
   templateUrl: './designer.component.html',
   styleUrls: ['./designer.component.scss']
 })
-export class DesignerComponent implements OnInit, AfterViewInit {
+export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() uiModel: UIModel;
   @Input() workflow: WorkflowConfig;
@@ -28,11 +30,13 @@ export class DesignerComponent implements OnInit, AfterViewInit {
   };
   uiModelVal: UIModel;
 
+  private destroy = new Subject();
+
   constructor(private container: ElementRef, private dragDropService: DragDropService) { }
 
   ngOnInit() {
     this.uiModelVal = this.uiModel;
-    this.dragDropService.uiModelUpdates$.subscribe(uiModel => {
+    this.dragDropService.uiModelUpdates$.pipe(takeUntil(this.destroy)).subscribe(uiModel => {
       setTimeout(() => {
         this.uiModelVal = uiModel;
         this.uiModelUpdated.emit(uiModel);
@@ -44,14 +48,19 @@ export class DesignerComponent implements OnInit, AfterViewInit {
       this.uiModelVal = null;
     });
 
-    this.dragDropService.selectedComponent$.subscribe(({uiModel}) => {
+    this.dragDropService.selectedComponent$.pipe(takeUntil(this.destroy)).subscribe(({uiModel}) => {
       this.uiModelToEdit = uiModel;
       this.tabSelect(1);
     });
 
-    this.dragDropService.componentRemoved$.subscribe(() => {
+    this.dragDropService.componentRemoved$.pipe(takeUntil(this.destroy)).subscribe(() => {
       this.tabSelect(0);
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
   }
 
   ngAfterViewInit() {

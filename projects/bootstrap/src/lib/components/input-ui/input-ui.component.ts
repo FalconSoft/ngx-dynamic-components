@@ -35,11 +35,11 @@ export class InputUIComponent extends BaseUIComponent<InputProperties> {
   }
 
   get hasLabel() {
-    return this.properties.labelPosition && this.properties.labelPosition !== 'none';
+    return this.properties.labelPosition;
   }
 
   get layout() {
-    return ['left', 'right', 'none'].includes(this.properties.labelPosition) ? 'row' : 'column';
+    return ['left', 'right'].includes(this.properties.labelPosition) ? 'row' : 'column';
   }
 
   get cssClasses() {
@@ -126,7 +126,7 @@ export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, In
       width: '200px',
       margin: '0',
       type: 'text',
-      labelPosition: 'none'
+      labelPosition: ''
     }
   },
   propertiesDescriptor: [

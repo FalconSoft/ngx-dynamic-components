@@ -1,8 +1,8 @@
 <as-split unit="pixel" #split="asSplit" class="row h-100 preview edit-mode m-0 w-100" direction="horizontal"
   [useTransition]="true">
   <as-split-area
-    size="*" #area1="asSplitArea" class="d-flex">
-    <ngx-dynamic-component class="h-100 flex-fill pt-4" *ngIf="uiModelVal" [uiModel]='uiModelVal' [dataModel]='{}' [workflow]='workflow'></ngx-dynamic-component>
+    size="*" #area1="asSplitArea" class="d-flex overflow-auto flex-column">
+    <ngx-dynamic-component class="flex-fill pt-4" *ngIf="uiModelVal" [uiModel]='uiModelVal' [dataModel]='{}' [workflow]='workflow'></ngx-dynamic-component>
   <div id="empty-container" class="w-100" *ngIf="!uiModelVal"></div>
   </as-split-area>
   <as-split-area #area2="asSplitArea" class="d-flex mb-0" [size]="350" [maxSize]="600">

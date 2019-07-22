@@ -21,7 +21,7 @@ import { ComboPropertyComponent } from './components/combo-property/combo-proper
     ComboPropertyComponent],
   imports: [
     CommonModule,
-    DragulaModule.forRoot(),
+    DragulaModule,
     CollapseModule.forRoot(),
     AccordionModule.forRoot(),
     TabsModule.forRoot(),

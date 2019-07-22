@@ -1,9 +1,9 @@
 <div class="d-flex combo-list" (keyup.enter)="onEnter($event)">
   <ng-container *ngFor="let prop of props; let i = index">
     <input *ngIf="isInput(prop)" type="text" class="form-control" [ngModel]="result[i]"
-      [name]="prop" (blur)="onSelect($event.target.value, i)"
+      [name]="prop" (blur)="setValue($event.target.value, i)"
       (input)="result[i] = $event.target.value">
-    <ng-select *ngIf="isSelect(prop)" [items]="prop" [clearable]="false" class="property"
-      (change)="onSelect($event.value, i)" [ngModel]="result[i]"></ng-select>
+    <ng-select *ngIf="isSelect(prop)" [items]="prop" class="property"
+      (change)="onSelect($event, i)" [ngModel]="selectedOption(i)"></ng-select>
   </ng-container>
 </div>

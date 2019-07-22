@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { CoreModule } from '@ngx-dynamic-components/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 import { ContainerComponent } from './components/container/container.component';
 import { registerComponents } from './components/register';
 import { ContainerRowComponent } from './components/container-row/container-row.component';
@@ -23,7 +25,8 @@ import { TextUIComponent } from './components/text-ui/text-ui.component';
     CoreModule,
     CommonModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgSelectModule
   ],
   exports: [ContainerComponent, ContainerRowComponent, InputUIComponent],
   entryComponents: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,

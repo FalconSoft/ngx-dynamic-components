@@ -47,12 +47,6 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     this.onSave();
   }
 
-  selectedOption(item: ComponentPropertyValue) {
-    if (item.options && item.hasOwnProperty('value')) {
-      return item.options.find(i => i.value === item.value);
-    }
-  }
-
   private initPropertyGroups(properties: ComponentPropertyValue[]) {
     const groups = {};
     properties.forEach((item) => {

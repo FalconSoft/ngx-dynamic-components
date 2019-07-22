@@ -30,7 +30,15 @@ export class ComboPropertyComponent implements OnInit {
     });
   }
 
-  onSelect(value: string, index: number) {
+  onSelect(option: OptionValue, index: number) {
+    this.setValue(option ? option.value : '', index);
+  }
+
+  selectedOption(i: number): OptionValue {
+    return this.props[i].find(o => o.value === this.result[i]);
+  }
+
+  setValue(value: string, index: number) {
     this.result[index] = value;
     this.emitChange();
   }

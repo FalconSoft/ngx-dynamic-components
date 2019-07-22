@@ -6,16 +6,12 @@ import { packageName } from '../../constants';
 @Component({
   selector: 'dc-select-ui',
   template: `
-    <div class="form-group mb-0" [fxLayout]="layout" [ngStyle]="itemStyles">
+  <div class="form-group mb-0" [fxLayout]="layout" [ngStyle]="itemStyles">
       <label selected *ngIf="hasLabel" [class]="properties.labelPosition"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-      <select class="form-control" [ngStyle]="itemStyles"
-        (change)="onSelect()"
-        [(ngModel)]="componentDataModel" [attr.disabled]="disabled">
-        <option *ngFor="let option of properties.options" [value]="option.value">{{option.label}}</option>
-      </select>
-    </div>
-  `,
+      <ng-select [items]="properties.options" (change)="onSelect()"
+      [(ngModel)]="componentDataModel" [attr.disabled]="disabled"></ng-select>
+    </div>`,
   styles: [`
     label.right, label.bottom {
       order: 1;
@@ -25,6 +21,7 @@ import { packageName } from '../../constants';
 
 export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
   onSelect() {
+    console.log('this.dataModel', this.dataModel);
     this.changedDataModel.emit(this.dataModel);
     this.triggerAction('_selectionChanged');
   }
@@ -41,11 +38,11 @@ export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
   }
 
   get hasLabel() {
-    return this.properties.labelPosition && this.properties.labelPosition !== 'none';
+    return this.properties.labelPosition;
   }
 
   get layout() {
-    return ['left', 'right', 'none'].includes(this.properties.labelPosition) ? 'row' : 'column';
+    return ['left', 'right'].includes(this.properties.labelPosition) ? 'row' : 'column';
   }
 }
 
@@ -104,7 +101,7 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
     itemProperties: {
       options: [
         {label: 'First option', value: '1'},
-        {label: 'second option', value: '2'}
+        {label: 'Second option', value: '2'}
       ],
       width: '200px',
       label: 'Select option',

@@ -100,7 +100,7 @@ export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, 
     }],
     ['btnClass', {name: 'btnClass', label: 'CSS Class', category: PropertyCategories.Main,
       combo: [['btn-primary', 'btn-secondary', 'btn-light', 'btn-success', 'btn-danger',
-        'btn-warning', 'btn-info', 'btn-dark', 'btn-link', 'none']]
+        'btn-warning', 'btn-info', 'btn-dark', 'btn-link']]
     }],
   ]
 };

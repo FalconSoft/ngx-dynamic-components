@@ -41,11 +41,11 @@ export class CheckboxUIComponent extends BaseUIComponent<CheckboxProperties> {
   }
 
   get hasLabel() {
-    return this.properties.labelPosition && this.properties.labelPosition !== 'none';
+    return this.properties.labelPosition;
   }
 
   get layout() {
-    return ['left', 'right', 'none'].includes(this.properties.labelPosition) ? 'row' : 'column';
+    return ['left', 'right'].includes(this.properties.labelPosition) ? 'row' : 'column';
   }
 
   get align() {

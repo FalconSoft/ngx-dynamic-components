@@ -1,4 +1,4 @@
-import { ComponentProperty, PropertyCategories } from '../../models';
+import { ComponentProperty, PropertyCategories, OptionValue } from '../../models';
 
 /**
  * Container properties related to each component.
@@ -29,7 +29,7 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   // Flex Container properties
   ['fxLayout', {
     name: 'fxLayout', label: 'Flex Direction', category: PropertyCategories.Main,
-    options: [{ label: 'Row', value: 'row' }, { label: 'Column', value: 'column' }]
+    combo: [[{ label: 'Row', value: 'row' }, { label: 'Column', value: 'column' }]]
   }],
   ['fxLayoutAlign', {
     name: 'fxLayoutAlign', label: 'Children Align', category: PropertyCategories.Main,
@@ -42,7 +42,7 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   ['label', { name: 'label', label: 'Label', category: PropertyCategories.Main }],
   ['labelPosition', {
     name: 'labelPosition', label: 'Label Position', category: PropertyCategories.Main,
-    combo: [['left', 'top', 'right', 'bottom', 'none']]
+    combo: [['left', 'top', 'right', 'bottom']]
   }],
   ['labelWidth', { name: 'labelWidth', label: 'Label Width', category: PropertyCategories.Layout }],
   ['dataModelPath', { name: 'dataModelPath', label: 'Binding', category: PropertyCategories.Main }],
@@ -54,7 +54,7 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   ['color', { name: 'color', label: 'Color', category: PropertyCategories.Appearance }],
   ['font-weight', {
     name: 'font-weight', label: 'Font weight', category: PropertyCategories.Appearance,
-    combo: [['bold', 'bolder', 'lighter', 100, 200, 300, 400, 500, 600, 700, 800, 900, 'none']]
+    combo: [['bold', 'bolder', 'lighter', 100, 200, 300, 400, 500, 600, 700, 800, 900]]
   }],
   ['font-size', {
     name: 'font-size', label: 'Font size', category: PropertyCategories.Appearance,
@@ -62,11 +62,11 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   }],
   ['font-style', {
     name: 'font-style', label: 'Font style', category: PropertyCategories.Appearance,
-    combo: [['italic', 'oblique', 'normal', 'none']]
+    combo: [['italic', 'oblique', 'normal']]
   }],
   ['border', {
     name: 'border', label: 'Border', category: PropertyCategories.Appearance,
     combo: [[{ label: 'all', value: 'border' }, { label: 'top', value: 'border-top' }, { label: 'left', value: 'border-left' },
-    { label: 'right', value: 'border-right' }, { label: 'bottom', value: 'border-bottom' }, { label: 'none', value: '' }], 'border-value']
+    { label: 'right', value: 'border-right' }, { label: 'bottom', value: 'border-bottom' }], 'border-value']
   }],
 ]);
