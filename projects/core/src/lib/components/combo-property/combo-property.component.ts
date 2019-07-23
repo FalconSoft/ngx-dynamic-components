@@ -11,15 +11,18 @@ export class ComboPropertyComponent implements OnInit {
   constructor() { }
 
   @Input() properties: Array<(string|OptionValue)[]>;
-  @Input() value: string;
+  @Input() value: string|boolean;
   @Output() change = new EventEmitter();
 
-  result: string[];
+  result: (string|boolean)[];
   props: Array<OptionValue[]>;
 
   ngOnInit() {
-    const values = (this.value || '').split('|');
-    this.result = this.properties.map((v, i) => values[i] || '');
+    let values = [this.value];
+    if (typeof this.value === 'string' || this.value === undefined) {
+      values = ((this.value as string) || '').split('|');
+    }
+    this.result = this.properties.map((v, i) => values[i] === undefined ? '' : values[i]);
     this.props = this.properties.map(options => {
       return Array.isArray(options) ? options.map(o => {
         if (typeof o === 'object') {
@@ -49,7 +52,8 @@ export class ComboPropertyComponent implements OnInit {
   }
 
   emitChange() {
-    this.change.emit(this.result.join('|'));
+    const res = this.result.length > 1 ? this.result.join('|') : this.result[0];
+    this.change.emit(res);
   }
 
   isInput(prop: string) {

@@ -12,7 +12,7 @@ import { packageName } from '../../constants';
     <input [attr.id]="id" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
       [fxFlex]="properties.inputWidth"
       [placeholder]="properties.placeholder"
-      [disabled]="!properties.enabled"
+      [disabled]="properties.enabled === false"
       (input)="changedDataModel.emit(this.dataModel)"
       [(ngModel)]="componentDataModel">
   </div>
@@ -27,7 +27,7 @@ import { packageName } from '../../constants';
 export class InputUIComponent extends LabeledComponent<InputProperties> {
   get cssClasses() {
     return {
-      invisible: !this.properties.visible
+      invisible: this.properties.visible === false
     };
   }
 
@@ -56,7 +56,7 @@ export class InputProperties extends LabelProperties {
     description: 'Is visible',
     example: 'true',
   })
-  visible?: string;
+  visible?: boolean;
   @propDescription({
     description: 'Input width',
     example: '200px',
@@ -116,6 +116,12 @@ export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, In
     ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Main,
       combo: [['text', 'number', 'email', 'file', 'url', 'date', 'time', 'datetime-local']]
     }],
-    ['inputWidth', {name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout}]
+    ['inputWidth', {name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout}],
+    ['enabled', { name: 'enabled', label: 'Enabled', category: PropertyCategories.Main,
+      combo: [[{label: 'Enable', value: true}, {label: 'Disable', value: false}]]
+    }],
+    ['visible', { name: 'visible', label: 'Visible', category: PropertyCategories.Main,
+      combo: [[{label: 'Visible', value: true}, {label: 'Hidden', value: false}]]
+    }]
   ]
 };

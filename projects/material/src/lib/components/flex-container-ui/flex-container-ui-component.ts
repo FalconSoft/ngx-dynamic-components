@@ -41,18 +41,21 @@ export class FlexContainerProperties extends StyleProperties {
   @propDescription({
     description: 'fxLayout (Angular Flex-Layout property)',
     example: 'column',
+    link: 'https://github.com/angular/flex-layout/wiki/fxLayout-API'
   })
   fxLayout?: string;
 
   @propDescription({
     description: 'fxLayoutGap (Angular Flex-Layout property)',
     example: '10px',
+    link: 'https://github.com/angular/flex-layout/wiki/fxLayoutGap-API'
   })
   fxLayoutGap?: string;
 
   @propDescription({
     description: 'fxLayoutAlign (Angular Flex-Layout property)',
     example: 'stretch center',
+    link: 'https://github.com/angular/flex-layout/wiki/fxLayoutAlign-API0'
   })
   fxLayoutAlign?: string;
 }

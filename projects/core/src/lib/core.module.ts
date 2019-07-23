@@ -15,6 +15,8 @@ import { ControlEditorComponent } from './components/control-editor/control-edit
 import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
 import { ControlsPanelComponent } from './components/controls-panel/controls-panel.component';
 import { ComboPropertyComponent } from './components/combo-property/combo-property.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ActionsService } from './services/actions.service';
 
 @NgModule({
   declarations: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, ControlEditorComponent, PropertiesEditorComponent,
@@ -29,9 +31,12 @@ import { ComboPropertyComponent } from './components/combo-property/combo-proper
     PopoverModule.forRoot(),
     AngularSplitModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent],
   entryComponents: [ControlEditorComponent]
 })
-export class CoreModule { }
+export class CoreModule {
+  constructor(private actionsService: ActionsService) { }
+}

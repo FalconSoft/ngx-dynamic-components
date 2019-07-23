@@ -24,8 +24,8 @@
         {{g.value}}
       </div>
       <ul class="d-flex flex-fill flex-column p-0 m-0">
-        <li class="pl-1 mt-1 d-flex cursor-pointer prop-{{item.name}}" *ngFor="let item of g.list">
-          <label for="container-prop-{{item.name}}" [popover]="item.description" triggers="mouseenter:mouseleave" class="col-form-label px-0 py-1">{{item.label}}</label>
+        <li class="pl-1 mt-1 d-flex cursor-pointer prop-{{item.name}}" *ngFor="let item of g.list" [popover]="popTemplate" triggers="mouseenter:mouseleave">
+          <label for="container-prop-{{item.name}}" class="col-form-label px-0 py-1">{{item.label}}</label>
           <div class="flex-fill">
             <dc-combo-property [properties]="item.combo" [value]="item.value" *ngIf="item.combo"
               (change)="onSelect($event, item)"></dc-combo-property>
@@ -33,6 +33,10 @@
               [name]="item.name" id="container-prop-{{item.name}}" (blur)="onSave()"
               (input)="updateProperty($event.target.value, item)">
           </div>
+          <ng-template #popTemplate>
+            <div [innerHtml]="item.descriptor.description"></div>
+            <a *ngIf="item.descriptor.link" [href]="item.descriptor.link" target="blank">Details</a>
+          </ng-template>
         </li>
       </ul>
     </accordion-group>

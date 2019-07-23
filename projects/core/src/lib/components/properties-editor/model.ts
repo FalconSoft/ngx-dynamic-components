@@ -1,4 +1,4 @@
-import { ComponentProperty, PropertyCategories, OptionValue } from '../../models';
+import { ComponentProperty, PropertyCategories } from '../../models';
 
 /**
  * Container properties related to each component.
@@ -46,8 +46,6 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   }],
   ['labelWidth', { name: 'labelWidth', label: 'Label Width', category: PropertyCategories.Layout }],
   ['dataModelPath', { name: 'dataModelPath', label: 'Binding', category: PropertyCategories.Main }],
-  ['enabled', { name: 'enabled', label: 'Enabled', category: PropertyCategories.Main }],
-  ['visible', { name: 'visible', label: 'Visible', category: PropertyCategories.Main }],
 
   // Appearence
   ['background', { name: 'background', label: 'Background', category: PropertyCategories.Appearance }],

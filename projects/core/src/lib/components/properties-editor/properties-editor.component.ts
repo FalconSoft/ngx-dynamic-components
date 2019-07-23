@@ -82,7 +82,7 @@ export class PropertiesEditorComponent implements OnInit, OnChanges {
     const iProps = props.map((prop) => {
       const name = prop.name;
       const controlProp = this.getProperty(name);
-      controlProp.description = prop.description;
+      controlProp.descriptor = prop;
       let value = itemProps[name];
       if (value === undefined) {
         value = '';

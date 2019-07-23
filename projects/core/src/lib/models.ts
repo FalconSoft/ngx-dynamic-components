@@ -1,4 +1,4 @@
-import { BaseUIComponentConstructor, propDescription } from './utils';
+import { BaseUIComponentConstructor, propDescription, PropDescriptor } from './utils';
 import { WorkflowEngine } from './workflow/workflow.processor';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
@@ -196,7 +196,7 @@ export interface ComponentProperty {
   category: PropertyCategories;
   isContainerProperty?: boolean;
   combo?: Array<(string|number|OptionValue)[]|string>;
-  description?: string;
+  descriptor?: PropDescriptor;
 }
 
 export interface ComponentPropertyValue extends ComponentProperty {

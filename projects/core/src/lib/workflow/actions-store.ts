@@ -1,16 +1,12 @@
 import { ExecutionContext } from './workflow.processor';
 import { JSONUtils } from './json.utils';
+import { HttpClient, HttpHandler, ɵHttpInterceptingHandler, HttpXhrBackend, HttpBackend, XhrFactory } from '@angular/common/http';
+import { Injector } from '@angular/core';
 
 export interface SetVariableConfig {
   object: string;
   sourceValue: string;
   variableName: string;
-}
-
-interface HttpCallConfig {
-    method: string;
-    url: string;
-    queryParams: string;
 }
 
 interface SetValueConfig {
@@ -53,6 +49,10 @@ interface TransferDataConfig {
   fromPropertyName: string;
   to: object;
   toPropertyName: string;
+}
+
+interface MergeInDataModelConfig {
+  data: string;
 }
 
 /**
@@ -259,8 +259,14 @@ const transferDataAction = (context: ExecutionContext, config: TransferDataConfi
   return JSONUtils.setValue(toObj, config.toPropertyName, value);
 };
 
+const mergeInDataModelAction = (context: ExecutionContext, config: MergeInDataModelConfig) => {
+  const value = config.data;
+  const dataModel = resolveValue(context, '$dataModel');
+  Object.assign(dataModel, value);
+  return dataModel;
+};
+
 export const commonActionsMap = new Map<string, (...args: any[]) => any>([
-    ['httpCall', (config: HttpCallConfig) => {}],
     ['switch', () => {}],
     ['getValue', getValueAction],
     ['setValue', setValueAction],
@@ -269,5 +275,6 @@ export const commonActionsMap = new Map<string, (...args: any[]) => any>([
     ['popArray', popArrayAction],
     ['pushItemToArray', pushItemToArrayAction],
     ['transferData', transferDataAction],
-    ['setLocalVariable', setLocalVariableAction]
+    ['setLocalVariable', setLocalVariableAction],
+    ['mergeInDataModel', mergeInDataModelAction]
 ]);

@@ -7,6 +7,7 @@ export interface BaseUIComponentConstructor {
 export interface PropDescriptor {
   description: string;
   example: string;
+  link?: string;
 }
 
 export interface UIModelProperty extends PropDescriptor {

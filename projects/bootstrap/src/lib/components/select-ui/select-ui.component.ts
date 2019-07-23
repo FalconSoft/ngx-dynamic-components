@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { LabelProperties, ComponentDescriptor, LabeledComponent,
-  UIModel, ComponentExample, propDescription, Categories } from '@ngx-dynamic-components/core';
+  UIModel, ComponentExample, propDescription, Categories, OptionValue, JSONUtils } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
@@ -9,16 +9,31 @@ import { packageName } from '../../constants';
     <div class="form-group mb-0" [fxLayout]="layout" [ngStyle]="itemStyles">
       <label selected *ngIf="hasLabel" [for]="id" [class]="properties.labelPosition"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-      <ng-select [items]="properties.options" (change)="onSelect()"
+      <ng-select [items]="options" (change)="onSelect()"
       [(ngModel)]="componentDataModel" [attr.disabled]="disabled"></ng-select>
     </div>`,
   styleUrls: ['../../styles/label.scss']
 })
 
-export class SelectUIComponent extends LabeledComponent<SelectProperties> {
+export class SelectUIComponent extends LabeledComponent<SelectProperties> implements DoCheck {
+  options: OptionValue[];
   onSelect() {
     this.changedDataModel.emit(this.dataModel);
     this.triggerAction('_selectionChanged');
+  }
+
+  ngDoCheck() {
+    if (this.dataModel) {
+      const options = this.properties.options;
+      if (Array.isArray(options)) {
+        this.options = options;
+      } else if (typeof options === 'string') {
+        const val = JSONUtils.find(this.dataModel, options);
+        if (val !== this.options) {
+          this.options = val;
+        }
+      }
+    }
   }
 
   get disabled() {
