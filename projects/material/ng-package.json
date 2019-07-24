@@ -3,6 +3,8 @@
   "dest": "../../dist/@ngx-dynamic-components/material",
   "lib": {
     "entryFile": "src/public_api.ts",
-    "umdModuleIds": "material"
+    "umdModuleIds": {
+      "@ngx-dynamic-components/core": "NgxDynamicComponentsCore"
+    }
   }
 }

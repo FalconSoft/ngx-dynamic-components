@@ -3,6 +3,10 @@
   "dest": "../../dist/@ngx-dynamic-components/bootstrap",
   "lib": {
     "entryFile": "src/public-api.ts",
-    "umdModuleIds": "bootstrap"
+    "umdModuleIds": {
+      "@ngx-dynamic-components/core": "NgxDynamicComponentsCore",
+      "ngx-bootstrap/utils": "NgxBootstrapUtils",
+      "@ng-select/ng-select": "NgSelect"
+    }
   }
 }
