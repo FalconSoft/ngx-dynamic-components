@@ -95,6 +95,9 @@ export class WorkflowEngine {
                 const name = `${step.actionName}-returnValue`;
                 context.variables.set(name, returnValue);
             }
+            if (step.returnValue) {
+              context.variables.set(step.returnValue, returnValue);
+            }
         }
     }
 

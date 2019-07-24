@@ -1,59 +1,7 @@
 import { ExecutionContext } from './workflow.processor';
 import { JSONUtils } from './json.utils';
-import { HttpClient, HttpHandler, ɵHttpInterceptingHandler, HttpXhrBackend, HttpBackend, XhrFactory } from '@angular/common/http';
-import { Injector } from '@angular/core';
-
-export interface SetVariableConfig {
-  object: string;
-  sourceValue: string;
-  variableName: string;
-}
-
-interface SetValueConfig {
-    object: any;
-    propertyName: string;
-    propertyValue: any;
-}
-
-interface SetValuesConfig {
-    object: object;
-    valuesList: object;
-}
-
-interface GetValueConfig {
-    object: object;
-    propertyName: string;
-}
-
-interface SwitchActionConfig {
-    object: object;
-}
-
-interface AddItemConfig {
-  object: object;
-  propertyName: string;
-  itemPropertyName: string;
-  wrapName: string;
-}
-
-interface PushItemConfig {
-  object: object;
-  target: object;
-  propertyName: string;
-  targetPropertyName: string;
-  wrapName: string;
-}
-
-interface TransferDataConfig {
-  from: string;
-  fromPropertyName: string;
-  to: object;
-  toPropertyName: string;
-}
-
-interface MergeInDataModelConfig {
-  data: string;
-}
+import { SetValueConfig, SetValuesConfig, GetValueConfig, AddItemConfig, PushItemConfig,
+  TransferDataConfig, MergeInDataModelConfig, SetVariableConfig } from './models';
 
 /**
  * Resolves expression({{ expression }}) in key if contains.
@@ -254,7 +202,7 @@ const setLocalVariableAction = (context: ExecutionContext, config: SetVariableCo
  */
 const transferDataAction = (context: ExecutionContext, config: TransferDataConfig) => {
   const fromObj = resolveValue(context, config.from);
-  const value = JSONUtils.find(fromObj, config.fromPropertyName);
+  const value = JSONUtils.find(fromObj, config.fromPropertyName || '$');
   const toObj = resolveValue(context, config.to);
   return JSONUtils.setValue(toObj, config.toPropertyName, value);
 };

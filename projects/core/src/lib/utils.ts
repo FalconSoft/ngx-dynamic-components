@@ -100,3 +100,17 @@ export const kebabStrToCamel = (s: string) => {
     return $1.toUpperCase().replace('-', '');
   });
 };
+
+export function setFields(fields: Array<string|string[]>, data: object[]) {
+  if (!fields) {
+    return data;
+  }
+  return fields.reduce((res: any, field) => {
+    if (Array.isArray(field)) {
+      res[field[1]] = data[field[0]];
+    } else {
+      res[field] = data[field];
+    }
+    return res;
+  }, {});
+}
