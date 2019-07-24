@@ -75,7 +75,9 @@ export class WorkflowEngine {
 
     private async executeFlow(context: ExecutionContext, steps: any[]) {
         steps = steps || [];
-        steps = this.variableResolver.resolve(steps) as [];
+        if (this.variableResolver) {
+          steps = this.variableResolver.resolve(steps) as [];
+        }
         for (const step of steps) {
             if (!context.actions.has(step.actionType)) {
                 if (context.failOnError) {

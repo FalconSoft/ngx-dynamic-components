@@ -21,6 +21,7 @@ export class ContainerRowComponent extends BaseUIComponent<BSContainerRowPropert
   @HostBinding('class.row') readonly isRow = true;
   @HostBinding('class.flex-column') isColumn = false;
   @HostBinding('attr.drop-container') dropContainer = true;
+  @HostBinding('style.display') display = 'flex';
 
   async ngOnInit() {
     await super.ngOnInit();

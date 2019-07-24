@@ -33,7 +33,7 @@
               [name]="item.name" id="container-prop-{{item.name}}" (blur)="onSave()"
               (input)="updateProperty($event.target.value, item)">
           </div>
-          <button class="btn px-1 py-0 mx-1" title="Help" [popover]="popTemplate" [outsideClick]="true">
+          <button class="btn px-1 py-0" title="Help" [popover]="popTemplate" [outsideClick]="true">
             <i class="fa fa-question-circle-o"></i>
           </button>
           <ng-template #popTemplate>

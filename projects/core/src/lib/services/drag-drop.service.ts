@@ -72,7 +72,8 @@ export class DragDropService {
     `);
     let arrElements = Array.from(elements) as HTMLElement[];
 
-    arrElements.filter(e => !e.id).forEach(((container: HTMLElement, index: number) => {
+    // .filter(e => !e.id)
+    arrElements.forEach(((container: HTMLElement, index: number) => {
       const childrenUIModel = this.getChildrenByIndex(this.uiModel.children, index);
       container.id = `container-${index}`;
       this.containerUIModelMap.set(container.id, childrenUIModel);
@@ -183,16 +184,21 @@ export class DragDropService {
    * Adds selected active class to current component.
    * setTimout is used to handle component rerender case. after uiModel update.
    */
-  selectCurrentComponent(i = 0) {
-    this.deselect();
-    const el = this.container.nativeElement.querySelector(this.selectedComponent.cssPath);
-    if (el) {
-      el.classList.add(ACTIVE_CLASS);
-    } else if (i < 20) {
-      setTimeout(() => {
-        this.selectCurrentComponent(i + 1);
-      }, 2e1);
-    }
+  selectCurrentComponent(i = 0): Promise<HTMLElement> {
+    return new Promise((resolve) => {
+      if (this.selectedComponent) {
+        this.deselect();
+        const el = this.container.nativeElement.querySelector(this.selectedComponent.cssPath);
+        if (el) {
+          el.classList.add(ACTIVE_CLASS);
+          resolve(el);
+        } else if (i < 20) {
+          setTimeout(() => {
+            return this.selectCurrentComponent(i + 1);
+          }, 2e1);
+        }
+      }
+    });
   }
 
   private initDrake(elements) {

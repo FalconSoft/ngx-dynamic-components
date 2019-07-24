@@ -93,10 +93,14 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
 
     private setHostStyles() {
       const props = this.properties as StyleProperties;
-      this.hostBindings.forEach(b => {
-        this[b] = props[b];
-      });
-      this.setBorder();
+      if (props) {
+        this.hostBindings.forEach(b => {
+          if (props && props.hasOwnProperty(b)) {
+            this[b] = props[b];
+          }
+        });
+        this.setBorder(props);
+      }
     }
 
     private getPropValue(properties: AttributesMap, prop: string) {
@@ -109,8 +113,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
       return val;
     }
 
-    private setBorder() {
-      const border = (this.properties as StyleProperties).border;
+    private setBorder(properties: StyleProperties) {
+      const border = properties.border;
       if (typeof border === 'string') {
         const [prop, value] = border.split('|');
         if (prop === 'border') {

@@ -1,11 +1,13 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { Subject, fromEvent } from 'rxjs';
+import { takeUntil, debounceTime, filter, map } from 'rxjs/operators';
+import { Ace, edit } from 'ace-builds';
 import { UIModel } from '../../models';
 import { WorkflowConfig } from '../../workflow/workflow.processor';
 import { DragDropService } from '../../services/drag-drop.service';
-import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { formatObjToJsonStr } from '../../utils';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line
@@ -19,16 +21,17 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() uiModelUpdated = new EventEmitter<UIModel>();
   @ViewChild('tabset', {static: false}) tabset: TabsetComponent;
   @ViewChild('controlsPanel', {static: false}) controlsPanel: ControlsPanelComponent;
+  @ViewChild('uiModelEl', {static: false}) uiModelEl: ElementRef;
+  @ViewChild('workflowEl', {static: false}) workflowEl: ElementRef;
 
+  /** Selected component UI Model */
   uiModelToEdit: UIModel;
-  workflowConfig: WorkflowConfig = {
-    failOnError: true,
-    include: ['@common'],
-    vars: {},
-    workflowsMap: [],
-    consts: {}
-  };
+  /** Designer UI Model */
   uiModelVal: UIModel;
+  uiModelEditor: Ace.Editor;
+  workflowEditor: Ace.Editor;
+  error: string;
+  formatted = true;
 
   private destroy = new Subject();
 
@@ -37,15 +40,7 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.uiModelVal = this.uiModel;
     this.dragDropService.uiModelUpdates$.pipe(takeUntil(this.destroy)).subscribe(uiModel => {
-      setTimeout(() => {
-        this.uiModelVal = uiModel;
-        this.uiModelUpdated.emit(uiModel);
-        this.controlsPanel.initGroups();
-        setTimeout(() => {
-          this.dragDropService.init(this.container, this.uiModelVal);
-        });
-      });
-      this.uiModelVal = null;
+      this.updateUIModel(uiModel);
     });
 
     this.dragDropService.selectedComponent$.pipe(takeUntil(this.destroy)).subscribe(({uiModel}) => {
@@ -58,14 +53,78 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit() {
+    this.uiModelEditor = edit(this.uiModelEl.nativeElement, {
+      mode: 'ace/mode/json',
+      autoScrollEditorIntoView: true,
+      value: formatObjToJsonStr(this.uiModelVal)
+    });
+
+    this.workflowEditor = edit(this.workflowEl.nativeElement, {
+      mode: 'ace/mode/json',
+      autoScrollEditorIntoView: true,
+      value: formatObjToJsonStr(this.workflow.workflowsMap)
+    });
+
+    fromEvent(this.uiModelEditor, 'change').pipe(
+      debounceTime(500),
+      map(() => {
+        return this.getUIModelObject();
+      }),
+      filter(v => Boolean(v))).subscribe(async uiModel => {
+        this.uiModelVal = uiModel;
+        await this.initDrag();
+        if (this.uiModelToEdit) {
+          const el = await this.dragDropService.selectCurrentComponent();
+          el.click();
+        }
+        this.uiModelUpdated.emit(uiModel);
+      });
+
+    fromEvent(this.workflowEditor, 'change').pipe(
+      debounceTime(500),
+      map(() => {
+        try {
+          return JSON.parse(this.workflowEditor.getValue());
+        } catch (e) {
+          return false;
+        }
+      }),
+      filter(v => Boolean(v))).subscribe(wMap => this.workflow.workflowsMap = wMap);
+
+    this.initDrag();
+  }
+
   ngOnDestroy() {
     this.destroy.next();
     this.destroy.complete();
   }
 
-  ngAfterViewInit() {
+  private getUIModelObject() {
+    try {
+      return JSON.parse(this.uiModelEditor.getValue());
+    } catch (e) {
+      return false;
+    }
+  }
+
+  private initDrag() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.dragDropService.init(this.container, this.uiModelVal);
+        resolve();
+      });
+    });
+  }
+
+  private updateUIModel(uiModel: UIModel) {
+    this.uiModelVal = null;
     setTimeout(() => {
-      this.dragDropService.init(this.container, this.uiModelVal);
+      this.uiModelVal = uiModel;
+      this.uiModelEditor.setValue(formatObjToJsonStr(this.uiModelVal), -1);
+      this.uiModelUpdated.emit(uiModel);
+      this.controlsPanel.initGroups();
+      this.initDrag();
     });
   }
 
@@ -79,9 +138,9 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.uiModelVal = null;
     window.requestAnimationFrame(() => {
       this.uiModelVal = model;
-      setTimeout(() => {
-        this.dragDropService.init(this.container, this.uiModelVal);
-      });
+      this.uiModelUpdated.emit(model);
+      this.uiModelEditor.setValue(formatObjToJsonStr(this.uiModelVal), -1);
+      this.initDrag();
     });
   }
 
@@ -91,6 +150,26 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onClone() {
     this.dragDropService.cloneSelected();
+  }
+
+  formatJSON(format = true) {
+    try {
+      const uiModel = JSON.parse(this.uiModelEditor.getValue());
+      const workflowsMap = JSON.parse(this.workflowEditor.getValue());
+      if (format) {
+        this.uiModelEditor.setValue(formatObjToJsonStr(uiModel), -1);
+        this.workflowEditor.setValue(formatObjToJsonStr(workflowsMap), -1);
+      } else {
+        this.uiModelEditor.setValue(JSON.stringify(uiModel), -1);
+        this.workflowEditor.setValue(JSON.stringify(workflowsMap), -1);
+      }
+      this.formatted = format;
+      this.error = null;
+    } catch (e) {
+      console.error(e);
+      this.error = e;
+      this.formatted = false;
+    }
   }
 
   private tabSelect(i: number) {

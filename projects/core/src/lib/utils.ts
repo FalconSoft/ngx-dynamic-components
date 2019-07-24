@@ -114,3 +114,14 @@ export function setFields(fields: Array<string|string[]>, data: object[]) {
     return res;
   }, {});
 }
+
+export function formatObjToJsonStr(obj: any): string {
+  if (obj === null || obj === undefined) {
+    return '';
+  }
+
+  if (typeof obj === 'string') {
+    return obj;
+  }
+  return JSON.stringify(obj, null, '\t');
+}
