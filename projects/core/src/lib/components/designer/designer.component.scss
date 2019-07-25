@@ -30,3 +30,13 @@ ngx-dynamic-component, #empty-container {
     display: block;
   }
 }
+
+.mode.btn-group {
+  border-top: 1px solid gray;
+}
+
+.edit-mode ::ng-deep .full-mode {
+  > .as-split-gutter {
+    display: none;
+  }
+}

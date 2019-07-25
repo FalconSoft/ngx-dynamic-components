@@ -32,8 +32,17 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   workflowEditor: Ace.Editor;
   error: string;
   formatted = true;
+  modeState = {
+    json: false,
+    designer: true
+  };
+  jsonConfigSize = 0;
 
   private destroy = new Subject();
+
+  get fullMode() {
+    return this.jsonConfigSize === 0 || this.jsonConfigSize === 100;
+  }
 
   constructor(private container: ElementRef, private dragDropService: DragDropService) { }
 
@@ -98,6 +107,22 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.destroy.next();
     this.destroy.complete();
+  }
+
+  onSizeChange() {
+    this.uiModelEditor.resize();
+    this.workflowEditor.resize();
+  }
+
+  onModeState(prop: string) {
+    this.modeState[prop] = !this.modeState[prop];
+    if (this.modeState.json && !this.modeState.designer) {
+      this.jsonConfigSize = 100;
+    } else if (this.modeState.json && this.modeState.designer) {
+      this.jsonConfigSize = 50;
+    } else {
+      this.jsonConfigSize = 0;
+    }
   }
 
   private getUIModelObject() {

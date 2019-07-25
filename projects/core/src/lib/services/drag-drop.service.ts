@@ -38,6 +38,7 @@ export class DragDropService {
   public init(container, uiModel: UIModel) {
     this.cleanUpEditor();
     this.container = container;
+    console.log('uiModel', uiModel);
     this.uiModel = uiModel;
 
     if (!this.drake) {
@@ -73,13 +74,15 @@ export class DragDropService {
     let arrElements = Array.from(elements) as HTMLElement[];
 
     // .filter(e => !e.id)
-    arrElements.forEach(((container: HTMLElement, index: number) => {
-      const childrenUIModel = this.getChildrenByIndex(this.uiModel.children, index);
-      container.id = `container-${index}`;
-      this.containerUIModelMap.set(container.id, childrenUIModel);
-      this.appendControlEditor(container, [this.uiModel], index, true);
-      arrElements = arrElements.concat(this.mapChildren(container, childrenUIModel));
-    }));
+    if (this.uiModel) {
+      arrElements.forEach(((container: HTMLElement, index: number) => {
+        const childrenUIModel = this.getChildrenByIndex(this.uiModel.children, index);
+        container.id = `container-${index}`;
+        this.containerUIModelMap.set(container.id, childrenUIModel);
+        this.appendControlEditor(container, [this.uiModel], index, true);
+        arrElements = arrElements.concat(this.mapChildren(container, childrenUIModel));
+      }));
+    }
     const controlPanelGroups = Array.from(this.container.nativeElement.querySelectorAll('.preview .components-list')) as HTMLElement[];
     arrElements = [...arrElements, ...controlPanelGroups];
     return arrElements as HTMLElement[];
@@ -161,6 +164,10 @@ export class DragDropService {
     });
 
     const el = element.attributes.hasOwnProperty('drop-container') ? element : element.querySelector('dc-ui-selector + *');
+    if (!el) {
+      // Case of an empty ui model.
+      return;
+    }
     el.addEventListener('click', evt => {
       evt.stopImmediatePropagation();
       evt.preventDefault();
