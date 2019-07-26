@@ -2,6 +2,7 @@ import { ExecutionContext } from './workflow.processor';
 import { JSONUtils } from './json.utils';
 import { SetValueConfig, SetValuesConfig, GetValueConfig, AddItemConfig, PushItemConfig,
   TransferDataConfig, MergeInDataModelConfig, SetVariableConfig } from './models';
+import { ActionDescriptor } from '../models';
 
 /**
  * Resolves expression({{ expression }}) in key if contains.
@@ -214,7 +215,7 @@ const mergeInDataModelAction = (context: ExecutionContext, config: MergeInDataMo
   return dataModel;
 };
 
-export const commonActionsMap = new Map<string, (...args: any[]) => any>([
+export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([
     ['switch', () => {}],
     ['getValue', getValueAction],
     ['setValue', setValueAction],

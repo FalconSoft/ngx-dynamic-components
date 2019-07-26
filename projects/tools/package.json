@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/tools",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "private": false,
   "description": "@ngx-dynamic-components/tools is Angular 7+ library what contains a core interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -19,14 +19,14 @@
     "form library"
   ],
   "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3",
+    "@angular/common": "^8.1.2",
+    "@angular/core": "^8.1.2",
     "@angular/flex-layout": "^8.0.0-beta.26",
-    "@angular/material": "^8.0.1",
-    "@ngx-dynamic-components/bootstrap": ">=0.0.20",
-    "@ngx-dynamic-components/core": ">=0.0.20",
-    "@ngx-dynamic-components/material": ">=0.0.20",
-    "angular-split": "^2.0.1",
+    "@angular/material": "^8.1.1",
+    "@ngx-dynamic-components/bootstrap": ">=0.0.22",
+    "@ngx-dynamic-components/core": ">=0.0.22",
+    "@ngx-dynamic-components/material": ">=0.0.22",
+    "angular-split": "^3.0.2",
     "ngx-monaco-editor": "^7.0.0"
   }
 }

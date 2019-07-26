@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild,
+  Output, EventEmitter, OnDestroy, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, Inject } from '@angular/core';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil, debounceTime, filter, map } from 'rxjs/operators';
@@ -8,6 +9,8 @@ import { WorkflowConfig } from '../../workflow/workflow.processor';
 import { DragDropService } from '../../services/drag-drop.service';
 import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
 import { formatObjToJsonStr } from '../../utils';
+import { WorkflowEditorComponent } from '../workflow-editor/workflow-editor.component';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line
@@ -39,12 +42,19 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   jsonConfigSize = 0;
 
   private destroy = new Subject();
+  private workflowsMapEdit: WorkflowEditorComponent;
 
   get fullMode() {
     return this.jsonConfigSize === 0 || this.jsonConfigSize === 100;
   }
 
-  constructor(private container: ElementRef, private dragDropService: DragDropService) { }
+  constructor(
+    @Inject(DOCUMENT) private _document: Document,
+    private container: ElementRef,
+    private dragDropService: DragDropService,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private appRef: ApplicationRef,
+    private injector: Injector) { }
 
   ngOnInit() {
     this.uiModelVal = this.uiModel;
@@ -112,6 +122,22 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   onSizeChange() {
     this.uiModelEditor.resize();
     this.workflowEditor.resize();
+  }
+
+  onWorkflowEdit() {
+    const componentRef = this.componentFactoryResolver.resolveComponentFactory(WorkflowEditorComponent).create(this.injector);
+    this.workflowsMapEdit = componentRef.instance;
+    componentRef.instance.modal.onHide.subscribe(() => {
+      componentRef.destroy();
+    });
+
+    this.appRef.attachView(componentRef.hostView);
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+
+    this._document.body.appendChild(domElem);
+    setTimeout(() => {
+      componentRef.instance.openModal();
+    });
   }
 
   onModeState(prop: string) {

@@ -12,24 +12,54 @@ import { HttpCallConfig, MapConfig, JoinConfig } from '../workflow/models';
 })
 export class ActionsService {
   constructor(private http: HttpClient) {
-    commonActionsMap.set('httpCall', async (context: ExecutionContext, config: HttpCallConfig) => {
+    async function httpCall(context: ExecutionContext, config: HttpCallConfig) {
       const url = config.url.replace(/\/+/g, '/').replace(':/', '://') + (config.queryParams ? `?${config.queryParams}` : '')
       const req = new HttpRequest(config.method, url, {
         responseType: config.responseType || 'json',
       });
       const value = await this.http.request(req).toPromise();
       return value;
+    }
+    commonActionsMap.set('httpCall', {
+      name: 'httpCall',
+      method: httpCall,
+      category: 'Common',
+      config: {
+        actionType: 'httpCall',
+        actionName: 'xhr-1',
+        url: 'request/url',
+        method: 'GET'
+      }
     });
 
-    commonActionsMap.set('map', (context: ExecutionContext, config: MapConfig) => {
+    function mapAction(context: ExecutionContext, config: MapConfig) {
       const propertyName = config.propertyName || '$';
       const obj = resolveValue(context, config.object);
       const list = JSONUtils.find(obj, propertyName);
       const res = list.map(item => setFields(config.fields, item));
       return res;
+    }
+
+    commonActionsMap.set('map', {
+      name: 'map',
+      method: mapAction,
+      category: 'Common',
+      config: {
+        actionType: 'map',
+        actionName: 'map-1',
+        object: '$step0-returnValue',
+        propertyName: '$.body',
+        fields: [[
+          'field1',
+          'label'
+        ], [
+          'field2',
+          'value'
+        ]]
+      }
     });
 
-    commonActionsMap.set('join', (context: ExecutionContext, config: JoinConfig) => {
+    function joinAction(context: ExecutionContext, config: JoinConfig) {
       const primaryPropertyName = config.primaryPropertyName || '$';
       const primaryObj = resolveValue(context, config.primaryTable);
       const primaryTable = JSONUtils.find(primaryObj, primaryPropertyName);
@@ -50,6 +80,22 @@ export class ActionsService {
         return joinTable;
       } catch (e) {
         throw e;
+      }
+    }
+
+    commonActionsMap.set('join', {
+      name: 'join',
+      method: joinAction,
+      category: 'Common',
+      config: {
+        actionType: 'join',
+        primaryKey: 'table1ID',
+        primaryTable: '$tableData1',
+        primaryFields: [['field1', 'Fild Title'], 'ID'],
+        foreignKey: 'table2ID',
+        foreignTable: '$tableData2',
+        foreignFields: ['ID', ['fieldTable2', 'Title']],
+        returnValue: 'resultTableData'
       }
     });
   }

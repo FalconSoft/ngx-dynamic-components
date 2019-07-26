@@ -6,6 +6,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { AngularSplitModule } from 'angular-split';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UISelectorComponent } from './components/ui-selector-component';
@@ -17,11 +18,13 @@ import { ControlsPanelComponent } from './components/controls-panel/controls-pan
 import { ComboPropertyComponent } from './components/combo-property/combo-property.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ActionsService } from './services/actions.service';
+import { WorkflowEditorComponent } from './components/workflow-editor/workflow-editor.component';
 
 @NgModule({
   declarations: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, ControlEditorComponent, PropertiesEditorComponent,
     ControlsPanelComponent,
-    ComboPropertyComponent],
+    ComboPropertyComponent,
+    WorkflowEditorComponent],
   imports: [
     CommonModule,
     DragulaModule,
@@ -29,13 +32,14 @@ import { ActionsService } from './services/actions.service';
     AccordionModule.forRoot(),
     TabsModule.forRoot(),
     PopoverModule.forRoot(),
+    ModalModule.forRoot(),
     AngularSplitModule,
     NgSelectModule,
     FormsModule,
     HttpClientModule
   ],
   exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent],
-  entryComponents: [ControlEditorComponent]
+  entryComponents: [ControlEditorComponent, WorkflowEditorComponent]
 })
 export class CoreModule {
   constructor(private actionsService: ActionsService) { }

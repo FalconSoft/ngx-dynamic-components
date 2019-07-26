@@ -75,3 +75,8 @@ export interface HttpCallConfig {
   queryParams: string;
   responseType?: string; // default 'json'
 }
+
+export interface TransposeDataConfig {
+  object: string;
+  propertyName: string;
+}

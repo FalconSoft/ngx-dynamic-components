@@ -12,6 +12,10 @@
                     [ngClass]="{active: !formatted}" title="Compact JSON data, remove all whitespaces (Ctrl+Shift+\)">
                     <i class="fa fa-align-justify"></i>
               </button>
+              <button type="button" class="btn btn-light btn-sm ml-1 px-1 py-0" (click)="onWorkflowEdit(false)"
+                    [ngClass]="{active: !formatted}" title="Workflow edit">
+                    <i class="fa fa-cogs"></i>
+              </button>
             </div>
             <tabset class="tabset-fx w-100">
               <tab heading="UI Model">

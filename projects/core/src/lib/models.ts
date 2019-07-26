@@ -151,6 +151,14 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
   propertiesDescriptor?: any[];
 }
 
+export interface ActionDescriptor {
+  name: string;
+  category: string;
+  config: string | object;
+  description?: string;
+  method: (...args: any[]) => any;
+}
+
 export abstract class UIModel<T = AttributesMap> {
   id?: string;
   type: string;

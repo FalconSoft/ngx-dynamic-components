@@ -1,0 +1,10 @@
+.ace-editor {
+  min-height: 200px;
+}
+
+.action {
+  cursor: pointer;
+  &.active {
+    text-decoration: underline;
+  }
+}
