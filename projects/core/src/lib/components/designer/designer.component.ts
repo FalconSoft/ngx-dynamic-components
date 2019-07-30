@@ -49,7 +49,7 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
-    @Inject(DOCUMENT) private _document: Document,
+    @Inject(DOCUMENT) private document: any,
     private container: ElementRef,
     private dragDropService: DragDropService,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -127,16 +127,20 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   onWorkflowEdit() {
     const componentRef = this.componentFactoryResolver.resolveComponentFactory(WorkflowEditorComponent).create(this.injector);
     this.workflowsMapEdit = componentRef.instance;
-    componentRef.instance.modal.onHide.subscribe(() => {
+    this.workflowsMapEdit.config = this.workflow.workflowsMap;
+    this.workflowsMapEdit.modal.onHide.subscribe(() => {
       componentRef.destroy();
+    });
+    this.workflowsMapEdit.change.subscribe(() => {
+      this.workflowEditor.setValue(formatObjToJsonStr(this.workflow.workflowsMap));
     });
 
     this.appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
-    this._document.body.appendChild(domElem);
+    this.document.body.appendChild(domElem);
     setTimeout(() => {
-      componentRef.instance.openModal();
+      this.workflowsMapEdit.openModal();
     });
   }
 

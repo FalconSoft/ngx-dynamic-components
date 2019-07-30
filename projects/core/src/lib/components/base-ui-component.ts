@@ -52,7 +52,10 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
         return null;
       }
       const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
-      return JSONUtils.find(this.dataModel, dataModelPath);
+      // TODO: Handle case for Array type.
+      if (!Array.isArray(this.dataModel)) {
+        return JSONUtils.find(this.dataModel, dataModelPath);
+      }
     }
 
     set componentDataModel(val) {

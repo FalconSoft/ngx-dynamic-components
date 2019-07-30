@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { ActionDescriptor } from '../../models';
+import { ActionDescriptor, AttributesMap } from '../../models';
 import { commonActionsMap } from '../../workflow/actions-store';
 import { Ace, edit } from 'ace-builds';
 import { formatObjToJsonStr } from '../../utils';
@@ -13,12 +13,16 @@ import { formatObjToJsonStr } from '../../utils';
 export class WorkflowEditorComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modal', {static: true}) public modal: ModalDirective;
-
-  selectedAction: ActionDescriptor;
   @ViewChild('configEl', {static: false}) configEl: ElementRef;
+  @Input() config: AttributesMap;
+  @Output() change = new EventEmitter();
+  search = '';
+  mapArray: string[];
+  selectedAction: ActionDescriptor;
   configEditor: Ace.Editor;
-
   actions: ActionDescriptor[];
+  filteredActions: ActionDescriptor[];
+
   constructor() { }
 
   ngOnInit() {
@@ -27,6 +31,8 @@ export class WorkflowEditorComponent implements OnInit, AfterViewInit {
     }).map(([name, action]) => {
       return action as ActionDescriptor;
     });
+    this.setFilteredActions();
+    this.mapArray = Object.keys(this.config);
     this.selectedAction = this.actions[0];
   }
 
@@ -41,6 +47,26 @@ export class WorkflowEditorComponent implements OnInit, AfterViewInit {
   onSelect(action: ActionDescriptor) {
     this.selectedAction = action;
     this.configEditor.setValue(formatObjToJsonStr(action.config));
+  }
+
+  appendTo(key: string) {
+    try {
+      this.config[key].push(JSON.parse(this.configEditor.getValue()));
+      this.change.emit();
+      this.modal.hide();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  setFilteredActions() {
+    if (!this.search) {
+      this.filteredActions = this.actions;
+    } else {
+      this.filteredActions = this.actions.filter(a => {
+        return a.name.includes(this.search);
+      });
+    }
   }
 
   openModal() {

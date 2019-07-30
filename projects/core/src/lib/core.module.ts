@@ -7,6 +7,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AngularSplitModule } from 'angular-split';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UISelectorComponent } from './components/ui-selector-component';
@@ -33,12 +34,13 @@ import { WorkflowEditorComponent } from './components/workflow-editor/workflow-e
     TabsModule.forRoot(),
     PopoverModule.forRoot(),
     ModalModule.forRoot(),
+    BsDropdownModule.forRoot(),
     AngularSplitModule,
     NgSelectModule,
     FormsModule,
     HttpClientModule
   ],
-  exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent],
+  exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, WorkflowEditorComponent],
   entryComponents: [ControlEditorComponent, WorkflowEditorComponent]
 })
 export class CoreModule {

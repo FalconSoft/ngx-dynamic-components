@@ -5,6 +5,17 @@
 .action {
   cursor: pointer;
   &.active {
-    text-decoration: underline;
+    background: lightgray;
   }
+}
+
+.actions-list {
+  max-height: 400px;
+  overflow: auto;
+  padding: .5rem;
+}
+
+.ace-editor, .actions-list {
+  border: solid 1px gray;
+  border-radius: 0.25rem;
 }

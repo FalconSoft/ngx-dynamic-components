@@ -16,7 +16,7 @@ import { packageName } from '../../constants';
 })
 
 export class SelectUIComponent extends LabeledComponent<SelectProperties> implements DoCheck {
-  options: OptionValue[];
+  options: OptionValue[] = [];
   onSelect() {
     this.changedDataModel.emit(this.dataModel);
     this.triggerAction('_selectionChanged');

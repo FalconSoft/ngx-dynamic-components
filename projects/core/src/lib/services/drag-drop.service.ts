@@ -38,7 +38,6 @@ export class DragDropService {
   public init(container, uiModel: UIModel) {
     this.cleanUpEditor();
     this.container = container;
-    console.log('uiModel', uiModel);
     this.uiModel = uiModel;
 
     if (!this.drake) {

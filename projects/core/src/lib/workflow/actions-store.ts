@@ -3,117 +3,7 @@ import { JSONUtils } from './json.utils';
 import { SetValueConfig, SetValuesConfig, GetValueConfig, AddItemConfig, PushItemConfig,
   TransferDataConfig, MergeInDataModelConfig, SetVariableConfig } from './models';
 import { ActionDescriptor } from '../models';
-
-/**
- * Resolves expression({{ expression }}) in key if contains.
- * @param context - Execution context.
- * @param key - string with posible expression
- */
-function resolveExpression(context: ExecutionContext, key: string): string {
-  // Remove spaces in expressions.
-  key = key.replace(/\{\{\s*/g, '{{').replace(/\s*\}\}/g, '}}');
-  const expressions = getExpressions(key);
-  expressions.forEach(e => {
-    let value = resolveValue(context, e);
-    if (value && typeof value === 'object') {
-      const propertyPath = e.substring(e.indexOf('/') + 1);
-      value =  JSONUtils.find(value, `$.${propertyPath}`, null);
-    }
-    key = key.replace(`{{${e}}}`, value);
-  });
-  return key;
-}
-
-/**
- * Get expression keys in key string.
- * @param key - path with possibles expressions.
- */
-function getExpressions(key: string): string[] {
-  let expressions = [];
-  const re = /.*\{\{(.*)\}\}/;
-  const match = key.match(re);
-  if (match) {
-    const expression = match[1];
-    if (expression) {
-      expressions = [expression, ...getExpressions(key.replace(`{{${expression}}}`, ''))];
-    }
-  }
-  return expressions;
-}
-
-// todo: this function should not be here. it has to be moved out to utils and then exported from there
-/**
- * this has to be more advanced method and has to resolve more complex grammar.
- *  - $ prefix means it takes values from variable
- *  - {{ expression }} like format in a string
- * @param context - Execution context.
- * @param object - payload object.
- */
-export function resolveValue(context: ExecutionContext, object: any) {
-    if (!object) { return null; }
-    if (typeof object === 'object') { return object; }
-
-    if (typeof object === 'string') {
-        let key = String(object);
-        key = resolveExpression(context, key);
-
-        // if starts with $property but not if $.property.
-        if (/^\$\w/.test(key)) {
-            // get root property path.
-            key = key.substring(1).replace(/\/.*/, '');
-        } else {
-            return key;
-        }
-
-        if (context.variables.has(key)) {
-            return context.variables.get(key);
-        } else {
-            throw new Error(`Can't resolve Object by string ${key}`);
-        }
-
-        return;
-    }
-
-    throw new Error(`Can't resolve Object ${object}`);
-}
-
-export function resolveVariable(context: ExecutionContext, object: any) {
-  if (!object) { return null; }
-  if (typeof object === 'object') { return object; }
-
-  if (typeof object === 'string') {
-    const { name, key } = resolvePath(object);
-    if (context.variables.has(key)) {
-        const value = context.variables.get(key);
-        return {value, name};
-    } else {
-        throw new Error(`Can't resolve Object by string ${name}`);
-    }
-
-    return;
-  }
-
-  throw new Error(`Can't resolve Object ${object}`);
-}
-
-export function resolvePath(key: string) {
-  const res = key.match(/^{{([\w-]+)}}.*/);
-
-  if (res && res[1]) {
-    const prop = res[1];
-    if (key.indexOf('}}/') !== -1) {
-      return {
-        name: key.replace(`{{${prop}}}/`, '$.'),
-        key: prop
-      };
-    } else {
-      return {
-        name: key.replace(`{{${prop}}}`, '$'),
-        key: prop
-      };
-    }
-  }
-}
+import { resolveValue, resolveVariable } from './actions-core';
 
 const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
     const objValue = resolveValue(context, config.object);
@@ -215,15 +105,139 @@ const mergeInDataModelAction = (context: ExecutionContext, config: MergeInDataMo
   return dataModel;
 };
 
+const getValueDescriptor = {
+  name: 'getValueAction',
+  method: getValueAction,
+  category: 'Common',
+  config: {
+    actionType: 'getValueAction',
+    actionName: 'get-value-1',
+    object: '$data',
+    propertyName: 'propName'
+  },
+  description: 'Gets value from object by propertyName path'
+};
+
+const setValueDescriptor = {
+  name: 'setValueAction',
+  method: setValueAction,
+  category: 'Common',
+  config: {
+    actionType: 'setValueAction',
+    actionName: 'set-value-1',
+    object: '$data',
+    propertyName: 'propName',
+    propertyValue: 'value-1'
+  } as SetValueConfig,
+  description: 'Sets value to propertyName in objet'
+};
+
+const setValuesDescriptor = {
+  name: 'setValuesAction',
+  method: setValuesAction,
+  category: 'Common',
+  config: {
+    actionType: 'setValuesAction',
+    actionName: 'set-values-1',
+    object: '$data',
+    valuesList: {prop: 'value-1'}
+  } as SetValuesConfig,
+  description: 'Sets properties values in object'
+};
+
+const addItemToArrayDescriptor = {
+  name: 'addItemToArrayAction',
+  method: addItemToArrayAction,
+  category: 'Common',
+  config: {
+    actionType: 'addItemToArrayAction',
+    actionName: 'add-item-1',
+    object: '$data',
+    propertyName: 'arrayProp',
+    itemPropertyName: 'dataProp',
+    wrapName: 'item'
+  } as AddItemConfig,
+  description: 'Push item from current object into array property'
+};
+
+const pushItemToArrayDescriptor = {
+  name: 'pushItemToArrayAction',
+  method: pushItemToArrayAction,
+  category: 'Common',
+  config: {
+    actionType: 'pushItemToArrayAction',
+    actionName: 'push-item-1',
+    object: '$fromVar',
+    target: '$toVar',
+    propertyName: 'prop1',
+    targetPropertyName: 'prop2',
+    wrapName: 'item'
+  } as PushItemConfig,
+  description: 'Push item from custom object into array property'
+};
+
+const popArrayDescriptor = {
+  name: 'popArrayAction',
+  method: popArrayAction,
+  category: 'Common',
+  config: {
+    actionType: 'popArrayAction',
+    actionName: 'pop-item-1',
+    object: '$dataVar',
+    propertyName: 'prop1',
+  },
+  description: 'Pop item from object array property'
+};
+
+const transferDataDescriptor = {
+  name: 'transferDataAction',
+  method: transferDataAction,
+  category: 'Common',
+  config: {
+    actionType: 'transferDataAction',
+    actionName: 'data-transfer-1',
+    from: 'object1',
+    fromPropertyName: 'prop1',
+    to: 'object2',
+    toPropertyName: 'prop2'
+  },
+  description: 'Transfer data from object1 to object2'
+};
+
+const setLocalVariableDescriptor = {
+  name: 'setLocalVariableAction',
+  method: setLocalVariableAction,
+  category: 'Common',
+  config: {
+    actionType: 'setLocalVariableAction',
+    actionName: 'set-local-1',
+    sourceValue: '{{responseContent}}/user/userName',
+    variableName: 'userName',
+  } as SetVariableConfig,
+  description: 'Set value to local context'
+};
+
+const mergeInDataModelDescriptor = {
+  name: 'mergeInDataModelAction',
+  method: mergeInDataModelAction,
+  category: 'Common',
+  config: {
+    actionType: 'mergeInDataModelAction',
+    actionName: 'merge-data-1',
+    data: '{prop: 2}',
+  } as MergeInDataModelConfig,
+  description: 'Merge data into DataModel'
+};
+
 export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([
     ['switch', () => {}],
-    ['getValue', getValueAction],
-    ['setValue', setValueAction],
-    ['setValues', setValuesAction],
-    ['addItemToArray', addItemToArrayAction],
-    ['popArray', popArrayAction],
-    ['pushItemToArray', pushItemToArrayAction],
-    ['transferData', transferDataAction],
-    ['setLocalVariable', setLocalVariableAction],
-    ['mergeInDataModel', mergeInDataModelAction]
+    ['getValue', getValueDescriptor],
+    ['setValue', setValueDescriptor],
+    ['setValues', setValuesDescriptor],
+    ['addItemToArray', addItemToArrayDescriptor],
+    ['popArray', popArrayDescriptor],
+    ['pushItemToArray', pushItemToArrayDescriptor],
+    ['transferData', transferDataDescriptor],
+    ['setLocalVariable', setLocalVariableDescriptor],
+    ['mergeInDataModel', mergeInDataModelDescriptor]
 ]);

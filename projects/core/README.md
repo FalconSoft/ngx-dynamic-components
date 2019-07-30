@@ -26,3 +26,63 @@ ng add @angular/material
 ```
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 ```
+
+## Usage
+
+In html template add tag
+```
+<ngx-dynamic-component (render)="onRender($event)" [uiModel]='uiModel'
+    [dataModel]='dataModel' [workflow]='workflowConfig'></ngx-dynamic-component>
+```
+In ts code add `uiModel`, `workflowConfig` and `dataModel`
+
+```
+uiModel = {
+    id: 'container',
+    type: 'material:flex-container',
+    containerProperties: {},
+    itemProperties: {
+      fxLayout: 'row',
+      fxLayoutGap: '10px',
+      width: '100%',
+      padding: '10px'
+    },
+    children: [{
+      type: 'material:text',
+      containerProperties: {
+        fxFlex: '1 1 auto'
+      },
+      itemProperties: {
+        text: 'Text line 1',
+      }
+    }, {
+      type: 'material:text',
+      containerProperties: {
+        fxFlex: '1 1 auto'
+      },
+      itemProperties: {
+        text: 'Text line 2',
+      }
+    }]
+  };
+
+  dataModel = {};
+
+  workflowConfig = {
+    failOnError: true,
+    include: ['@common'],
+    vars: {},
+    workflowsMap: Chart.workflowsMap,
+    consts: {}
+  };
+
+  workflow: WorkflowConfig = {
+    failOnError: true,
+    include: ['@common'],
+    vars: {},
+    workflowsMap: {
+      'container-OnInit': []
+    },
+    consts: {}
+  };
+  ```

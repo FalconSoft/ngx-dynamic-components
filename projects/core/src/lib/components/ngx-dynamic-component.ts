@@ -9,6 +9,7 @@ import { UIModel } from '../models';
         [uiModel]='uiModel'
         [dataModel]='dataModel'
         [workflowEngine]='workflowEngine'
+        (changedDataModel)="changedDataModel.emit($event)"
         (render)="render.emit($event)">
     </dc-ui-selector>
       `
@@ -19,6 +20,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
     @Input() uiModel: UIModel<any>;
     @Input() appContext: any;
     @Output() render = new EventEmitter();
+    @Output() changedDataModel = new EventEmitter();
 
     workflowEngine: WorkflowEngine = null;
 

@@ -12,7 +12,7 @@
                     [ngClass]="{active: !formatted}" title="Compact JSON data, remove all whitespaces (Ctrl+Shift+\)">
                     <i class="fa fa-align-justify"></i>
               </button>
-              <button type="button" class="btn btn-light btn-sm ml-1 px-1 py-0" (click)="onWorkflowEdit(false)"
+              <button type="button" class="btn btn-light btn-sm ml-1 px-1 py-0" (click)="onWorkflowEdit()"
                     [ngClass]="{active: !formatted}" title="Workflow edit">
                     <i class="fa fa-cogs"></i>
               </button>
@@ -27,7 +27,7 @@
             </tabset>
           </as-split-area>
           <as-split-area [size]="100 - jsonConfigSize" #area1="asSplitArea" class="d-flex overflow-auto flex-column">
-            <ngx-dynamic-component class="flex-fill pt-4" *ngIf="uiModelVal" [uiModel]='uiModelVal' [dataModel]='{}' [workflow]='workflow'></ngx-dynamic-component>
+            <ngx-dynamic-component class="flex-fill pt-4 h-100" *ngIf="uiModelVal" [uiModel]='uiModelVal' [dataModel]='{}' [workflow]='workflow'></ngx-dynamic-component>
             <div id="empty-container" class="w-100 h-100" *ngIf="!uiModelVal"></div>
           </as-split-area>
     </as-split>

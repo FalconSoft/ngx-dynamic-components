@@ -1,5 +1,9 @@
+export interface StepConfig {
+  actionType: string;
+  actionName?: string;
+}
+
 export interface SetVariableConfig {
-  object: string;
   sourceValue: string;
   variableName: string;
 }
@@ -11,7 +15,7 @@ export interface SetValueConfig {
 }
 
 export interface SetValuesConfig {
-    object: object;
+    object: string;
     valuesList: object;
 }
 
@@ -25,15 +29,15 @@ export interface SwitchActionConfig {
 }
 
 export interface AddItemConfig {
-  object: object;
+  object: object|string;
   propertyName: string;
   itemPropertyName: string;
   wrapName: string;
 }
 
 export interface PushItemConfig {
-  object: object;
-  target: object;
+  object: object|string;
+  target: object|string;
   propertyName: string;
   targetPropertyName: string;
   wrapName: string;

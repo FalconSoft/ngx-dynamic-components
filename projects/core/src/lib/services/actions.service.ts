@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 
-import { commonActionsMap, resolveValue } from '../workflow/actions-store';
+import { commonActionsMap } from '../workflow/actions-store';
+import { resolveValue } from '../workflow/actions-core';
 import { ExecutionContext } from '../workflow/workflow.processor';
 import { JSONUtils } from '../workflow/json.utils';
 import { setFields } from '../utils';
@@ -17,7 +18,7 @@ export class ActionsService {
       const req = new HttpRequest(config.method, url, {
         responseType: config.responseType || 'json',
       });
-      const value = await this.http.request(req).toPromise();
+      const value = await http.request(req).toPromise();
       return value;
     }
     commonActionsMap.set('httpCall', {
@@ -29,7 +30,8 @@ export class ActionsService {
         actionName: 'xhr-1',
         url: 'request/url',
         method: 'GET'
-      }
+      },
+      description: 'Create http request'
     });
 
     function mapAction(context: ExecutionContext, config: MapConfig) {
@@ -56,7 +58,8 @@ export class ActionsService {
           'field2',
           'value'
         ]]
-      }
+      },
+      description: 'Map array item properties'
     });
 
     function joinAction(context: ExecutionContext, config: JoinConfig) {
@@ -96,7 +99,8 @@ export class ActionsService {
         foreignTable: '$tableData2',
         foreignFields: ['ID', ['fieldTable2', 'Title']],
         returnValue: 'resultTableData'
-      }
+      },
+      description: 'Joins data from two sources'
     });
   }
 }
