@@ -1,6 +1,7 @@
 import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
 import { IVariableResolver, ActionDescriptor } from '../models';
+import { WorkflowLogger } from './workflow.logger';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -24,6 +25,7 @@ export class WorkflowEngine {
     public variableResolver: IVariableResolver;
     private readonly context: ExecutionContext = null;
     private isInitialized = false;
+    public readonly logger = new WorkflowLogger();
 
     constructor(private readonly workflowConfig: WorkflowConfig) {
         this.context = new ExecutionContext();
@@ -73,12 +75,13 @@ export class WorkflowEngine {
         return payload;
     }
 
-    private async executeFlow(context: ExecutionContext, steps: any[]) {
-        steps = steps || [];
+    private async executeFlow(context: ExecutionContext, workflowName: string) {
+        let steps = this.context.workflows.get(workflowName) || [];
         if (this.variableResolver) {
           steps = this.variableResolver.resolve(steps) as [];
         }
         for (const step of steps) {
+          try {
             if (!context.actions.has(step.actionType)) {
                 if (context.failOnError) {
                     throw new Error(`Can't find action ${step.actionType}`);
@@ -92,10 +95,14 @@ export class WorkflowEngine {
             console.log(`Execute ${step.actionType} with config:`, payload);
             const action = context.actions.get(step.actionType);
             let returnValue;
+            let message = 'Action finished';
             if (typeof action === 'function') {
               returnValue = await action(context, payload);
             } else {
               returnValue = await action.method(context, payload);
+              if (action.getMessage) {
+                message = action.getMessage(payload);
+              }
             }
 
             // set return value if step has a name
@@ -106,6 +113,20 @@ export class WorkflowEngine {
             if (step.returnValue) {
               context.variables.set(step.returnValue, returnValue);
             }
+
+            this.logger.log(workflowName, {
+              actionType: step.actionType,
+              message,
+              success: true,
+            });
+          } catch (e) {
+            this.logger.log(workflowName, {
+              actionType: step.actionType,
+              message: e.message,
+              success: false,
+            });
+          }
+
         }
     }
 
@@ -141,7 +162,7 @@ export class WorkflowEngine {
             this.isInitialized = true;
         }
         if (this.context.workflows.has(workflowName)) {
-            await this.executeFlow(this.context, this.context.workflows.get(workflowName));
+          await this.executeFlow(this.context, workflowName);
         } else {
             if (this.context.failOnError) {
                 throw new Error(`Can't find workflow ${workflowName}`);

@@ -29,7 +29,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       this.initWorkflow();
     }
 
-    ngOnChanges({workflow}: SimpleChanges) {
+    ngOnChanges({workflow, dataModel}: SimpleChanges) {
       if (workflow && !workflow.firstChange && workflow.currentValue !== workflow.previousValue) {
         this.initWorkflow(workflow.currentValue);
       }

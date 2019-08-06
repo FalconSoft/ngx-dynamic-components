@@ -25,9 +25,9 @@ const switchAction = (context: ExecutionContext, config: SetValuesConfig) => {
 };
 
 const getValueAction = (context: ExecutionContext, config: GetValueConfig) => {
-    const objValue = resolveValue(context, config.object);
-    const propertyName = resolveValue(context, config.propertyName);
-    return JSONUtils.find(objValue, propertyName);
+  const objValue = resolveValue(context, config.object);
+  const propertyName = resolveValue(context, config.propertyName);
+  return JSONUtils.find(objValue, propertyName);
 };
 
 const getListFromContext = (context: ExecutionContext, config: AddItemConfig | PushItemConfig) => {
@@ -115,7 +115,10 @@ const getValueDescriptor = {
     object: '$data',
     propertyName: 'propName'
   },
-  description: 'Gets value from object by propertyName path'
+  description: 'Gets value from object by propertyName path',
+  getMessage(config: GetValueConfig) {
+    return `Get value from var:${config.object} prop: ${config.propertyName}`;
+  }
 };
 
 const setValueDescriptor = {
@@ -129,7 +132,10 @@ const setValueDescriptor = {
     propertyName: 'propName',
     propertyValue: 'value-1'
   } as SetValueConfig,
-  description: 'Sets value to propertyName in objet'
+  description: 'Sets value to propertyName in objet',
+  getMessage(config: SetValueConfig) {
+    return `Set value to ${config.object} prop ${config.propertyName}`;
+  }
 };
 
 const setValuesDescriptor = {
@@ -142,7 +148,10 @@ const setValuesDescriptor = {
     object: '$data',
     valuesList: {prop: 'value-1'}
   } as SetValuesConfig,
-  description: 'Sets properties values in object'
+  description: 'Sets properties values in object',
+  getMessage(config: SetValuesConfig) {
+    return `Set value list to ${config.object}`;
+  }
 };
 
 const addItemToArrayDescriptor = {
@@ -157,7 +166,10 @@ const addItemToArrayDescriptor = {
     itemPropertyName: 'dataProp',
     wrapName: 'item'
   } as AddItemConfig,
-  description: 'Push item from current object into array property'
+  description: 'Push item from current object into array property',
+  getMessage(config: AddItemConfig) {
+    return `Pushed item to array: ${config.object} prop: ${config.propertyName}`;
+  }
 };
 
 const pushItemToArrayDescriptor = {
@@ -173,7 +185,10 @@ const pushItemToArrayDescriptor = {
     targetPropertyName: 'prop2',
     wrapName: 'item'
   } as PushItemConfig,
-  description: 'Push item from custom object into array property'
+  description: 'Push item from custom object into array property',
+  getMessage(config: PushItemConfig) {
+    return `Pushed item from: ${config.object} prop: ${config.propertyName} to ${config.target} prop: ${config.targetPropertyName}`;
+  }
 };
 
 const popArrayDescriptor = {
@@ -186,7 +201,10 @@ const popArrayDescriptor = {
     object: '$dataVar',
     propertyName: 'prop1',
   },
-  description: 'Pop item from object array property'
+  description: 'Pop item from object array property',
+  getMessage(config: AddItemConfig) {
+    return `Pop item from array ${config.object} prop ${config.propertyName}`;
+  }
 };
 
 const transferDataDescriptor = {
@@ -200,8 +218,11 @@ const transferDataDescriptor = {
     fromPropertyName: 'prop1',
     to: 'object2',
     toPropertyName: 'prop2'
-  },
-  description: 'Transfer data from object1 to object2'
+  } as TransferDataConfig,
+  description: 'Transfer data from object1 to object2',
+  getMessage(config: TransferDataConfig) {
+    return `Transfer data from ${config.from} prop: ${config.fromPropertyName} to ${config.to} prop ${config.toPropertyName}`;
+  }
 };
 
 const setLocalVariableDescriptor = {
@@ -214,7 +235,10 @@ const setLocalVariableDescriptor = {
     sourceValue: '{{responseContent}}/user/userName',
     variableName: 'userName',
   } as SetVariableConfig,
-  description: 'Set value to local context'
+  description: 'Set value to local context',
+  getMessage(config: SetVariableConfig) {
+    return `Set value to local variable ${config.variableName}`;
+  }
 };
 
 const mergeInDataModelDescriptor = {
@@ -226,7 +250,10 @@ const mergeInDataModelDescriptor = {
     actionName: 'merge-data-1',
     data: '{prop: 2}',
   } as MergeInDataModelConfig,
-  description: 'Merge data into DataModel'
+  description: 'Merge data into DataModel',
+  getMessage(config: MergeInDataModelConfig) {
+    return `Merged data in data model`;
+  }
 };
 
 export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([

@@ -22,3 +22,30 @@ Run `ng test bootstrap` to execute the unit tests via [Karma](https://karma-runn
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Description
+
+Implements dynamic components based on [bootstrap](https://getbootstrap.com/) and it's Angular wrapper [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
+
+1. Install package
+```
+npm install @ngx-dynamic-components/bootstrap
+```
+
+2. Import module
+```
+import { BootstrapModule } from '@ngx-dynamic-components/bootstrap';
+
+...
+@NgModule({
+  ...
+  imports: [
+    ...
+    BootstrapModule
+  ],
+  ...
+})
+export class AppModule { }
+```
+
+

@@ -78,6 +78,9 @@ export class JSONUtils {
      * JSONUtils.setValue(inObject, '$.parent/someValue', 55);
      */
     public static setValue(objectValue: object, path: string, value: any): void {
+      if (path === '$') {
+        return Object.assign(objectValue, value);
+      }
       const pMatch = JSONUtils.getParentPathMatch(path);
       if (pMatch) {
         return JSONUtils.setDataPathProp(objectValue, pMatch.groups.dataPath, value);

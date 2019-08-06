@@ -46,7 +46,7 @@ export interface PushItemConfig {
 export interface TransferDataConfig {
   from: string;
   fromPropertyName: string;
-  to: object;
+  to: object|string;
   toPropertyName: string;
 }
 
@@ -83,4 +83,15 @@ export interface HttpCallConfig {
 export interface TransposeDataConfig {
   object: string;
   propertyName: string;
+}
+
+export interface WorkflowLog {
+  workflowName: string;
+  steps: StepLog[];
+}
+
+export interface StepLog {
+  message: string;
+  actionType: string;
+  success: boolean;
 }

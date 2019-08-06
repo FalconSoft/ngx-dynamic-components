@@ -1,10 +1,10 @@
-import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding } from '@angular/core';
+import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges } from '@angular/core';
 import { UIModel, AttributesMap, DataModelProperties, StylePropertiesList, StyleProperties } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
 import { WorkflowEngine } from '../workflow/workflow.processor';
 import { kebabStrToCamel } from '../utils';
 
-export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
+export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
     @Input() workflowEngine: WorkflowEngine;
@@ -30,6 +30,12 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy {
 
     async ngOnDestroy(): Promise<void> {
       await this.triggerAction('_OnDestroy');
+    }
+
+    async ngOnChanges(changes: SimpleChanges) {
+      if (!changes.dataModel.firstChange && this.dataModel !== changes.dataModel.currentValue) {
+        this.dataModel = changes.dataModel.currentValue;
+      }
     }
 
     get componentDataModel() {

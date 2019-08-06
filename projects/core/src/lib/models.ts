@@ -156,6 +156,7 @@ export interface ActionDescriptor {
   category: string;
   config: string | object;
   description?: string;
+  getMessage?: (config?: any) => string;
   method: (...args: any[]) => any;
 }
 

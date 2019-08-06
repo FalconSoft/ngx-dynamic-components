@@ -25,6 +25,6 @@
     "@angular/core": "^8.1.2",
     "@angular/flex-layout": "^8.0.0-beta.26",
     "@angular/material": "^8.1.1",
-    "@ngx-dynamic-components/core": ">=0.0.22"
+    "@ngx-dynamic-components/core": ">=0.0.24"
   }
 }

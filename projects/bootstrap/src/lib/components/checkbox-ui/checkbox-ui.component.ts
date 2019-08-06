@@ -76,7 +76,7 @@ export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrut
     containerProperties: {},
     itemProperties: {
       label: 'Accept conditions',
-      width: "200px",
+      width: '200px',
       dataModelPath: '$.accept',
       labelPosition: 'left'
     }

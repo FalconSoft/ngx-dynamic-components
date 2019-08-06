@@ -14,7 +14,7 @@ import { HttpCallConfig, MapConfig, JoinConfig } from '../workflow/models';
 export class ActionsService {
   constructor(private http: HttpClient) {
     async function httpCall(context: ExecutionContext, config: HttpCallConfig) {
-      const url = config.url.replace(/\/+/g, '/').replace(':/', '://') + (config.queryParams ? `?${config.queryParams}` : '')
+      const url = config.url.replace(/\/+/g, '/').replace(':/', '://') + (config.queryParams ? `?${config.queryParams}` : '');
       const req = new HttpRequest(config.method, url, {
         responseType: config.responseType || 'json',
       });
@@ -31,7 +31,10 @@ export class ActionsService {
         url: 'request/url',
         method: 'GET'
       },
-      description: 'Create http request'
+      description: 'Create http request',
+      getMessage(config: HttpCallConfig) {
+        return `Send request ${config.method} ${config.url}`;
+      }
     });
 
     function mapAction(context: ExecutionContext, config: MapConfig) {
@@ -59,7 +62,10 @@ export class ActionsService {
           'value'
         ]]
       },
-      description: 'Map array item properties'
+      description: 'Map array item properties',
+      getMessage(config: MapConfig) {
+        return `Map array ${config.object} prop: ${config.propertyName}, fields: ${config.fields}`;
+      }
     });
 
     function joinAction(context: ExecutionContext, config: JoinConfig) {
@@ -100,7 +106,11 @@ export class ActionsService {
         foreignFields: ['ID', ['fieldTable2', 'Title']],
         returnValue: 'resultTableData'
       },
-      description: 'Joins data from two sources'
+      description: 'Joins data from two sources',
+      getMessage(config: JoinConfig) {
+        return `Join table ${config.primaryTable} (primary key ${config.primaryKey})
+          with ${config.foreignTable} (foreign key ${config.foreignKey})`;
+      }
     });
   }
 }

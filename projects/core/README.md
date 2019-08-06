@@ -9,30 +9,41 @@ NGX Dynamic Components is a dynamic configuration driven web page builder. It is
 ```
 ng new my-dynamic-project
 cd my-dynamic-project
-npm install @angular/flex-layout @ngx-dynamic-components/core @ngx-dynamic-components/material
+npm install @angular/flex-layout @ngx-dynamic-components/core
 ```
 
-2. Install Angular Material [More details](https://material.angular.io/guide/getting-started).
-- Install packages:
-
+Add to file src/polyfills.ts
 ```
-npm install --save @angular/material @angular/cdk @angular/animations
-```
-or using `ng add` for Angular Devkit 6+
-```
-ng add @angular/material
-```
-- Include theme. Add to file `styles.css`:
-```
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+(window as any).global = window;
 ```
 
 ## Usage
+
+Import module
+```
+import { CoreModule } from '@ngx-dynamic-components/core';
+
+...
+@NgModule({
+  ...
+  imports: [
+    ...
+    CoreModule
+  ],
+  ...
+})
+export class AppModule { }
+```
 
 In html template add tag
 ```
 <ngx-dynamic-component (render)="onRender($event)" [uiModel]='uiModel'
     [dataModel]='dataModel' [workflow]='workflowConfig'></ngx-dynamic-component>
+```
+For designer mode use tag
+```
+<ngx-designer-component (uiModelUpdated)="onUIModelUpdateHandler($event)"
+  [uiModel]='page.uiModel' [workflow]='page.workflowConfig'></ngx-designer-component>
 ```
 In ts code add `uiModel`, `workflowConfig` and `dataModel`
 
@@ -72,7 +83,7 @@ uiModel = {
     failOnError: true,
     include: ['@common'],
     vars: {},
-    workflowsMap: Chart.workflowsMap,
+    workflowsMap: {},
     consts: {}
   };
 

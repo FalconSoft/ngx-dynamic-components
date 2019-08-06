@@ -30,13 +30,18 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
         }
       } else {
         // Update component properties.
+        let changed = false;
         for (const prop in changes) {
           if (changes.hasOwnProperty(prop)) {
             const change = changes[prop];
             if (!change.firstChange && change.currentValue !== change.previousValue) {
               this.component[prop] = change.currentValue;
+              changed = true;
             }
           }
+        }
+        if (changed) {
+          this.component.ngOnChanges(changes);
         }
       }
   }
