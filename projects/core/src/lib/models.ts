@@ -196,7 +196,8 @@ export enum PropertyCategories {
   Layout = 'Layout Properties',
   Container = 'Container Properties',
   Main = 'Main Properties',
-  Appearance = 'Appearance Properties'
+  Appearance = 'Appearance Properties',
+  Validation = 'Validation Properties'
 }
 
 export interface ComponentProperty {

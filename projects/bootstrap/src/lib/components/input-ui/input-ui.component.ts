@@ -9,12 +9,20 @@ import { packageName } from '../../constants';
   <div class="form-group align-items-baseline" [fxLayout]="layout" [ngClass]="cssClasses" [ngStyle]="itemStyles">
     <label class="mr-1 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-    <input [attr.id]="id" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
+    <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
       [fxFlex]="properties.inputWidth"
       [placeholder]="properties.placeholder"
       [disabled]="properties.enabled === false"
+      [required]="properties.required"
+      [minlength]="properties.minlength"
+      [maxlength]="properties.maxlength"
       (input)="changedDataModel.emit(this.dataModel)"
       [(ngModel)]="componentDataModel">
+    <div *ngIf="inputField.invalid && (inputField.dirty || inputField.touched)" class="alert alert-danger py-0 px-1 m-0">
+      <div *ngIf="inputField.errors.required">Field is required.</div>
+      <div *ngIf="inputField.errors.minlength">Min length {{properties.minlength}} characters.</div>
+      <div *ngIf="inputField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
+    </div>
   </div>
   `,
   styleUrls: ['../../styles/label.scss'],
@@ -62,6 +70,21 @@ export class InputProperties extends LabelProperties {
     example: '200px',
   })
   inputWidth?: string;
+  @propDescription({
+    description: 'Is field required',
+    example: 'true'
+  })
+  required?: boolean;
+  @propDescription({
+    description: 'Min field value length',
+    example: '5'
+  })
+  minlength?: number;
+  @propDescription({
+    description: 'Max field value length',
+    example: '10'
+  })
+  maxlength?: number;
 }
 
 export const example: ComponentExample<UIModel<InputProperties>> = {

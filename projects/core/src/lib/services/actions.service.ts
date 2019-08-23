@@ -14,12 +14,25 @@ import { HttpCallConfig, MapConfig, JoinConfig } from '../workflow/models';
 export class ActionsService {
   constructor(private http: HttpClient) {
     async function httpCall(context: ExecutionContext, config: HttpCallConfig) {
+      const body = config.body ? resolveValue(context, config.body) : undefined;
       const url = config.url.replace(/\/+/g, '/').replace(':/', '://') + (config.queryParams ? `?${config.queryParams}` : '');
-      const req = new HttpRequest(config.method, url, {
-        responseType: config.responseType || 'json',
+      const req = new HttpRequest(config.method, url, body, {
+        responseType: (config.responseType || 'json') as 'json',
       });
-      const value = await http.request(req).toPromise();
-      return value;
+      try {
+        const value = await http.request(req).toPromise();
+        return {
+          type: 'success',
+          message: 'Request send',
+          ...value
+        };
+      } catch (e) {
+        console.error(e);
+        return {
+          type: 'danger',
+          message: e.message || 'Failed to send request'
+        };
+      }
     }
     commonActionsMap.set('httpCall', {
       name: 'httpCall',
@@ -41,8 +54,23 @@ export class ActionsService {
       const propertyName = config.propertyName || '$';
       const obj = resolveValue(context, config.object);
       const list = JSONUtils.find(obj, propertyName);
-      const res = list.map(item => setFields(config.fields, item));
-      return res;
+      if (Array.isArray(list)) {
+        return list.map(item => setFields(config.fields, item));
+      }
+
+      if (typeof list === 'object') {
+        return Object.entries(list).reduce((prev, entry) => {
+          const [field, val] = entry;
+          const mapField = config.fields.find(f => f[0] === field);
+          if (mapField) {
+            prev[mapField[1]] = val;
+          } else {
+            prev[field] = val;
+          }
+          return prev;
+        }, {});
+      }
+      return list;
     }
 
     commonActionsMap.set('map', {

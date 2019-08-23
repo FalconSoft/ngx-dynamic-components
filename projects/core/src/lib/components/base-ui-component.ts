@@ -33,7 +33,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     }
 
     async ngOnChanges(changes: SimpleChanges) {
-      if (!changes.dataModel.firstChange && this.dataModel !== changes.dataModel.currentValue) {
+      if (changes.dataModel && !changes.dataModel.firstChange && this.dataModel !== changes.dataModel.currentValue) {
         this.dataModel = changes.dataModel.currentValue;
       }
     }

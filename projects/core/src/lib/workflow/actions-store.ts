@@ -2,7 +2,7 @@ import { ExecutionContext } from './workflow.processor';
 import { JSONUtils } from './json.utils';
 import { SetValueConfig, SetValuesConfig, GetValueConfig, AddItemConfig, PushItemConfig,
   TransferDataConfig, MergeInDataModelConfig, SetVariableConfig } from './models';
-import { ActionDescriptor } from '../models';
+import { ActionDescriptor, UIModel } from '../models';
 import { resolveValue, resolveVariable } from './actions-core';
 
 const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
@@ -226,11 +226,11 @@ const transferDataDescriptor = {
 };
 
 const setLocalVariableDescriptor = {
-  name: 'setLocalVariableAction',
+  name: 'setLocalVariable',
   method: setLocalVariableAction,
   category: 'Common',
   config: {
-    actionType: 'setLocalVariableAction',
+    actionType: 'setLocalVariable',
     actionName: 'set-local-1',
     sourceValue: '{{responseContent}}/user/userName',
     variableName: 'userName',
@@ -242,11 +242,11 @@ const setLocalVariableDescriptor = {
 };
 
 const mergeInDataModelDescriptor = {
-  name: 'mergeInDataModelAction',
+  name: 'mergeInDataModel',
   method: mergeInDataModelAction,
   category: 'Common',
   config: {
-    actionType: 'mergeInDataModelAction',
+    actionType: 'mergeInDataModel',
     actionName: 'merge-data-1',
     data: '{prop: 2}',
   } as MergeInDataModelConfig,
@@ -254,6 +254,47 @@ const mergeInDataModelDescriptor = {
   getMessage(config: MergeInDataModelConfig) {
     return `Merged data in data model`;
   }
+};
+
+const clearDataModelDescriptor = {
+  name: 'clearDataModel',
+  method(context: ExecutionContext) {
+    const dataModel = resolveValue(context, '$dataModel');
+    Object.keys(dataModel).forEach(key => {
+      dataModel[key] = null;
+    });
+  },
+  category: 'Common',
+  config: {
+    actionType: 'clearDataModel'
+  },
+  description: 'Clears all data model properties'
+};
+
+function dataModelValidationAction(context: ExecutionContext) {
+  let valid = true;
+  const uiModel = resolveValue(context, '$uiModel') as UIModel;
+  const fields = JSONUtils.find(uiModel, '$(children)/itemProperties');
+  const requiredFields = fields.filter(f => f.required);
+  if (requiredFields.length) {
+    const dataModel = resolveValue(context, '$dataModel');
+    requiredFields.forEach(f => {
+      const value = JSONUtils.find(dataModel, f.dataModelPath);
+      valid = !(value === undefined || value === null);
+    });
+  }
+
+  return valid;
+}
+
+const dataModelValidationDescriptor = {
+  name: 'dataModelValidation',
+  method: dataModelValidationAction,
+  category: 'Common',
+  config: {
+    actionType: 'dataModelValidation'
+  },
+  description: 'Validates dataModel based on uiModel'
 };
 
 export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([
@@ -266,5 +307,7 @@ export const commonActionsMap = new Map<string, ((...args: any[]) => any) | Acti
     ['pushItemToArray', pushItemToArrayDescriptor],
     ['transferData', transferDataDescriptor],
     ['setLocalVariable', setLocalVariableDescriptor],
-    ['mergeInDataModel', mergeInDataModelDescriptor]
+    ['mergeInDataModel', mergeInDataModelDescriptor],
+    ['clearDataModel', clearDataModelDescriptor],
+    ['dataModelValidation', dataModelValidationDescriptor]
 ]);

@@ -69,7 +69,7 @@ export interface JoinConfig {
 export interface MapConfig {
   object: string;
   propertyName?: string; // default '$'
-  fields: [];
+  fields: Array<[string, string]>;
   returnValue: string;
 }
 
@@ -78,6 +78,7 @@ export interface HttpCallConfig {
   url: string;
   queryParams: string;
   responseType?: string; // default 'json'
+  body?: any;
 }
 
 export interface TransposeDataConfig {

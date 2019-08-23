@@ -31,6 +31,7 @@ export class WorkflowEngine {
         this.context = new ExecutionContext();
         workflowConfig.vars = workflowConfig.vars || {};
         workflowConfig.consts = workflowConfig.consts || {};
+        workflowConfig.workflowsMap = workflowConfig.workflowsMap || {};
         this.variableResolver = workflowConfig.variableResolver;
     }
 
@@ -173,4 +174,3 @@ export class WorkflowEngine {
         //
     }
 }
-

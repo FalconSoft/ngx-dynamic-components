@@ -22,6 +22,7 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() uiModel: UIModel;
   @Input() workflow: WorkflowConfig;
   @Output() uiModelUpdated = new EventEmitter<UIModel>();
+  @Output() workflowsMapUpdate = new EventEmitter<UIModel>();
   @ViewChild('tabset', {static: false}) tabset: TabsetComponent;
   @ViewChild('controlsPanel', {static: false}) controlsPanel: ControlsPanelComponent;
   @ViewChild('uiModelEl', {static: false}) uiModelEl: ElementRef;
@@ -109,7 +110,11 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
           return false;
         }
       }),
-      filter(v => Boolean(v))).subscribe(wMap => this.workflow.workflowsMap = wMap);
+      filter(v => Boolean(v))).subscribe(
+        wMap => {
+          this.workflow.workflowsMap = wMap;
+          this.workflowsMapUpdate.emit(wMap);
+        });
 
     this.initDrag();
   }

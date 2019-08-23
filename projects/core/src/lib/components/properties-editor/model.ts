@@ -67,4 +67,10 @@ export const ControlProperties = new Map<string, ComponentProperty>([
     combo: [[{ label: 'all', value: 'border' }, { label: 'top', value: 'border-top' }, { label: 'left', value: 'border-left' },
     { label: 'right', value: 'border-right' }, { label: 'bottom', value: 'border-bottom' }], 'border-value']
   }],
+
+  // Validation properties
+  ['required', {name: 'required', label: 'Required', category: PropertyCategories.Validation,
+  combo: [[{label: 'true', value: true}, {label: 'false', value: false}]]}],
+  ['minlength', {name: 'minlength', label: 'Min length', category: PropertyCategories.Validation}],
+  ['maxlength', {name: 'maxlength', label: 'Max length', category: PropertyCategories.Validation}]
 ]);

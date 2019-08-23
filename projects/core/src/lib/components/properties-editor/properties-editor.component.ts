@@ -3,6 +3,9 @@ import { UIModel, ComponentProperty, ComponentPropertyValue, PropertyCategories 
 import { ControlProperties, ContainerControlProperties } from './model';
 import { CoreService } from '../../services/core.service';
 
+/**
+ * @classdesc Widget displayes editable, grouped by category list of component properties based on UIModel.
+ */
 @Component({
   selector: 'dc-properties-editor',
   templateUrl: './properties-editor.component.html',
