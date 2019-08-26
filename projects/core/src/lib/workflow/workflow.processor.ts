@@ -1,7 +1,8 @@
 import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
 import { IVariableResolver, ActionDescriptor } from '../models';
-import { WorkflowLogger } from './workflow.logger';
+import { WorkflowLogger } from './logger';
+import { ActionConfig } from './models';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -16,7 +17,7 @@ export class ExecutionContext {
     public failOnError = false;
     public readonly variables = new Map<string, any>();
     public readonly actions = new Map<string, ((...args: any[]) => any) | ActionDescriptor>();
-    public readonly workflows = new Map<string, any[]>();
+    public readonly workflows = new Map<string, ActionConfig[]>();
     public readonly constants = new Map<string, any>();
 }
 

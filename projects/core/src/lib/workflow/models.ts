@@ -1,6 +1,7 @@
-export interface StepConfig {
+export interface ActionConfig {
   actionType: string;
   actionName?: string;
+  returnValue?: string;
 }
 
 export interface SetVariableConfig {
@@ -86,13 +87,14 @@ export interface TransposeDataConfig {
   propertyName: string;
 }
 
-export interface WorkflowLog {
-  workflowName: string;
-  steps: StepLog[];
+export enum ActionStatus {
+  SUCCESS = 'success',
+  FAILED = 'failed',
+  STOP_EXECUTION = 'stop execution'
 }
 
-export interface StepLog {
-  message: string;
-  actionType: string;
-  success: boolean;
+export interface ActionResult {
+  status: ActionStatus;
+  result: any;
+  steps?: ActionConfig[];
 }

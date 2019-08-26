@@ -1,5 +1,5 @@
 import { BaseUIComponent } from './base-ui-component';
-import { LabelProperties } from '../models';
+import { LabelProperties } from '../properties';
 
 export abstract class LabeledComponent<T = LabelProperties> extends BaseUIComponent<T> {
   get id() {

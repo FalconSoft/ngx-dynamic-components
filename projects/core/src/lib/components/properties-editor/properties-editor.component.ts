@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter, Output, OnInit, SimpleChanges, OnChanges } from '@angular/core';
-import { UIModel, ComponentProperty, ComponentPropertyValue, PropertyCategories } from '../../models';
-import { ControlProperties, ContainerControlProperties } from './model';
+import { UIModel } from '../../models';
+import { ControlProperties, ContainerControlProperties,
+  ComponentProperty, ComponentPropertyValue, PropertyCategories } from '../../properties';
 import { CoreService } from '../../services/core.service';
 
 /**

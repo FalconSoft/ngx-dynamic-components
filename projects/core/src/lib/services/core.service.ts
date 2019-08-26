@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { ComponentDescriptor } from '../models';
-import { BaseUIComponentConstructor, UIModelProperty } from '../utils';
-import { ControlProperties } from '../components/properties-editor/model';
+import { BaseUIComponentConstructor } from '../utils';
+import { ControlProperties, UIModelProperty } from '../properties';
 
 @Injectable({
   providedIn: 'root'

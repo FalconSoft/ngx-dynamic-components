@@ -9,19 +9,26 @@ import { packageName } from '../../constants';
   <div class="form-group align-items-baseline" [fxLayout]="layout" [ngClass]="cssClasses" [ngStyle]="itemStyles">
     <label class="mr-1 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-    <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
-      [fxFlex]="properties.inputWidth"
-      [placeholder]="properties.placeholder"
-      [disabled]="properties.enabled === false"
-      [required]="properties.required"
-      [minlength]="properties.minlength"
-      [maxlength]="properties.maxlength"
-      (input)="changedDataModel.emit(this.dataModel)"
-      [(ngModel)]="componentDataModel">
-    <div *ngIf="inputField.invalid && (inputField.dirty || inputField.touched)" class="alert alert-danger py-0 px-1 m-0">
-      <div *ngIf="inputField.errors.required">Field is required.</div>
-      <div *ngIf="inputField.errors.minlength">Min length {{properties.minlength}} characters.</div>
-      <div *ngIf="inputField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
+    <div class="w-100 flex-column">
+      <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
+        [fxFlex]="properties.inputWidth"
+        [placeholder]="properties.placeholder"
+        [disabled]="properties.enabled === false"
+        [required]="properties.required"
+        [minlength]="properties.minlength"
+        [maxlength]="properties.maxlength"
+        [email]="properties.type === 'email'"
+        [pattern]="properties.pattern"
+        (input)="changedDataModel.emit(this.dataModel)"
+        [attr.name]="name"
+        [(ngModel)]="componentDataModel">
+      <div *ngIf="inputField.invalid && (inputField.dirty || inputField.touched)" class="alert alert-danger py-0 px-1 m-0">
+        <div *ngIf="inputField.errors.required">Field is required.</div>
+        <div *ngIf="inputField.errors.minlength">Min length {{properties.minlength}} characters.</div>
+        <div *ngIf="inputField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
+        <div *ngIf="inputField.errors.email">Email is invalid.</div>
+        <div *ngIf="inputField.errors.pattern">Field should match required pattern.</div>
+      </div>
     </div>
   </div>
   `,
@@ -30,17 +37,26 @@ import { packageName } from '../../constants';
     :host {
       display: inline-block;
     }
+
+    .required label:after {
+      content: '*';
+    }
   `]
 })
 export class InputUIComponent extends LabeledComponent<InputProperties> {
   get cssClasses() {
     return {
-      invisible: this.properties.visible === false
+      invisible: this.properties.visible === false,
+      required: this.properties.required
     };
   }
 
   get inputStyles() {
     return this.getStyles(this.uiModel.itemProperties, ['background', 'color']);
+  }
+
+  get name() {
+    return this.properties.dataModelPath.replace(/[^A-Z]+/gi, '');
   }
 }
 
@@ -85,6 +101,11 @@ export class InputProperties extends LabelProperties {
     example: '10'
   })
   maxlength?: number;
+  @propDescription({
+    description: 'RegExp pattern',
+    example: '[a-zA-Z ]*'
+  })
+  pattern?: string;
 }
 
 export const example: ComponentExample<UIModel<InputProperties>> = {

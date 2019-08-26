@@ -9,12 +9,22 @@ import { packageName } from '../../constants';
     <div class="form-group" [ngStyle]="itemStyles"  [fxLayout]="layout">
       <label *ngIf="hasLabel" [class]="properties.labelPosition" [for]="id"
         [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-      <textarea [attr.id]="id" class="form-control"
-        [rows]="properties.rows"
-        [placeholder]="properties.placeholder"
-        [ngStyle]="itemStyles"
-        (input)="changedDataModel.emit(this.dataModel)"
-        [(ngModel)]="componentDataModel"></textarea>
+      <div class="w-100 flex-column">
+        <textarea #txtAreaField="ngModel" [attr.id]="id" class="form-control"
+          [rows]="properties.rows"
+          [placeholder]="properties.placeholder"
+          [ngStyle]="itemStyles"
+          [required]="properties.required"
+          [minlength]="properties.minlength"
+          [maxlength]="properties.maxlength"
+          (input)="changedDataModel.emit(this.dataModel)"
+          [(ngModel)]="componentDataModel"></textarea>
+        <div *ngIf="txtAreaField.invalid && (txtAreaField.dirty || txtAreaField.touched)" class="alert alert-danger py-0 px-1 m-0">
+          <div *ngIf="txtAreaField.errors.required">Field is required.</div>
+          <div *ngIf="txtAreaField.errors.minlength">Min length {{properties.minlength}} characters.</div>
+          <div *ngIf="txtAreaField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
+        </div>
+      </div>
     </div>
   `,
   styleUrls: ['../../styles/label.scss']
@@ -34,6 +44,22 @@ export class TextareaProperties extends LabelProperties {
     example: 'Type about yourself',
   })
   placeholder: string;
+
+  @propDescription({
+    description: 'Is field required',
+    example: 'true'
+  })
+  required?: boolean;
+  @propDescription({
+    description: 'Min field value length',
+    example: '5'
+  })
+  minlength?: number;
+  @propDescription({
+    description: 'Max field value length',
+    example: '10'
+  })
+  maxlength?: number;
 }
 
 export const example: ComponentExample<UIModel<TextareaProperties>> = {

@@ -1,4 +1,4 @@
-import { ComponentProperty, PropertyCategories } from '../../models';
+import { ComponentProperty, PropertyCategories } from './models';
 
 /**
  * Container properties related to each component.
@@ -72,5 +72,6 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   ['required', {name: 'required', label: 'Required', category: PropertyCategories.Validation,
   combo: [[{label: 'true', value: true}, {label: 'false', value: false}]]}],
   ['minlength', {name: 'minlength', label: 'Min length', category: PropertyCategories.Validation}],
-  ['maxlength', {name: 'maxlength', label: 'Max length', category: PropertyCategories.Validation}]
+  ['maxlength', {name: 'maxlength', label: 'Max length', category: PropertyCategories.Validation}],
+  ['pattern', {name: 'pattern', label: 'Pattern', category: PropertyCategories.Validation}]
 ]);

@@ -1,39 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { BaseUIComponent, UIModel, ComponentDescriptor, propDescription, ComponentExample,
-  Categories, StyleProperties } from '@ngx-dynamic-components/core';
+  Categories, StyleProperties, PropertyCategories } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
     selector: 'dc-ui-flex-container',
-    template: `
-    <div drop-container
-        [fxLayout]="properties.fxLayout || 'row'"
-        [fxLayoutGap]="properties.fxLayoutGap || '0'"
-        [fxLayoutAlign]="getStrValue(properties.fxLayoutAlign)"
-        [ngStyle]="itemStyles">
-
-        <div *ngFor="let item of uiModel.children" class="item"
-            [fxFlex]="item.containerProperties?.fxFlex || 'initial'"
-            [fxFlexOrder]="item.containerProperties?.fxFlexOrder || 0"
-            [fxFlexOffset]="item.containerProperties?.fxFlexOffset || '0%'"
-            [fxFlexAlign]="item.containerProperties?.fxFlexAlign || 'unset'"
-            [attr.fxFlexFill]="item.containerProperties?.fxFill || false">
-
-            <dc-ui-selector
-                (changedDataModel)="changedDataModel.emit($event)"
-                [uiModel]='item'
-                [dataModel]='dataModel'
-                [workflowEngine]='workflowEngine'
-            ></dc-ui-selector>
-        </div>
-    </div>`
+    templateUrl: './flex-container-ui-component.html'
 })
 export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
+  @ViewChild('form', {static: false}) form: ElementRef<HTMLFormElement>;
   getStrValue(value: string) {
     if (value) {
       return value.split('|').join(' ');
     }
     return '';
+  }
+
+  onFormSubmit(evt) {
+    this.triggerAction('_OnSubmit');
   }
 }
 
@@ -58,6 +42,12 @@ export class FlexContainerProperties extends StyleProperties {
     link: 'https://github.com/angular/flex-layout/wiki/fxLayoutAlign-API0'
   })
   fxLayoutAlign?: string;
+
+  @propDescription({
+    description: 'If panel is form',
+    example: 'true'
+  })
+  isForm?: string;
 }
 
 const example: ComponentExample<UIModel<FlexContainerProperties>> = {
@@ -118,8 +108,14 @@ export const flexContainerDescriptor: ComponentDescriptor<FlexContainerUICompone
       width: '100%',
       height: '100%',
       'min-height': '50px',
-      'min-width': '50px'
+      'min-width': '50px',
+      isForm: false,
+      id: 'form'
     },
     children: []
-  }
+  },
+  propertiesDescriptor: [['isForm', {
+    name: 'isForm', label: 'Form', category: PropertyCategories.Main,
+    combo: [[{label: 'false', value: false}, {label: 'true', value: true}]]
+  }]]
 };

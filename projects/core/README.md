@@ -97,3 +97,13 @@ uiModel = {
     consts: {}
   };
   ```
+
+## Workflow
+
+Application provides workflows - sequance of sync/async actions that are executed one by one.
+[Workflow](src/lib/workflow/README.md)
+
+## Properties
+
+Properties provides meta information for component properties.
+[Properties](src/lib/properties/README.md)
