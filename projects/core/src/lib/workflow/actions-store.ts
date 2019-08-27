@@ -1,9 +1,11 @@
 import { ExecutionContext } from './workflow.processor';
 import { JSONUtils } from './json.utils';
 import { SetValueConfig, SetValuesConfig, GetValueConfig, AddItemConfig, PushItemConfig,
-  TransferDataConfig, MergeInDataModelConfig, SetVariableConfig, ActionDescriptor, IfStatementConfig, ActionResult, ActionStatus } from './models';
+  TransferDataConfig, MergeInDataModelConfig, SetVariableConfig, ActionDescriptor,
+  IfStatementConfig, ActionResult, ActionStatus, JoinConfig, MapConfig, CreateObjectConfig } from './models';
 import { UIModel } from '../models';
 import { resolveValue, resolveVariable } from './actions-core';
+import { setFields } from '../utils';
 
 const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
     const objValue = resolveValue(context, config.object);
@@ -311,9 +313,11 @@ const ifSttatementAction = (context: ExecutionContext, config: IfStatementConfig
       throw new Error(`Variable ${config.value} is not resolved`);
     }
     const value = JSONUtils.find(resolved.value as object, resolved.name);
+    const state = config.compareTo ? value === config.compareTo : Boolean(value);
+
     return {
-      result: value,
-      steps: value ? config.trueActions : config.falseActions,
+      result: state,
+      steps: state ? config.trueActions : config.falseActions,
       status: ActionStatus.SUCCESS
     };
   } catch (e) {
@@ -337,6 +341,132 @@ const ifSttatementDescriptor = {
   description: 'Executes actions based on value'
 };
 
+function mapAction(context: ExecutionContext, config: MapConfig) {
+  const propertyName = config.propertyName || '$';
+  const obj = resolveValue(context, config.object);
+  const list = JSONUtils.find(obj, propertyName);
+  if (Array.isArray(list)) {
+    return list.map(item => setFields(config.fields, item));
+  }
+
+  if (typeof list === 'object') {
+    return Object.entries(list).reduce((prev, entry) => {
+      const [field, val] = entry;
+      const mapField = config.fields.find(f => f[0] === field);
+      if (mapField) {
+        prev[mapField[1]] = val;
+      } else {
+        prev[field] = val;
+      }
+      return prev;
+    }, {});
+  }
+  return list;
+}
+
+const mapDescriptor = {
+  name: 'map',
+  method: mapAction,
+  category: 'Common',
+  config: {
+    actionType: 'map',
+    actionName: 'map-1',
+    object: '$step0-returnValue',
+    propertyName: '$.body',
+    fields: [[
+      'field1',
+      'label'
+    ], [
+      'field2',
+      'value'
+    ]]
+  },
+  description: 'Map array item properties',
+  getMessage(config: MapConfig) {
+    return `Map array ${config.object} prop: ${config.propertyName}, fields: ${config.fields}`;
+  }
+};
+
+function joinAction(context: ExecutionContext, config: JoinConfig) {
+  const primaryPropertyName = config.primaryPropertyName || '$';
+  const primaryObj = resolveValue(context, config.primaryTable);
+  const primaryTable = JSONUtils.find(primaryObj, primaryPropertyName);
+
+  const foreignObj = resolveValue(context, config.foreignTable);
+  const foreignTable = JSONUtils.find(foreignObj, config.foreignPropertyName || '$');
+
+  const foreignKey = config.foreignKey || config.primaryKey;
+
+  try {
+    const joinTable = foreignTable.map(row => {
+      let primaryData = primaryTable.find(d => d[config.primaryKey] === row[foreignKey]);
+      row = setFields(config.foreignFields, row);
+
+      primaryData = setFields(config.primaryFields, primaryData);
+      return {...row, ...primaryData};
+    });
+    return joinTable;
+  } catch (e) {
+    throw e;
+  }
+}
+
+const joinDescriptor = {
+  name: 'join',
+  method: joinAction,
+  category: 'Common',
+  config: {
+    actionType: 'join',
+    primaryKey: 'table1ID',
+    primaryTable: '$tableData1',
+    primaryFields: [['field1', 'Fild Title'], 'ID'],
+    foreignKey: 'table2ID',
+    foreignTable: '$tableData2',
+    foreignFields: ['ID', ['fieldTable2', 'Title']],
+    returnValue: 'resultTableData'
+  },
+  description: 'Joins data from two sources',
+  getMessage(config: JoinConfig) {
+    return `Join table ${config.primaryTable} (primary key ${config.primaryKey})
+      with ${config.foreignTable} (foreign key ${config.foreignKey})`;
+  }
+};
+
+const createObjectAction = (context: ExecutionContext, config: CreateObjectConfig) => {
+  let obj = config.object;
+
+  if (typeof obj === 'object') {
+    obj = JSON.stringify(obj);
+  }
+
+  let res = obj.match(/\$([\w-]+)*/);
+
+  while (res) {
+    const variable = `$${res[1]}`;
+    let value = resolveValue(context, variable);
+    if (typeof value === 'object') {
+      value = JSON.stringify(value);
+    }
+    obj = obj.replace(`"${variable}"`, value);
+    res = obj.match(/\$([\w-]+)*/);
+  }
+  return JSON.parse(obj);
+};
+
+const createObjectDescriptor = {
+  name: 'createObject',
+  method: createObjectAction,
+  category: 'Data Formatter',
+  config: {
+    actionType: 'createObject',
+    actionName: 'result',
+    object: {
+      items: [ '$sendData-returnValue' ]
+    }
+  },
+  description: 'Creates custom object'
+};
+
 export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([
     ['switch', () => {}],
     ['getValue', getValueDescriptor],
@@ -350,5 +480,8 @@ export const commonActionsMap = new Map<string, ((...args: any[]) => any) | Acti
     ['mergeInDataModel', mergeInDataModelDescriptor],
     ['clearDataModel', clearDataModelDescriptor],
     ['dataModelValidation', dataModelValidationDescriptor],
-    ['if', ifSttatementDescriptor]
+    ['if', ifSttatementDescriptor],
+    ['join', joinDescriptor],
+    ['map', mapDescriptor],
+    ['createObject', createObjectDescriptor]
 ]);

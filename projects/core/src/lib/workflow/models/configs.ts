@@ -80,6 +80,7 @@ export interface HttpCallConfig {
   queryParams: string;
   responseType?: string; // default 'json'
   body?: any;
+  headers?: any;
 }
 
 export interface TransposeDataConfig {
@@ -87,8 +88,13 @@ export interface TransposeDataConfig {
   propertyName: string;
 }
 
-export interface IfStatementConfig {
+export interface IfStatementConfig extends ActionConfig {
   value: any;
+  compareTo?: any;
   trueActions?: ActionConfig[];
   falseActions?: ActionConfig[];
+}
+
+export interface CreateObjectConfig extends ActionConfig {
+  object: any;
 }
