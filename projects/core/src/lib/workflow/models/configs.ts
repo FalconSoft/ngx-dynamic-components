@@ -87,14 +87,8 @@ export interface TransposeDataConfig {
   propertyName: string;
 }
 
-export enum ActionStatus {
-  SUCCESS = 'success',
-  FAILED = 'failed',
-  STOP_EXECUTION = 'stop execution'
-}
-
-export interface ActionResult {
-  status: ActionStatus;
-  result: any;
-  steps?: ActionConfig[];
+export interface IfStatementConfig {
+  value: any;
+  trueActions?: ActionConfig[];
+  falseActions?: ActionConfig[];
 }

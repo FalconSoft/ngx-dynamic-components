@@ -1,8 +1,8 @@
 import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
-import { IVariableResolver, ActionDescriptor } from '../models';
+import { IVariableResolver } from '../models';
 import { WorkflowLogger } from './logger';
-import { ActionConfig } from './models';
+import { ActionConfig, ActionDescriptor } from './models';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -77,8 +77,8 @@ export class WorkflowEngine {
         return payload;
     }
 
-    private async executeFlow(context: ExecutionContext, workflowName: string) {
-        let steps = this.context.workflows.get(workflowName) || [];
+    private async executeFlow(steps: ActionConfig[] = [], workflowName: string) {
+        const context = this.context;
         if (this.variableResolver) {
           steps = this.variableResolver.resolve(steps) as [];
         }
@@ -121,6 +121,10 @@ export class WorkflowEngine {
               message,
               success: true,
             });
+
+            if (returnValue.steps) {
+              this.executeFlow(returnValue.steps, workflowName);
+            }
           } catch (e) {
             this.logger.log(workflowName, {
               actionType: step.actionType,
@@ -164,7 +168,7 @@ export class WorkflowEngine {
             this.isInitialized = true;
         }
         if (this.context.workflows.has(workflowName)) {
-          await this.executeFlow(this.context, workflowName);
+          await this.executeFlow(this.context.workflows.get(workflowName), workflowName);
         } else {
             if (this.context.failOnError) {
                 throw new Error(`Can't find workflow ${workflowName}`);

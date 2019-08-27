@@ -147,3 +147,6 @@ export abstract class ContainerProperties extends StyleProperties {
   })
   children?: UIModel[];
 }
+
+export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'min-height', 'min-width', 'background', 'color',
+  'font-size', 'font-weight', 'font-style'];

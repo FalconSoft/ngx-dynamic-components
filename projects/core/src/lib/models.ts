@@ -37,15 +37,6 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
   propertiesDescriptor?: Array<[string, ComponentProperty]>;
 }
 
-export interface ActionDescriptor {
-  name: string;
-  category: string;
-  config: string | object;
-  description?: string;
-  getMessage?: (config?: any) => string;
-  method: (...args: any[]) => ActionResult|any;
-}
-
 export abstract class UIModel<T = AttributesMap> {
   id?: string;
   type: string;
@@ -65,9 +56,6 @@ export interface IVariableResolver {
   resolveString: (str: string, vars?: object) => object|string;
 }
 
-export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'min-height', 'min-width', 'background', 'color',
-  'font-size', 'font-weight', 'font-style'];
-
 export interface SelectedComponent {
   uiModel: UIModel;
   cssPath: string;
@@ -77,3 +65,11 @@ export interface OptionValue {
   label: string;
   value: any;
 }
+
+export const enum Categories {
+  Basic = 'Basic',
+  Containers = 'Containers',
+  Data = 'Data',
+  CustomControls = 'Custom Controls'
+}
+

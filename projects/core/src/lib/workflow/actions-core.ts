@@ -79,7 +79,7 @@ export function resolveVariable(context: ExecutionContext, object: any) {
   if (typeof object === 'object') { return object; }
 
   if (typeof object === 'string') {
-    const { name, key } = resolvePath(object);
+    const { name, key } = object.startsWith('{{') ? resolvePath(object) : resolveWorkflowPath(object);
     if (context.variables.has(key)) {
         const value = context.variables.get(key);
         return {value, name};
@@ -106,6 +106,25 @@ export function resolvePath(key: string) {
     } else {
       return {
         name: key.replace(`{{${prop}}}`, '$'),
+        key: prop
+      };
+    }
+  }
+}
+
+export function resolveWorkflowPath(key: string) {
+  const res = key.match(/^\$([\w-]+)*/);
+
+  if (res && res[1]) {
+    const prop = res[1];
+    if (key.indexOf('/') !== -1) {
+      return {
+        name: key.replace(`$${prop}/`, '$.'),
+        key: prop
+      };
+    } else {
+      return {
+        name: '$',
         key: prop
       };
     }

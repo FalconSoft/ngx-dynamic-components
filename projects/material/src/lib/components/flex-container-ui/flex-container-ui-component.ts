@@ -18,6 +18,13 @@ export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerPrope
 
   onFormSubmit(evt) {
     this.triggerAction('_OnSubmit');
+    // Trigger ui validation messages.
+    this.form.nativeElement.querySelectorAll('input,textarea,select').forEach((el: HTMLFormElement, i, list) => {
+      el.focus();
+      if (list.length - 1 === i) {
+        el.blur();
+      }
+    });
   }
 }
 

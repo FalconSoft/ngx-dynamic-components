@@ -1,8 +1,8 @@
 import { ExecutionContext } from './workflow.processor';
 import { JSONUtils } from './json.utils';
 import { SetValueConfig, SetValuesConfig, GetValueConfig, AddItemConfig, PushItemConfig,
-  TransferDataConfig, MergeInDataModelConfig, SetVariableConfig } from './models';
-import { ActionDescriptor, UIModel } from '../models';
+  TransferDataConfig, MergeInDataModelConfig, SetVariableConfig, ActionDescriptor, IfStatementConfig, ActionResult, ActionStatus } from './models';
+import { UIModel } from '../models';
 import { resolveValue, resolveVariable } from './actions-core';
 
 const setValueAction = (context: ExecutionContext, config: SetValueConfig) => {
@@ -271,20 +271,27 @@ const clearDataModelDescriptor = {
   description: 'Clears all data model properties'
 };
 
-function dataModelValidationAction(context: ExecutionContext) {
-  let valid = true;
-  const uiModel = resolveValue(context, '$uiModel') as UIModel;
-  const fields = JSONUtils.find(uiModel, '$(children)/itemProperties');
-  const requiredFields = fields.filter(f => f.required);
-  if (requiredFields.length) {
-    const dataModel = resolveValue(context, '$dataModel');
-    requiredFields.forEach(f => {
-      const value = JSONUtils.find(dataModel, f.dataModelPath);
-      valid = !(value === undefined || value === null);
-    });
-  }
+function dataModelValidationAction(context: ExecutionContext): ActionResult {
+  try {
+    let valid = true;
+    const uiModel = resolveValue(context, '$uiModel') as UIModel;
+    const fields = JSONUtils.find(uiModel, '$(children)/itemProperties');
+    const requiredFields = fields.filter(f => f.required);
+    if (requiredFields.length) {
+      const dataModel = resolveValue(context, '$dataModel');
+      requiredFields.forEach(f => {
+        const value = JSONUtils.find(dataModel, f.dataModelPath);
+        valid = !(value === undefined || value === null);
+      });
+    }
 
-  return valid;
+    return {
+      result: valid,
+      status: ActionStatus.SUCCESS
+    };
+  } catch (e) {
+    throw e;
+  }
 }
 
 const dataModelValidationDescriptor = {
@@ -295,6 +302,39 @@ const dataModelValidationDescriptor = {
     actionType: 'dataModelValidation'
   },
   description: 'Validates dataModel based on uiModel'
+};
+
+const ifSttatementAction = (context: ExecutionContext, config: IfStatementConfig): ActionResult => {
+  try {
+    const resolved = resolveVariable(context, config.value);
+    if (!resolved) {
+      throw new Error(`Variable ${config.value} is not resolved`);
+    }
+    const value = JSONUtils.find(resolved.value as object, resolved.name);
+    return {
+      result: value,
+      steps: value ? config.trueActions : config.falseActions,
+      status: ActionStatus.SUCCESS
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      result: null,
+      status: ActionStatus.STOP_EXECUTION
+    };
+  }
+ };
+
+
+const ifSttatementDescriptor = {
+  name: 'if',
+  method: ifSttatementAction,
+  category: 'Conditional',
+  config: {
+    value: true,
+    trueActions: []
+  } as IfStatementConfig,
+  description: 'Executes actions based on value'
 };
 
 export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([
@@ -309,5 +349,6 @@ export const commonActionsMap = new Map<string, ((...args: any[]) => any) | Acti
     ['setLocalVariable', setLocalVariableDescriptor],
     ['mergeInDataModel', mergeInDataModelDescriptor],
     ['clearDataModel', clearDataModelDescriptor],
-    ['dataModelValidation', dataModelValidationDescriptor]
+    ['dataModelValidation', dataModelValidationDescriptor],
+    ['if', ifSttatementDescriptor]
 ]);

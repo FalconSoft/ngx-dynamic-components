@@ -13,8 +13,10 @@ import { packageName } from '../../constants';
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
   onClick() {
-    this.workflowEngine.run(this.properties.clickActionKey);
-    this.changedDataModel.emit(this.dataModel);
+    if (this.properties.clickActionKey) {
+      this.workflowEngine.run(this.properties.clickActionKey);
+      this.changedDataModel.emit(this.dataModel);
+    }
   }
 
   get btnClass() {
@@ -35,7 +37,7 @@ export class ButtonProperties extends StyleProperties {
     description: 'Key for action that fires onclick',
     example: 'submit',
   })
-  clickActionKey: string;
+  clickActionKey?: string;
 
   @propDescription({
     description: 'Bootstrap predefined button class',

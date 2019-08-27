@@ -6,14 +6,14 @@ import { resolveValue } from '../workflow/actions-core';
 import { ExecutionContext } from '../workflow/workflow.processor';
 import { JSONUtils } from '../workflow/json.utils';
 import { setFields } from '../utils';
-import { HttpCallConfig, MapConfig, JoinConfig } from '../workflow/models';
+import { HttpCallConfig, MapConfig, JoinConfig, ActionResult, ActionStatus } from '../workflow/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActionsService {
   constructor(private http: HttpClient) {
-    async function httpCall(context: ExecutionContext, config: HttpCallConfig) {
+    async function httpCall(context: ExecutionContext, config: HttpCallConfig): Promise<ActionResult> {
       const body = config.body ? resolveValue(context, config.body) : undefined;
       const url = config.url.replace(/\/+/g, '/').replace(':/', '://') + (config.queryParams ? `?${config.queryParams}` : '');
       const req = new HttpRequest(config.method, url, body, {
@@ -22,15 +22,14 @@ export class ActionsService {
       try {
         const value = await http.request(req).toPromise();
         return {
-          type: 'success',
-          message: 'Request send',
-          ...value
+          result: {...value},
+          status: ActionStatus.SUCCESS
         };
       } catch (e) {
         console.error(e);
         return {
-          type: 'danger',
-          message: e.message || 'Failed to send request'
+          result: e,
+          status: ActionStatus.FAILED
         };
       }
     }

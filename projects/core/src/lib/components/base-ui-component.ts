@@ -1,9 +1,9 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges } from '@angular/core';
-import { UIModel, AttributesMap, StylePropertiesList } from '../models';
+import { UIModel, AttributesMap } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
 import { WorkflowEngine } from '../workflow/workflow.processor';
 import { kebabStrToCamel } from '../utils';
-import { StyleProperties, DataModelProperties } from '../properties';
+import { StyleProperties, DataModelProperties, StylePropertiesList } from '../properties';
 
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;

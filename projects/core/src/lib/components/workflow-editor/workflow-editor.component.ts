@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { ActionDescriptor, AttributesMap } from '../../models';
+import { AttributesMap } from '../../models';
 import { commonActionsMap } from '../../workflow/actions-store';
 import { Ace, edit } from 'ace-builds';
 import { formatObjToJsonStr } from '../../utils';
+import { ActionDescriptor } from '../../workflow/models';
 
 @Component({
   selector: 'dc-workflow-editor',

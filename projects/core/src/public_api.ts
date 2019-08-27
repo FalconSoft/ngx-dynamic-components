@@ -18,5 +18,4 @@ export * from './lib/workflow/actions-core';
 export * from './lib/workflow/json.utils';
 export * from './lib/workflow/models';
 export * from './lib/workflow/logger';
-export * from './lib/constants';
 export * from './lib/utils';
