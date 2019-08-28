@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatExpansionModule, MatListModule } from '@angular/material';
 import { SideBarComponent } from './side-bar.component';
 
 describe('SideBarComponent', () => {
@@ -8,6 +9,7 @@ describe('SideBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule, MatExpansionModule, MatListModule],
       declarations: [ SideBarComponent ]
     })
     .compileComponents();

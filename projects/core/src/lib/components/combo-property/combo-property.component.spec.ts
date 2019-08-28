@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ComboPropertyComponent } from './combo-property.component';
 
@@ -8,6 +10,7 @@ describe('ComboPropertyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ FormsModule, NgSelectModule ],
       declarations: [ ComboPropertyComponent ]
     })
     .compileComponents();
@@ -16,6 +19,7 @@ describe('ComboPropertyComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ComboPropertyComponent);
     component = fixture.componentInstance;
+    component.properties = [];
     fixture.detectChanges();
   });
 

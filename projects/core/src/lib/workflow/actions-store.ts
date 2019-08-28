@@ -446,6 +446,8 @@ const createObjectAction = (context: ExecutionContext, config: CreateObjectConfi
     let value = resolveValue(context, variable);
     if (typeof value === 'object') {
       value = JSON.stringify(value);
+    } else if (typeof value === 'string') {
+      value = `"${value}"`;
     }
     obj = obj.replace(`"${variable}"`, value);
     res = obj.match(/\$([\w-]+)*/);

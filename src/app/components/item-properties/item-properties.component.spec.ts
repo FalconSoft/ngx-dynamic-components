@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatTableModule } from '@angular/material';
 
 import { ItemPropertiesComponent } from './item-properties.component';
+import { Observable } from 'rxjs';
 
 describe('ItemPropertiesComponent', () => {
   let component: ItemPropertiesComponent;
@@ -8,6 +10,7 @@ describe('ItemPropertiesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ MatTableModule ],
       declarations: [ ItemPropertiesComponent ]
     })
     .compileComponents();
@@ -16,6 +19,7 @@ describe('ItemPropertiesComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemPropertiesComponent);
     component = fixture.componentInstance;
+    component.component$ = new Observable();
     fixture.detectChanges();
   });
 

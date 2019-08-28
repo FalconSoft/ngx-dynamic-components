@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { WorkflowEditorComponent } from './workflow-editor.component';
 
@@ -8,6 +10,7 @@ describe('WorkflowEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [FormsModule, ModalModule.forRoot()],
       declarations: [ WorkflowEditorComponent ]
     })
     .compileComponents();
@@ -16,6 +19,7 @@ describe('WorkflowEditorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkflowEditorComponent);
     component = fixture.componentInstance;
+    component.config = {};
     fixture.detectChanges();
   });
 

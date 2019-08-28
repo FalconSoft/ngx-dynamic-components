@@ -71,6 +71,9 @@
       ],
       "bootstrap/*": [
         "dist/bootstrap/*"
+      ],
+      "core-js/es7/reflect": [
+        "node_modules/core-js/proposals/reflect-metadata"
       ]
     }
   }
