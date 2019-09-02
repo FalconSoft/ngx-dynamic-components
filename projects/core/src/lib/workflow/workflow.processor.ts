@@ -60,6 +60,9 @@ export class WorkflowEngine {
         for (const name of Object.keys(config.workflowsMap).filter(p => !p.startsWith('_'))) {
             context.workflows.set(name, config.workflowsMap[name]);
         }
+        for (const name of Object.keys(config.workflowsMap).filter(p => p.startsWith('_var'))) {
+            context.variables.set(name, config.workflowsMap[name]);
+      }
     }
 
     private async loadExternals(context: ExecutionContext, includes: string[]): Promise<void> {
@@ -80,7 +83,9 @@ export class WorkflowEngine {
     private async executeFlow(steps: ActionConfig[] = [], workflowName: string) {
         const context = this.context;
         if (this.variableResolver) {
-          steps = this.variableResolver.resolve(steps) as [];
+          const importVars = context.variables.get('_var_import_overrides') || {};
+          const vars = this.variableResolver.resolve(context.variables.get('_var') || {}, importVars);
+          steps = this.variableResolver.resolve(steps, vars) as [];
         }
         for (const step of steps) {
           try {
@@ -123,7 +128,7 @@ export class WorkflowEngine {
             });
 
             if (returnValue.steps) {
-              this.executeFlow(returnValue.steps, workflowName);
+              await this.executeFlow(returnValue.steps, workflowName);
             }
           } catch (e) {
             this.logger.log(workflowName, {

@@ -52,7 +52,7 @@ export interface ComponentConfiguration {
 }
 
 export interface IVariableResolver {
-  resolve: (obj: object) => object;
+  resolve: (obj: object, vars?: object) => object;
   resolveString: (str: string, vars?: object) => object|string;
 }
 

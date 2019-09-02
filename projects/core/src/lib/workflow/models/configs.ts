@@ -77,7 +77,7 @@ export interface MapConfig {
 export interface HttpCallConfig {
   method: string;
   url: string;
-  queryParams: string;
+  queryParams?: string;
   responseType?: string; // default 'json'
   body?: any;
   headers?: any;
