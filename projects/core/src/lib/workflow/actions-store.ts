@@ -470,7 +470,6 @@ const createObjectDescriptor = {
 };
 
 export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([
-    ['switch', () => {}],
     ['getValue', getValueDescriptor],
     ['setValue', setValueDescriptor],
     ['setValues', setValuesDescriptor],
@@ -487,3 +486,20 @@ export const commonActionsMap = new Map<string, ((...args: any[]) => any) | Acti
     ['map', mapDescriptor],
     ['createObject', createObjectDescriptor]
 ]);
+
+export function registerAction(name: string, val: ((...args: any[]) => any) | ActionDescriptor) {
+  if (typeof val === 'function') {
+    val = {
+      name,
+      method: val,
+      category: 'Common',
+      config: 'Not described',
+    };
+  }
+
+  if (!val.hasOwnProperty('getMessage')) {
+    val.getMessage = () =>  `Action ${name} executed.`;
+  }
+
+  commonActionsMap.set(name, val);
+}

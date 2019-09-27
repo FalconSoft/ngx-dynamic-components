@@ -2,7 +2,7 @@ import { commonActionsMap } from './actions-store';
 import { mapToObj } from '../utils';
 import { IVariableResolver } from '../models';
 import { WorkflowLogger } from './logger';
-import { ActionConfig, ActionDescriptor } from './models';
+import { ActionConfig, ActionDescriptor, ActionStatus } from './models';
 
 export interface WorkflowConfig {
     failOnError?: boolean;
@@ -101,17 +101,13 @@ export class WorkflowEngine {
             const payload = this.resolveProperties(context, step);
             console.log(`Execute ${step.actionType} with config:`, payload);
             const action = context.actions.get(step.actionType);
-            let returnValue;
-            let message = 'Action finished';
             if (typeof action === 'function') {
-              returnValue = await action(context, payload);
-            } else {
-              returnValue = await action.method(context, payload);
-              if (action.getMessage) {
-                message = action.getMessage(payload);
-              }
+              throw Error(`No ActionDescriptor for ${step.actionType}`);
             }
-
+            let returnValue;
+            const message = action.getMessage(payload);
+            this.logger.status$.next(`Workflow: ${workflowName}. ${message}`);
+            returnValue = await action.method(context, payload);
             // set return value if step has a name
             if (step.actionName) {
                 const name = `${step.actionName}-returnValue`;
@@ -120,11 +116,10 @@ export class WorkflowEngine {
             if (step.returnValue) {
               context.variables.set(step.returnValue, returnValue);
             }
-
             this.logger.log(workflowName, {
               actionType: step.actionType,
-              message,
-              success: true,
+              message : returnValue.message ? returnValue.message : message,
+              success: returnValue.status ? returnValue.status === ActionStatus.SUCCESS : true,
             });
 
             if (returnValue.steps) {
@@ -136,6 +131,8 @@ export class WorkflowEngine {
               message: e.message,
               success: false,
             });
+            this.logger.error$.next(`Failed action ${step.actionType}: ${e.message}`);
+            break;
           }
 
         }

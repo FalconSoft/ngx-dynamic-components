@@ -17,7 +17,7 @@
     </div>
   </div>
   <accordion class="d-flex flex-fill flex-column p-0 m-0 w-100">
-    <accordion-group *ngFor="let g of groups" isOpen="true" class="mt-1 {{strToKebabCase(g.value)}}">
+    <accordion-group *ngFor="let g of groups" isOpen="true" class="{{strToKebabCase(g.value)}}">
       <div class="header" accordion-heading>
         <i class="fa text-center fa-chevron-down"></i>
         <i class="fa text-center fa-chevron-right"></i>

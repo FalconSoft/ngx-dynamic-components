@@ -10,6 +10,7 @@ export interface ActionResult {
   status: ActionStatus;
   result: any;
   steps?: ActionConfig[];
+  message?: string;
 }
 
 export interface ActionDescriptor {

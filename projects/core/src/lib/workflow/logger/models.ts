@@ -7,4 +7,5 @@ export interface StepLog {
   message: string;
   actionType: string;
   success: boolean;
+  workflowName?: string;
 }

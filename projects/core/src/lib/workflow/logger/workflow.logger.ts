@@ -1,7 +1,10 @@
 import { WorkflowLog, StepLog } from './models';
+import { Subject } from 'rxjs';
 
 export class WorkflowLogger {
   private logsMap: Map<string, WorkflowLog> = new Map();
+  status$ = new Subject<string>();
+  error$ = new Subject<string>();
 
   log(workflowName: string, step?: StepLog) {
     if (this.logsMap.has(workflowName) && step) {
