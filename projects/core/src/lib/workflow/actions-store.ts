@@ -107,7 +107,7 @@ const mergeInDataModelAction = (context: ExecutionContext, config: MergeInDataMo
   return dataModel;
 };
 
-const getValueDescriptor = {
+const getValueDescriptor: ActionDescriptor = {
   name: 'getValueAction',
   method: getValueAction,
   category: 'Common',
@@ -123,7 +123,7 @@ const getValueDescriptor = {
   }
 };
 
-const setValueDescriptor = {
+const setValueDescriptor: ActionDescriptor = {
   name: 'setValueAction',
   method: setValueAction,
   category: 'Common',
@@ -140,7 +140,7 @@ const setValueDescriptor = {
   }
 };
 
-const setValuesDescriptor = {
+const setValuesDescriptor: ActionDescriptor = {
   name: 'setValuesAction',
   method: setValuesAction,
   category: 'Common',
@@ -156,7 +156,7 @@ const setValuesDescriptor = {
   }
 };
 
-const addItemToArrayDescriptor = {
+const addItemToArrayDescriptor: ActionDescriptor = {
   name: 'addItemToArrayAction',
   method: addItemToArrayAction,
   category: 'Common',
@@ -174,7 +174,7 @@ const addItemToArrayDescriptor = {
   }
 };
 
-const pushItemToArrayDescriptor = {
+const pushItemToArrayDescriptor: ActionDescriptor = {
   name: 'pushItemToArrayAction',
   method: pushItemToArrayAction,
   category: 'Common',
@@ -193,7 +193,7 @@ const pushItemToArrayDescriptor = {
   }
 };
 
-const popArrayDescriptor = {
+const popArrayDescriptor: ActionDescriptor = {
   name: 'popArrayAction',
   method: popArrayAction,
   category: 'Common',
@@ -209,7 +209,7 @@ const popArrayDescriptor = {
   }
 };
 
-const transferDataDescriptor = {
+const transferDataDescriptor: ActionDescriptor = {
   name: 'transferDataAction',
   method: transferDataAction,
   category: 'Common',
@@ -227,7 +227,7 @@ const transferDataDescriptor = {
   }
 };
 
-const setLocalVariableDescriptor = {
+const setLocalVariableDescriptor: ActionDescriptor = {
   name: 'setLocalVariable',
   method: setLocalVariableAction,
   category: 'Common',
@@ -243,7 +243,7 @@ const setLocalVariableDescriptor = {
   }
 };
 
-const mergeInDataModelDescriptor = {
+const mergeInDataModelDescriptor: ActionDescriptor = {
   name: 'mergeInDataModel',
   method: mergeInDataModelAction,
   category: 'Common',
@@ -258,7 +258,7 @@ const mergeInDataModelDescriptor = {
   }
 };
 
-const clearDataModelDescriptor = {
+const clearDataModelDescriptor: ActionDescriptor = {
   name: 'clearDataModel',
   method(context: ExecutionContext) {
     const dataModel = resolveValue(context, '$dataModel');
@@ -270,7 +270,10 @@ const clearDataModelDescriptor = {
   config: {
     actionType: 'clearDataModel'
   },
-  description: 'Clears all data model properties'
+  description: 'Clears all data model properties',
+  getMessage() {
+    return `Clear data model`;
+  }
 };
 
 function dataModelValidationAction(context: ExecutionContext): ActionResult {
@@ -296,14 +299,17 @@ function dataModelValidationAction(context: ExecutionContext): ActionResult {
   }
 }
 
-const dataModelValidationDescriptor = {
+const dataModelValidationDescriptor: ActionDescriptor = {
   name: 'dataModelValidation',
   method: dataModelValidationAction,
   category: 'Common',
   config: {
     actionType: 'dataModelValidation'
   },
-  description: 'Validates dataModel based on uiModel'
+  description: 'Validates dataModel based on uiModel',
+  getMessage() {
+    return `Data model validation`;
+  }
 };
 
 const ifSttatementAction = (context: ExecutionContext, config: IfStatementConfig): ActionResult => {
@@ -330,7 +336,7 @@ const ifSttatementAction = (context: ExecutionContext, config: IfStatementConfig
  };
 
 
-const ifSttatementDescriptor = {
+const ifSttatementDescriptor: ActionDescriptor = {
   name: 'if',
   method: ifSttatementAction,
   category: 'Conditional',
@@ -338,7 +344,10 @@ const ifSttatementDescriptor = {
     value: true,
     trueActions: []
   } as IfStatementConfig,
-  description: 'Executes actions based on value'
+  description: 'Executes actions based on value',
+  getMessage(config) {
+    return `If statement for value ${config.value}`;
+  }
 };
 
 function mapAction(context: ExecutionContext, config: MapConfig) {
@@ -364,7 +373,7 @@ function mapAction(context: ExecutionContext, config: MapConfig) {
   return list;
 }
 
-const mapDescriptor = {
+const mapDescriptor: ActionDescriptor = {
   name: 'map',
   method: mapAction,
   category: 'Common',
@@ -455,7 +464,7 @@ const createObjectAction = (context: ExecutionContext, config: CreateObjectConfi
   return JSON.parse(obj);
 };
 
-const createObjectDescriptor = {
+const createObjectDescriptor: ActionDescriptor = {
   name: 'createObject',
   method: createObjectAction,
   category: 'Data Formatter',
@@ -466,7 +475,10 @@ const createObjectDescriptor = {
       items: [ '$sendData-returnValue' ]
     }
   },
-  description: 'Creates custom object'
+  description: 'Creates custom object',
+  getMessage() {
+    return 'Creates object';
+  }
 };
 
 export const commonActionsMap = new Map<string, ((...args: any[]) => any) | ActionDescriptor>([
