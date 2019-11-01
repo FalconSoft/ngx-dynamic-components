@@ -20,6 +20,7 @@ import { DOCUMENT } from '@angular/common';
 export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() uiModel: UIModel;
+  @Input() script: string;
   @Input() workflow: WorkflowConfig;
   @Output() uiModelUpdated = new EventEmitter<UIModel>();
   @Output() workflowsMapUpdate = new EventEmitter<UIModel>();
@@ -81,7 +82,7 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.workflowEditor = edit(this.workflowEl.nativeElement, {
-      mode: 'ace/mode/json',
+      mode: 'ace/mode/python',
       autoScrollEditorIntoView: true,
       value: formatObjToJsonStr(this.workflow.workflowsMap)
     });

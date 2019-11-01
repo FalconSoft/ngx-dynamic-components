@@ -8,7 +8,7 @@ import { packageName } from '../constants';
     template: `
     <button mat-flat-button color="primary"
       [ngStyle]="itemStyles"
-      (click)="workflowEngine.run(uiModel.itemProperties?.clickActionKey)">
+      (click)="interpreter.evaluate('', uiModel.itemProperties?.clickActionKey)">
     {{uiModel.itemProperties?.label}}
     </button>
     `

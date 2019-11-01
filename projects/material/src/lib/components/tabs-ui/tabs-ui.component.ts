@@ -13,7 +13,7 @@ import { packageName } from '../../constants';
           (changedDataModel)="changedDataModel.emit(dataModel)"
           [uiModel]='item'
           [dataModel]='dataModel'
-          [workflowEngine]='workflowEngine'></dc-ui-selector>
+          [interpreter]='interpreter'></dc-ui-selector>
       </mat-tab>
     </mat-tab-group>
   `,

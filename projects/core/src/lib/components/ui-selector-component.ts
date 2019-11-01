@@ -52,7 +52,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       this.containerRef.clear();
       const componentRef = this.containerRef.createComponent(componentFactory);
       this.component = componentRef.instance as BaseUIComponent;
-      this.component.workflowEngine = this.workflowEngine;
+      this.component.interpreter = this.interpreter;
       this.component.dataModel = this.dataModel;
       this.component.uiModel = this.uiModel;
       this.component.changedDataModel.subscribe((evt) => {

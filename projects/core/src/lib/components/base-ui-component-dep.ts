@@ -1,14 +1,14 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges } from '@angular/core';
 import { UIModel, AttributesMap } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
+import { WorkflowEngine } from '../workflow/workflow.processor';
 import { kebabStrToCamel } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList } from '../properties';
-import { Interpreter } from '../interpreter/interpreter';
 
-export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
+export class BaseUIComponentDep<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
-    @Input() interpreter: Interpreter;
+    @Input() workflowEngine: WorkflowEngine;
     @HostBinding('style.width') width: string;
     @HostBinding('style.height') height: string;
     @HostBinding('style.padding') padding: string;
@@ -42,21 +42,27 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     get componentDataModel() {
       if (this.properties.hasOwnProperty('dataSource')) {
         const value = (this.properties as DataModelProperties).dataSource;
-        if (typeof value === 'object') {
+        if (typeof value === 'object') { // Value already resolved with variableresolvber.
           return value;
-        } else if (typeof value === 'string' &&  this.dataModel.hasOwnProperty(value)) {
-          return this.dataModel[value];
+        } else if (typeof value === 'string') { // Value not resolved. Resolve value with workflow variables.
+          if (this.workflowEngine.variableResolver) {
+            const resolved = this.workflowEngine.variableResolver.resolveString(value, this.workflowEngine.configuration.vars);
+            if (typeof resolved === 'object') {
+              return resolved;
+            }
+          }
+          return [];
         }
       }
 
-      // if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
-      //   return null;
-      // }
-      // const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
+      if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
+        return null;
+      }
+      const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
       // TODO: Handle case for Array type.
-      // if (!Array.isArray(this.dataModel)) {
-      //   return JSONUtils.find(this.dataModel, dataModelPath);
-      // }
+      if (!Array.isArray(this.dataModel)) {
+        return JSONUtils.find(this.dataModel, dataModelPath);
+      }
     }
 
     set componentDataModel(val) {
@@ -71,14 +77,15 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     }
 
     async triggerAction(action: string): Promise<void> {
-      if (!this.interpreter || !this.uiModel.id) { return; }
+      if (!this.workflowEngine || !this.uiModel.id) { return; }
 
-      const functionName = this.uiModel.id + action;
-
-      this.interpreter.evaluate('', {
-        uiModel: this.uiModel,
-        dataModel: this.dataModel
-      }, functionName);
+      const workflowName = this.uiModel.id + action;
+      if (await this.workflowEngine.hasWorkflow(workflowName)) {
+        console.log(`Executes Workflow: ${workflowName}`);
+        this.workflowEngine.run(workflowName);
+      } else {
+        console.warn(`WorkflowName ${workflowName} not found`);
+      }
     }
 
     get itemStyles() {

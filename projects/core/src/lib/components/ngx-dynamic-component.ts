@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
-import { WorkflowConfig, WorkflowEngine } from '../workflow/workflow.processor';
 import { UIModel } from '../models';
+import { Interpreter } from '../interpreter/interpreter';
 
 @Component({
     selector: 'ngx-dynamic-component', // tslint:disable-line
@@ -8,47 +8,32 @@ import { UIModel } from '../models';
     <dc-ui-selector
         [uiModel]='uiModel'
         [dataModel]='dataModel'
-        [workflowEngine]='workflowEngine'
+        [interpreter]='interpreter'
         (changedDataModel)="changedDataModel.emit($event)"
         (render)="render.emit($event)">
     </dc-ui-selector>
       `
 })
 export class NGXDynamicComponent implements OnInit, OnChanges {
-    @Input() workflow: WorkflowConfig;
+    @Input() script: string;
     @Input() dataModel: any;
     @Input() uiModel: UIModel<any>;
-    @Input() appContext: any;
     @Output() render = new EventEmitter();
     @Output() changedDataModel = new EventEmitter();
 
-    workflowEngine: WorkflowEngine = null;
+    interpreter: Interpreter;
 
     async ngOnInit(): Promise<void> {
-      this.resolveVariables();
-      this.initWorkflow();
+      this.initInterpreter();
     }
 
-    ngOnChanges({workflow, dataModel}: SimpleChanges) {
-      if (workflow && !workflow.firstChange && workflow.currentValue !== workflow.previousValue) {
-        this.initWorkflow(workflow.currentValue);
+    ngOnChanges({script, dataModel}: SimpleChanges) {
+      if (script && !script.firstChange && script.currentValue !== script.previousValue) {
+        this.initInterpreter(script.currentValue);
       }
     }
 
-    private initWorkflow(workflow = this.workflow) {
-      this.workflow = workflow;
-      this.workflow.vars = this.workflow.vars || {};
-      this.workflow.vars.uiModel = this.uiModel;
-      this.workflow.vars.dataModel = this.dataModel;
-      this.workflowEngine = new WorkflowEngine(this.workflow);
-      if (this.appContext && this.uiModel.id) {
-        this.appContext[this.uiModel.id] = this.workflowEngine;
-      }
-    }
-
-    private resolveVariables() {
-      if (this.workflow.variableResolver) {
-        this.uiModel = this.workflow.variableResolver.resolve(this.uiModel) as UIModel;
-      }
+    private initInterpreter(script = this.script) {
+      this.interpreter = Interpreter.create();
     }
 }

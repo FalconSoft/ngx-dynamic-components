@@ -10,7 +10,7 @@ import { packageName } from '../../constants';
       (changedDataModel)="changedDataModel.emit($event)"
       [uiModel]='item'
       [dataModel]='dataModel'
-      [workflowEngine]='workflowEngine'
+      [interpreter]='interpreter'
     ></dc-container-row>
   `,
   styles: [`

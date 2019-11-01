@@ -2,6 +2,7 @@ import { BaseUIComponentConstructor } from './utils';
 import { WorkflowEngine } from './workflow/workflow.processor';
 import { ComponentProperty } from './properties';
 import { ActionResult } from './workflow/models';
+import { Interpreter } from './interpreter/interpreter';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 
@@ -48,6 +49,7 @@ export abstract class UIModel<T = AttributesMap> {
 export interface ComponentConfiguration {
   uiModel: UIModel;
   dataModel: any;
+  interpreter?: Interpreter;
   workflowEngine?: WorkflowEngine;
 }
 

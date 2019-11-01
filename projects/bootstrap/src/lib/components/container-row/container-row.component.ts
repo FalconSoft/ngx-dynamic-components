@@ -11,7 +11,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
           (changedDataModel)="changedDataModel.emit($event)"
           [uiModel]='item'
           [dataModel]='dataModel'
-          [workflowEngine]='workflowEngine'
+          [interpreter]='interpreter'
       ></dc-ui-selector>
     </div>
   `,
