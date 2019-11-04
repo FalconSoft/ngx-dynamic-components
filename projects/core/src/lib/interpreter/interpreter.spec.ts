@@ -298,38 +298,49 @@ describe('Interpreter', async () => {
 
   it('print two objects', async () => {
     // same problem as code below
-    // const x = await e.evaluate('print({"x":"88", "y":"test"}, {"x": "99", "y": "test 99"})');
-    // expect(x.x)
-    //   .toBe(88);
+    const x = await e.evaluate('print({"x":88, "y":"test"}, {"x": "99", "y": "test 99"})');
+    expect(x.x)
+      .toBe(88);
 
-    // const x2 = await e.evaluate('print([{"x":"88", "y" : "test"}, {},{}], {"x": "99", "y": "test 99"})');
-    // expect(x2[0].x)
-    //   .toBe(88);
+    const x5 = await e.evaluate('print({x : 88, y:"test"}, {x: "99", y: "test 99"})');
+    expect(x5.x)
+      .toBe(88);
+
+    const x2 = await e.evaluate('print([{"x": 88, "y" : "test"}, {},{}], {"x": "99", "y": "test 99"})');
+    expect(x2[0].x)
+      .toBe(88);
+
+    const x25 = await e.evaluate('print([{x: 88, y : "test"}, {},{}], {x: "99", y: "test 99"})');
+    expect(x25[0].x)
+      .toBe(88);
+
   });
 
   it('MultiLine JSON objects', async () => {
-    // const x = await e.evaluate(
-    //   [
-    //     'x = [{',
-    //     '  "x" : 88,',
-    //     '  "y" : "test"',
-    //     '  },',
-    //     '  {"x":99,"y":"test 99"}',
-    //     ']',
-    //     'x[0].x + 2'
-    //   ].join('\n'));
+    expect(
+      await e.evaluate(
+        [
+          'x = {',
+          '  "x" : 88,',
+          '  "y" : "test"',
+          '  }',
+          'x.x + 2'
+        ].join('\n'))
+    )
+      .toBe(90);
 
-    // const x = await e.evaluate(
-    //   [
-    //     'x = {',
-    //     '  "x" : 88,',
-    //     '  "y" : "test"',
-    //     '  }',
-    //     'x.x + 2'
-    //   ].join('\n'));
-
-    // expect(x)
-    //   .toBe(90);
+    // json5
+    expect(
+      await e.evaluate(
+        [
+          'x = {',
+          '  x : 88,',
+          '  y : "test"',
+          '}',
+          'x.x + 2'
+        ].join('\n'))
+    )
+      .toBe(90);
 
   });
 
@@ -519,7 +530,16 @@ describe('Interpreter', async () => {
       'math.floor(x / 2)'
     ].join('\n')))
       .toBe(Math.floor(3.14 / 2));
+  });
 
+  it('Replace tabs', async () => {
+    expect(await e.evaluate([
+      'x = 5',
+      'if x == 5:',
+      '\tx = 10',
+      'x + 5'
+    ].join('\n')))
+      .toBe(15);
   });
 
 

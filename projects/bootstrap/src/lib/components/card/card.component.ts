@@ -12,21 +12,24 @@ import { packageName } from '../../constants';
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='header'
         [dataModel]='dataModel'
-        [interpreter]='interpreter'></dc-ui-selector>
+        [interpreter]='interpreter'
+        [scripts]='scripts'></dc-ui-selector>
     </div>
     <div class="card-body" *ngIf="content">
       <dc-ui-selector
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='content'
         [dataModel]='dataModel'
-        [interpreter]='interpreter'></dc-ui-selector>
+        [interpreter]='interpreter'
+        [scripts]='scripts'></dc-ui-selector>
     </div>
     <div class="card-footer" *ngIf="footer">
       <dc-ui-selector
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='footer'
         [dataModel]='dataModel'
-        [interpreter]='interpreter'></dc-ui-selector>
+        [interpreter]='interpreter'
+        [scripts]='scripts'></dc-ui-selector>
     </div>
   </div>`,
 })

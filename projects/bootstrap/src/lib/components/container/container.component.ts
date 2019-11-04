@@ -11,6 +11,7 @@ import { packageName } from '../../constants';
       [uiModel]='item'
       [dataModel]='dataModel'
       [interpreter]='interpreter'
+      [scripts]='scripts'
     ></dc-container-row>
   `,
   styles: [`

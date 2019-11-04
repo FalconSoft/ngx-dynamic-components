@@ -9,31 +9,32 @@ import { Interpreter } from '../interpreter/interpreter';
         [uiModel]='uiModel'
         [dataModel]='dataModel'
         [interpreter]='interpreter'
+        [scripts]='scripts'
         (changedDataModel)="changedDataModel.emit($event)"
         (render)="render.emit($event)">
-    </dc-ui-selector>
-      `
+    </dc-ui-selector>`
 })
 export class NGXDynamicComponent implements OnInit, OnChanges {
-    @Input() script: string;
+    @Input() scripts: string;
+    @Input() interpreter: Interpreter;
     @Input() dataModel: any;
     @Input() uiModel: UIModel<any>;
     @Output() render = new EventEmitter();
     @Output() changedDataModel = new EventEmitter();
 
-    interpreter: Interpreter;
-
     async ngOnInit(): Promise<void> {
       this.initInterpreter();
     }
 
-    ngOnChanges({script, dataModel}: SimpleChanges) {
-      if (script && !script.firstChange && script.currentValue !== script.previousValue) {
-        this.initInterpreter(script.currentValue);
+    ngOnChanges({scripts, dataModel}: SimpleChanges) {
+      if (scripts && !scripts.firstChange && scripts.currentValue !== scripts.previousValue) {
+        this.initInterpreter();
       }
     }
 
-    private initInterpreter(script = this.script) {
-      this.interpreter = Interpreter.create();
+    private initInterpreter() {
+      if (!this.interpreter) {
+        this.interpreter = Interpreter.create();
+      }
     }
 }

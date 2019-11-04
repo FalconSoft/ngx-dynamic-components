@@ -1,16 +1,14 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild,
-  Output, EventEmitter, OnDestroy, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, Inject } from '@angular/core';
+  Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil, debounceTime, filter, map } from 'rxjs/operators';
 import { Ace, edit } from 'ace-builds';
 import { UIModel } from '../../models';
-import { WorkflowConfig } from '../../workflow/workflow.processor';
 import { DragDropService } from '../../services/drag-drop.service';
 import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
 import { formatObjToJsonStr } from '../../utils';
-import { WorkflowEditorComponent } from '../workflow-editor/workflow-editor.component';
-import { DOCUMENT } from '@angular/common';
+import { Interpreter } from '../../interpreter/interpreter';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line
@@ -20,43 +18,38 @@ import { DOCUMENT } from '@angular/common';
 export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() uiModel: UIModel;
-  @Input() script: string;
-  @Input() workflow: WorkflowConfig;
+  @Input() scripts: string;
+  @Input() interpreter: Interpreter;
   @Output() uiModelUpdated = new EventEmitter<UIModel>();
-  @Output() workflowsMapUpdate = new EventEmitter<UIModel>();
+  @Output() scriptUpdate = new EventEmitter<string>();
   @ViewChild('tabset', {static: false}) tabset: TabsetComponent;
   @ViewChild('controlsPanel', {static: false}) controlsPanel: ControlsPanelComponent;
   @ViewChild('uiModelEl', {static: false}) uiModelEl: ElementRef;
-  @ViewChild('workflowEl', {static: false}) workflowEl: ElementRef;
+  @ViewChild('script', {static: false}) scriptEl: ElementRef;
 
   /** Selected component UI Model */
   uiModelToEdit: UIModel;
   /** Designer UI Model */
   uiModelVal: UIModel;
   uiModelEditor: Ace.Editor;
-  workflowEditor: Ace.Editor;
+  scriptEditor: Ace.Editor;
   error: string;
   formatted = true;
   modeState = {
-    json: false,
+    script: false,
     designer: true
   };
-  jsonConfigSize = 0;
+  scriptConfigSize = 0;
 
   private destroy = new Subject();
-  private workflowsMapEdit: WorkflowEditorComponent;
 
   get fullMode() {
-    return this.jsonConfigSize === 0 || this.jsonConfigSize === 100;
+    return this.scriptConfigSize === 0 || this.scriptConfigSize === 100;
   }
 
   constructor(
-    @Inject(DOCUMENT) private document: any,
     private container: ElementRef,
-    private dragDropService: DragDropService,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private appRef: ApplicationRef,
-    private injector: Injector) { }
+    private dragDropService: DragDropService) { }
 
   ngOnInit() {
     this.uiModelVal = this.uiModel;
@@ -81,10 +74,19 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
       value: formatObjToJsonStr(this.uiModelVal)
     });
 
-    this.workflowEditor = edit(this.workflowEl.nativeElement, {
+    this.scriptEditor = edit(this.scriptEl.nativeElement, {
       mode: 'ace/mode/python',
       autoScrollEditorIntoView: true,
-      value: formatObjToJsonStr(this.workflow.workflowsMap)
+      value: this.scripts,
+      tabSize: 2,
+      useSoftTabs: true,
+      indentedSoftWrap: true
+    });
+
+    this.scriptEditor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: false,
+      enableLiveAutocompletion: true
     });
 
     fromEvent(this.uiModelEditor, 'change').pipe(
@@ -102,20 +104,9 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
         this.uiModelUpdated.emit(uiModel);
       });
 
-    fromEvent(this.workflowEditor, 'change').pipe(
-      debounceTime(500),
-      map(() => {
-        try {
-          return JSON.parse(this.workflowEditor.getValue());
-        } catch (e) {
-          return false;
-        }
-      }),
-      filter(v => Boolean(v))).subscribe(
-        wMap => {
-          this.workflow.workflowsMap = wMap;
-          this.workflowsMapUpdate.emit(wMap);
-        });
+    fromEvent(this.scriptEditor, 'change').pipe(debounceTime(500)).subscribe(() => {
+      this.scriptUpdate.emit(this.scriptEditor.getValue());
+    });
 
     this.initDrag();
   }
@@ -127,37 +118,17 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSizeChange() {
     this.uiModelEditor.resize();
-    this.workflowEditor.resize();
-  }
-
-  onWorkflowEdit() {
-    const componentRef = this.componentFactoryResolver.resolveComponentFactory(WorkflowEditorComponent).create(this.injector);
-    this.workflowsMapEdit = componentRef.instance;
-    this.workflowsMapEdit.config = this.workflow.workflowsMap;
-    this.workflowsMapEdit.modal.onHide.subscribe(() => {
-      componentRef.destroy();
-    });
-    this.workflowsMapEdit.change.subscribe(() => {
-      this.workflowEditor.setValue(formatObjToJsonStr(this.workflow.workflowsMap));
-    });
-
-    this.appRef.attachView(componentRef.hostView);
-    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-
-    this.document.body.appendChild(domElem);
-    setTimeout(() => {
-      this.workflowsMapEdit.openModal();
-    });
+    this.scriptEditor.resize();
   }
 
   onModeState(prop: string) {
     this.modeState[prop] = !this.modeState[prop];
-    if (this.modeState.json && !this.modeState.designer) {
-      this.jsonConfigSize = 100;
-    } else if (this.modeState.json && this.modeState.designer) {
-      this.jsonConfigSize = 50;
+    if (this.modeState.script && !this.modeState.designer) {
+      this.scriptConfigSize = 100;
+    } else if (this.modeState.script && this.modeState.designer) {
+      this.scriptConfigSize = 50;
     } else {
-      this.jsonConfigSize = 0;
+      this.scriptConfigSize = 0;
     }
   }
 
@@ -216,13 +187,10 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   formatJSON(format = true) {
     try {
       const uiModel = JSON.parse(this.uiModelEditor.getValue());
-      const workflowsMap = JSON.parse(this.workflowEditor.getValue());
       if (format) {
         this.uiModelEditor.setValue(formatObjToJsonStr(uiModel), -1);
-        this.workflowEditor.setValue(formatObjToJsonStr(workflowsMap), -1);
       } else {
         this.uiModelEditor.setValue(JSON.stringify(uiModel), -1);
-        this.workflowEditor.setValue(JSON.stringify(workflowsMap), -1);
       }
       this.formatted = format;
       this.error = null;

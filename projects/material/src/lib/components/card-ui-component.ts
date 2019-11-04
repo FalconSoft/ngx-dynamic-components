@@ -12,7 +12,8 @@ import { packageName } from '../constants';
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='header'
         [dataModel]='dataModel'
-        [interpreter]='interpreter'></dc-ui-selector>
+        [interpreter]='interpreter'
+        [scripts]='scripts'></dc-ui-selector>
         <ng-container *ngTemplateOutlet="headerTitle"></ng-container>
     </mat-card-header>
     <ng-template #headerTitle>
@@ -26,14 +27,16 @@ import { packageName } from '../constants';
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='content'
         [dataModel]='dataModel'
-        [interpreter]='interpreter'></dc-ui-selector>
+        [interpreter]='interpreter'
+        [scripts]='scripts'></dc-ui-selector>
     </mat-card-content>
     <mat-card-footer *ngIf="footer">
       <dc-ui-selector
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='footer'
         [dataModel]='dataModel'
-        [interpreter]='interpreter'></dc-ui-selector>
+        [interpreter]='interpreter'
+        [scripts]='scripts'></dc-ui-selector>
     </mat-card-footer>
   </mat-card>`,
   styles: [`

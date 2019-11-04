@@ -21,6 +21,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
   }
 
   async ngOnChanges(changes: SimpleChanges) {
+    if (changes.firstChange) { return; }
     if (!this.component || this.component.uiModel.type !== this.uiModel.type) {
         const shouldInit = !this.component || this.component.uiModel.id !== this.uiModel.id;
         // Recreate component with new type.
@@ -55,6 +56,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       this.component.interpreter = this.interpreter;
       this.component.dataModel = this.dataModel;
       this.component.uiModel = this.uiModel;
+      this.component.scripts = this.scripts;
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);
       });

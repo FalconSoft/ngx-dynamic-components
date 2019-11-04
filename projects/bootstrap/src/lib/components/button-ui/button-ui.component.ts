@@ -14,7 +14,7 @@ import { packageName } from '../../constants';
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
   onClick() {
     if (this.properties.clickActionKey) {
-      this.interpreter.evaluate('', {dataModel: this.dataModel, uiModel: this.uiModel}, this.properties.clickActionKey);
+      this.interpreter.evaluate(this.scripts, {dataModel: this.dataModel, uiModel: this.uiModel}, this.properties.clickActionKey);
       this.changedDataModel.emit(this.dataModel);
     }
   }

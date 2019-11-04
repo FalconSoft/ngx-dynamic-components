@@ -9,6 +9,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
     @Input() interpreter: Interpreter;
+    @Input() scripts: string;
     @HostBinding('style.width') width: string;
     @HostBinding('style.height') height: string;
     @HostBinding('style.padding') padding: string;
@@ -74,8 +75,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       if (!this.interpreter || !this.uiModel.id) { return; }
 
       const functionName = this.uiModel.id + action;
-
-      this.interpreter.evaluate('', {
+      this.interpreter.evaluate(this.scripts, {
         uiModel: this.uiModel,
         dataModel: this.dataModel
       }, functionName);

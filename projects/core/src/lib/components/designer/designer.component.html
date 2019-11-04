@@ -2,7 +2,7 @@
   [useTransition]="true">
   <as-split-area class="d-flex flex-column">
     <as-split [useTransition]="true" [ngClass]="{'full-mode': fullMode}" (onDragEnd)="onSizeChange()" (transitionEnd)="onSizeChange()">
-        <as-split-area #area0="asSplitArea" class="d-flex mb-0 position-relative" [size]="jsonConfigSize">
+        <as-split-area #area0="asSplitArea" class="d-flex mb-0 position-relative" [size]="scriptConfigSize">
             <div class="tabs-actions position-absolute">
               <button type="button" class="btn btn-light btn-sm px-1 py-0" (click)="formatJSON()"
                     [ngClass]="{active: formatted}" title="Format JSON data, with proper indentation and line feeds (Ctrl+\)">
@@ -12,28 +12,25 @@
                     [ngClass]="{active: !formatted}" title="Compact JSON data, remove all whitespaces (Ctrl+Shift+\)">
                     <i class="fa fa-align-justify"></i>
               </button>
-              <button type="button" class="btn btn-light btn-sm ml-1 px-1 py-0" (click)="onWorkflowEdit()"
-                    [ngClass]="{active: !formatted}" title="Workflow edit">
-                    <i class="fa fa-cogs"></i>
-              </button>
             </div>
             <tabset class="tabset-fx w-100">
               <tab heading="UI Model">
                 <div #uiModelEl class="h-100 ace-editor"></div>
               </tab>
-              <tab heading="Workflow Config">
-                <div #workflowEl class="h-100 ace-editor"></div>
+              <tab heading="Script">
+                <div #script class="h-100 ace-editor"></div>
               </tab>
             </tabset>
           </as-split-area>
-          <as-split-area [size]="100 - jsonConfigSize" #area1="asSplitArea" class="d-flex overflow-auto flex-column">
-            <ngx-dynamic-component class="flex-fill pt-4 h-100" *ngIf="uiModelVal" [uiModel]='uiModelVal' [dataModel]='{}' [script]='""'></ngx-dynamic-component>
+          <as-split-area [size]="100 - scriptConfigSize" #area1="asSplitArea" class="d-flex overflow-auto flex-column">
+            <ngx-dynamic-component class="flex-fill pt-4 h-100" *ngIf="uiModelVal"
+              [uiModel]='uiModelVal' [interpreter]="interpreter" [dataModel]='{}' [scripts]='scripts'></ngx-dynamic-component>
             <div id="empty-container" class="w-100 h-100" *ngIf="!uiModelVal"></div>
           </as-split-area>
     </as-split>
     <div class="btn-group d-block mode">
-      <label class="btn btn-light btn-sm cursor-pointer" ngDefaultControl [(ngModel)]="modeState.json" [class.active]="modeState.json"
-        btnCheckbox tabindex="0" role="button" name="mode-json" (click)="onModeState('json')" title="JSON Configuration">
+      <label class="btn btn-light btn-sm cursor-pointer" ngDefaultControl [(ngModel)]="modeState.script" [class.active]="modeState.script"
+        btnCheckbox tabindex="0" role="button" name="mode-script" (click)="onModeState('script')" title="UIModel & Script code">
         <i class="fa fa-code fa-lg"></i> Configuration
       </label>
       <label class="btn btn-light btn-sm cursor-pointer" ngDefaultControl [(ngModel)]="modeState.designer" [class.active]="modeState.designer"

@@ -8,7 +8,7 @@ import { packageName } from '../constants';
     template: `
     <button mat-flat-button color="primary"
       [ngStyle]="itemStyles"
-      (click)="interpreter.evaluate('', uiModel.itemProperties?.clickActionKey)">
+      (click)="interpreter.evaluate(scripts, uiModel.itemProperties?.clickActionKey)">
     {{uiModel.itemProperties?.label}}
     </button>
     `

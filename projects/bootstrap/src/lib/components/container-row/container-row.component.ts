@@ -12,6 +12,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
           [uiModel]='item'
           [dataModel]='dataModel'
           [interpreter]='interpreter'
+          [scripts]='scripts'
       ></dc-ui-selector>
     </div>
   `,

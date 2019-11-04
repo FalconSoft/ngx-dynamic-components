@@ -1,5 +1,6 @@
-import { TokensIterator } from './tokens-iterator';
+import { Tokenizer, CodeLine } from './tokenizer';
 import * as json5 from 'json5';
+import { promise } from 'protractor';
 
 interface BlockContext {
     index: number;
@@ -80,7 +81,13 @@ export class Interpreter {
         function getValue(obj: any, propName: string): any {
 
             if (propName[propName.length - 1] !== ']') {
-                return obj[propName];
+                const value = obj[propName];
+
+                if (value === undefined) {
+                    throw Error(`Undefined property '${propName}'`);
+                }
+
+                return value;
             } else {
                 const openInd = propName.indexOf('[');
                 if (openInd <= 0) {
@@ -106,7 +113,7 @@ export class Interpreter {
             return num;
         }
 
-        const tokenParts = TokensIterator.create().setSeparator(['.']).splitAll(token);
+        const tokenParts = Tokenizer.splitAll(token, ['.']);
 
         let result: any = null;
         if (tokenParts.length === 1) {
@@ -134,13 +141,13 @@ export class Interpreter {
             if (!parentObject) {
                 const fn = this.funcs[name] || this.vars[name];
                 if (typeof fn !== 'function') {
-                    throw Error(`Token ${name} is not a valid function`);
+                    throw Error(`Token '${name}' is not a valid function (1)`);
                 }
                 return fn; // all functions should be here and no 'bind' required
             } else {
                 const f = parentObject[name];
                 if (typeof f !== 'function') {
-                    throw Error(`Token ${name} is not a valid function`);
+                    throw Error(`Token '${name}' is not a valid function (2)`);
                 }
                 return f.bind(parentObject);
             }
@@ -152,7 +159,7 @@ export class Interpreter {
         const func = callingObject[funcName];
 
         if (typeof func !== 'function') {
-            throw Error(`Token ${name} is not a valid function`);
+            throw Error(`Token '${name}' is not a valid function (3)`);
         }
 
         return func.bind(callingObject);
@@ -194,15 +201,12 @@ export class Interpreter {
         const pStart = token.indexOf('(');
         const pEnd = token.lastIndexOf(')');
         if (pStart < 0 || pEnd < 0) {
-            throw Error(`This token is not a valid function call. ${token}`);
+            throw Error(`Token '${token}' is not a valid function. (4)`);
         }
 
         const funcName = token.substring(0, pStart);
         const paramsStr = token.substring(pStart + 1, pEnd);
-        const funcParamTokens = (paramsStr) ? TokensIterator
-            .create()
-            .setSeparator([','])
-            .splitAll(paramsStr) : [];
+        const funcParamTokens = (paramsStr) ? Tokenizer.splitAll(paramsStr, [',']) : [];
 
         const fps = [];
         for (const paramToken of funcParamTokens) {
@@ -230,7 +234,7 @@ export class Interpreter {
                     const res = opFn(result, value);
                     result = res;
                 } else {
-                    throw Error(`Unknown operation ${tokens[ind] + 1}`);
+                    throw Error(`Unknown operation '${tokens[ind - 1]}'`);
                 }
             }
             ind += 2;
@@ -254,7 +258,8 @@ export class Interpreter {
     }
 
     private async evalInstruction(instruction: string): Promise<any> {
-        const tokens = TokensIterator.create().splitAll(instruction, t => (t || '').trim().startsWith('#'));
+        instruction = (instruction.indexOf('#') < 0) ? instruction.trim() : instruction.substring(0, instruction.indexOf('#')).trim();
+        const tokens = Tokenizer.splitAll(instruction);
 
         if (!tokens || !tokens.length) { return null; }
         if (tokens.length === 2) {
@@ -281,16 +286,17 @@ export class Interpreter {
         return cc;
     }
 
-    private async runBlock(instuctionLines: string[], blockIndent: number = 0, ignoreLine = false, context: BlockContext)
+    private async runBlock(instuctionLines: CodeLine[], blockIndent: number = 0, ignoreLine = false, context: BlockContext)
         : Promise<any> {
         let lastResult = null;
+
 
         while (context.index < instuctionLines.length) {
             if (context.returnCalled) {
                 return context.returnObject;
             }
 
-            const instruction = instuctionLines[context.index++];
+            const instruction = instuctionLines[context.index++].line;
 
             // ignore empty lines and comment lines
             if (instruction.trim() === ''
@@ -337,27 +343,36 @@ export class Interpreter {
     }
 
     async evaluate(script: string, context: object = null, entryFunctionName: string = null): Promise<any> {
-        this.entryFunctionName = entryFunctionName;
+        // replace all tabs with 2 spaces
+        script = script.replace(new RegExp('\t', 'g'), '  ');
 
+        this.entryFunctionName = entryFunctionName;
         this.vars = (context && typeof context === 'object') ?
             { ...this.globalVars, ...context } : { ...this.globalVars };
 
         const linesContext = { index: 0, returnCalled: false } as BlockContext;
-        const instuctionLines = TokensIterator
-            .create()
-            .setSeparator(['\n'])
-            .splitAll(script);
+        const instuctionLines = Tokenizer.splitCodeLines(script);
 
-        if (!this.entryFunctionName || !this.entryFunctionName.length) {
-            return await this.runBlock(instuctionLines, 0, false, linesContext);
-        } else {
-            linesContext.index = instuctionLines
-                .findIndex(i => i.startsWith(`def ${this.entryFunctionName}(`) && i[i.length - 1] === ':');
+        try {
+            if (!this.entryFunctionName || !this.entryFunctionName.length) {
+                return await this.runBlock(instuctionLines, 0, false, linesContext);
+            } else {
+                linesContext.index = instuctionLines
+                    .findIndex(i => i.line.startsWith(`def ${this.entryFunctionName}(`) && i.line[i.line.length - 1] === ':');
 
-            if (linesContext.index >= 0) {
-                linesContext.index++;
-                return await this.runBlock(instuctionLines, INDENT_SIZE, false, linesContext);
-            } else { return null; }
+                if (linesContext.index >= 0) {
+                    linesContext.index++;
+                    return await this.runBlock(instuctionLines, INDENT_SIZE, false, linesContext);
+                } else { return null; }
+            }
+        } catch (error) {
+            const cl = instuctionLines[linesContext.index - 1];
+            let ln = String(cl.start);
+            if (cl.start !== cl.end) {
+                ln += `:${cl.end}`;
+            }
+            throw Error(`Line (${ln}): ${error}`);
         }
+
     }
 }
