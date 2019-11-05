@@ -1740,6 +1740,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _interpreter_interpreter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./interpreter/interpreter */ "./src/app/shared/interpreter/interpreter.ts");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils */ "./src/app/shared/utils.ts");
+/* harmony import */ var _app_variables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app-variables */ "./src/app/shared/app-variables.ts");
+
 
 
 
@@ -1774,6 +1776,31 @@ function getInterpreter() {
 function addFunctions(interpreter) {
     mapFunction.forEach(function (func, name) {
         interpreter.addFunction(name, func);
+    });
+    interpreter.assignGlobalContext({
+        ArrayUtils: {
+            map: function (data, props) {
+                if (!data || !props) {
+                    return data;
+                }
+                return data.map(function (item) {
+                    return props.reduce(function (prev, _a) {
+                        var oldKey = _a[0], newKey = _a[1];
+                        prev[newKey] = item[oldKey];
+                        return prev;
+                    }, {});
+                });
+            },
+            toArray: function (val) {
+                if (val && !(val instanceof Array)) {
+                    return [val];
+                }
+            }
+        }
+    });
+    interpreter.assignGlobalContext({
+        app: _app_variables__WEBPACK_IMPORTED_MODULE_7__["Variables"].variables,
+        session: _app_variables__WEBPACK_IMPORTED_MODULE_7__["Variables"].contextVariables
     });
     return interpreter;
 }

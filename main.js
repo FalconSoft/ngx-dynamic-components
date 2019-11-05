@@ -2795,7 +2795,7 @@ var HeaderComponent = /** @class */ (function () {
 /*!********************************************!*\
   !*** ./src/app/shared/components/index.ts ***!
   \********************************************/
-/*! exports provided: ContentExplorerComponent, DynamicModalComponent, ListViewComponent, PageInfoComponent, ManageFiltersComponent */
+/*! exports provided: ContentExplorerComponent, ListViewComponent, PageInfoComponent, ManageFiltersComponent, DynamicModalComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3783,7 +3783,7 @@ function forbiddenValuesValidator(values) {
 /*!*********************************!*\
   !*** ./src/app/shared/index.ts ***!
   \*********************************/
-/*! exports provided: SharedModule, formatCamelStr, mapTableToValues, dateToDtoString, parseDatetimeOrNull, parseNumberOrNull, replaceAll, parseBooleanOrNull, mapValuesToTable, formatObjToJsonStr, transposeData, getDomain, verifyFields, compareFields, compareSqlObjects, compareColumns, generateFields, getTableColumns, getErrorMessage, deepClone, getFilters, hasValue, formatToPrimitive, formatWijmoDate, Empty, ClubMembershipRegistrationForm, PageBS, Page, Chart, Form, ContentExplorerComponent, DynamicModalComponent, ListViewComponent, PageInfoComponent, ManageFiltersComponent */
+/*! exports provided: SharedModule, formatCamelStr, mapTableToValues, dateToDtoString, parseDatetimeOrNull, parseNumberOrNull, replaceAll, parseBooleanOrNull, mapValuesToTable, formatObjToJsonStr, transposeData, getDomain, verifyFields, compareFields, compareSqlObjects, compareColumns, generateFields, getTableColumns, getErrorMessage, deepClone, getFilters, hasValue, formatToPrimitive, formatWijmoDate, Empty, ClubMembershipRegistrationForm, PageBS, Page, Chart, Form, ContentExplorerComponent, ListViewComponent, PageInfoComponent, ManageFiltersComponent, DynamicModalComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3854,13 +3854,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components */ "./src/app/shared/components/index.ts");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ContentExplorerComponent", function() { return _components__WEBPACK_IMPORTED_MODULE_3__["ContentExplorerComponent"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DynamicModalComponent", function() { return _components__WEBPACK_IMPORTED_MODULE_3__["DynamicModalComponent"]; });
-
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ListViewComponent", function() { return _components__WEBPACK_IMPORTED_MODULE_3__["ListViewComponent"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageInfoComponent", function() { return _components__WEBPACK_IMPORTED_MODULE_3__["PageInfoComponent"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ManageFiltersComponent", function() { return _components__WEBPACK_IMPORTED_MODULE_3__["ManageFiltersComponent"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DynamicModalComponent", function() { return _components__WEBPACK_IMPORTED_MODULE_3__["DynamicModalComponent"]; });
 
 
 
@@ -5567,7 +5567,7 @@ var FileManagerService = /** @class */ (function () {
 /*!******************************************!*\
   !*** ./src/app/shared/services/index.ts ***!
   \******************************************/
-/*! exports provided: NotificationService, DialogService, FileManagerService, LocalSettingsService, ActionsService, SqlDbService */
+/*! exports provided: DialogService, LocalSettingsService, NotificationService, FileManagerService, ActionsService, SqlDbService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
