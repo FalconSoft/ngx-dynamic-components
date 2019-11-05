@@ -914,7 +914,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DynamicWorkflowComponent", function() { return DynamicWorkflowComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "./node_modules/@ngx-dynamic-components/core/fesm5/ngx-dynamic-components-core.js");
+/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "../ngx-dynamic-components/projects/core/src/public_api.ts");
 /* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ace-builds */ "./node_modules/ace-builds/src-noconflict/ace.js");
 /* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(ace_builds__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var src_app_shared__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared */ "./src/app/shared/index.ts");
@@ -2573,10 +2573,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScriptComponent", function() { return ScriptComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ace-builds */ "./node_modules/ace-builds/src-noconflict/ace.js");
-/* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ace_builds__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _rest_interpreter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../rest-interpreter */ "./src/app/rest-client/rest-interpreter/index.ts");
-/* harmony import */ var _rest_interpreter_snippets__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../rest-interpreter/snippets */ "./src/app/rest-client/rest-interpreter/snippets.ts");
+/* harmony import */ var _rest_interpreter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../rest-interpreter */ "./src/app/rest-client/rest-interpreter/index.ts");
+/* harmony import */ var _rest_interpreter_snippets__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../rest-interpreter/snippets */ "./src/app/rest-client/rest-interpreter/snippets.ts");
+/* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ace-builds */ "./node_modules/ace-builds/src-noconflict/ace.js");
+/* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(ace_builds__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
@@ -2584,7 +2584,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ScriptComponent = /** @class */ (function () {
     function ScriptComponent() {
-        this.snippets = _rest_interpreter_snippets__WEBPACK_IMPORTED_MODULE_4__["snippets"];
+        this.snippets = _rest_interpreter_snippets__WEBPACK_IMPORTED_MODULE_3__["snippets"];
     }
     Object.defineProperty(ScriptComponent.prototype, "context", {
         get: function () {
@@ -2594,20 +2594,8 @@ var ScriptComponent = /** @class */ (function () {
         configurable: true
     });
     ScriptComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.restInterpreter = new _rest_interpreter__WEBPACK_IMPORTED_MODULE_3__["RestInterpreter"]();
-        var tools = ace_builds__WEBPACK_IMPORTED_MODULE_2__["require"]('ace/ext/language_tools');
-        var interpreterCompleter = {
-            getCompletions: function (editor, session, pos, prefix, callback) {
-                var line = editor.session.getLine(pos.row);
-                var regexp = "([\\w.]+)." + prefix;
-                var res = line.match(new RegExp(regexp));
-                var wordList = _this.restInterpreter.interpreter['getAutocompletionList'](res ? res[1] : null);
-                callback(null, wordList);
-            }
-        };
-        tools.addCompleter(interpreterCompleter);
-        this.editor = ace_builds__WEBPACK_IMPORTED_MODULE_2__["edit"](this.scriptEl.nativeElement, {
+        this.restInterpreter = new _rest_interpreter__WEBPACK_IMPORTED_MODULE_2__["RestInterpreter"]();
+        this.editor = Object(ace_builds__WEBPACK_IMPORTED_MODULE_4__["edit"])(this.scriptEl.nativeElement, {
             mode: 'ace/mode/python',
             autoScrollEditorIntoView: true,
             value: this.defaultScript,
@@ -3404,9 +3392,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-bootstrap/modal */ "./node_modules/ngx-bootstrap/modal/fesm5/ngx-bootstrap-modal.js");
 /* harmony import */ var ngx_bootstrap_popover__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-bootstrap/popover */ "./node_modules/ngx-bootstrap/popover/fesm5/ngx-bootstrap-popover.js");
 /* harmony import */ var angular_split__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! angular-split */ "./node_modules/angular-split/fesm5/angular-split.js");
-/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "./node_modules/@ngx-dynamic-components/core/fesm5/ngx-dynamic-components-core.js");
-/* harmony import */ var _ngx_dynamic_components_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngx-dynamic-components/bootstrap */ "./node_modules/@ngx-dynamic-components/bootstrap/fesm5/ngx-dynamic-components-bootstrap.js");
-/* harmony import */ var _ngx_dynamic_components_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ngx-dynamic-components/material */ "./node_modules/@ngx-dynamic-components/material/fesm5/ngx-dynamic-components-material.js");
+/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "../ngx-dynamic-components/projects/core/src/public_api.ts");
+/* harmony import */ var _ngx_dynamic_components_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngx-dynamic-components/bootstrap */ "../ngx-dynamic-components/projects/bootstrap/src/public-api.ts");
+/* harmony import */ var _ngx_dynamic_components_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ngx-dynamic-components/material */ "../ngx-dynamic-components/projects/material/src/public_api.ts");
 /* harmony import */ var src_app_shared__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! src/app/shared */ "./src/app/shared/index.ts");
 /* harmony import */ var src_app_wijmo_wijmo_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! src/app/wijmo/wijmo.module */ "./src/app/wijmo/wijmo.module.ts");
 /* harmony import */ var _rest_client_routing_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./rest-client-routing.module */ "./src/app/rest-client/rest-client-routing.module.ts");
@@ -3585,12 +3573,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RestInterpreter", function() { return RestInterpreter; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var src_app_shared_interpreter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/shared/interpreter */ "./src/app/shared/interpreter.ts");
-/* harmony import */ var src_app_shared_interpreter_interpreter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/interpreter/interpreter */ "./src/app/shared/interpreter/interpreter.ts");
-/* harmony import */ var src_app_shared__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared */ "./src/app/shared/index.ts");
-/* harmony import */ var _models__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./models */ "./src/app/rest-client/rest-interpreter/models.ts");
-/* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./functions */ "./src/app/rest-client/rest-interpreter/functions.ts");
-/* harmony import */ var src_app_shared_app_variables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/app-variables */ "./src/app/shared/app-variables.ts");
-
+/* harmony import */ var src_app_shared__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared */ "./src/app/shared/index.ts");
+/* harmony import */ var _models__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./models */ "./src/app/rest-client/rest-interpreter/models.ts");
+/* harmony import */ var _functions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./functions */ "./src/app/rest-client/rest-interpreter/functions.ts");
+/* harmony import */ var src_app_shared_app_variables__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/app-variables */ "./src/app/shared/app-variables.ts");
 
 
 
@@ -3602,35 +3588,6 @@ var RestInterpreter = /** @class */ (function () {
         var _this = this;
         this.reset();
         this.interpreter = Object(src_app_shared_interpreter__WEBPACK_IMPORTED_MODULE_1__["getInterpreter"])();
-        // Temporary getAutocompletionList implementation.
-        if (!src_app_shared_interpreter_interpreter__WEBPACK_IMPORTED_MODULE_2__["Interpreter"].prototype['getAutocompletionList']) {
-            src_app_shared_interpreter_interpreter__WEBPACK_IMPORTED_MODULE_2__["Interpreter"].prototype['getAutocompletionList'] = function (objPath) {
-                var varsScope = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.interpreter['globalVars'], _this.interpreter['vars'], _this.interpreter['funcs']);
-                function toAutoCompletion(obj, propName) {
-                    if (typeof obj !== 'object') {
-                        return null;
-                    }
-                    var tp = typeof obj[propName];
-                    var result = {
-                        name: propName,
-                        score: 1,
-                        value: tp === 'function' ? propName + '()' : propName,
-                        caption: propName,
-                        meta: tp
-                    };
-                    return result;
-                }
-                if (objPath) {
-                    var obj_1 = varsScope[objPath];
-                    return (obj_1 !== undefined) ?
-                        Object.getOwnPropertyNames(obj_1).map(function (p) { return toAutoCompletion(obj_1, p); }).filter(function (a) { return a; })
-                        : [];
-                }
-                else {
-                    return Object.keys(varsScope).map(function (p) { return toAutoCompletion(varsScope, p); }).filter(function (a) { return a; });
-                }
-            };
-        }
         this.interpreter.addFunction('assert', function (condition, name, description) {
             _this.scriptContext.asserts = _this.scriptContext.asserts.concat([{ condition: condition, name: name, description: description }]);
         });
@@ -3638,13 +3595,13 @@ var RestInterpreter = /** @class */ (function () {
             _this.scriptContext.errors = _this.scriptContext.errors.concat([error]);
         });
         this.interpreter.addFunction('showInObjectExplorer', function (data, title) {
-            _this.showIn(_models__WEBPACK_IMPORTED_MODULE_4__["ShowInTypes"].ObjectExplorer, data, title);
+            _this.showIn(_models__WEBPACK_IMPORTED_MODULE_3__["ShowInTypes"].ObjectExplorer, data, title);
         });
         this.interpreter.addFunction('showInJSON', function (data, title) {
-            _this.showIn(_models__WEBPACK_IMPORTED_MODULE_4__["ShowInTypes"].JSON, data, title);
+            _this.showIn(_models__WEBPACK_IMPORTED_MODULE_3__["ShowInTypes"].JSON, data, title);
         });
         this.interpreter.addFunction('plotChart', function (data, title, chartConfig) {
-            _this.showIn(_models__WEBPACK_IMPORTED_MODULE_4__["ShowInTypes"].Chart, data, title, chartConfig);
+            _this.showIn(_models__WEBPACK_IMPORTED_MODULE_3__["ShowInTypes"].Chart, data, title, chartConfig);
         });
     }
     RestInterpreter.prototype.evaluate = function (script, context, entryFunctionName) {
@@ -3656,14 +3613,14 @@ var RestInterpreter = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.interpreter.evaluate(script, tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, context, { app: src_app_shared_app_variables__WEBPACK_IMPORTED_MODULE_6__["Variables"].variables, session: src_app_shared_app_variables__WEBPACK_IMPORTED_MODULE_6__["Variables"].contextVariables }), entryFunctionName)];
+                        return [4 /*yield*/, this.interpreter.evaluate(script, tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, context), entryFunctionName)];
                     case 1:
                         res = _a.sent();
-                        src_app_shared_app_variables__WEBPACK_IMPORTED_MODULE_6__["Variables"].syncAppVariables();
+                        src_app_shared_app_variables__WEBPACK_IMPORTED_MODULE_5__["Variables"].syncAppVariables();
                         return [2 /*return*/, res];
                     case 2:
                         e_1 = _a.sent();
-                        this.scriptContext.errors = this.scriptContext.errors.concat([Object(src_app_shared__WEBPACK_IMPORTED_MODULE_3__["getErrorMessage"])(e_1)]);
+                        this.scriptContext.errors = this.scriptContext.errors.concat([Object(src_app_shared__WEBPACK_IMPORTED_MODULE_2__["getErrorMessage"])(e_1)]);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -4071,7 +4028,7 @@ var RunRequestService = /** @class */ (function () {
 /*!****************************************************!*\
   !*** ./src/app/rest-client/store/actions/index.ts ***!
   \****************************************************/
-/*! exports provided: AppActionTypes, AppErrorAction, AppInfoAction, ActionTypes, setScripts, UpdateRequestModel, SendRequest, SaveRequestInHistory, RecieveResponse, SetDynamicPages, SaveDynamicPages, ClearResponse, UpdateUiSettings, SavedRequestsActionTypes, SaveRequest, SavedRequest, SaveRequestFailed, LoadRequests, LoadedRequests, LoadRequestsFailed, LoadRequest, LoadedRequest, LoadRequestFailed, DeselectRequest, DeleteRequest, DeletedRequest */
+/*! exports provided: ActionTypes, setScripts, UpdateRequestModel, SendRequest, SaveRequestInHistory, RecieveResponse, SetDynamicPages, SaveDynamicPages, ClearResponse, UpdateUiSettings, SavedRequestsActionTypes, SaveRequest, SavedRequest, SaveRequestFailed, LoadRequests, LoadedRequests, LoadRequestsFailed, LoadRequest, LoadedRequest, LoadRequestFailed, DeselectRequest, DeleteRequest, DeletedRequest, AppActionTypes, AppErrorAction, AppInfoAction */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

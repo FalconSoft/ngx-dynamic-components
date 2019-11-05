@@ -1738,9 +1738,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var wijmo_wijmo__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(wijmo_wijmo__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _interpreter_interpreter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./interpreter/interpreter */ "./src/app/shared/interpreter/interpreter.ts");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utils */ "./src/app/shared/utils.ts");
-/* harmony import */ var _app_variables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app-variables */ "./src/app/shared/app-variables.ts");
+/* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ace-builds */ "./node_modules/ace-builds/src-noconflict/ace.js");
+/* harmony import */ var ace_builds__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ace_builds__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _interpreter_interpreter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./interpreter/interpreter */ "./src/app/shared/interpreter/interpreter.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils */ "./src/app/shared/utils.ts");
+/* harmony import */ var _app_variables__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app-variables */ "./src/app/shared/app-variables.ts");
+
 
 
 
@@ -1756,7 +1759,7 @@ var mapFunction = new Map([
     ['httpPost', function (url, body, headers) { return httpClient.post(url, body, getHttpOptions(headers)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(e); })).toPromise(); }],
     ['httpPut', function (url, body, headers) { return httpClient.put(url, body, getHttpOptions(headers)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(e); })).toPromise(); }],
     ['httpDelete', function (url, headers) { return httpClient.delete(url, getHttpOptions(headers)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (e) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(e); })).toPromise(); }],
-    ['dateTime', function (str) { return (str && str.length) ? Object(_utils__WEBPACK_IMPORTED_MODULE_6__["parseDatetimeOrNull"])(str) || new Date() : new Date(); }],
+    ['dateTime', function (str) { return (str && str.length) ? Object(_utils__WEBPACK_IMPORTED_MODULE_7__["parseDatetimeOrNull"])(str) || new Date() : new Date(); }],
     ['format', function (value, displayFormat) {
             if (displayFormat === void 0) { displayFormat = null; }
             return format(value, displayFormat);
@@ -1771,7 +1774,7 @@ function registerFunction(name, func) {
     }
 }
 function getInterpreter() {
-    return addFunctions(_interpreter_interpreter__WEBPACK_IMPORTED_MODULE_5__["Interpreter"].create());
+    return addFunctions(_interpreter_interpreter__WEBPACK_IMPORTED_MODULE_6__["Interpreter"].create());
 }
 function addFunctions(interpreter) {
     mapFunction.forEach(function (func, name) {
@@ -1799,10 +1802,29 @@ function addFunctions(interpreter) {
         }
     });
     interpreter.assignGlobalContext({
-        app: _app_variables__WEBPACK_IMPORTED_MODULE_7__["Variables"].variables,
-        session: _app_variables__WEBPACK_IMPORTED_MODULE_7__["Variables"].contextVariables
+        app: _app_variables__WEBPACK_IMPORTED_MODULE_8__["Variables"].variables,
+        session: _app_variables__WEBPACK_IMPORTED_MODULE_8__["Variables"].contextVariables
     });
+    initEditorMode(interpreter);
     return interpreter;
+}
+var initializedMode = false;
+function initEditorMode(interpreter) {
+    if (initializedMode) {
+        return;
+    }
+    var tools = ace_builds__WEBPACK_IMPORTED_MODULE_5__["require"]('ace/ext/language_tools');
+    var interpreterCompleter = {
+        getCompletions: function (editor, session, pos, prefix, callback) {
+            var line = editor.session.getLine(pos.row);
+            var regexp = "([\\w.]+)." + prefix;
+            var res = line.match(new RegExp(regexp));
+            var wordList = interpreter.getAutocompletionList(res ? res[1] : null);
+            callback(null, wordList);
+        }
+    };
+    tools.addCompleter(interpreterCompleter);
+    initializedMode = true;
 }
 function getHttpOptions(headers) {
     if (headers && typeof headers === 'object') {
@@ -1829,7 +1851,7 @@ function format(value, displayFormat) {
     }
     if (value instanceof Date) {
         var dt = value;
-        return (!displayFormat) ? Object(_utils__WEBPACK_IMPORTED_MODULE_6__["dateToDtoString"])(dt) : wijmo_wijmo__WEBPACK_IMPORTED_MODULE_2__["Globalize"].format(dt, String(displayFormat));
+        return (!displayFormat) ? Object(_utils__WEBPACK_IMPORTED_MODULE_7__["dateToDtoString"])(dt) : wijmo_wijmo__WEBPACK_IMPORTED_MODULE_2__["Globalize"].format(dt, String(displayFormat));
     }
     if (typeof value === 'object') {
         return JSON.stringify(value);
@@ -1846,7 +1868,7 @@ function templateString(formatTemplate, values) {
     for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
         var key = keys_1[_i];
         if (key && !key.startsWith('_')) {
-            result = Object(_utils__WEBPACK_IMPORTED_MODULE_6__["replaceAll"])(key, values[key]);
+            result = Object(_utils__WEBPACK_IMPORTED_MODULE_7__["replaceAll"])(key, values[key]);
         }
     }
     return result;
@@ -1860,7 +1882,7 @@ function mapTableDto(table, fields) {
             }
         });
     }
-    return Object(_utils__WEBPACK_IMPORTED_MODULE_6__["mapTableToValues"])(table);
+    return Object(_utils__WEBPACK_IMPORTED_MODULE_7__["mapTableToValues"])(table);
 }
 function getHttpClient() {
     var injector = _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"].create({
@@ -2342,6 +2364,32 @@ var Interpreter = /** @class */ (function () {
                 }
             });
         });
+    };
+    Interpreter.prototype.getAutocompletionList = function (objPath) {
+        var varsScope = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.globalVars, this.vars, this.funcs);
+        function toAutoCompletion(obj, propName) {
+            if (typeof obj !== 'object') {
+                return null;
+            }
+            var tp = typeof obj[propName];
+            var result = {
+                name: propName,
+                score: 1,
+                value: tp === 'function' ? propName + '()' : propName,
+                caption: propName,
+                meta: tp
+            };
+            return result;
+        }
+        if (objPath) {
+            var obj_1 = varsScope[objPath];
+            return (obj_1 !== undefined) ?
+                Object.getOwnPropertyNames(obj_1).map(function (p) { return toAutoCompletion(obj_1, p); }).filter(function (a) { return a; })
+                : [];
+        }
+        else {
+            return Object.keys(varsScope).map(function (p) { return toAutoCompletion(varsScope, p); }).filter(function (a) { return a; });
+        }
     };
     return Interpreter;
 }());

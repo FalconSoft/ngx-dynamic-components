@@ -546,7 +546,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _services_data_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/data.service */ "./src/app/forms-builder/services/data.service.ts");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../constants */ "./src/app/forms-builder/constants.ts");
-/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "./node_modules/@ngx-dynamic-components/core/fesm5/ngx-dynamic-components-core.js");
+/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "../ngx-dynamic-components/projects/core/src/public_api.ts");
 /* harmony import */ var src_app_shared_app_variables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/app-variables */ "./src/app/shared/app-variables.ts");
 /* harmony import */ var src_app_security__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/security */ "./src/app/security/index.ts");
 
@@ -805,9 +805,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var ngx_bootstrap_alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-bootstrap/alert */ "./node_modules/ngx-bootstrap/alert/fesm5/ngx-bootstrap-alert.js");
 /* harmony import */ var ngx_bootstrap_dropdown__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-bootstrap/dropdown */ "./node_modules/ngx-bootstrap/dropdown/fesm5/ngx-bootstrap-dropdown.js");
-/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "./node_modules/@ngx-dynamic-components/core/fesm5/ngx-dynamic-components-core.js");
-/* harmony import */ var _ngx_dynamic_components_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-dynamic-components/bootstrap */ "./node_modules/@ngx-dynamic-components/bootstrap/fesm5/ngx-dynamic-components-bootstrap.js");
-/* harmony import */ var _ngx_dynamic_components_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-dynamic-components/material */ "./node_modules/@ngx-dynamic-components/material/fesm5/ngx-dynamic-components-material.js");
+/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "../ngx-dynamic-components/projects/core/src/public_api.ts");
+/* harmony import */ var _ngx_dynamic_components_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-dynamic-components/bootstrap */ "../ngx-dynamic-components/projects/bootstrap/src/public-api.ts");
+/* harmony import */ var _ngx_dynamic_components_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-dynamic-components/material */ "../ngx-dynamic-components/projects/material/src/public_api.ts");
 /* harmony import */ var src_app_wijmo_wijmo_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/wijmo/wijmo.module */ "./src/app/wijmo/wijmo.module.ts");
 /* harmony import */ var src_app_shared__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/shared */ "./src/app/shared/index.ts");
 /* harmony import */ var src_app_shared_services__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/app/shared/services */ "./src/app/shared/services/index.ts");
@@ -885,7 +885,7 @@ var FormsBuilderModule = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "./node_modules/@ngx-dynamic-components/core/fesm5/ngx-dynamic-components-core.js");
+/* harmony import */ var _ngx_dynamic_components_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ngx-dynamic-components/core */ "../ngx-dynamic-components/projects/core/src/public_api.ts");
 /* harmony import */ var _shared_interpreter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/interpreter */ "./src/app/shared/interpreter.ts");
 
 
