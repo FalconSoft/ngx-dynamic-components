@@ -342,6 +342,8 @@ export class Interpreter {
         return this;
     }
 
+    hasFunction(scripts, funcName: string) {return true;}
+
     async evaluate(script: string, context: object = null, entryFunctionName: string = null): Promise<any> {
         // replace all tabs with 2 spaces
         script = script.replace(new RegExp('\t', 'g'), '  ');

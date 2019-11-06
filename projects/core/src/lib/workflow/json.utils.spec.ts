@@ -1,4 +1,3 @@
-import { WorkflowConfig, WorkflowEngine } from './workflow.processor';
 import { JSONUtils } from './json.utils';
 
 export const TEST_OBJECT = {

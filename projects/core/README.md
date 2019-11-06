@@ -38,14 +38,14 @@ export class AppModule { }
 In html template add tag
 ```
 <ngx-dynamic-component (render)="onRender($event)" [uiModel]='uiModel'
-    [dataModel]='dataModel' [workflow]='workflowConfig'></ngx-dynamic-component>
+    [dataModel]='dataModel' [interpreter]='interpreter'></ngx-dynamic-component>
 ```
 For designer mode use tag
 ```
 <ngx-designer-component (uiModelUpdated)="onUIModelUpdateHandler($event)"
-  [uiModel]='page.uiModel' [workflow]='page.workflowConfig'></ngx-designer-component>
+  [uiModel]='uiModel' [interpreter]='interpreter'></ngx-designer-component>
 ```
-In ts code add `uiModel`, `workflowConfig` and `dataModel`
+In ts code add `uiModel`, `interpreter` and `dataModel`
 
 ```
 uiModel = {
@@ -79,29 +79,8 @@ uiModel = {
 
   dataModel = {};
 
-  workflowConfig = {
-    failOnError: true,
-    include: ['@common'],
-    vars: {},
-    workflowsMap: {},
-    consts: {}
-  };
-
-  workflow: WorkflowConfig = {
-    failOnError: true,
-    include: ['@common'],
-    vars: {},
-    workflowsMap: {
-      'container-OnInit': []
-    },
-    consts: {}
-  };
+  interpreter = Interpreter.create()
   ```
-
-## Workflow
-
-Application provides workflows - sequance of sync/async actions that are executed one by one.
-[Workflow](src/lib/workflow/README.md)
 
 ## Properties
 

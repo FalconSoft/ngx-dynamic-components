@@ -50,14 +50,14 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         }
       }
 
-      // if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
-      //   return null;
-      // }
-      // const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
+      if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
+        return null;
+      }
+      const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
       // TODO: Handle case for Array type.
-      // if (!Array.isArray(this.dataModel)) {
-      //   return JSONUtils.find(this.dataModel, dataModelPath);
-      // }
+      if (!Array.isArray(this.dataModel)) {
+        return JSONUtils.find(this.dataModel, dataModelPath);
+      }
     }
 
     set componentDataModel(val) {
@@ -75,10 +75,16 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       if (!this.interpreter || !this.uiModel.id) { return; }
 
       const functionName = this.uiModel.id + action;
-      this.interpreter.evaluate(this.scripts, {
-        uiModel: this.uiModel,
-        dataModel: this.dataModel
-      }, functionName);
+      if (this.interpreter.hasFunction(this.scripts, functionName)) {
+        try {
+          await this.interpreter.evaluate(this.scripts, {
+            uiModel: this.uiModel,
+            dataModel: this.dataModel
+          }, functionName);
+        } catch (e) {
+          this.interpreter.evaluate(`alert("${e.message}")`);
+        }
+      }
     }
 
     get itemStyles() {
