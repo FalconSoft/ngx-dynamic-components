@@ -1,12 +1,12 @@
 <mat-card *ngIf="initUiModel" fxLayout="column">
   <mat-card-header fxLayoutAlign="start center">
     <span fxFlex="1 1 auto">{{title}}</span>
-    <button mat-icon-button matTooltip="Add row" *ngIf="editMode$ | async" (click)="addRow()">
+    <!-- <button mat-icon-button matTooltip="Add row" *ngIf="editMode$ | async" (click)="addRow()">
       <mat-icon>add_box</mat-icon>
-    </button>
-    <button mat-icon-button [matTooltip]="editorTooltip$ | async" (click)="editMode$.next(!editMode$.value)">
+    </button> -->
+    <!-- <button mat-icon-button [matTooltip]="editorTooltip$ | async" (click)="editMode$.next(!editMode$.value)">
       <mat-icon [ngStyle]="{opacity: (editMode$ | async) ? 1 : 0.5}">edit</mat-icon>
-    </button>
+    </button> -->
     <button mat-icon-button *ngIf="sourceCode" (click)="toggleLayout()"
       [matTooltip]="(isHorizontal ? 'Vertical' : 'Horizontal') + ' layout'">
       <mat-icon>{{isHorizontal ? 'vertical_split' : 'horizontal_split'}}</mat-icon>
@@ -15,25 +15,27 @@
       <mat-icon>code</mat-icon>
     </button>
   </mat-card-header>
-  <mat-card-content [fxLayout]="layout" fxFlex="1 1 auto">
-    <ng-container *ngIf="sourceCode">
-      <mat-tab-group fxFlex="1 1 auto" [ngStyle]="{'max-width': isHorizontal ? '100%' : '50%'}">
+  <mat-card-content [fxLayout]="layout">
+    <div *ngIf="sourceCode" fxLayout="row">
+      <mat-tab-group [ngStyle]="{width: isHorizontal ? '100%' : '100%'}">
         <mat-tab label="UI Model">
           <ngx-monaco-editor [options]="editorOptions" [formControl]="uiModelControl"></ngx-monaco-editor>
         </mat-tab>
-        <mat-tab label="Workflows">
-          <ngx-monaco-editor [options]="editorOptions" [formControl]="workflowControl"></ngx-monaco-editor>
+        <mat-tab label="Scripts">
+          <ngx-monaco-editor [options]="editorOptions" [formControl]="scriptControl"></ngx-monaco-editor>
         </mat-tab>
         <mat-tab label="Data Model">
           <ngx-monaco-editor [options]="editorOptions" [formControl]="dataModelControl"></ngx-monaco-editor>
         </mat-tab>
       </mat-tab-group>
-      <mat-divider *ngIf="isHorizontal"></mat-divider>
-    </ng-container>
-
+    </div>
+    <mat-divider *ngIf="isHorizontal"></mat-divider>
     <div class="preview" fxFlex="1 1 auto" [ngClass]="{'edit-mode': editMode$ | async}">
-      <dc-ui-selector #dynamicComponent (changedDataModel)="onDataModelChange($event)" [uiModel]='uiModel'
-        [dataModel]='dataModel'></dc-ui-selector >
+      <ngx-dynamic-component #dynamicComponent (changedDataModel)="onDataModelChange($event)"
+        [uiModel]='uiModel'
+        [interpreter]='interpreter'
+        [scripts]='scripts'
+        [dataModel]='dataModel'></ngx-dynamic-component>
     </div>
 
   </mat-card-content>

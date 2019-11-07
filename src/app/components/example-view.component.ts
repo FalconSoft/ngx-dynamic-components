@@ -3,7 +3,6 @@ import { EXAMPLES_LIST } from '../examples/examples.config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { WorkflowEngine } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-example',
@@ -12,9 +11,9 @@ import { WorkflowEngine } from '@ngx-dynamic-components/core';
       <dc-preview-editor
           #editor
           [title]="ex.name"
+          [scripts]="ex.scripts"
           [initUiModel]="ex.uiModel"
-          [initDataModel]="ex.dataModel"
-          [workflowEngine]="ex.workflowEngine"></dc-preview-editor>
+          [initDataModel]="ex.dataModel"></dc-preview-editor>
       <h3 class="">Data Model: </h3>
       <div dcJsonFormatter [json]="editor.dataModel$ | async"></div>
     </ng-container>
@@ -41,10 +40,6 @@ export class ExampleViewComponent implements OnInit {
         filter(p => p.example),
         map(p => {
           const config = EXAMPLES_LIST.find(({name}) => p.example === name);
-          const wfConfig = config.workflowConfig;
-          wfConfig.vars.uiModel = config.uiModel;
-          wfConfig.vars.dataModel = config.dataModel;
-          (config as any).workflowEngine = new WorkflowEngine(wfConfig);
           return config;
         }));
 

@@ -22,7 +22,7 @@ export interface PeriodicElement {
       <ng-container *ngIf="component.example as ex">
         <dc-preview-editor
           [title]="ex.title"
-          [workflowEngine]="ex.workflowEngine"
+          [scripts]="ex.scripts"
           [initUiModel]="ex.uiModel"
           [initDataModel]="ex.dataModel"></dc-preview-editor>
       </ng-container>

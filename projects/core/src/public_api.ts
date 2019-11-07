@@ -19,3 +19,6 @@ export * from './lib/workflow/json.utils';
 export * from './lib/workflow/models';
 export * from './lib/workflow/logger';
 export * from './lib/utils';
+
+// TODO: remove after creating npm package for interpreter
+export * from './lib/interpreter/interpreter';

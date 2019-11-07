@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { UIModel, UISelectorComponent, WorkflowEngine } from '@ngx-dynamic-components/core';
+import { UIModel, NGXDynamicComponent, Interpreter } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -18,7 +18,7 @@ enum Layout {
 })
 export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit {
 
-  @Input() workflowEngine: WorkflowEngine;
+  @Input() scripts: string;
   @Input() initUiModel: UIModel;
   @Input() initDataModel: any;
   @Input() title: string;
@@ -29,11 +29,12 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
 
   uiModelControl: FormControl;
   dataModelControl: FormControl;
-  workflowControl: FormControl;
+  scriptControl: FormControl;
+  interpreter: Interpreter;
 
-  @ViewChild('dynamicComponent', {static: false}) dynamicComponent: UISelectorComponent;
+  @ViewChild('dynamicComponent', {static: false}) dynamicComponent: NGXDynamicComponent;
 
-  layout: Layout = Layout.horizontal;
+  layout: Layout = Layout.vertical;
 
   sourceCode = false;
   editMode$ = new BehaviorSubject<boolean>(false);
@@ -49,6 +50,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   constructor(private container: ElementRef, private dragService: DragDropService) { }
 
   ngOnInit() {
+    this.interpreter = Interpreter.create();
     this.initUIPreview();
     this.editMode$.subscribe(editMode => {
       if (editMode) {
@@ -107,18 +109,15 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   private initUIPreview() {
     this.initUIModelControl().subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
     this.initDataModelControl().subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel));
-    this.initWorkflowControl();
+    this.initScriptsControl();
     this.dragService.uiModelUpdates$.subscribe(() => this.onDataModelChange(null));
   }
 
   private refreshPreview(uiModel: UIModel, dataModel: any) {
     this.uiModel = uiModel;
     this.dataModel = dataModel;
-    this.workflowEngine.setVariable('uiModel', this.uiModel);
-    this.workflowEngine.setVariable('dataModel', this.dataModel);
-    if (this.workflowControl) {
-      const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
-      this.workflowControl.setValue(strWorkflowConfig);
+    if (this.scriptControl) {
+      this.scriptControl.setValue(this.scripts);
     }
 
     if (this.editMode$.value) {
@@ -149,14 +148,11 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
         map(str => JSON.parse(str)));
   }
 
-  private initWorkflowControl() {
-    const strWorkflowConfig = JSON.stringify(this.workflowEngine.configuration, null, 4);
-    this.workflowControl = new FormControl(strWorkflowConfig);
-    this.workflowControl.valueChanges.pipe(
-      filter(this.jsonValidFilter),
-      map(str => JSON.parse(str))).subscribe(wc => {
-        this.workflowEngine.loadContext(wc);
-      });
+  private initScriptsControl() {
+    this.scriptControl = new FormControl(this.scripts);
+    this.scriptControl.valueChanges.subscribe(sc => {
+      this.scripts = sc;
+    });
   }
 
   private jsonValidFilter(jsonStr: string): boolean {

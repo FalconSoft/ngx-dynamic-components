@@ -159,7 +159,7 @@ export const ProfileFormUIModel = {
           },
           itemProperties: {
             label: 'SUBMIT',
-            clickActionKey: 'consoleLog'
+            clickActionKey: 'SubmitForm'
           }
         },
       ]
@@ -214,5 +214,8 @@ export const ProfileWorkflowsMap = {
         propertyValue: '$findCities-returnValue'
       }
     ]
-  }
+  },
 } as WorkflowConfig;
+
+export const ProfileScripts = `def SubmitForm():
+  print("SubmitForm")`;

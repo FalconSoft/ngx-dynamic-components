@@ -8,13 +8,18 @@ import { packageName } from '../constants';
     template: `
     <button mat-flat-button color="primary"
       [ngStyle]="itemStyles"
-      (click)="interpreter.evaluate(scripts, uiModel.itemProperties?.clickActionKey)">
+      (click)="onClick()">
     {{uiModel.itemProperties?.label}}
     </button>
     `
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
-
+  onClick() {
+    this.interpreter.evaluate(this.scripts, {
+      dataModel: this.dataModel,
+      uiModel: this.uiModel
+    }, this.properties.clickActionKey);
+  }
 }
 
 export class ButtonProperties extends StyleProperties {

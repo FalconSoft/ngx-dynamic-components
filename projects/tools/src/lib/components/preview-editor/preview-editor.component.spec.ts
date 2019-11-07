@@ -4,9 +4,9 @@ import { MatTabsModule, MatIconModule, MatTooltipModule, MatCardModule, MatDivid
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { CoreModule, WorkflowEngine, UIModel } from '@ngx-dynamic-components/core';
+import { CoreModule, UIModel } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
-import { ProfileFormUIModel, ProfileDataModel, ProfileWorkflowsMap } from 'src/app/examples/profile-page.config';
+import { ProfileFormUIModel, ProfileDataModel, ProfileScripts } from 'src/app/examples/profile-page.config';
 import { PreviewEditorComponent } from './preview-editor.component';
 import { DebugElement } from '@angular/core';
 
@@ -33,7 +33,7 @@ describe('PreviewEditorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PreviewEditorComponent);
     component = fixture.componentInstance;
-    component.workflowEngine = new WorkflowEngine(ProfileWorkflowsMap);
+    component.scripts = ProfileScripts;
     component.initUiModel = ProfileFormUIModel;
     component.initDataModel = ProfileDataModel;
     component.title = TITLE;
@@ -57,7 +57,7 @@ describe('PreviewEditorComponent', () => {
     // Verify existing tabs.
     const labels = codeEditorTabs.querySelectorAll('mat-tab-header .mat-tab-label-content');
     expect(labels[0].textContent).toEqual('UI Model');
-    expect(labels[1].textContent).toEqual('Workflows');
+    expect(labels[1].textContent).toEqual('Scripts');
     expect(labels[2].textContent).toEqual('Data Model');
     // Verify layout button appear.
     const layoutBtn = getBtnByIcon(editorEl.querySelector('mat-card-header'), 'vertical_split');

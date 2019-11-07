@@ -3,6 +3,7 @@ import { EXAMPLES_LIST } from '../examples/examples.config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Interpreter } from 'projects/core/src/lib/interpreter/interpreter';
 
 @Component({
   selector: 'dc-static-example',
@@ -11,7 +12,8 @@ import { Observable } from 'rxjs';
       <ngx-dynamic-component #dynamicComponent
         [uiModel]='ex.uiModel'
         [dataModel]='ex.dataModel'
-        [workflow]='ex.workflowConfig'></ngx-dynamic-component>
+        [interpreter]='interpreter'
+        [scripts]='ex.scripts'></ngx-dynamic-component>
     </ng-container>
   `,
   styles: [`
@@ -26,6 +28,7 @@ export class StaticExampleViewComponent implements OnInit {
   example: Observable<any>;
 
   ex: any;
+  interpreter: Interpreter;
 
   constructor(private route: ActivatedRoute, private router: Router) {
   }
@@ -39,7 +42,10 @@ export class StaticExampleViewComponent implements OnInit {
           return config;
         }));
 
-    this.example.subscribe(e => this.ex = e);
+    this.example.subscribe(e => {
+      this.ex = e;
+      this.interpreter = Interpreter.create();
+    });
 
     this.route.params.subscribe(({example}) => {
       if (!example) {

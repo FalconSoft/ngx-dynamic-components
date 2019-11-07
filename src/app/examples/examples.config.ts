@@ -1,4 +1,4 @@
-import { ProfileFormUIModel, ProfileCardUIModel, ProfileDataModel, ProfileWorkflowsMap } from './profile-page.config';
+import { ProfileFormUIModel, ProfileCardUIModel, ProfileDataModel, ProfileScripts } from './profile-page.config';
 import { dashboardConfig } from './dashboard.config';
 import { bsFormConfig } from './profile-bs.config';
 import { itemsListConfig } from './items-list.config';
@@ -9,13 +9,13 @@ export const EXAMPLES_LIST = [{
   name: 'profile-form',
   uiModel: ProfileFormUIModel,
   dataModel: ProfileDataModel,
-  workflowConfig: ProfileWorkflowsMap
+  scripts: ProfileScripts
 }, {
   type: 'Form Controls',
   name: 'profile-form-card',
   uiModel: ProfileCardUIModel,
   dataModel: ProfileDataModel,
-  workflowConfig: ProfileWorkflowsMap
+  scripts: ProfileScripts
 }, dashboardConfig, bsFormConfig, itemsListConfig, itemsTableConfig];
 
 export function getGroupedExamples(): {name: string, examples: []}[] {
