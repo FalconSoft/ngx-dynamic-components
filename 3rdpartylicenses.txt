@@ -616,9 +616,6 @@ ngx-bootstrap/tabs
 
 ngx-bootstrap/utils
 
-ngx-monaco-editor
-MIT
-
 pscript-interpreter
 ISC
 
