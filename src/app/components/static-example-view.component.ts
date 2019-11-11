@@ -3,7 +3,7 @@ import { EXAMPLES_LIST } from '../examples/examples.config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Interpreter } from 'projects/core/src/lib/interpreter/interpreter';
+import { Interpreter } from 'pscript-interpreter';
 
 @Component({
   selector: 'dc-static-example',

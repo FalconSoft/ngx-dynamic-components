@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild,
-  Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+  Output, EventEmitter, OnDestroy } from '@angular/core';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { Subject, fromEvent } from 'rxjs';
 import { takeUntil, debounceTime, filter, map } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { UIModel } from '../../models';
 import { DragDropService } from '../../services/drag-drop.service';
 import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
 import { formatObjToJsonStr } from '../../utils';
-import { Interpreter } from '../../interpreter/interpreter';
+import { Interpreter } from 'pscript-interpreter';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line

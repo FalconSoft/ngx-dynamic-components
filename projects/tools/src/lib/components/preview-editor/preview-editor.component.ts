@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { UIModel, NGXDynamicComponent, Interpreter } from '@ngx-dynamic-components/core';
+import { UIModel, NGXDynamicComponent } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Interpreter } from 'pscript-interpreter';
 
 import { DragDropService } from '../../services/drag-drop.service';
 

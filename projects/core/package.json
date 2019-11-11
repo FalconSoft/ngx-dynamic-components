@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/core",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "private": false,
   "description": "@ngx-dynamic-components/core is Angular 7+ library what contains a core interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -25,7 +25,6 @@
     "@angular/core": "^8.1.2",
     "@ng-select/ng-select": "^3.0.6",
     "ace-builds": "^1.4.5",
-    "angular-split": "^3.0.2",
     "ng2-dragula": "^2.1.1",
     "ngx-bootstrap": "^5.1.1"
   }

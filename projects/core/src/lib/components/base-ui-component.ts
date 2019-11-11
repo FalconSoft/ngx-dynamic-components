@@ -3,7 +3,7 @@ import { UIModel, AttributesMap } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
 import { kebabStrToCamel } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList } from '../properties';
-import { Interpreter } from '../interpreter/interpreter';
+import { Interpreter } from 'pscript-interpreter';
 
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;

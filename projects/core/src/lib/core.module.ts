@@ -18,7 +18,6 @@ import { PropertiesEditorComponent } from './components/properties-editor/proper
 import { ControlsPanelComponent } from './components/controls-panel/controls-panel.component';
 import { ComboPropertyComponent } from './components/combo-property/combo-property.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ActionsService } from './services/actions.service';
 import { WorkflowEditorComponent } from './components/workflow-editor/workflow-editor.component';
 
 @NgModule({
@@ -40,9 +39,7 @@ import { WorkflowEditorComponent } from './components/workflow-editor/workflow-e
     FormsModule,
     HttpClientModule
   ],
-  exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, WorkflowEditorComponent],
+  exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, WorkflowEditorComponent, AngularSplitModule],
   entryComponents: [ControlEditorComponent, WorkflowEditorComponent]
 })
-export class CoreModule {
-  constructor(private actionsService: ActionsService) { }
-}
+export class CoreModule { }
