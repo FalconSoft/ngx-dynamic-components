@@ -42,8 +42,8 @@
         "dist/@ngx-dynamic-components/bootstrap/*"
       ],
       "@ngx-dynamic-components/tools": [
-        "dist/@ngx-dynamic-components/tools",
-        // "projects/tools/src/public_api.ts"
+        // "dist/@ngx-dynamic-components/tools",
+        "projects/tools/src/public_api.ts"
       ],
       "@ngx-dynamic-components/tools/*": [
         "dist/@ngx-dynamic-components/tools/*"

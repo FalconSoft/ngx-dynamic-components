@@ -6,7 +6,6 @@ import { AngularSplitModule } from 'angular-split';
 import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule, MatCardModule, MatIconModule,
   MatTooltipModule, MatInputModule, MatFormFieldModule, MatDialogModule, MatListModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { DragulaModule } from 'ng2-dragula';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
@@ -42,9 +41,9 @@ import { AddDialogComponent } from './components/add-dialog/add-dialog.component
     ReactiveFormsModule,
     FlexLayoutModule,
     AngularSplitModule.forRoot(),
-    MonacoEditorModule.forRoot({
-      baseUrl: './assets'
-    }),
+    // MonacoEditorModule.forRoot({
+    //   baseUrl: './assets'
+    // }),
     DragulaModule.forRoot()
   ],
   exports: [ PreviewEditorComponent ],

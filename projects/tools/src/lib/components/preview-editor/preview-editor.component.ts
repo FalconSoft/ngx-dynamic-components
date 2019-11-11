@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { UIModel, NGXDynamicComponent } from '@ngx-dynamic-components/core';
+import { UIModel, NGXDynamicComponent, formatObjToJsonStr } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
+import { Ace, edit } from 'ace-builds';
 import { Interpreter } from 'pscript-interpreter';
 
 import { DragDropService } from '../../services/drag-drop.service';
@@ -23,20 +24,22 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   @Input() initUiModel: UIModel;
   @Input() initDataModel: any;
   @Input() title: string;
+  @ViewChild('uiModel', {static: false}) uiModelEl: ElementRef<HTMLElement>;
+  @ViewChild('scripts', {static: false}) scriptsEl: ElementRef<HTMLElement>;
+  @ViewChild('dataModel', {static: false}) dataModelEl: ElementRef<HTMLElement>;
+  @ViewChild('dynamicComponent', {static: false}) dynamicComponent: NGXDynamicComponent;
   @HostBinding('style.flex') flex = 'initial';
 
   uiModel: UIModel;
   dataModel: any;
-
+  uiModelEditor: Ace.Editor;
+  dataModelEditor: Ace.Editor;
+  scriptsEditor: Ace.Editor;
   uiModelControl: FormControl;
   dataModelControl: FormControl;
   scriptControl: FormControl;
   interpreter: Interpreter;
-
-  @ViewChild('dynamicComponent', {static: false}) dynamicComponent: NGXDynamicComponent;
-
   layout: Layout = Layout.vertical;
-
   sourceCode = false;
   editMode$ = new BehaviorSubject<boolean>(false);
   editorOptions = {
@@ -45,14 +48,14 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   };
 
   get editorTooltip$() {
-    return this.editMode$.pipe(map(edit => edit ? 'Disable preview edit' : 'Enable preview edit'));
+    return this.editMode$.pipe(map(mode => mode ? 'Disable preview edit' : 'Enable preview edit'));
   }
 
   constructor(private container: ElementRef, private dragService: DragDropService) { }
 
   ngOnInit() {
     this.interpreter = Interpreter.create();
-    this.initUIPreview();
+    this.uiModel = this.initUiModel;
     this.editMode$.subscribe(editMode => {
       if (editMode) {
         this.dragService.init(this.container, this.uiModel);
@@ -64,12 +67,13 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
 
   ngOnChanges({initUiModel}: SimpleChanges) {
     if (initUiModel && !initUiModel.firstChange) {
-      this.initUIPreview();
+      // this.initUIPreview();
     }
   }
 
   ngAfterViewInit() {
     this.onDataModelChange(this.dynamicComponent.dataModel);
+    this.initUIPreview();
   }
 
   get isHorizontal() {
@@ -82,6 +86,9 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     if (!this.sourceCode) {
       this.layout = Layout.horizontal;
     }
+    setTimeout(() => {
+      this.initUIPreview();
+    });
   }
 
   toggleLayout() {
@@ -101,16 +108,24 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
 
   onDataModelChange(data: any) {
     if (data) {
-      this.dataModelControl.setValue(JSON.stringify(data, null, 4));
-    } else {
-      this.uiModelControl.setValue(JSON.stringify(this.uiModel, null, 4));
+      this.dataModelEditor.setValue(formatObjToJsonStr(data));
+    } else if (this.uiModelEditor) {
+      this.uiModelEditor.setValue(formatObjToJsonStr(this.uiModel));
     }
   }
 
   private initUIPreview() {
-    this.initUIModelControl().subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
-    this.initDataModelControl().subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel));
-    this.initScriptsControl();
+    if (this.uiModelEl) {
+      this.initEditor('uiModel', this.uiModelEl, this.initUiModel)
+        .subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
+
+      this.initEditor('dataModel', this.dataModelEl, this.initDataModel)
+        .subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel));
+
+      this.initEditor('scripts', this.scriptsEl, this.scripts, 'ace/mode/python')
+        .subscribe(sc => this.scripts = sc);
+    }
+
     this.dragService.uiModelUpdates$.subscribe(() => this.onDataModelChange(null));
   }
 
@@ -128,14 +143,46 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     }
   }
 
+  private initEditor(name: string, element: ElementRef, value: object|string, mode = 'ace/mode/json'): Observable<any> {
+    const editor = edit(element.nativeElement, {
+      mode,
+      autoScrollEditorIntoView: true,
+      value: typeof value === 'string' ? value : formatObjToJsonStr(value),
+      tabSize: 2,
+      useSoftTabs: true,
+      indentedSoftWrap: true
+    });
+
+    editor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: false,
+      enableLiveAutocompletion: true
+    });
+
+    this[`${name}Editor`] = editor;
+
+    return fromEvent(editor, 'change').pipe(map(() => {
+      return editor.getValue();
+    }));
+  }
+
   private initUIModelControl(): Observable<any> {
-    const strUiModel = JSON.stringify(this.initUiModel, null, 4);
-    this.uiModelControl = new FormControl(strUiModel);
-    return this.uiModelControl.valueChanges
-      .pipe(
-        filter(this.jsonValidFilter),
-        startWith(strUiModel),
-        map(str => JSON.parse(str)));
+    this.uiModelEditor = edit(this.uiModelEl.nativeElement, {
+      mode: 'ace/mode/python',
+      autoScrollEditorIntoView: true,
+      value: this.scripts,
+      tabSize: 2,
+      useSoftTabs: true,
+      indentedSoftWrap: true
+    });
+
+    this.uiModelEditor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: false,
+      enableLiveAutocompletion: true
+    });
+
+    return fromEvent(this.uiModelEditor, 'change');
   }
 
   private initDataModelControl(): Observable<any> {

@@ -24,18 +24,18 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "node_modules/ngx-monaco-editor/assets/monaco",
-                "output": "./assets/monaco/"
-              }
+              "src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              { "input": "node_modules/ace-builds/src-noconflict/ace.js", "bundleName": "ace-editor" },
+              { "input": "node_modules/ace-builds/src-noconflict/mode-json.js", "lazy": false },
+              { "input": "node_modules/pscript-interpreter/dist/assets/mode-interpreter.js", "lazy": false },
+              { "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js", "lazy": false }
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -231,13 +231,7 @@
             "main": "projects/tools/src/test.ts",
             "tsConfig": "projects/tools/tsconfig.spec.json",
             "karmaConfig": "projects/tools/karma.conf.js",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/ngx-monaco-editor/assets/monaco",
-                "output": "./assets/monaco/"
-              }
-            ]
+            "assets": []
           }
         },
         "lint": {

@@ -19,13 +19,13 @@
     <div *ngIf="sourceCode" fxLayout="row">
       <mat-tab-group [ngStyle]="{width: isHorizontal ? '100%' : '100%'}">
         <mat-tab label="UI Model">
-          <ngx-monaco-editor [options]="editorOptions" [formControl]="uiModelControl"></ngx-monaco-editor>
+          <div #uiModel class="h-100"></div>
         </mat-tab>
         <mat-tab label="Scripts">
-          <ngx-monaco-editor [options]="editorOptions" [formControl]="scriptControl"></ngx-monaco-editor>
+          <div #scripts class="h-100"></div>
         </mat-tab>
         <mat-tab label="Data Model">
-          <ngx-monaco-editor [options]="editorOptions" [formControl]="dataModelControl"></ngx-monaco-editor>
+          <div #dataModel class="h-100"></div>
         </mat-tab>
       </mat-tab-group>
     </div>

@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 import { MatTabsModule, MatIconModule, MatTooltipModule, MatCardModule, MatDividerModule, MatListModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { CoreModule, UIModel } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
 import { ProfileFormUIModel, ProfileDataModel, ProfileScripts } from 'src/app/examples/profile-page.config';
@@ -23,8 +22,7 @@ describe('PreviewEditorComponent', () => {
       imports: [
         CoreModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,
         MatCardModule, MatTabsModule, MatIconModule, MatTooltipModule, MatDividerModule,
-        MatListModule,
-        MonacoEditorModule.forRoot({baseUrl: './assets'})
+        MatListModule
       ]
     })
     .compileComponents();
@@ -91,7 +89,7 @@ describe('PreviewEditorComponent', () => {
       // Wait a tick while monaco editor render.
       tick();
       // Verify monaco editor was rendered for the first tab.
-      expect(tabs[i].querySelector('ngx-monaco-editor .editor-container')).toBeTruthy();
+      expect(tabs[i].querySelector('.ace_editor .editor-container')).toBeTruthy();
     }
   }));
 
