@@ -619,6 +619,9 @@ ngx-bootstrap/utils
 ngx-monaco-editor
 MIT
 
+pscript-interpreter
+ISC
+
 regenerator-runtime
 MIT
 MIT License
