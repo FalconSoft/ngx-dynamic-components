@@ -1,0 +1,109 @@
+{
+  "id": 1,
+  "name": "form1",
+  "title": "From 1",
+  "category": "category-1",
+  "description": "category description",
+  "accountName": "Test1",
+  "uiModel": {
+    "id": "chart",
+    "type": "material:flex-container",
+    "containerProperties": {},
+    "itemProperties": {
+      "width": "100%",
+      "height": "100%",
+      "padding": "16px",
+      "margin": "0",
+      "fxLayoutAlign": "start stretch",
+      "fxLayout": "column",
+      "fxLayoutGap": "8px"
+    },
+    "children": [
+      {
+        "type": "wijmo:chart",
+        "containerProperties": {},
+        "itemProperties": {
+          "dataModelPath": "$.chartData",
+          "header": "Countries",
+          "bindingX": "country",
+          "selectionMode": "Point",
+          "legendPosition": "Bottom",
+          "series": [
+            {
+              "name": "2014",
+              "binding": "2014"
+            },
+            {
+              "name": "2015",
+              "binding": "2015"
+            },
+            {
+              "name": "2016",
+              "binding": "2016"
+            }
+          ],
+          "chartType": 0
+        }
+      }
+    ]
+  },
+  "workflowsMap": {
+    "chart_OnInit": [
+      {
+        "actionType": "mergeInDataModel",
+        "data": {
+          "chartData": [
+            {
+              "2014": 17348075,
+              "2015": 18036650,
+              "2016": 18624450,
+              "country": "United States"
+            },
+            {
+              "2014": 10356508,
+              "2015": 11181556,
+              "2016": 11232110,
+              "country": "China"
+            },
+            {
+              "2014": 4602367,
+              "2015": 4124211,
+              "2016": 4936540,
+              "country": "Japan"
+            },
+            {
+              "2014": 3874437,
+              "2015": 3365293,
+              "2016": 3479230,
+              "country": "Germany"
+            },
+            {
+              "2014": 2950039,
+              "2015": 2858482,
+              "2016": 2629190,
+              "country": "United Kingdom"
+            },
+            {
+              "2014": 2833687,
+              "2015": 2420163,
+              "2016": 2466470,
+              "country": "France"
+            },
+            {
+              "2014": 2051228,
+              "2015": 2073002,
+              "2016": 2263790,
+              "country": "India"
+            },
+            {
+              "2014": 2147744,
+              "2015": 1815759,
+              "2016": 1850740,
+              "country": "Italy"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
