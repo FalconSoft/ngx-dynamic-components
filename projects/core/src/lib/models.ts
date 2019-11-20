@@ -1,7 +1,7 @@
 import { BaseUIComponentConstructor } from './utils';
 import { WorkflowEngine } from './workflow/workflow.processor';
 import { ComponentProperty } from './properties';
-import { Interpreter } from 'pscript-interpreter';
+import { Interpreter } from 'JSPython';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 

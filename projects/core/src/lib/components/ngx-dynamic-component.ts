@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { UIModel } from '../models';
-import { Interpreter } from 'pscript-interpreter';
+import { Interpreter } from 'JSPython';
 
 @Component({
     selector: 'ngx-dynamic-component', // tslint:disable-line
