@@ -165,6 +165,9 @@ MIT
 @ngx-dynamic-components/tools
 MIT
 
+JSPython
+ISC
+
 ace-builds
 BSD-3-Clause
 Copyright (c) 2010, Ajax.org B.V.
@@ -615,9 +618,6 @@ ngx-bootstrap/positioning
 ngx-bootstrap/tabs
 
 ngx-bootstrap/utils
-
-pscript-interpreter
-ISC
 
 regenerator-runtime
 MIT
