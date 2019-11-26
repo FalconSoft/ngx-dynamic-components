@@ -150,6 +150,9 @@ MIT
 @angular/router
 MIT
 
+@jspython-dev/jspython
+MIT
+
 @ng-select/ng-select
 MIT
 
@@ -164,9 +167,6 @@ MIT
 
 @ngx-dynamic-components/tools
 MIT
-
-JSPython
-ISC
 
 ace-builds
 BSD-3-Clause
