@@ -10,7 +10,7 @@ import { packageName } from '../constants';
           <input matInput
             [ngStyle]="itemStyles"
             [placeholder]="uiModel.itemProperties?.placeholder"
-            (input)="changedDataModel.emit(this.dataModel)"
+            (input)="changedDataModel.emit(dataModel)"
             [(ngModel)]="componentDataModel"
             />
         </mat-form-field>

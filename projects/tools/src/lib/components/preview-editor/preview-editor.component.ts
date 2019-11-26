@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
-import { Interpreter } from 'JSPython';
+import { jsPython, Interpreter } from '@jspython-dev/jspython';
 
 import { DragDropService } from '../../services/drag-drop.service';
 
@@ -54,8 +54,9 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   constructor(private container: ElementRef, private dragService: DragDropService) { }
 
   ngOnInit() {
-    this.interpreter = Interpreter.create();
+    this.interpreter = jsPython();
     this.uiModel = this.initUiModel;
+    this.dataModel = this.initDataModel;
     this.editMode$.subscribe(editMode => {
       if (editMode) {
         this.dragService.init(this.container, this.uiModel);
@@ -107,7 +108,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   onDataModelChange(data: any) {
-    if (data) {
+    if (data && this.dataModelEditor) {
       this.dataModelEditor.setValue(formatObjToJsonStr(data));
     } else if (this.uiModelEditor) {
       this.uiModelEditor.setValue(formatObjToJsonStr(this.uiModel));
@@ -117,10 +118,10 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   private initUIPreview() {
     if (this.uiModelEl) {
       this.initEditor('uiModel', this.uiModelEl, this.initUiModel)
-        .subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
+        .subscribe(uiModel => this.refreshPreview(JSON.parse(uiModel), this.dataModel));
 
       this.initEditor('dataModel', this.dataModelEl, this.initDataModel)
-        .subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel));
+        .subscribe(dataModel => this.refreshPreview(this.uiModel, JSON.parse(dataModel)));
 
       this.initEditor('scripts', this.scriptsEl, this.scripts, 'ace/mode/python')
         .subscribe(sc => this.scripts = sc);

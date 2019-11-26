@@ -8,7 +8,7 @@ import { UIModel } from '../../models';
 import { DragDropService } from '../../services/drag-drop.service';
 import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
 import { formatObjToJsonStr } from '../../utils';
-import { Interpreter } from 'JSPython';
+import { Interpreter } from '@jspython-dev/jspython';
 
 @Component({
   selector: 'ngx-designer-component', // tslint:disable-line
