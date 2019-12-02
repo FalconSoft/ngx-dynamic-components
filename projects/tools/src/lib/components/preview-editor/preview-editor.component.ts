@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
-import { jsPython, Interpreter } from '@jspython-dev/jspython';
+import { jsPython, Interpreter } from 'jspython-interpreter';
 
 import { DragDropService } from '../../services/drag-drop.service';
 

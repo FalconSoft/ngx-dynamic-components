@@ -34,7 +34,7 @@
     "@angular/platform-browser": "^8.2.13",
     "@angular/platform-browser-dynamic": "^8.2.13",
     "@angular/router": "^8.2.13",
-    "@jspython-dev/jspython": "^0.0.1",
+    "jspython-interpreter": "^0.0.4",
     "@ng-select/ng-select": "^3.5.0",
     "ace-builds": "^1.4.7",
     "angular-split": "^3.0.2",

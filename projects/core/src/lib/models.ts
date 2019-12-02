@@ -1,7 +1,7 @@
+import { Interpreter } from 'jspython-interpreter';
 import { BaseUIComponentConstructor } from './utils';
 import { WorkflowEngine } from './workflow/workflow.processor';
 import { ComponentProperty } from './properties';
-import { Interpreter } from '@jspython-dev/jspython';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 
