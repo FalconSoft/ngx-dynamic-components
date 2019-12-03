@@ -23,10 +23,14 @@ export class ContainerRowComponent extends BaseUIComponent<BSContainerRowPropert
   @HostBinding('class.flex-column') isColumn = false;
   @HostBinding('attr.drop-container') dropContainer = true;
   @HostBinding('style.display') display = 'flex';
+  @HostBinding('style.height') height = 'auto';
 
   async ngOnInit() {
     await super.ngOnInit();
     this.isColumn = this.properties && this.properties.direction === 'column';
+    if (this.uiModel.containerProperties && this.uiModel.containerProperties.height) {
+      this.height = this.uiModel.containerProperties.height;
+    }
   }
 }
 

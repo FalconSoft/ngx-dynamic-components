@@ -17,7 +17,7 @@
     "build": "ng build",
     "build:libs": "ng build core && ng build material && ng build bootstrap && ng build tools",
     "build:publish": "cd dist/@ngx-dynamic-components/core && npm publish && cd ../material && npm publish && cd ../bootstrap && npm publish && cd ../tools && npm publish && cd ../../../",
-    "build:gh": "ng build --prod --base-href='/ngx-dynamic-components/'",    
+    "build:gh": "ng build --prod --base-href='/ngx-dynamic-components/'",
     "deploy:gh": "npm run build:libs && npm run build:gh && npx ngh --dir=dist/ngx-dynamic-components/",
     "test": "ng test",
     "lint": "ng lint",
