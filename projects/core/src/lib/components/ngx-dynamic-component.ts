@@ -11,7 +11,8 @@ import { UIModel } from '../models';
         [interpreter]='interpreter'
         [scripts]='scripts'
         (changedDataModel)="changedDataModel.emit($event)"
-        (render)="render.emit($event)">
+        (render)="render.emit($event)"
+        (evaluate)="evaluate.emit($event)">
     </dc-ui-selector>`
 })
 export class NGXDynamicComponent implements OnInit, OnChanges {
@@ -21,6 +22,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
     @Input() uiModel: UIModel<any>;
     @Output() render = new EventEmitter();
     @Output() changedDataModel = new EventEmitter();
+    @Output() evaluate = new EventEmitter<boolean>();
 
     async ngOnInit(): Promise<void> {
       this.initInterpreter();

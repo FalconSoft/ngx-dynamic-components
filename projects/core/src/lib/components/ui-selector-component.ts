@@ -60,6 +60,9 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);
       });
+      this.component.evaluate.subscribe((evt) => {
+        this.evaluate.emit(evt);
+      });
       this.render.emit({success: true});
     } catch (error) {
       this.render.emit({error});

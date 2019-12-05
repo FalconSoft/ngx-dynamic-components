@@ -10,6 +10,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @Input() uiModel: UIModel<T>;
     @Input() interpreter: Interpreter;
     @Input() scripts: string;
+    @Output() evaluate = new EventEmitter<boolean>();
     @HostBinding('style.width') width: string;
     @HostBinding('style.height') height: string;
     @HostBinding('style.padding') padding: string;
@@ -76,6 +77,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
 
       const functionName = this.uiModel.id + action;
       if (this.interpreter.hasFunction(this.scripts, functionName)) {
+        this.evaluate.emit(true);
         try {
           await this.interpreter.evaluate(this.scripts, {
             uiModel: this.uiModel,
@@ -83,6 +85,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
           }, functionName);
         } catch (e) {
           this.interpreter.evaluate(`alert("${e.message}")`);
+        } finally {
+          this.evaluate.emit(false);
         }
       }
     }
