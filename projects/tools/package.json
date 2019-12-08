@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/tools",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "private": false,
   "description": "@ngx-dynamic-components/tools is Angular 7+ library what contains a core interfaces to build a configuration driven web pages.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
