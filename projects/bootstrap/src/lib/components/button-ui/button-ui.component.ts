@@ -6,16 +6,25 @@ import { packageName } from '../../constants';
 @Component({
   selector: 'dc-button-ui',
   template: `
-    <button [ngClass]="btnClass"
-      [type]="properties.type" [ngStyle]="itemStyles"
-      (click)="onClick()">{{properties.label}}</button>
+    <a *ngIf="properties.type == 'link' else btn"
+      [ngClass]="btnClass" [ngStyle]="itemStyles" [href]="properties.href">{{properties.label}}</a>
+    <ng-template #btn>
+      <button [ngClass]="btnClass"
+        [type]="properties.type" [ngStyle]="itemStyles"
+        (click)="onClick()">{{properties.label}}</button>
+    </ng-template>
   `
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
-  onClick() {
+  async onClick() {
     if (this.properties.clickActionKey) {
-      this.interpreter.evaluate(this.scripts, {dataModel: this.dataModel, uiModel: this.uiModel}, this.properties.clickActionKey);
-      this.changedDataModel.emit(this.dataModel);
+      this.evaluate.emit(true);
+      try {
+        await this.interpreter.evaluate(this.scripts, {dataModel: this.dataModel, uiModel: this.uiModel}, this.properties.clickActionKey);
+        this.changedDataModel.emit(this.dataModel);
+      } finally {
+        this.evaluate.emit(false);
+      }
     }
   }
 
@@ -46,10 +55,16 @@ export class ButtonProperties extends StyleProperties {
   btnClass?: string;
 
   @propDescription({
-    description: 'Button type: button|submit|reset. Default: button',
+    description: 'Button type: button|submit|reset|link. Default: button',
     example: 'submit',
   })
   type?: string;
+
+  @propDescription({
+    description: 'Link href used in case of type=link.',
+    example: 'submit',
+  })
+  href?: string;
 }
 
 export const example: ComponentExample<UIModel<ButtonProperties>> = {

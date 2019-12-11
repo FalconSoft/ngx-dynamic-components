@@ -9,7 +9,7 @@ import { packageName } from '../../constants';
   <div class="form-group align-items-baseline" [fxLayout]="layout" [ngClass]="cssClasses" [ngStyle]="itemStyles">
     <label class="mr-1 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-    <div class="w-100 flex-column">
+    <div class="w-100 flex-column" [ngStyle]="wrapperStyles">
       <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
         [fxFlex]="properties.inputWidth"
         [placeholder]="properties.placeholder"
@@ -55,6 +55,15 @@ export class InputUIComponent extends LabeledComponent<InputProperties> {
     return this.getStyles(this.uiModel.itemProperties, ['background', 'color']);
   }
 
+  get wrapperStyles() {
+    if (this.properties.inputHeight) {
+      return {
+        height: this.properties.inputHeight
+      };
+    }
+    return null;
+  }
+
   get name() {
     return this.properties.dataModelPath.replace(/[^A-Z]+/gi, '');
   }
@@ -86,6 +95,11 @@ export class InputProperties extends LabelProperties {
     example: '200px',
   })
   inputWidth?: string;
+  @propDescription({
+    description: 'Is field required',
+    example: 'true'
+  })
+  inputHeight?: string;
   @propDescription({
     description: 'Is field required',
     example: 'true'
@@ -161,6 +175,7 @@ export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, In
       combo: [['text', 'number', 'email', 'file', 'url', 'date', 'time', 'datetime-local']]
     }],
     ['inputWidth', {name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout}],
+    ['inputHeight', {name: 'inputHeight', label: 'Input Height', category: PropertyCategories.Layout}],
     ['enabled', { name: 'enabled', label: 'Enabled', category: PropertyCategories.Main,
       combo: [[{label: 'Enable', value: true}, {label: 'Disable', value: false}]]
     }],

@@ -1,6 +1,6 @@
 import { Component, DoCheck } from '@angular/core';
 import { LabelProperties, ComponentDescriptor, LabeledComponent,
-  UIModel, ComponentExample, propDescription, Categories, OptionValue, JSONUtils } from '@ngx-dynamic-components/core';
+  UIModel, ComponentExample, propDescription, Categories, OptionValue, JSONUtils, PropertyCategories } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
@@ -9,10 +9,16 @@ import { packageName } from '../../constants';
     <div class="form-group mb-0" [fxLayout]="layout" [ngStyle]="itemStyles">
       <label selected *ngIf="hasLabel" [for]="id" [class]="properties.labelPosition"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-      <ng-select [items]="options" (change)="onSelect()"
-      [(ngModel)]="componentDataModel" [attr.disabled]="disabled"></ng-select>
+      <ng-select [items]="options" (change)="onSelect()" [ngStyle]="selectStyles"
+      [(ngModel)]="componentDataModel" bindValue="value" [attr.disabled]="disabled"></ng-select>
     </div>`,
-  styleUrls: ['../../styles/label.scss']
+  styleUrls: ['../../styles/label.scss'],
+  styles: [`
+    :host ::ng-deep .ng-select.ng-select-single .ng-select-container {
+      height: inherit;
+      min-height: 30px;
+    }
+  `]
 })
 
 export class SelectUIComponent extends LabeledComponent<SelectProperties> implements DoCheck {
@@ -20,6 +26,15 @@ export class SelectUIComponent extends LabeledComponent<SelectProperties> implem
   onSelect() {
     this.changedDataModel.emit(this.dataModel);
     this.triggerAction('_selectionChanged');
+  }
+
+  get selectStyles() {
+    if (this.properties.selectHeight) {
+      return {
+        height: this.properties.selectHeight
+      };
+    }
+    return null;
   }
 
   ngDoCheck() {
@@ -50,10 +65,10 @@ export class SelectProperties extends LabelProperties {
   options: { label: string, value: string | number }[];
 
   @propDescription({
-    description: 'Label shown when no option is selected.',
-    example: 'Please select an option',
+    description: 'Select height.',
+    example: '30px',
   })
-  label: string;
+  selectHeight?: string;
 }
 
 interface SelectUIComponentConstrutor {
@@ -103,5 +118,8 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
       label: 'Select option',
       dataModelPath: '$.option'
     }
-  }
+  },
+  propertiesDescriptor: [
+    ['selectHeight', {name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout}],
+  ]
 };
