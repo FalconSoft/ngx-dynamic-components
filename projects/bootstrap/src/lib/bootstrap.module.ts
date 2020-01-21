@@ -17,10 +17,11 @@ import { TextareaUIComponent } from './components/textarea-ui/textarea-ui.compon
 import { ButtonUIComponent } from './components/button-ui/button-ui.component';
 import { CardComponent } from './components/card/card.component';
 import { TextUIComponent } from './components/text-ui/text-ui.component';
+import { IconUIComponent } from './components/icon-ui/icon-ui.component';
 
 @NgModule({
   declarations: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,
-    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent, TextUIComponent],
+    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent, TextUIComponent, IconUIComponent],
   imports: [
     CoreModule,
     CommonModule,
@@ -29,7 +30,7 @@ import { TextUIComponent } from './components/text-ui/text-ui.component';
     NgSelectModule
   ],
   exports: [ContainerComponent, ContainerRowComponent, InputUIComponent],
-  entryComponents: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,
+  entryComponents: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent, IconUIComponent,
     CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent, TextUIComponent]
 })
 export class BootstrapModule {

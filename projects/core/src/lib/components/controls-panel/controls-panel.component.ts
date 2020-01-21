@@ -12,7 +12,7 @@ export class ControlsPanelComponent implements OnInit {
   components: Array<ComponentDescriptor> = [];
   private readonly COMPONENTS_LIST = [
     'bootstrap:button', 'bootstrap:text-input', 'bootstrap:textarea', 'bootstrap:radio-group',
-    'material:flex-container', 'bootstrap:text', 'bootstrap:checkbox', 'bootstrap:select',
+    'material:flex-container', 'bootstrap:text', 'bootstrap:checkbox', 'bootstrap:select', 'bootstrap:icon',
     'wijmo:grid', 'rest-client:grid-object-explorer', 'wijmo:chart'
   ];
 

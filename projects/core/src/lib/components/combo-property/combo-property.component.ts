@@ -12,6 +12,7 @@ export class ComboPropertyComponent implements OnInit {
 
   @Input() properties: Array<(string|OptionValue)[]>;
   @Input() value: string|boolean;
+  @Input() name: string;
   @Output() change = new EventEmitter();
 
   result: (string|boolean)[];

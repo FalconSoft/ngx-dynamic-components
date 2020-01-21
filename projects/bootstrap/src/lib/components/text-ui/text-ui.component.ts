@@ -1,7 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import {
-  BaseUIComponent, propDescription, ComponentDescriptor, StyleProperties,
-  ComponentExample, UIModel, Categories, PropertyCategories
+  BaseUIComponent, propDescription, ComponentDescriptor,
+  ComponentExample, UIModel, Categories, PropertyCategories, BindingProperties
 } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
@@ -9,15 +9,15 @@ import { packageName } from '../../constants';
   selector: 'dc-ui-text',
   template: `
     <div [ngSwitch]="txtStyle">
-      <h1 *ngSwitchCase="'h1'" [class]="txtStyle" [ngStyle]="itemStyles">{{properties.text}}</h1>
-      <h2 *ngSwitchCase="'h2'" [class]="txtStyle" [ngStyle]="itemStyles">{{properties.text}}</h2>
-      <h3 *ngSwitchCase="'h3'" [class]="txtStyle" [ngStyle]="itemStyles">{{properties.text}}</h3>
-      <h4 *ngSwitchCase="'h4'" [class]="txtStyle" [ngStyle]="itemStyles">{{properties.text}}</h4>
-      <h5 *ngSwitchCase="'h5'" [class]="txtStyle" [ngStyle]="itemStyles">{{properties.text}}</h5>
-      <h6 *ngSwitchCase="'h6'" [class]="txtStyle" [ngStyle]="itemStyles">{{properties.text}}</h6>
-      <p *ngSwitchCase="''" [ngStyle]="itemStyles">{{properties.text}}</p>
-      <p *ngSwitchCase="undefined" [ngStyle]="itemStyles">{{properties.text}}</p>
-      <span *ngSwitchDefault [class]="txtStyle" [ngStyle]="itemStyles">{{properties.text}}</span>
+      <h1 *ngSwitchCase="'h1'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h1>
+      <h2 *ngSwitchCase="'h2'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h2>
+      <h3 *ngSwitchCase="'h3'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h3>
+      <h4 *ngSwitchCase="'h4'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h4>
+      <h5 *ngSwitchCase="'h5'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h5>
+      <h6 *ngSwitchCase="'h6'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h6>
+      <p *ngSwitchCase="''" [ngStyle]="itemStyles">{{text}}</p>
+      <p *ngSwitchCase="undefined" [ngStyle]="itemStyles">{{text}}</p>
+      <span *ngSwitchDefault [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</span>
     </div>
     `
 })
@@ -26,9 +26,13 @@ export class TextUIComponent extends BaseUIComponent<TextProperties> {
   get txtStyle() {
     return this.properties['text-style'];
   }
+
+  get text() {
+    return this.componentDataModel || this.properties.text;
+  }
 }
 
-export class TextProperties extends StyleProperties {
+export class TextProperties extends BindingProperties {
   @propDescription({
     description: 'Displays text data.',
     example: 'Text information',

@@ -4,6 +4,15 @@
       [name]="prop" (blur)="setValue($event.target.value, i)"
       (input)="result[i] = $event.target.value">
     <ng-select *ngIf="isSelect(prop)" [items]="prop" class="property"
-      (change)="onSelect($event, i)" [ngModel]="selectedOption(i)"></ng-select>
+      (change)="onSelect($event, i)" [ngModel]="selectedOption(i)">
+      <ng-container *ngIf="name === 'iconClass'">
+        <ng-template ng-label-tmp let-item="item">
+          <i [class]="item"></i> {{item.value.replace('fa fa-', '')}}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+          <i [class]="item"></i> {{item.value.replace('fa fa-', '')}}
+        </ng-template>
+      </ng-container>
+    </ng-select>
   </ng-container>
 </div>
