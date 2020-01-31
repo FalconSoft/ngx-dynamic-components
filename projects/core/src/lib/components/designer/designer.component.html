@@ -3,7 +3,7 @@
   <as-split-area class="d-flex flex-column">
     <as-split [useTransition]="true" [ngClass]="{'full-mode': fullMode}" (onDragEnd)="onSizeChange()" (transitionEnd)="onSizeChange()">
         <as-split-area #area0="asSplitArea" class="d-flex mb-0 position-relative" [size]="scriptConfigSize">
-            <div class="tabs-actions position-absolute">
+            <div class="tabs-actions position-absolute" *ngIf="showUIModel">
               <button type="button" class="btn btn-light btn-sm px-1 py-0" (click)="formatJSON()"
                     [ngClass]="{active: formatted}" title="Format JSON data, with proper indentation and line feeds (Ctrl+\)">
                     <i class="fa fa-indent"></i>
@@ -14,10 +14,10 @@
               </button>
             </div>
             <tabset class="tabset-fx w-100">
-              <tab heading="UI Model">
+              <tab heading="UI Model" *ngIf="showUIModel">
                 <div #uiModelEl class="h-100 ace-editor"></div>
               </tab>
-              <tab heading="Script">
+              <tab heading="Script" *ngIf="showScripts">
                 <div #script class="h-100 ace-editor"></div>
               </tab>
             </tabset>

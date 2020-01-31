@@ -5,7 +5,7 @@ import { Subject, fromEvent } from 'rxjs';
 import { takeUntil, debounceTime, filter, map } from 'rxjs/operators';
 import { Ace, edit } from 'ace-builds';
 import { Interpreter } from 'jspython-interpreter';
-import { UIModel } from '../../models';
+import { UIModel, DesignerVisibility } from '../../models';
 import { DragDropService } from '../../services/drag-drop.service';
 import { ControlsPanelComponent } from '../controls-panel/controls-panel.component';
 import { formatObjToJsonStr } from '../../utils';
@@ -20,6 +20,7 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() uiModel: UIModel;
   @Input() scripts: string;
   @Input() interpreter: Interpreter;
+  @Input() visibility: DesignerVisibility;
   @Output() uiModelUpdated = new EventEmitter<UIModel>();
   @Output() scriptUpdate = new EventEmitter<string>();
   @ViewChild('tabset', {static: false}) tabset: TabsetComponent;
@@ -33,6 +34,7 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   uiModelVal: UIModel;
   uiModelEditor: Ace.Editor;
   scriptEditor: Ace.Editor;
+  DesignerVisibility = DesignerVisibility;
   error: string;
   formatted = true;
   modeState = {
@@ -40,6 +42,9 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
     designer: true
   };
   scriptConfigSize = 0;
+  showScripts: boolean;
+  showUIModel: boolean;
+  visibilityMode = DesignerVisibility.All;
 
   private destroy = new Subject();
 
@@ -52,6 +57,11 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
     private dragDropService: DragDropService) { }
 
   ngOnInit() {
+    if (this.visibility) {
+      this.visibilityMode = this.visibility;
+    }
+    this.showScripts = [DesignerVisibility.All, DesignerVisibility.Scripts].includes(this.visibilityMode);
+    this.showUIModel = [DesignerVisibility.All, DesignerVisibility.UIModel].includes(this.visibilityMode);
     this.uiModelVal = this.uiModel;
     this.dragDropService.uiModelUpdates$.pipe(takeUntil(this.destroy)).subscribe(uiModel => {
       this.updateUIModel(uiModel);
@@ -68,45 +78,49 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.uiModelEditor = edit(this.uiModelEl.nativeElement, {
-      mode: 'ace/mode/json',
-      autoScrollEditorIntoView: true,
-      value: formatObjToJsonStr(this.uiModelVal)
-    });
-
-    this.scriptEditor = edit(this.scriptEl.nativeElement, {
-      mode: 'ace/mode/python',
-      autoScrollEditorIntoView: true,
-      value: this.scripts,
-      tabSize: 2,
-      useSoftTabs: true,
-      indentedSoftWrap: true
-    });
-
-    this.scriptEditor.setOptions({
-      enableBasicAutocompletion: true,
-      enableSnippets: false,
-      enableLiveAutocompletion: true
-    });
-
-    fromEvent(this.uiModelEditor, 'change').pipe(
-      debounceTime(500),
-      map(() => {
-        return this.getUIModelObject();
-      }),
-      filter(v => Boolean(v))).subscribe(async uiModel => {
-        this.uiModelVal = uiModel;
-        await this.initDrag();
-        if (this.uiModelToEdit) {
-          const el = await this.dragDropService.selectCurrentComponent();
-          el.click();
-        }
-        this.uiModelUpdated.emit(uiModel);
+    if (this.showUIModel) {
+      this.uiModelEditor = edit(this.uiModelEl.nativeElement, {
+        mode: 'ace/mode/json',
+        autoScrollEditorIntoView: true,
+        value: formatObjToJsonStr(this.uiModelVal)
       });
 
-    fromEvent(this.scriptEditor, 'change').pipe(debounceTime(500)).subscribe(() => {
-      this.scriptUpdate.emit(this.scriptEditor.getValue());
-    });
+      fromEvent(this.uiModelEditor, 'change').pipe(
+        debounceTime(500),
+        map(() => {
+          return this.getUIModelObject();
+        }),
+        filter(v => Boolean(v))).subscribe(async uiModel => {
+          this.uiModelVal = uiModel;
+          await this.initDrag();
+          if (this.uiModelToEdit) {
+            const el = await this.dragDropService.selectCurrentComponent();
+            el.click();
+          }
+          this.uiModelUpdated.emit(uiModel);
+        });
+    }
+
+    if (this.showScripts) {
+      this.scriptEditor = edit(this.scriptEl.nativeElement, {
+        mode: 'ace/mode/python',
+        autoScrollEditorIntoView: true,
+        value: this.scripts,
+        tabSize: 2,
+        useSoftTabs: true,
+        indentedSoftWrap: true,
+      });
+
+      this.scriptEditor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: false,
+        enableLiveAutocompletion: true
+      });
+
+      fromEvent(this.scriptEditor, 'change').pipe(debounceTime(500)).subscribe(() => {
+        this.scriptUpdate.emit(this.scriptEditor.getValue());
+      });
+    }
 
     this.initDrag();
   }
@@ -117,8 +131,12 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSizeChange() {
-    this.uiModelEditor.resize();
-    this.scriptEditor.resize();
+    if (this.showUIModel) {
+      this.uiModelEditor.resize();
+    }
+    if (this.showScripts) {
+      this.scriptEditor.resize();
+    }
   }
 
   onModeState(prop: string) {
@@ -168,12 +186,14 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   onPropertyChange() {
     const model = this.uiModelVal;
     this.uiModelVal = null;
-    window.requestAnimationFrame(() => {
-      this.uiModelVal = model;
-      this.uiModelUpdated.emit(model);
-      this.uiModelEditor.setValue(formatObjToJsonStr(this.uiModelVal), -1);
-      this.initDrag();
-    });
+    if (this.showUIModel) {
+      window.requestAnimationFrame(() => {
+        this.uiModelVal = model;
+        this.uiModelUpdated.emit(model);
+        this.uiModelEditor.setValue(formatObjToJsonStr(this.uiModelVal), -1);
+        this.initDrag();
+      });
+    }
   }
 
   onParentSelect() {

@@ -75,3 +75,9 @@ export const enum Categories {
   DataTable = 'Data table'
 }
 
+export enum DesignerVisibility {
+  UIModel = 1,
+  Scripts = 2,
+  All = 3
+}
+
