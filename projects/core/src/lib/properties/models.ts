@@ -149,4 +149,4 @@ export abstract class ContainerProperties extends StyleProperties {
 }
 
 export const StylePropertiesList = ['width', 'height', 'padding', 'margin', 'min-height', 'min-width', 'background', 'color',
-  'font-size', 'font-weight', 'font-style'];
+  'font-size', 'font-weight', 'font-style', 'overflow'];

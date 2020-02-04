@@ -1,19 +1,20 @@
-<form *ngIf="properties.isForm" drop-container (ngSubmit)="onFormSubmit($event)" #form
+<form *ngIf="properties?.isForm" drop-container (ngSubmit)="onFormSubmit($event)" #form
   [fxLayout]="properties.fxLayout || 'row'"
   [fxLayoutGap]="properties.fxLayoutGap || '0'"
   [fxLayoutAlign]="getStrValue(properties.fxLayoutAlign)"
   [ngStyle]="itemStyles">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </form>
-<div *ngIf="!properties.isForm" drop-container
-  [fxLayout]="properties.fxLayout || 'row'"
-  [fxLayoutGap]="properties.fxLayoutGap || '0'"
-  [fxLayoutAlign]="getStrValue(properties.fxLayoutAlign)"
+<div *ngIf="!properties?.isForm" drop-container
+  [fxLayout]="properties?.fxLayout || 'row'"
+  [fxLayoutGap]="properties?.fxLayoutGap || '0'"
+  [fxLayoutAlign]="getStrValue(properties?.fxLayoutAlign)"
   [ngStyle]="itemStyles">
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
 <ng-template #content>
   <div *ngFor="let item of uiModel.children" class="item"
+    [ngStyle]="getStyles(item.containerProperties)"
     [fxFlex]="item.containerProperties?.fxFlex || 'initial'"
     [fxFlexOrder]="item.containerProperties?.fxFlexOrder || 0"
     [fxFlexOffset]="item.containerProperties?.fxFlexOffset || '0%'"

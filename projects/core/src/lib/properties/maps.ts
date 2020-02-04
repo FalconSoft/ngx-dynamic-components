@@ -11,7 +11,9 @@ export const ContainerControlProperties = new Map<string, ComponentProperty>([
     name: 'fxFlexAlign', label: 'Flex Align', category: PropertyCategories.Container,
     combo: [['start', 'baseline', 'center', 'end']]
   }],
-  ['fxFlexFill', { name: 'fxFlexFill', label: 'Flex Fill', category: PropertyCategories.Container }]
+  ['fxFlexFill', { name: 'fxFlexFill', label: 'Flex Fill', category: PropertyCategories.Container }],
+  ['overflow', {name: 'overflow', label: 'Overflow', category: PropertyCategories.Container,
+  combo: [['auto', 'hidden', 'visible', 'unset']]}]
 ]);
 // background, color, font
 /**
