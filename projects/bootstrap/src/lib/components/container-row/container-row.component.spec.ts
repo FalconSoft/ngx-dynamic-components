@@ -17,12 +17,6 @@ describe('ContainerRowComponent', () => {
       imports: [ FormsModule ]
     });
 
-    TestBed.overrideModule(BrowserDynamicTestingModule, {
-      set: {
-        entryComponents: [InputUIComponent]
-      }
-    });
-
     TestBed.compileComponents();
     registerComponents();
   }));

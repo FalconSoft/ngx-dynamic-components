@@ -3,7 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTabsModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { CoreModule } from '@ngx-dynamic-components/core';
 import { TabsUIComponent, example } from './tabs-ui.component';
 import { registerComponents } from '../register';
@@ -21,11 +23,6 @@ describe('TabsUiComponent', () => {
       imports: [MatTabsModule, MatInputModule, MatSelectModule, CoreModule, NoopAnimationsModule, FormsModule],
     });
 
-    TestBed.overrideModule(BrowserDynamicTestingModule, {
-      set: {
-        entryComponents: [InputUIComponent, TextUIComponent, SelectUIComponent]
-      }
-    });
     TestBed.compileComponents();
     registerComponents();
   }));

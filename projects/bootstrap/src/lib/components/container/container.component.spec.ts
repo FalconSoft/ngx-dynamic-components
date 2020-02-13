@@ -18,12 +18,6 @@ describe('ContainerComponent', () => {
       imports: [ FormsModule ]
     });
 
-    TestBed.overrideModule(BrowserDynamicTestingModule, {
-      set: {
-        entryComponents: [InputUIComponent]
-      }
-    });
-
     TestBed.compileComponents();
     registerComponents();
   }));

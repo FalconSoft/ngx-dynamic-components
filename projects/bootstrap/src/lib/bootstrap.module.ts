@@ -29,9 +29,7 @@ import { IconUIComponent } from './components/icon-ui/icon-ui.component';
     FlexLayoutModule,
     NgSelectModule
   ],
-  exports: [ContainerComponent, ContainerRowComponent, InputUIComponent],
-  entryComponents: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent, IconUIComponent,
-    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent, TextUIComponent]
+  exports: [ContainerComponent, ContainerRowComponent, InputUIComponent]
 })
 export class BootstrapModule {
   constructor() {

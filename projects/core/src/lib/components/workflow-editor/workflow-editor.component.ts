@@ -14,7 +14,7 @@ import { ActionDescriptor } from '../../workflow/models';
 export class WorkflowEditorComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modal', {static: true}) public modal: ModalDirective;
-  @ViewChild('configEl', {static: false}) configEl: ElementRef;
+  @ViewChild('configEl') configEl: ElementRef;
   @Input() config: AttributesMap;
   @Output() change = new EventEmitter();
   search = '';

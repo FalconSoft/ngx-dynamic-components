@@ -23,10 +23,10 @@ export class DesignerComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() visibility: DesignerVisibility;
   @Output() uiModelUpdated = new EventEmitter<UIModel>();
   @Output() scriptUpdate = new EventEmitter<string>();
-  @ViewChild('tabset', {static: false}) tabset: TabsetComponent;
-  @ViewChild('controlsPanel', {static: false}) controlsPanel: ControlsPanelComponent;
-  @ViewChild('uiModelEl', {static: false}) uiModelEl: ElementRef;
-  @ViewChild('script', {static: false}) scriptEl: ElementRef;
+  @ViewChild('tabset') tabset: TabsetComponent;
+  @ViewChild('controlsPanel') controlsPanel: ControlsPanelComponent;
+  @ViewChild('uiModelEl') uiModelEl: ElementRef;
+  @ViewChild('script') scriptEl: ElementRef;
 
   /** Selected component UI Model */
   uiModelToEdit: UIModel;

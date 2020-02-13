@@ -24,10 +24,10 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   @Input() initUiModel: UIModel;
   @Input() initDataModel: any;
   @Input() title: string;
-  @ViewChild('uiModel', {static: false}) uiModelEl: ElementRef<HTMLElement>;
-  @ViewChild('scripts', {static: false}) scriptsEl: ElementRef<HTMLElement>;
-  @ViewChild('dataModel', {static: false}) dataModelEl: ElementRef<HTMLElement>;
-  @ViewChild('dynamicComponent', {static: false}) dynamicComponent: NGXDynamicComponent;
+  @ViewChild('uiModel') uiModelEl: ElementRef<HTMLElement>;
+  @ViewChild('scripts') scriptsEl: ElementRef<HTMLElement>;
+  @ViewChild('dataModel') dataModelEl: ElementRef<HTMLElement>;
+  @ViewChild('dynamicComponent') dynamicComponent: NGXDynamicComponent;
   @HostBinding('style.flex') flex = 'initial';
 
   uiModel: UIModel;

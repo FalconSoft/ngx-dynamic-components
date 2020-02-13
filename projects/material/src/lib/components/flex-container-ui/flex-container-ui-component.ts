@@ -8,7 +8,7 @@ import { packageName } from '../../constants';
     templateUrl: './flex-container-ui-component.html'
 })
 export class FlexContainerUIComponent extends BaseUIComponent<FlexContainerProperties> {
-  @ViewChild('form', {static: false}) form: ElementRef<HTMLFormElement>;
+  @ViewChild('form') form: ElementRef<HTMLFormElement>;
   getStrValue(value: string) {
     if (value) {
       return value.split('|').join(' ');

@@ -1,6 +1,6 @@
 import { Component, Input, HostListener, ViewChild, ElementRef, EventEmitter, Output, OnInit } from '@angular/core';
 import { UIModelProperty, UIModel, CoreService } from '@ngx-dynamic-components/core';
-import { MatButton } from '@angular/material';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'dc-properties-editor',
@@ -36,10 +36,10 @@ export class PropertiesEditorComponent implements OnInit {
   @Input()
   uiModel: UIModel;
 
-  @ViewChild('editorContainer', {static: false})
+  @ViewChild('editorContainer')
   editorContainer: ElementRef;
 
-  @ViewChild('editBtn', {static: false})
+  @ViewChild('editBtn')
   editBtn: MatButton;
 
   @Output()

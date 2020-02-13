@@ -3,8 +3,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularSplitModule } from 'angular-split';
-import { MatToolbarModule, MatButtonModule, MatTabsModule, MatDividerModule, MatCardModule, MatIconModule,
-  MatTooltipModule, MatInputModule, MatFormFieldModule, MatDialogModule, MatListModule } from '@angular/material';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DragulaModule } from 'ng2-dragula';
 
@@ -41,12 +52,8 @@ import { AddDialogComponent } from './components/add-dialog/add-dialog.component
     ReactiveFormsModule,
     FlexLayoutModule,
     AngularSplitModule.forRoot(),
-    // MonacoEditorModule.forRoot({
-    //   baseUrl: './assets'
-    // }),
     DragulaModule.forRoot()
   ],
-  exports: [ PreviewEditorComponent ],
-  entryComponents: [ControlEditorComponent, AddDialogComponent],
+  exports: [ PreviewEditorComponent ]
 })
 export class ToolsModule { }

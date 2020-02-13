@@ -3,8 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatButtonModule, MatCardModule,
-  MatRadioModule, MatTabsModule, MatTableModule, MatTooltipModule, MatIconModule } from '@angular/material';
+
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 import { CoreModule } from '@ngx-dynamic-components/core';
 
@@ -63,20 +73,7 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         SelectUIComponent,
         TextareaUIComponent,
         TextUIComponent
-    ],
-    entryComponents: [
-      InputUIComponent,
-      TextUIComponent,
-      ButtonUIComponent,
-      FlexContainerUIComponent,
-      CheckboxUIComponent,
-      SelectUIComponent,
-      TextareaUIComponent,
-      CardUIComponent,
-      RadioGroupUIComponent,
-      TabsUIComponent,
-      DatableUIComponent
-    ],
+    ]
 })
 export class MaterialModule {
   constructor() {

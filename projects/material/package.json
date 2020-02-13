@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/material",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "private": false,
   "description": "@ngx-dynamic-components/material is Angular 7+ library what contains a core interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -19,12 +19,12 @@
     "form library"
   ],
   "peerDependencies": {
-    "@angular/animations": "^8.1.2",
-    "@angular/cdk": "^8.1.1",
-    "@angular/common": "^8.1.2",
+    "@angular/animations": "^9.0.0",
+    "@angular/cdk": "^9.0.0",
+    "@angular/common": "^9.0.0",
     "@angular/core": "^8.1.2",
-    "@angular/flex-layout": "^8.0.0-beta.26",
-    "@angular/material": "^8.1.1",
-    "@ngx-dynamic-components/core": ">=0.0.24"
+    "@angular/flex-layout": "^9.0.0-beta.29",
+    "@angular/material": "^9.0.0",
+    "@ngx-dynamic-components/core": ">=0.0.41"
   }
 }

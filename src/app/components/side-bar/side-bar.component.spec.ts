@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatExpansionModule, MatListModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 import { SideBarComponent } from './side-bar.component';
 
 describe('SideBarComponent', () => {

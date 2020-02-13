@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { getCategories } from '@ngx-dynamic-components/material';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'dc-add-dialog',

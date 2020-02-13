@@ -1,10 +1,11 @@
-import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges } from '@angular/core';
+import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { Interpreter } from 'jspython-interpreter';
 import { UIModel, AttributesMap } from '../models';
 import { JSONUtils } from '../workflow/json.utils';
 import { kebabStrToCamel } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList } from '../properties';
 
+@Directive()
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;

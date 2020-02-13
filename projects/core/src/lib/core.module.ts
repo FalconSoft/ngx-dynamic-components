@@ -39,7 +39,6 @@ import { WorkflowEditorComponent } from './components/workflow-editor/workflow-e
     FormsModule,
     HttpClientModule
   ],
-  exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, WorkflowEditorComponent, AngularSplitModule],
-  entryComponents: [ControlEditorComponent, WorkflowEditorComponent]
+  exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, WorkflowEditorComponent, AngularSplitModule]
 })
 export class CoreModule { }
