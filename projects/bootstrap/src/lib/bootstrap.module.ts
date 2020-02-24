@@ -6,6 +6,8 @@ import { CoreModule } from '@ngx-dynamic-components/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgSelectModule } from '@ng-select/ng-select';
 
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
 import { ContainerComponent } from './components/container/container.component';
 import { registerComponents } from './components/register';
 import { ContainerRowComponent } from './components/container-row/container-row.component';
@@ -18,16 +20,19 @@ import { ButtonUIComponent } from './components/button-ui/button-ui.component';
 import { CardComponent } from './components/card/card.component';
 import { TextUIComponent } from './components/text-ui/text-ui.component';
 import { IconUIComponent } from './components/icon-ui/icon-ui.component';
+import { TabsUIComponent } from './components/tabs-ui/tabs-ui.component';
 
 @NgModule({
   declarations: [ContainerComponent, ContainerRowComponent, InputUIComponent, SelectUIComponent,
-    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent, TextUIComponent, IconUIComponent],
+    CheckboxUIComponent, RadioGroupUIComponent, TextareaUIComponent, ButtonUIComponent, CardComponent,
+    TextUIComponent, IconUIComponent, TabsUIComponent],
   imports: [
     CoreModule,
     CommonModule,
     FormsModule,
     FlexLayoutModule,
-    NgSelectModule
+    NgSelectModule,
+    TabsModule.forRoot()
   ],
   exports: [ContainerComponent, ContainerRowComponent, InputUIComponent]
 })

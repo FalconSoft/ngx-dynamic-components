@@ -68,7 +68,9 @@ export class DragDropService {
     const elements = this.container.nativeElement.querySelectorAll(`
       #empty-container,
       ngx-dynamic-component>[drop-container],
-      ngx-dynamic-component>dc-ui-flex-container>[drop-container]
+      ngx-dynamic-component>dc-ui-flex-container>[drop-container],
+      dc-tabs-ui>tabset>ui.nav.nav-tabs,
+      dc-tabs-ui>tabset tab dc-ui-flex-container>[drop-container]
     `);
     let arrElements = Array.from(elements) as HTMLElement[];
 

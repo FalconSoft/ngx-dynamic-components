@@ -11,6 +11,7 @@ import { buttonDescriptor } from './button-ui/button-ui.component';
 import { cardDescriptor } from './card/card.component';
 import { textDescriptor } from './text-ui/text-ui.component';
 import { iconDescriptor } from './icon-ui/icon-ui.component';
+import { tabsDescriptor } from './tabs-ui/tabs-ui.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   containerDescriptor,
@@ -23,7 +24,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   buttonDescriptor,
   cardDescriptor,
   textDescriptor,
-  iconDescriptor
+  iconDescriptor,
+  tabsDescriptor
 ];
 
 // Register components.

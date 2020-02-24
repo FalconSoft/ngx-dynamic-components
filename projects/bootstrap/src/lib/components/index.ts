@@ -9,3 +9,4 @@ export { RadioGroupUIComponent } from './radio-group-ui/radio-group-ui.component
 export { SelectUIComponent } from './select-ui/select-ui.component';
 export { TextUIComponent } from './text-ui/text-ui.component';
 export { TextareaUIComponent } from './textarea-ui/textarea-ui.component';
+export { TabsUIComponent } from './tabs-ui/tabs-ui.component';

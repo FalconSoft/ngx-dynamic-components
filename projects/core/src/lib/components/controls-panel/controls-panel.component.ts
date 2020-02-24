@@ -13,7 +13,7 @@ export class ControlsPanelComponent implements OnInit {
   private readonly COMPONENTS_LIST = [
     'bootstrap:button', 'bootstrap:text-input', 'bootstrap:textarea', 'bootstrap:radio-group',
     'material:flex-container', 'bootstrap:text', 'bootstrap:checkbox', 'bootstrap:select', 'bootstrap:icon',
-    'wijmo:grid', 'rest-client:grid-object-explorer', 'wijmo:chart'
+    'wijmo:grid', 'rest-client:grid-object-explorer', 'wijmo:chart', 'bootstrap:tabs', 'worksheet:data-view'
   ];
 
   ngOnInit() {
