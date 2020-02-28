@@ -11,6 +11,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @Input() uiModel: UIModel<T>;
     @Input() interpreter: Interpreter;
     @Input() scripts: string;
+    @Input() rootUIModel: UIModel<T>;
     @Output() evaluate = new EventEmitter<boolean>();
     @HostBinding('style.width') width: string;
     @HostBinding('style.height') height: string;
@@ -81,6 +82,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         this.evaluate.emit(true);
         try {
           await this.interpreter.evaluate(this.scripts, {
+            rootUIModel: this.rootUIModel,
             uiModel: this.uiModel,
             dataModel: this.dataModel
           }, functionName);

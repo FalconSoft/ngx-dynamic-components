@@ -29,13 +29,6 @@ describe('DesignerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DesignerComponent);
     component = fixture.componentInstance;
-    component.workflow = {
-      failOnError: true,
-      include: ['@common'],
-      vars: {},
-      workflowsMap: {},
-      consts: {}
-    };;
     fixture.detectChanges();
   });
 

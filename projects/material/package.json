@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/material",
-  "version": "0.0.41",
+  "version": "0.0.44",
   "private": false,
   "description": "@ngx-dynamic-components/material is Angular 7+ library what contains a core interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -22,9 +22,9 @@
     "@angular/animations": "^9.0.0",
     "@angular/cdk": "^9.0.0",
     "@angular/common": "^9.0.0",
-    "@angular/core": "^8.1.2",
+    "@angular/core": "^9.0.1",
     "@angular/flex-layout": "^9.0.0-beta.29",
     "@angular/material": "^9.0.0",
-    "@ngx-dynamic-components/core": ">=0.0.41"
+    "@ngx-dynamic-components/core": ">=0.0.44"
   }
 }

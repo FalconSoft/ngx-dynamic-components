@@ -6,7 +6,7 @@ describe('DragDropService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DragDropService = TestBed.get(DragDropService);
+    const service: DragDropService = TestBed.inject(DragDropService);
     expect(service).toBeTruthy();
   });
 });

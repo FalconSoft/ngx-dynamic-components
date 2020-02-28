@@ -22,6 +22,7 @@
     [attr.fxFlexFill]="item.containerProperties?.fxFill || false">
 
     <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)"
+      [rootUIModel]='rootUIModel'
       [uiModel]='item'
       [dataModel]='dataModel'
       [interpreter]='interpreter'
