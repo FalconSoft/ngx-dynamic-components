@@ -9,6 +9,7 @@ import { packageName } from '../../constants';
     <dc-container-row *ngFor="let item of uiModel.children" [ngStyle]="getStyles(item.itemProperties)"
       (changedDataModel)="changedDataModel.emit($event)"
       [uiModel]='item'
+      [rootUIModel]='rootUIModel'
       [dataModel]='dataModel'
       [interpreter]='interpreter'
       [scripts]='scripts'

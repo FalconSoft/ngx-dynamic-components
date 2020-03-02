@@ -12,6 +12,7 @@ import { packageName } from '../../constants';
         <dc-ui-selector
           (changedDataModel)="changedDataModel.emit(dataModel)"
           [uiModel]='item'
+          [rootUIModel]='rootUIModel'
           [dataModel]='dataModel'
           [interpreter]='interpreter'
           [scripts]='scripts'></dc-ui-selector>

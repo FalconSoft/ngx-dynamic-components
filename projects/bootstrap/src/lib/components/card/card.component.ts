@@ -11,6 +11,7 @@ import { packageName } from '../../constants';
       <dc-ui-selector
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='header'
+        [rootUIModel]='rootUIModel'
         [dataModel]='dataModel'
         [interpreter]='interpreter'
         [scripts]='scripts'></dc-ui-selector>
@@ -19,6 +20,7 @@ import { packageName } from '../../constants';
       <dc-ui-selector
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='content'
+        [rootUIModel]='rootUIModel'
         [dataModel]='dataModel'
         [interpreter]='interpreter'
         [scripts]='scripts'></dc-ui-selector>
@@ -27,6 +29,7 @@ import { packageName } from '../../constants';
       <dc-ui-selector
         (changedDataModel)="changedDataModel.emit(this.dataModel)"
         [uiModel]='footer'
+        [rootUIModel]='rootUIModel'
         [dataModel]='dataModel'
         [interpreter]='interpreter'
         [scripts]='scripts'></dc-ui-selector>

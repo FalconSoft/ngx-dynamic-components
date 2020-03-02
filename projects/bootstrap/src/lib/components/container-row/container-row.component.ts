@@ -10,6 +10,7 @@ import { BaseUIComponent, ContainerProperties, UIModel, ComponentDescriptor,
       <dc-ui-selector
           (changedDataModel)="changedDataModel.emit($event)"
           [uiModel]='item'
+          [rootUIModel]='rootUIModel'
           [dataModel]='dataModel'
           [interpreter]='interpreter'
           [scripts]='scripts'
