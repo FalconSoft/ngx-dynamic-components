@@ -15,9 +15,10 @@ export interface AttributesMap {
 }
 
 export interface ComponentExample<T = UIModel> {
-  uiModel: T;
-  dataModel;
+  uiModel: T|string;
+  dataModel: any;
   title: string;
+  scripts?: string;
 }
 
 interface AttributesMapConstructor {

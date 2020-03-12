@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { DragulaModule } from 'ng2-dragula';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
@@ -19,9 +20,17 @@ import { ControlsPanelComponent } from './components/controls-panel/controls-pan
 import { ComboPropertyComponent } from './components/combo-property/combo-property.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WorkflowEditorComponent } from './components/workflow-editor/workflow-editor.component';
+import { FlexContainerComponent } from './ui-components/flex-container/flex-container-component';
+import { registerComponents } from './ui-components/register';
+import { TextComponent } from './ui-components/text/text.component';
+import { ButtonComponent } from './ui-components/button/button.component';
 
 @NgModule({
-  declarations: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, ControlEditorComponent, PropertiesEditorComponent,
+  declarations: [
+    FlexContainerComponent,
+    TextComponent,
+    ButtonComponent,
+    UISelectorComponent, NGXDynamicComponent, DesignerComponent, ControlEditorComponent, PropertiesEditorComponent,
     ControlsPanelComponent,
     ComboPropertyComponent,
     WorkflowEditorComponent],
@@ -37,8 +46,13 @@ import { WorkflowEditorComponent } from './components/workflow-editor/workflow-e
     AngularSplitModule,
     NgSelectModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FlexLayoutModule
   ],
   exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, WorkflowEditorComponent, AngularSplitModule]
 })
-export class CoreModule { }
+export class CoreModule {
+  constructor() {
+    registerComponents();
+  }
+}

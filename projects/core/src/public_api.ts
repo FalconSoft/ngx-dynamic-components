@@ -19,3 +19,4 @@ export * from './lib/workflow/json.utils';
 export * from './lib/workflow/models';
 export * from './lib/workflow/logger';
 export * from './lib/utils';
+export * from './lib/ui-components/register';

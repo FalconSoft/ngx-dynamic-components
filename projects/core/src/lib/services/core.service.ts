@@ -8,7 +8,6 @@ import { ControlProperties, UIModelProperty } from '../properties';
   providedIn: 'root'
 })
 export class CoreService {
-
   private static COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
 
   public static registerComponent(desc: ComponentDescriptor) {
@@ -18,7 +17,8 @@ export class CoreService {
         ControlProperties.set(`${packageName}:${name}:${prop[0]}`, prop[1]);
       });
     }
-    CoreService.COMPONENTS_REGISTER.set(`${packageName}:${name}`, desc);
+    const key = packageName === 'core' ? name : `${packageName}:${name}`;
+    CoreService.COMPONENTS_REGISTER.set(key, desc);
   }
 
   public static getComponent(type: string): BaseUIComponentConstructor {

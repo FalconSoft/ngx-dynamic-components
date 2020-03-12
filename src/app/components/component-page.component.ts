@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { map, switchMap, debounceTime, takeUntil, tap } from 'rxjs/operators';
 
 import { ComponentDescriptor, WorkflowEngine } from '@ngx-dynamic-components/core';
 import { COMPONENTS_LIST } from '../utils';
@@ -16,17 +16,17 @@ export interface PeriodicElement {
 @Component({
   selector: 'dc-example',
   template: `
-    <div *ngIf="component$ | async as component" class="static-padding">
+    <div *ngIf="component" class="static-padding">
       <h1 class="mat-h1">{{component.name}}</h1>
       <h3 class="mat-h3">{{component.description}}</h3>
-      <ng-container *ngIf="component.example as ex">
+      <ng-container *ngIf="!loading && component.example as ex">
         <dc-preview-editor
           [title]="ex.title"
           [scripts]="ex.scripts"
           [initUiModel]="ex.uiModel"
           [initDataModel]="ex.dataModel"></dc-preview-editor>
       </ng-container>
-      <dc-item-properties [component$]="component$"></dc-item-properties>
+      <dc-item-properties *ngIf="!loading" [component]="component"></dc-item-properties>
     </div>
   `,
   styles: [`
@@ -36,21 +36,28 @@ export interface PeriodicElement {
     }
   `]
 })
-export class ComponentPageComponent implements OnInit {
+export class ComponentPageComponent implements OnInit, OnDestroy {
 
-  component$: Observable<ComponentDescriptor>;
+  component: ComponentDescriptor;
+  private destroy = new Subject();
+  loading = false;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.component$ = this.route.params.pipe(map(p => {
-      const component = COMPONENTS_LIST.find((c: ComponentDescriptor) => c.name === p.component && c.packageName === p.packageName);
-      const config = component.example;
-      const wfConfig: any = {include: ['@common'], vars: {}, workflowsMap: {}};
-      wfConfig.vars.uiModel = config.uiModel;
-      wfConfig.vars.dataModel = config.dataModel;
-      (config as any).workflowEngine = new WorkflowEngine(wfConfig);
-      return component;
-     }));
+    this.route.params.pipe(takeUntil(this.destroy),
+    tap(() => {
+      if (this.component) {
+        this.loading = true;
+      }
+    }), debounceTime(1)).subscribe(p => {
+      this.component = COMPONENTS_LIST.find(c => c.name === p.component && c.packageName === p.packageName);
+      this.loading = false;
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy.next();
+    this.destroy.complete();
   }
 }

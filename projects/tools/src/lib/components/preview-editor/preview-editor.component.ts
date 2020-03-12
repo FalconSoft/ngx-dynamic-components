@@ -117,8 +117,8 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
 
   private initUIPreview() {
     if (this.uiModelEl) {
-      this.initEditor('uiModel', this.uiModelEl, this.initUiModel)
-        .subscribe(uiModel => this.refreshPreview(JSON.parse(uiModel), this.dataModel));
+      this.initEditor('uiModel', this.uiModelEl, this.initUiModel, 'ace/mode/xml')
+        .subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
 
       this.initEditor('dataModel', this.dataModelEl, this.initDataModel)
         .subscribe(dataModel => this.refreshPreview(this.uiModel, JSON.parse(dataModel)));

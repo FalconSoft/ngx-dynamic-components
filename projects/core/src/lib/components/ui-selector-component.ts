@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
-  SimpleChanges, OnChanges, EventEmitter, Output } from '@angular/core';
+  SimpleChanges, OnChanges, EventEmitter, Output, Renderer2 } from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
 import { CoreService } from '../services/core.service';
 
@@ -8,7 +8,10 @@ import { CoreService } from '../services/core.service';
     template: ''
 })
 export class UISelectorComponent extends BaseUIComponent implements OnInit, OnChanges {
-  constructor(private containerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(
+    private containerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private renderer2: Renderer2) {
     super();
   }
 
@@ -53,6 +56,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       this.containerRef.clear();
       const componentRef = this.containerRef.createComponent(componentFactory);
       this.component = componentRef.instance as BaseUIComponent;
+      this.renderer2.addClass(componentRef.location.nativeElement, 'dc-wrapper');
       this.component.interpreter = this.interpreter;
       this.component.dataModel = this.dataModel;
       this.component.uiModel = this.uiModel;

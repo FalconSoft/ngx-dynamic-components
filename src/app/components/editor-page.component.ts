@@ -15,6 +15,9 @@ import { ProfileFormUIModel,  ProfileDataModel, ProfileScripts } from '../exampl
     dc-preview-editor {
       margin: 25px;
     }
+    :host {
+      flex-direction: column;
+    }
     :host ::ng-deep .mat-tab-body-wrapper {
       min-height: 400px;
     }

@@ -53,20 +53,20 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         }
       }
 
-      if (!this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
+      if (!this.properties.hasOwnProperty('dataModelPath') && !this.properties.hasOwnProperty('binding')) {
         return null;
       }
-      const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
+      const path = (this.properties as DataModelProperties).dataModelPath || (this.properties as DataModelProperties).binding;
       // TODO: Handle case for Array type.
       if (!Array.isArray(this.dataModel)) {
-        return JSONUtils.find(this.dataModel, dataModelPath);
+        return JSONUtils.find(this.dataModel, path);
       }
     }
 
     set componentDataModel(val) {
-      if (this.uiModel.itemProperties.hasOwnProperty('dataModelPath')) {
-        const dataModelPath = (this.uiModel.itemProperties as DataModelProperties).dataModelPath;
-        JSONUtils.setValue(this.dataModel, dataModelPath, val);
+      if (this.properties.hasOwnProperty('dataModelPath') || this.properties.hasOwnProperty('binding')) {
+        const path = (this.properties as DataModelProperties).dataModelPath || (this.properties as DataModelProperties).binding;
+        JSONUtils.setValue(this.dataModel, path, val);
       }
     }
 

@@ -31,7 +31,7 @@
     </div>
     <mat-divider *ngIf="isHorizontal"></mat-divider>
     <div class="preview" fxFlex="1 1 auto" [ngClass]="{'edit-mode': editMode$ | async}">
-      <ngx-dynamic-component #dynamicComponent (changedDataModel)="onDataModelChange($event)"
+      <ngx-dynamic-component class="d-block" *ngIf="uiModel" #dynamicComponent (changedDataModel)="onDataModelChange($event)"
         [uiModel]='uiModel'
         [interpreter]='interpreter'
         [scripts]='scripts'

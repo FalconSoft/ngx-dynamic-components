@@ -11,14 +11,14 @@ import { pluck } from 'rxjs/operators';
 export class ItemPropertiesComponent implements OnInit {
 
   @Input()
-  component$: Observable<ComponentDescriptor>;
-  itemProperties$: Observable<[]>;
+  component: ComponentDescriptor;
+  itemProperties: Observable<[]>;
   displayedColumns = ['name', 'example', 'description'];
 
   constructor() { }
 
   ngOnInit() {
-    this.itemProperties$ = this.component$.pipe(pluck('itemProperties', 'prototype', 'properties'));
+    this.itemProperties = this.component.itemProperties.prototype.properties;
   }
 
 }

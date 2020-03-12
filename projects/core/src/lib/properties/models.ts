@@ -108,10 +108,16 @@ export abstract class StyleProperties implements AttributesMap {
 
 export abstract class BindingProperties extends StyleProperties {
   @propDescription({
-    description: 'Path to id in data model.',
+    description: 'Path to id in data model. (DEPRECATED)',
     example: 'name'
   })
   dataModelPath?: string;
+
+  @propDescription({
+    description: 'Path to data model property.',
+    example: 'name'
+  })
+  binding?: string;
 }
 
 export abstract class DataModelProperties extends BindingProperties {

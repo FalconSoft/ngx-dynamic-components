@@ -34,6 +34,7 @@
             "scripts": [
               { "input": "node_modules/ace-builds/src-noconflict/ace.js", "bundleName": "ace-editor" },
               { "input": "node_modules/ace-builds/src-noconflict/mode-json.js"},
+              { "input": "node_modules/ace-builds/src-noconflict/mode-xml.js"},
               { "input": "node_modules/jspython-interpreter/dist/assets/mode-jspython.js"},
               { "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js"}
             ],
