@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileFormUIModel,  ProfileDataModel, ProfileScripts } from '../examples/profile-page.config';
+import * as flex from '../examples/flex.config';
 
 @Component({
   selector: 'dc-editor-page',
@@ -25,13 +25,13 @@ import { ProfileFormUIModel,  ProfileDataModel, ProfileScripts } from '../exampl
 })
 export class EditorPageComponent implements OnInit {
 
-  defaultModel = ProfileFormUIModel;
-  defaultDataModel = ProfileDataModel;
+  defaultModel = flex.uIModel;
+  defaultDataModel = flex.dataModel;
   scripts: string;
 
   constructor() { }
 
   ngOnInit() {
-    this.scripts = ProfileScripts;
+    this.scripts = flex.scripts;
   }
 }

@@ -62,40 +62,13 @@ const example: ComponentExample<UIModel<FlexContainerProperties>> = {
   uiModel: `
   <flex-container
     fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" id="continuous"
-    width="100%" height="100%" margin="8px">
-    <text fxFlex="1 2 500px" text-style="h1">Header 1</text>
-    <text fxFlexOrder="2" text-style="h2">Header 2</text>
-    <button fxFlexOrder="1" on-click="consoleLog" type="button">Click</button>
-    <text fxFlexFill="true" text-style="h3">Header 3</text>
+    width="100%" height="100%" margin="8px" background="white">
+    <text class="m-0" fxFlex="1 2 500px" text-style="h1">Header 1</text>
+    <text class="m-0" fxFlexOrder="2" text-style="h2">Header 2</text>
+    <button class="btn btn-secondary" fxFlexOrder="1" on-click="consoleLog" type="button">Click</button>
+    <text class="m-0" fxFlexFill="true" background="red" text-style="h3">Header 3</text>
   </flex-container>
   `,
-  // uiModel: {
-  //   type: 'core:flex-container',
-  //   containerProperties: {},
-  //   itemProperties: {
-  //     fxLayout: 'row',
-  //     fxLayoutGap: '10px',
-  //     width: '100%',
-  //     padding: '10px'
-  //   },
-  //   children: [{
-  //     type: 'material:text',
-  //     containerProperties: {
-  //       fxFlex: '1 1 auto'
-  //     },
-  //     itemProperties: {
-  //       text: 'Text line 1',
-  //     }
-  //   }, {
-  //     type: 'material:text',
-  //     containerProperties: {
-  //       fxFlex: '1 1 auto'
-  //     },
-  //     itemProperties: {
-  //       text: 'Text line 2',
-  //     }
-  //   }]
-  // },
   dataModel: {}
 };
 

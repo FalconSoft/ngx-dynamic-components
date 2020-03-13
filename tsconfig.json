@@ -25,8 +25,8 @@
     ],
     "paths": {
       "@ngx-dynamic-components/core": [
-        "dist/@ngx-dynamic-components/core",
-        // "projects/core/src/public_api.ts"
+        // "dist/@ngx-dynamic-components/core",
+        "projects/core/src/public_api.ts"
       ],
       "@ngx-dynamic-components/core/*": [
         "dist/@ngx-dynamic-components/core/*"

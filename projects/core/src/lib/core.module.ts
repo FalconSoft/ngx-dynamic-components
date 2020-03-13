@@ -24,12 +24,26 @@ import { FlexContainerComponent } from './ui-components/flex-container/flex-cont
 import { registerComponents } from './ui-components/register';
 import { TextComponent } from './ui-components/text/text.component';
 import { ButtonComponent } from './ui-components/button/button.component';
+import { InputComponent } from './ui-components/input/input.component';
+import { IconComponent } from './ui-components/icon/icon.component';
+import { TabsComponent } from './ui-components/tabs/tabs.component';
+import { SelectComponent } from './ui-components/select/select.component';
+import { CheckboxComponent } from './ui-components/checkbox/checkbox.component';
+import { RadioGroupComponent } from './ui-components/radio-group/radio-group.component';
+import { TextareaComponent } from './ui-components/textarea/textarea.component';
 
 @NgModule({
   declarations: [
     FlexContainerComponent,
     TextComponent,
     ButtonComponent,
+    InputComponent,
+    IconComponent,
+    TabsComponent,
+    SelectComponent,
+    CheckboxComponent,
+    RadioGroupComponent,
+    TextareaComponent,
     UISelectorComponent, NGXDynamicComponent, DesignerComponent, ControlEditorComponent, PropertiesEditorComponent,
     ControlsPanelComponent,
     ComboPropertyComponent,

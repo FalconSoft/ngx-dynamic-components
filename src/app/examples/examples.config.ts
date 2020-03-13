@@ -3,8 +3,15 @@ import { dashboardConfig } from './dashboard.config';
 import { bsFormConfig } from './profile-bs.config';
 import { itemsListConfig } from './items-list.config';
 import { itemsTableConfig } from './items-table.config';
+import * as flex from './flex.config';
 
 export const EXAMPLES_LIST = [{
+  type: 'Flex panels',
+  name: 'flex-panels',
+  uiModel: flex.uIModel,
+  dataModel: flex.dataModel,
+  scripts: flex.scripts
+}, {
   type: 'Form Controls',
   name: 'profile-form',
   uiModel: ProfileFormUIModel,

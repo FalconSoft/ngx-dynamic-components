@@ -3,8 +3,9 @@ import { LabelProperties } from '../properties';
 
 export abstract class LabeledComponent<T = LabelProperties> extends BaseUIComponent<T> {
   get id() {
-    if (this.hasLabel) {
-      return 'component-id-' + (this.properties as LabelProperties).label.replace(/ /g, '-').toLowerCase();
+    const label = (this.properties as LabelProperties).label;
+    if (this.hasLabel && label) {
+      return 'component-id-' + label.replace(/ /g, '-').toLowerCase();
     }
   }
 
@@ -14,5 +15,9 @@ export abstract class LabeledComponent<T = LabelProperties> extends BaseUICompon
 
   get layout() {
     return ['left', 'right'].includes((this.properties as LabelProperties).labelPosition) ? 'row' : 'column';
+  }
+
+  get align() {
+    return this.layout === 'row' ? 'start center' : 'center start';
   }
 }

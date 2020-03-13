@@ -36,6 +36,7 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
   example?: ComponentExample;
   defaultModel?: UIModel;
   propertiesDescriptor?: Array<[string, ComponentProperty]>;
+  parseUIModel?: (xmlData: XMLResult) => UIModel;
 }
 
 export abstract class UIModel<T = AttributesMap> {
@@ -82,3 +83,9 @@ export enum DesignerVisibility {
   All = 3
 }
 
+export interface XMLResult {
+  type: string;
+  attrs: AttributesMap;
+  content: string;
+  childNodes: any[];
+}

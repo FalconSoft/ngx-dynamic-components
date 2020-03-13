@@ -104,6 +104,12 @@ export abstract class StyleProperties implements AttributesMap {
     example: '100%'
   })
   border?: string;
+
+  @propDescription({
+    description: 'Css class.',
+    example: 'btn-primary'
+  })
+  class?: string;
 }
 
 export abstract class BindingProperties extends StyleProperties {

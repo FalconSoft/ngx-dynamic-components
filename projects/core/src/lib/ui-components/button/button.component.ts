@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription, PropertyCategories } from '../../properties';
-import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
+import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
   selector: 'dc-button',
@@ -10,7 +10,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
       [ngClass]="btnClass" [ngStyle]="itemStyles" [href]="properties.href">{{properties.label}}</a>
     <ng-template #btn>
       <button [ngClass]="btnClass"
-        [type]="properties.type" [ngStyle]="itemStyles"
+        [type]="properties.type || 'button'" [ngStyle]="itemStyles"
         (click)="onClick()">{{properties.label}}</button>
     </ng-template>
   `
@@ -31,7 +31,7 @@ export class ButtonComponent extends BaseUIComponent<ButtonProperties> {
 
   get btnClass() {
     return {
-      [`btn ${this.properties.btnClass}`]: this.properties.btnClass
+      [`${this.properties.class}`]: this.properties.class
     };
   }
 }
@@ -50,12 +50,6 @@ export class ButtonProperties extends StyleProperties {
   'on-click'?: string;
 
   @propDescription({
-    description: 'Bootstrap predefined button class',
-    example: 'btn-secondary',
-  })
-  btnClass?: string;
-
-  @propDescription({
     description: 'Button type: button|submit|reset|link. Default: button',
     example: 'submit',
   })
@@ -71,7 +65,7 @@ export class ButtonProperties extends StyleProperties {
 export const example: ComponentExample<UIModel<ButtonProperties>> = {
   title: 'Basic button example',
   uiModel: `
-  <button width="50%" margin="15px" padding="10px 5px 10px 0px" on-click="consoleLog" type="button">Click</button>
+  <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" on-click="consoleLog" type="button">Click</button>
   `,
   scripts: `
   def consoleLog():
@@ -97,6 +91,18 @@ export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, Bu
   itemProperties: ButtonProperties,
   component: ButtonComponent,
   example,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const content = xmlRes.content;
+    const itemProperties: AttributesMap = {};
+    if (typeof content === 'string') {
+      itemProperties.label = content;
+    }
+
+    return {
+      type: 'button',
+      itemProperties: { label: content }
+    };
+  },
   defaultModel: {
     type: `core:button`,
     containerProperties: {},
@@ -110,10 +116,6 @@ export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, Bu
   propertiesDescriptor: [
     ['type', {name: 'type', label: 'Type', category: PropertyCategories.Main,
       combo: [['button', 'submit', 'reset']]
-    }],
-    ['btnClass', {name: 'btnClass', label: 'CSS Class', category: PropertyCategories.Main,
-      combo: [['btn-primary', 'btn-secondary', 'btn-light', 'btn-success', 'btn-danger',
-        'btn-warning', 'btn-info', 'btn-dark', 'btn-link']]
-    }],
+    }]
   ]
 };

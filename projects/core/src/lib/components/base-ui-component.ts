@@ -95,10 +95,10 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     }
 
     get itemStyles() {
-      return this.getStyles(this.uiModel.itemProperties);
+      return this.getStyles(this.properties);
     }
 
-    getStyles(properties: AttributesMap = {}, stylesList = StylePropertiesList): {[key: string]: string} {
+    getStyles(properties: StyleProperties = {}, stylesList = StylePropertiesList): {[key: string]: string} {
       return stylesList.reduce((styles, prop) => {
         if (properties.hasOwnProperty(prop)) {
           styles[prop] = this.getPropValue(properties, prop);

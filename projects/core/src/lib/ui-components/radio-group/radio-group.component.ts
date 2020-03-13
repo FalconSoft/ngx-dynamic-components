@@ -1,0 +1,102 @@
+import { Component } from '@angular/core';
+import { LabeledComponent } from '../../components/labeled.component';
+import { LabelProperties, propDescription } from '../../properties';
+import { OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult, AttributesMap } from '../../models';
+import { JSONUtils } from '../../workflow/json.utils';
+
+@Component({
+  selector: 'dc-radio-group',
+  template: `
+    <div class="form-check my-1" *ngFor="let option of options"
+      [fxLayout]="layout" [fxLayoutAlign]="align" [ngStyle]="itemStyles">
+      <label class="my-0 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
+        [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{option.label}}</label>
+      <input type="radio" (change)="onChange(option)" [name]="properties.binding" [value]="option.value">
+    </div>
+  `,
+  styleUrls: ['../../styles/label.scss']
+})
+export class RadioGroupComponent extends LabeledComponent<RadioGroupProperties> {
+  onChange(option: OptionValue) {
+    this.componentDataModel = option.value;
+    this.changedDataModel.emit(this.dataModel);
+    this.triggerAction('_change');
+  }
+
+  get options(): OptionValue[] {
+    const src = this.properties.itemsSource;
+    if (Array.isArray(src)) {
+      return src;
+    }
+
+    if (typeof src === 'string' && src.startsWith('$.')) {
+      return JSONUtils.find(this.dataModel, src);
+    }
+  }
+}
+
+export class RadioGroupProperties extends LabelProperties {
+  @propDescription({
+    description: 'Radio group options or binding to dataModel.',
+    example: '[{label: "One", value: 1}]',
+  })
+  itemsSource: string|OptionValue[];
+}
+
+export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
+  title: 'Radio group example',
+  uiModel: `
+  <flex-container>
+    <radio-group labelPosition="right" binding="$.color">
+      <option value="white">White</option>
+      <option value="black">Black</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+    </radio-group>
+    <radio-group itemsSource="$.genderOptions" labelPosition="right" binding="$.gender"></radio-group>
+  </flex-container>
+  `,
+  dataModel: {
+    genderOptions: [{label: 'Man', value: 'm'}, {label: 'Woman', value: 'w'}]
+  }
+};
+
+interface RadioGroupComponentConstrutor {
+  new (): RadioGroupComponent;
+}
+
+interface RadioGroupPropertiesConstrutor {
+  new (): RadioGroupProperties;
+}
+
+export const radioGroupDescriptor: ComponentDescriptor<RadioGroupComponentConstrutor, RadioGroupPropertiesConstrutor> = {
+  name: 'radio-group',
+  label: 'Single choice boxes',
+  packageName: 'core',
+  category: Categories.Basic,
+  description: 'Radio group component',
+  itemProperties: RadioGroupProperties,
+  component: RadioGroupComponent,
+  example,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const itemProperties: AttributesMap = {};
+    if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
+      itemProperties.itemsSource = xmlRes.childNodes.map(r => ({ label: r._, value: r.$.value }));
+      xmlRes.childNodes = null;
+    }
+
+    return {
+      type: 'select',
+      itemProperties
+    };
+  },
+  defaultModel: {
+    type: `core:radio-group`,
+    containerProperties: {},
+    itemProperties: {
+      label: 'Select option',
+      binding: '$.radioGroup',
+      options: [{label: 'Option 1', value: '1'}, {label: 'Option 2', value: 'black'}],
+    }
+  }
+};

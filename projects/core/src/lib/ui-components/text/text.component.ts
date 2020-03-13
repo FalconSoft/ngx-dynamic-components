@@ -1,7 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { BindingProperties, propDescription, PropertyCategories } from '../../properties';
-import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
+import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
   selector: 'dc-text',
@@ -22,7 +22,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 export class TextComponent extends BaseUIComponent<TextProperties> {
   @HostBinding('style.display') display = 'inline-block';
   get txtStyle() {
-    return this.properties['text-style'];
+    return this.properties['text-style'] + ' ' + (this.properties.class || '');
   }
 
   get text() {
@@ -67,6 +67,18 @@ export const textDescriptor: ComponentDescriptor<TextComponentConstrutor, TextPr
   itemProperties: TextProperties,
   component: TextComponent,
   example,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const content = xmlRes.content;
+    const itemProperties: AttributesMap = {};
+    if (typeof content === 'string') {
+      if (content.startsWith('$.')) {
+        itemProperties.binding = content;
+      } else {
+        itemProperties.text = content;
+      }
+    }
+    return {type: 'text', itemProperties};
+  },
   defaultModel: {
     type: `core:text`,
     itemProperties: {
