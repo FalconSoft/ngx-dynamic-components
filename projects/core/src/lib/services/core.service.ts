@@ -18,13 +18,13 @@ export class CoreService {
 
   public static registerComponent(desc: ComponentDescriptor) {
     const {name, packageName, propertiesDescriptor} = desc;
+    // @deprecated
     if (propertiesDescriptor) {
       propertiesDescriptor.forEach(prop => {
-        ControlProperties.set(`${packageName}:${name}:${prop[0]}`, prop[1]);
+        ControlProperties.set(`${name}:${prop[0]}`, prop[1]);
       });
     }
-    const key = packageName === 'core' ? name : `${packageName}:${name}`;
-    CoreService.COMPONENTS_REGISTER.set(key, desc);
+    CoreService.COMPONENTS_REGISTER.set(name, desc);
   }
 
   public static getComponent(type: string): BaseUIComponentConstructor {

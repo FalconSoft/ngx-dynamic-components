@@ -35,7 +35,7 @@ export class TextareaProperties extends DataModelProperties {
 const example: ComponentExample<UIModel<TextareaProperties>> = {
   title: 'Text area example',
   uiModel: {
-    type: 'material:textarea',
+    type: 'mat-textarea',
     containerProperties: {
       fxFlex: '1 1 auto'
     },
@@ -57,7 +57,7 @@ interface TextareaPropertiesConstrutor {
 }
 
 export const textareaDescriptor: ComponentDescriptor<TextareaUIComponentConstrutor, TextareaPropertiesConstrutor> = {
-  name: 'textarea',
+  name: 'mat-textarea',
   label: 'Text Area',
   packageName,
   category: Categories.Basic,

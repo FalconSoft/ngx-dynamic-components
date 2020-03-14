@@ -1,4 +1,4 @@
-import { UIModel, AttributesMap, WorkflowConfig } from '@ngx-dynamic-components/core';
+import { UIModel, AttributesMap } from '@ngx-dynamic-components/core';
 
 export const ProfileFormUIModel = {
   type: 'bootstrap:container',
@@ -143,44 +143,9 @@ export const ProfileDataModel = {
   }
 };
 
-export const ProfileWorkflowsMap = {
-  failOnError: true,
-  include: ['@common'],
-  vars: {
-    countryCityMap: {
-      uk: [
-        { label: 'London', value: 'london' },
-        { label: 'Liverpool', value: 'liverpool' }
-      ],
-      ua: [
-        { label: 'Lviv', value: 'lviv' },
-        { label: 'Kyiv', value: 'kyiv' }
-      ]
-    }
-  },
-  workflowsMap: {
-    stateSelection_selectionChanged: [
-      {
-        id: 'findCities',
-        actionType: 'getValue',
-        object: '$countryCityMap',
-        propertyName: '$.{{ $dataModel/address/country }}',
-        actionName: 'findCities'
-      },
-      {
-        actionType: 'setValue',
-        object: '$uiModel',
-        propertyName: '$(children:id=citySelection)/itemProperties/options',
-        propertyValue: '$findCities-returnValue'
-      }
-    ]
-  }
-} as WorkflowConfig;
-
 export const bsFormConfig = {
   type: 'Form Controls',
   name: 'profile-bs-example',
   uiModel: ProfileFormUIModel,
-  dataModel: ProfileDataModel,
-  workflowConfig: ProfileWorkflowsMap,
+  dataModel: ProfileDataModel
 };

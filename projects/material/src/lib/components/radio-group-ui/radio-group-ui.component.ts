@@ -55,7 +55,7 @@ export class RadioGroupProperties extends DataModelProperties {
 export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   title: 'Radio group example',
   uiModel: {
-    type: 'material:radio-group',
+    type: 'mat-radio-group',
     containerProperties: {
       padding: '5px 0',
       margin: '10px 0',
@@ -82,7 +82,7 @@ interface RadioGroupPropertiesConstrutor {
 }
 
 export const radioGroupDescriptor: ComponentDescriptor<RadioGroupUIComponentConstrutor, RadioGroupPropertiesConstrutor> = {
-  name: 'radio-group',
+  name: 'mat-radio-group',
   label: 'Single choice boxes',
   packageName,
   category: Categories.Basic,

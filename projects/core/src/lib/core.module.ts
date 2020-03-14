@@ -1,36 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DragulaModule } from 'ng2-dragula';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { PopoverModule } from 'ngx-bootstrap/popover';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { AngularSplitModule } from 'angular-split';
-import { NgSelectModule } from '@ng-select/ng-select';
+
 import { UISelectorComponent } from './components/ui-selector-component';
 import { NGXDynamicComponent } from './components/ngx-dynamic-component';
-import { DesignerComponent } from './components/designer/designer.component';
-import { ControlEditorComponent } from './components/control-editor/control-editor.component';
-import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
-import { ControlsPanelComponent } from './components/controls-panel/controls-panel.component';
-import { ComboPropertyComponent } from './components/combo-property/combo-property.component';
-import { HttpClientModule } from '@angular/common/http';
-import { WorkflowEditorComponent } from './components/workflow-editor/workflow-editor.component';
+
 import { FlexContainerComponent } from './ui-components/flex-container/flex-container-component';
-import { registerComponents } from './ui-components/register';
 import { TextComponent } from './ui-components/text/text.component';
 import { ButtonComponent } from './ui-components/button/button.component';
 import { InputComponent } from './ui-components/input/input.component';
 import { IconComponent } from './ui-components/icon/icon.component';
-import { TabsComponent } from './ui-components/tabs/tabs.component';
-import { SelectComponent } from './ui-components/select/select.component';
 import { CheckboxComponent } from './ui-components/checkbox/checkbox.component';
 import { RadioGroupComponent } from './ui-components/radio-group/radio-group.component';
 import { TextareaComponent } from './ui-components/textarea/textarea.component';
+import { registerComponents } from './ui-components/register';
 
 @NgModule({
   declarations: [
@@ -39,31 +24,18 @@ import { TextareaComponent } from './ui-components/textarea/textarea.component';
     ButtonComponent,
     InputComponent,
     IconComponent,
-    TabsComponent,
-    SelectComponent,
     CheckboxComponent,
     RadioGroupComponent,
     TextareaComponent,
-    UISelectorComponent, NGXDynamicComponent, DesignerComponent, ControlEditorComponent, PropertiesEditorComponent,
-    ControlsPanelComponent,
-    ComboPropertyComponent,
-    WorkflowEditorComponent],
+    UISelectorComponent,
+    NGXDynamicComponent],
   imports: [
     CommonModule,
-    DragulaModule,
-    CollapseModule.forRoot(),
-    AccordionModule.forRoot(),
-    TabsModule.forRoot(),
-    PopoverModule.forRoot(),
-    ModalModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    AngularSplitModule,
-    NgSelectModule,
     FormsModule,
     HttpClientModule,
     FlexLayoutModule
   ],
-  exports: [UISelectorComponent, NGXDynamicComponent, DesignerComponent, WorkflowEditorComponent, AngularSplitModule]
+  exports: [UISelectorComponent, NGXDynamicComponent]
 })
 export class CoreModule {
   constructor() {

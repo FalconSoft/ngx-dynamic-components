@@ -6,14 +6,14 @@ import { packageName } from '../constants';
 @Component({
     selector: 'dc-ui-input',
     template: `
-        <mat-form-field>
-          <input matInput
-            [ngStyle]="itemStyles"
-            [placeholder]="uiModel.itemProperties?.placeholder"
-            (input)="changedDataModel.emit(dataModel)"
-            [(ngModel)]="componentDataModel"
-            />
-        </mat-form-field>
+      <mat-form-field>
+        <input matInput
+          [ngStyle]="itemStyles"
+          [placeholder]="uiModel.itemProperties?.placeholder"
+          (input)="changedDataModel.emit(dataModel)"
+          [(ngModel)]="componentDataModel"
+        />
+      </mat-form-field>
     `
 })
 export class InputUIComponent extends BaseUIComponent<InputProperties> {
@@ -36,7 +36,7 @@ export class InputProperties extends DataModelProperties {
 const example: ComponentExample<UIModel<InputProperties>> = {
   title: 'Text input example',
   uiModel: {
-    type: 'material:text-input',
+    type: 'mat-input',
     containerProperties: {},
     itemProperties: {
       isNumeric: false,
@@ -58,7 +58,7 @@ interface InputPropertiesConstrutor {
 }
 
 export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, InputPropertiesConstrutor> = {
-  name: 'text-input',
+  name: 'mat-input',
   label: 'Text Input (Material)',
   packageName,
   category: Categories.Basic,

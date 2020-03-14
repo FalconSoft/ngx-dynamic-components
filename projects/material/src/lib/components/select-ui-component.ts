@@ -49,7 +49,7 @@ interface SelectPropertiesConstrutor {
 
 const example: ComponentExample<UIModel<SelectProperties>> = {
   uiModel: {
-    type: 'material:select',
+    type: 'mat-select',
     containerProperties: {},
     id: 'stateSelection',
     itemProperties: {
@@ -66,7 +66,7 @@ const example: ComponentExample<UIModel<SelectProperties>> = {
 };
 
 export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, SelectPropertiesConstrutor> = {
-  name: 'select',
+  name: 'mat-select',
   packageName,
   label: 'Dropdown (Material)',
   category: Categories.Basic,

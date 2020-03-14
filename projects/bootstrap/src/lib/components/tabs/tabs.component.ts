@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { StyleProperties } from '../../properties';
-import { BaseUIComponent } from '../../components/base-ui-component';
-import { UIModel, ComponentExample, ComponentDescriptor, Categories, XMLResult } from '../../models';
-import { CoreService } from '../../services/core.service';
+import { BaseUIComponent, CoreService, StyleProperties, UIModel,
+  ComponentExample, ComponentDescriptor, Categories, XMLResult } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-tabs-ui',
@@ -66,7 +65,7 @@ interface TabsPropertiesConstrutor {
 export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPropertiesConstrutor> = {
   name: 'tab-container',
   label: 'Tabs container (Bootstrap)',
-  packageName: 'core',
+  packageName,
   category: Categories.Containers,
   description: 'Tabs component',
   itemProperties: TabsProperties,
@@ -77,18 +76,18 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
       const { itemProperties, containerProperties } = CoreService.getPropertiesFromAttributes(child.$);
       return {
         type: 'flex-container',
-        children: child.childNodes.map((r: any) => CoreService.getUIModel(r)),
+        children: child.$$.map((r: any) => CoreService.getUIModel(CoreService.getXMLResult(r))),
         containerProperties,
         itemProperties
       };
     });
     return {
-      type: 'tab-container',
+      type: `${packageName}:tab-container`,
       children
     };
   },
   defaultModel: {
-    type: 'tab-container',
+    type: `${packageName}:tab-container`,
     containerProperties: {},
     itemProperties: {},
     children: [{

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { LabeledComponent } from '../../components/labeled.component';
-import { OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
-import { JSONUtils } from '../../workflow/json.utils';
-import { LabelProperties, propDescription, PropertyCategories } from '../../properties';
+import { LabeledComponent, JSONUtils, LabelProperties, propDescription, PropertyCategories,
+  OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-select',
@@ -78,7 +77,8 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
         <option value="uk">United Kingdom</option>
         <option value="ua">Ukraine</option>
       </select>
-      <select label="City" labelWidth="50px" width="300px" itemsSource="$.cities" labelPosition="left" binding="$.city"></select>
+      <select label="City" labelWidth="50px" width="300px"
+        itemsSource="$.cities" labelPosition="left" binding="$.city"></select>
     </flex-container>
   `,
   dataModel: {},
@@ -98,7 +98,7 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
 export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, SelectPropertiesConstrutor> = {
   name: 'select',
   label: 'UI Select Input',
-  packageName: 'core',
+  packageName,
   category: Categories.Basic,
   description: 'Select component',
   itemProperties: SelectProperties,

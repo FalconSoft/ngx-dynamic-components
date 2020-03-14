@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
-import { map, switchMap, debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 
-import { ComponentDescriptor, WorkflowEngine } from '@ngx-dynamic-components/core';
+import { ComponentDescriptor } from '@ngx-dynamic-components/core';
 import { COMPONENTS_LIST } from '../utils';
 
 export interface PeriodicElement {

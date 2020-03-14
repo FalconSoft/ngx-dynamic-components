@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { LabeledComponent } from '../../components/labeled.component';
 import { LabelProperties, propDescription } from '../../properties';
 import { OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult, AttributesMap } from '../../models';
-import { JSONUtils } from '../../workflow/json.utils';
+import { JSONUtils } from '../../utils/json.utils';
 
 @Component({
   selector: 'dc-radio-group',
   template: `
     <div class="form-check my-1" *ngFor="let option of options"
       [fxLayout]="layout" [fxLayoutAlign]="align" [ngStyle]="itemStyles">
-      <label class="my-0 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
+      <label class="my-0 {{properties.labelPosition}}" [for]="getId(option.value)" *ngIf="hasLabel"
         [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{option.label}}</label>
-      <input type="radio" (change)="onChange(option)" [name]="properties.binding" [value]="option.value">
+      <input type="radio" (change)="onChange(option)" [attr.id]="getId(option.value)" [name]="properties.binding" [value]="option.value">
     </div>
   `,
   styleUrls: ['../../styles/label.scss']
@@ -21,6 +21,11 @@ export class RadioGroupComponent extends LabeledComponent<RadioGroupProperties> 
     this.componentDataModel = option.value;
     this.changedDataModel.emit(this.dataModel);
     this.triggerAction('_change');
+  }
+
+  getId(val: any): string {
+    const selectKey = this.uiModel.id || this.properties.binding;
+    return `select-${selectKey || ''}-option-${val}`;
   }
 
   get options(): OptionValue[] {

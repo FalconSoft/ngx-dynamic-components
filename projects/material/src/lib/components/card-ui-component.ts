@@ -80,7 +80,7 @@ export class CardProperties extends ContainerProperties {
   @propDescription({
     description: 'Card can have 3 children, 1 - header, 2 - content, 3 - footer.',
     example: `[null, {
-      type: 'material:text',
+      type: 'text',
       containerProperties: {},
       itemProperties: {
         text: 'Card content text',
@@ -93,7 +93,7 @@ export class CardProperties extends ContainerProperties {
 const example: ComponentExample<UIModel<CardProperties>> = {
   title: 'Card panel example',
   uiModel: {
-    type: 'material:card',
+    type: 'mat-card',
     containerProperties: {},
     itemProperties: {
       padding: '10px',
@@ -101,14 +101,14 @@ const example: ComponentExample<UIModel<CardProperties>> = {
       width: '80%'
     },
     children: [{
-      type: 'material:text',
+      type: 'text',
       containerProperties: {},
       itemProperties: {
         text: 'Card header text',
         width: '100%'
       }
     }, {
-      type: 'material:textarea',
+      type: 'mat-textarea',
       containerProperties: {},
       itemProperties: {
         rows: 4,
@@ -117,7 +117,7 @@ const example: ComponentExample<UIModel<CardProperties>> = {
         width: '100%',
       }
     }, {
-      type: 'material:button',
+      type: 'mat-button',
       containerProperties: {},
       itemProperties: {
           label: 'Submit',
@@ -139,7 +139,7 @@ interface CardPropertiesConstrutor {
 }
 
 export const cardDescriptor: ComponentDescriptor<CardUIComponentConstrutor, CardPropertiesConstrutor> = {
-  name: 'card',
+  name: 'mat-card',
   label: 'Card (Material)',
   packageName,
   category: Categories.Containers,

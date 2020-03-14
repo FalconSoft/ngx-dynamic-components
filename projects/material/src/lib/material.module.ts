@@ -19,9 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CoreModule } from '@ngx-dynamic-components/core';
 
 import { InputUIComponent } from './components/input-ui-component';
-import { TextUIComponent } from './components/text-ui-component';
 import { ButtonUIComponent } from './components/button-ui-component';
-import { FlexContainerUIComponent } from './components/flex-container-ui/flex-container-ui-component';
 import { SelectUIComponent } from './components/select-ui-component';
 import { CheckboxUIComponent } from './components/checkbox-ui-component';
 import { TextareaUIComponent } from './components/textarea-ui-component';
@@ -35,12 +33,10 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
 @NgModule({
     declarations: [
       ButtonUIComponent,
-      FlexContainerUIComponent,
       CardUIComponent,
       CheckboxUIComponent,
       InputUIComponent,
       SelectUIComponent,
-      TextUIComponent,
       TextareaUIComponent,
       RadioGroupUIComponent,
       TabsUIComponent,
@@ -68,11 +64,9 @@ import { DatableUIComponent } from './components/datable-ui/datable-ui.component
         ButtonUIComponent,
         CardUIComponent,
         CheckboxUIComponent,
-        FlexContainerUIComponent,
         InputUIComponent,
         SelectUIComponent,
-        TextareaUIComponent,
-        TextUIComponent
+        TextareaUIComponent
     ]
 })
 export class MaterialModule {

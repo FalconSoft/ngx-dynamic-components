@@ -39,7 +39,7 @@ export class ButtonProperties extends StyleProperties {
 const example: ComponentExample<UIModel<ButtonProperties>> = {
   title: 'Basic button example',
   uiModel: {
-    type: 'material:button',
+    type: 'mat-button',
     containerProperties: {},
     itemProperties: {
         label: 'SUBMIT',
@@ -61,7 +61,7 @@ interface ButtonPropertiesConstrutor {
 }
 
 export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, ButtonPropertiesConstrutor> = {
-  name: 'button',
+  name: 'mat-button',
   label: 'Button (Material)',
   packageName,
   category: Categories.Basic,
@@ -70,7 +70,7 @@ export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, 
   component: ButtonUIComponent,
   example,
   defaultModel: {
-    type: `${packageName}:button`,
+    type: 'mat-button',
     itemProperties: {
       label: 'Button'
     },

@@ -139,14 +139,7 @@ export const dashboardConfig = {
   type: 'Dashboard',
   name: 'dashboard-example',
   uiModel: dashboardUIModel,
-  dataModel: {...table.example.dataModel},
-  workflowConfig: {
-    failOnError: true,
-    include: ['@common'],
-    vars: {},
-    workflowsMap: {},
-    consts: {}
-  },
+  dataModel: {...table.example.dataModel}
 };
 
 function getCardWidget(header: string, content: string, background = 'white'): UIModel {

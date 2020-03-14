@@ -1,4 +1,4 @@
-import { BaseUIComponent } from './components/base-ui-component';
+import { BaseUIComponent } from '../components/base-ui-component';
 
 export interface BaseUIComponentConstructor {
   new (): BaseUIComponent;

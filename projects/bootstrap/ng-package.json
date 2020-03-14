@@ -6,6 +6,7 @@
     "umdModuleIds": {
       "@ngx-dynamic-components/core": "NgxDynamicComponentsCore",
       "ngx-bootstrap/utils": "NgxBootstrapUtils",
+      "ngx-bootstrap/tabs": "NgxBootstrapTabs",
       "@ng-select/ng-select": "NgSelect"
     }
   }

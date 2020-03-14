@@ -27,7 +27,7 @@ export class CheckboxProperties extends DataModelProperties {
 const example: ComponentExample<UIModel<CheckboxProperties>> = {
   title: 'Checkbox example',
   uiModel: {
-    type: 'material:checkbox',
+    type: 'mat-checkbox',
     containerProperties: {},
     itemProperties: {
       label: 'Accept conditions',
@@ -46,7 +46,7 @@ interface CheckboxPropertiesConstrutor {
 }
 
 export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrutor, CheckboxPropertiesConstrutor> = {
-  name: 'checkbox',
+  name: 'mat-checkbox',
   label: 'Multi-choice boxes (Material)',
   packageName,
   category: Categories.Basic,

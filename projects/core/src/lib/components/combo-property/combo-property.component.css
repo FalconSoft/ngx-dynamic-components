@@ -1,7 +1,0 @@
-ng-select:not(:last-child) {
-  margin-right: 5px;
-}
-
-.combo-list>* {
-  flex: 1 1 50%;
-}

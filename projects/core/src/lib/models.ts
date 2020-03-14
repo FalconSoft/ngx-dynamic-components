@@ -1,6 +1,5 @@
 import { Interpreter } from 'jspython-interpreter';
 import { BaseUIComponentConstructor } from './utils';
-import { WorkflowEngine } from './workflow/workflow.processor';
 import { ComponentProperty } from './properties';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
@@ -51,7 +50,6 @@ export interface ComponentConfiguration {
   uiModel: UIModel;
   dataModel: any;
   interpreter?: Interpreter;
-  workflowEngine?: WorkflowEngine;
 }
 
 export interface IVariableResolver {
