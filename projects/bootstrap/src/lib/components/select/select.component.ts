@@ -25,11 +25,6 @@ export class SelectComponent extends LabeledComponent<SelectProperties> {
   async onSelect() {
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onSelect);
-
-    /** @deprecated */
-    if (this.properties.onSelect) {
-      this.triggerAction(this.properties.onSelect);
-    }
   }
 
   get selectStyles() {

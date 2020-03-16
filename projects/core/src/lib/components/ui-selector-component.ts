@@ -32,8 +32,6 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
         this.createComponent();
         if (shouldInit && Object.values(changes).some(c => c.firstChange === false)) {
           this.emitEvent(this.properties.onInit);
-          /** @deprecated */
-          await this.triggerAction('_OnInit');
         }
       } else {
         // Update component properties.
@@ -60,16 +58,10 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       const componentRef = this.containerRef.createComponent(componentFactory);
       this.component = componentRef.instance as BaseUIComponent;
       this.renderer2.addClass(componentRef.location.nativeElement, 'dc-wrapper');
-      this.component.interpreter = this.interpreter;
       this.component.dataModel = this.dataModel;
       this.component.uiModel = this.uiModel;
-      this.component.rootUIModel = this.rootUIModel || this.uiModel;
-      this.component.scripts = this.scripts;
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);
-      });
-      this.component.evaluate.subscribe((evt) => {
-        this.evaluate.emit(evt);
       });
       this.component.eventHandlers.subscribe((evt: ComponentEvent) => {
         this.eventHandlers.emit(evt);

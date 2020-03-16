@@ -22,11 +22,6 @@ export class RadioGroupComponent extends LabeledComponent<RadioGroupProperties> 
     this.changedDataModel.emit(this.dataModel);
 
     this.emitEvent(this.properties.onChange);
-
-    /**
-     * @todo Remove v0.1.0
-     */
-    this.triggerAction('_change');
   }
 
   getId(val: any): string {

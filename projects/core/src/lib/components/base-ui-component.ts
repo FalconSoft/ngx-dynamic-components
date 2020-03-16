@@ -9,11 +9,7 @@ import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperti
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
-    /** @deprecated */ @Input() interpreter: Interpreter;
-    /** @deprecated */ @Input() scripts: string;
-    /** @deprecated */ @Input() rootUIModel: UIModel<T>;
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
-    @Output() evaluate = new EventEmitter<boolean>();
     @HostBinding('style.width') width: string;
     @HostBinding('style.height') height: string;
     @HostBinding('style.padding') padding: string;
@@ -32,12 +28,10 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
       this.emitEvent((this.properties as BaseProperties).onInit);
-      await this.triggerAction('_OnInit');
     }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
-      await this.triggerAction('_OnDestroy');
     }
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
@@ -86,30 +80,6 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
             ...parameters
           }
         });
-      }
-    }
-
-    /**
-     * @todo Remove after integration v0.1.0
-     * @deprecated
-     */
-    async triggerAction(action: string): Promise<void> {
-      if (!this.interpreter || !this.uiModel.id) { return; }
-
-      const functionName = this.uiModel.id + action;
-      if (this.interpreter.hasFunction(this.scripts, functionName)) {
-        this.evaluate.emit(true);
-        try {
-          await this.interpreter.evaluate(this.scripts, {
-            rootUIModel: this.rootUIModel,
-            uiModel: this.uiModel,
-            dataModel: this.dataModel
-          }, functionName);
-        } catch (e) {
-          this.interpreter.evaluate(`alert("${e.message}")`);
-        } finally {
-          this.evaluate.emit(false);
-        }
       }
     }
 

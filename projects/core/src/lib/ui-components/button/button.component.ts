@@ -16,33 +16,10 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
   `
 })
 export class ButtonComponent extends BaseUIComponent<ButtonProperties> {
-  /**
-   * @todo Remove after integration v0.1.0
-   * @deprecated
-   */
-  async onTriggerClick() {
-    const clickKey = this.properties['on-click'];
-    if (clickKey) {
-      this.evaluate.emit(true);
-      try {
-        await this.interpreter.evaluate(this.scripts, {dataModel: this.dataModel, uiModel: this.uiModel}, clickKey);
-        this.changedDataModel.emit(this.dataModel);
-      } finally {
-        this.evaluate.emit(false);
-      }
-    }
-  }
 
   async onClick() {
     this.emitEvent(this.properties.onClick);
     this.changedDataModel.emit(this.dataModel);
-
-    /**
-     * @todo Remove after integration v0.1.0
-     * @deprecated
-     * Temporary for integration v0.1.0
-     */
-    this.onTriggerClick();
   }
 
   get btnClass() {

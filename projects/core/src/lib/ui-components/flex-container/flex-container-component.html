@@ -22,11 +22,8 @@
     [fxFlexAlign]="item.containerProperties?.fxFlexAlign || 'unset'"
     [attr.fxFlexFill]="item.containerProperties?.fxFill || false">
     <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)"
-      [rootUIModel]='rootUIModel'
       [uiModel]='item'
       [dataModel]='dataModel'
-      [interpreter]='interpreter'
-      [scripts]='scripts'
       (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
   </div>
 </ng-template>

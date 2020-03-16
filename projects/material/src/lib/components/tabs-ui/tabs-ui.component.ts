@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, ComponentExample, ComponentDescriptor, UIModel, ContainerProperties,
-  Categories } from '@ngx-dynamic-components/core';
+import {
+  BaseUIComponent, ComponentExample, ComponentDescriptor, UIModel, ContainerProperties,
+  Categories
+} from '@ngx-dynamic-components/core';
 
 import { packageName } from '../../constants';
 
@@ -12,10 +14,8 @@ import { packageName } from '../../constants';
         <dc-ui-selector
           (changedDataModel)="changedDataModel.emit(dataModel)"
           [uiModel]='item'
-          [rootUIModel]='rootUIModel'
           [dataModel]='dataModel'
-          [interpreter]='interpreter'
-          [scripts]='scripts'></dc-ui-selector>
+          ></dc-ui-selector>
       </mat-tab>
     </mat-tab-group>
   `,
@@ -62,8 +62,8 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
       },
       itemProperties: {
         options: [
-          {label: 'United Kingdom', value: 'uk'},
-          {label: 'Ukraine', value: 'ua'}
+          { label: 'United Kingdom', value: 'uk' },
+          { label: 'Ukraine', value: 'ua' }
         ],
         placeholder: 'Country',
         dataModelPath: '$.country'
@@ -74,11 +74,11 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
 };
 
 interface TabsUIComponentConstrutor {
-  new (): TabsUIComponent;
+  new(): TabsUIComponent;
 }
 
 interface TabsPropertiesConstrutor {
-  new (): TabsProperties;
+  new(): TabsProperties;
 }
 
 export const tabsDescriptor: ComponentDescriptor<TabsUIComponentConstrutor, TabsPropertiesConstrutor> = {

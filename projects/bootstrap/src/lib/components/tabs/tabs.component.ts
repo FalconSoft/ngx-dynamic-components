@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, CoreService, StyleProperties, UIModel,
-  ComponentExample, ComponentDescriptor, Categories, XMLResult } from '@ngx-dynamic-components/core';
+import {
+  BaseUIComponent, CoreService, StyleProperties, UIModel,
+  ComponentExample, ComponentDescriptor, Categories, XMLResult
+} from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
@@ -10,11 +12,9 @@ import { packageName } from '../../constants';
       <tab *ngFor="let item of uiModel.children; let i = index" [heading]="item.containerProperties.header || 'Tab ' + (i + 1)">
       <dc-ui-selector
           (changedDataModel)="changedDataModel.emit(dataModel)"
-          [uiModel]='item'
-          [rootUIModel]='rootUIModel'
-          [dataModel]='dataModel'
-          [interpreter]='interpreter'
-          [scripts]='scripts'></dc-ui-selector>
+          [uiModel]="item"
+          [dataModel]="dataModel"
+          ></dc-ui-selector>
       </tab>
     </tabset>
   `
@@ -55,11 +55,11 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
 };
 
 interface TabsComponentConstrutor {
-  new (): TabsComponent;
+  new(): TabsComponent;
 }
 
 interface TabsPropertiesConstrutor {
-  new (): TabsProperties;
+  new(): TabsProperties;
 }
 
 export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPropertiesConstrutor> = {
