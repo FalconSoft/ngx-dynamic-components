@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Interpreter } from 'jspython-interpreter';
+import { ComponentEvent } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-static-example',
@@ -12,8 +13,7 @@ import { Interpreter } from 'jspython-interpreter';
       <ngx-dynamic-component #dynamicComponent
         [uiModel]='ex.uiModel'
         [dataModel]='ex.dataModel'
-        [interpreter]='interpreter'
-        [scripts]='ex.scripts'></ngx-dynamic-component>
+        (eventHandlers)="eventHandlers($event)"></ngx-dynamic-component>
     </ng-container>
   `,
   styles: [`
@@ -26,11 +26,25 @@ import { Interpreter } from 'jspython-interpreter';
 })
 export class StaticExampleViewComponent implements OnInit {
   example: Observable<any>;
-
   ex: any;
   interpreter: Interpreter;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  eventHandlers({eventName, parameters = null}: ComponentEvent) {
+    if (!this.interpreter) { return; }
+    const { scripts, uiModel, dataModel } = this.ex;
+    if (this.interpreter.hasFunction(scripts, eventName)) {
+      try {
+        this.interpreter.evaluate(scripts, {
+          rootUIModel: uiModel,
+          dataModel,
+          ...parameters
+        }, eventName);
+      } catch (e) {
+        this.interpreter.evaluate(`alert("${e.message}")`);
+      }
+    }
   }
 
   ngOnInit() {

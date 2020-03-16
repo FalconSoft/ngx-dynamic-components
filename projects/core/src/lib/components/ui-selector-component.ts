@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
   SimpleChanges, OnChanges, EventEmitter, Output, Renderer2 } from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
 import { CoreService } from '../services/core.service';
+import { ComponentEvent } from '../models';
 
 @Component({
     selector: 'dc-ui-selector',
@@ -23,13 +24,15 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
     this.createComponent();
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (changes.firstChange) { return; }
     if (!this.component || this.component.uiModel.type !== this.uiModel.type) {
         const shouldInit = !this.component || this.component.uiModel.id !== this.uiModel.id;
         // Recreate component with new type.
         this.createComponent();
         if (shouldInit && Object.values(changes).some(c => c.firstChange === false)) {
+          this.emitEvent(this.properties.onInit);
+          /** @deprecated */
           await this.triggerAction('_OnInit');
         }
       } else {
@@ -50,7 +53,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       }
   }
 
-  private createComponent() {
+  private createComponent(): void {
     try {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CoreService.getComponent(this.uiModel.type));
       this.containerRef.clear();
@@ -67,6 +70,9 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       });
       this.component.evaluate.subscribe((evt) => {
         this.evaluate.emit(evt);
+      });
+      this.component.eventHandlers.subscribe((evt: ComponentEvent) => {
+        this.eventHandlers.emit(evt);
       });
       this.render.emit({success: true});
     } catch (error) {

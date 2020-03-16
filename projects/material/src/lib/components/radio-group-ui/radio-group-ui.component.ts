@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, ComponentExample,
-  propDescription, ComponentDescriptor, UIModel, AttributesMap, Categories } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, ComponentExample, propDescription, ComponentDescriptor,
+  UIModel, AttributesMap, Categories, XMLResult, OptionValue, JSONUtils } from '@ngx-dynamic-components/core';
 
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-radio-group-ui',
   template: `
-    <label *ngIf="uiModel.itemProperties.label">{{uiModel.itemProperties.label}}</label>
+    <label *ngIf="properties.label">{{properties.label}}</label>
     <mat-radio-group [ngStyle]="itemStyles"
       [fxLayout]="orientation"
       (change)="changedDataModel.emit(this.dataModel)"
       [(ngModel)]="componentDataModel">
-      <mat-radio-button *ngFor="let option of uiModel.itemProperties.options" [value]="option.value"
-        [ngStyle]="getStyles(uiModel.itemProperties.optionStyles)">
+      <mat-radio-button *ngFor="let option of options" [value]="option.value"
+        [ngStyle]="getStyles(properties.optionStyles)">
         {{option.label}}
       </mat-radio-button>
     </mat-radio-group>
@@ -23,6 +23,17 @@ import { packageName } from '../../constants';
 export class RadioGroupUIComponent extends BaseUIComponent<RadioGroupProperties> {
   get orientation() {
     return this.properties.orientation === 'vertical' ? 'column' : 'row';
+  }
+
+  get options(): OptionValue[] {
+    const src = this.properties.itemsSource;
+    if (Array.isArray(src)) {
+      return src;
+    }
+
+    if (typeof src === 'string' && src.startsWith('$.')) {
+      return JSONUtils.find(this.dataModel, src);
+    }
   }
 }
 
@@ -34,10 +45,16 @@ export class RadioGroupProperties extends DataModelProperties {
   label: string;
 
   @propDescription({
-    description: 'Radio group options',
+    description: 'Radio group options or binding to dataModel.',
     example: '[{label: "One", value: 1}]',
   })
-  options: { label: string, value: string }[];
+  itemsSource: string|OptionValue[];
+
+  @propDescription({
+    description: 'On change event handler name.',
+    example: 'onSelect',
+  })
+  onChange?: string;
 
   @propDescription({
     description: 'Radio option styles',
@@ -54,23 +71,20 @@ export class RadioGroupProperties extends DataModelProperties {
 
 export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   title: 'Radio group example',
-  uiModel: {
-    type: 'mat-radio-group',
-    containerProperties: {
-      padding: '5px 0',
-      margin: '10px 0',
-    },
-    itemProperties: {
-      label: 'Select color',
-      dataModelPath: '$.color',
-      orientation: 'vertical',
-      options: [{label: 'White', value: 'white'}, {label: 'Black', value: 'black'}],
-      optionStyles: {
-        padding: '10px'
-      }
-    }
-  },
-  dataModel: {}
+  uiModel: `
+  <flex-container>
+    <mat-radio-group orientation="vertical" labelPosition="right" binding="$.color">
+      <option value="white">White</option>
+      <option value="black">Black</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+    </mat-radio-group>
+    <mat-radio-group margin="0 1rem" itemsSource="$.genderOptions" labelPosition="right" binding="$.gender"></mat-radio-group>
+  </flex-container>
+  `,
+  dataModel: {
+    genderOptions: [{label: 'Man', value: 'm'}, {label: 'Woman', value: 'w'}]
+  }
 };
 
 interface RadioGroupUIComponentConstrutor {
@@ -86,6 +100,17 @@ export const radioGroupDescriptor: ComponentDescriptor<RadioGroupUIComponentCons
   label: 'Single choice boxes',
   packageName,
   category: Categories.Basic,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const itemProperties: AttributesMap = {};
+    if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
+      itemProperties.itemsSource = xmlRes.childNodes.map(r => ({ label: r._, value: r.$.value }));
+      xmlRes.childNodes = null;
+    }
+    return {
+      type: 'mat-radio-group',
+      itemProperties
+    };
+  },
   description: 'Radio group component',
   itemProperties: RadioGroupProperties,
   component: RadioGroupUIComponent,

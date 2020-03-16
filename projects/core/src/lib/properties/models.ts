@@ -32,7 +32,22 @@ export interface ComponentPropertyValue extends ComponentProperty {
   value: any;
 }
 
-export abstract class StyleProperties implements AttributesMap {
+
+export abstract class BaseProperties implements AttributesMap {
+  @propDescription({
+    description: 'On init event handler name.',
+    example: 'OnComponentInit'
+  })
+  onInit?: string;
+
+  @propDescription({
+    description: 'On destroy event handler name.',
+    example: 'OnComponentDestroy'
+  })
+  onDestroy?: string;
+}
+
+export abstract class StyleProperties extends BaseProperties {
   @propDescription({
     description: 'Element\'s width.',
     example: '100%'
@@ -113,6 +128,7 @@ export abstract class StyleProperties implements AttributesMap {
 }
 
 export abstract class BindingProperties extends StyleProperties {
+  /** @deprecated */
   @propDescription({
     description: 'Path to id in data model. (DEPRECATED)',
     example: 'name'

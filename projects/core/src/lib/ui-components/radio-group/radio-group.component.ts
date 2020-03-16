@@ -20,6 +20,12 @@ export class RadioGroupComponent extends LabeledComponent<RadioGroupProperties> 
   onChange(option: OptionValue) {
     this.componentDataModel = option.value;
     this.changedDataModel.emit(this.dataModel);
+
+    this.emitEvent(this.properties.onChange);
+
+    /**
+     * @todo Remove v0.1.0
+     */
     this.triggerAction('_change');
   }
 
@@ -46,6 +52,12 @@ export class RadioGroupProperties extends LabelProperties {
     example: '[{label: "One", value: 1}]',
   })
   itemsSource: string|OptionValue[];
+
+  @propDescription({
+    description: 'On change event handler name.',
+    example: 'onSelect',
+  })
+  onChange?: string;
 }
 
 export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
@@ -91,7 +103,7 @@ export const radioGroupDescriptor: ComponentDescriptor<RadioGroupComponentConstr
     }
 
     return {
-      type: 'select',
+      type: 'radio-group',
       itemProperties
     };
   },

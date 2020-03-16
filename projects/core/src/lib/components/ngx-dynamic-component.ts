@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { Interpreter } from 'jspython-interpreter';
-import { UIModel } from '../models';
+import { UIModel, ComponentEvent } from '../models';
 import { CoreService } from '../services/core.service';
 
 @Component({
@@ -12,18 +12,20 @@ import { CoreService } from '../services/core.service';
         [interpreter]='interpreter'
         [scripts]='scripts'
         (changedDataModel)="changedDataModel.emit($event)"
+        (eventHandlers)="eventHandlers.emit($event)"
         (render)="render.emit($event)"
         (evaluate)="evaluate.emit($event)">
     </dc-ui-selector>`
 })
 export class NGXDynamicComponent implements OnInit, OnChanges {
-    @Input() scripts: string;
-    @Input() interpreter: Interpreter;
+    /** @deprecated */ @Input() scripts: string;
+    /** @deprecated */ @Input() interpreter: Interpreter;
     @Input() dataModel: any;
     @Input() uiModel: UIModel<any>|string;
     @Output() render = new EventEmitter();
     @Output() changedDataModel = new EventEmitter();
-    @Output() evaluate = new EventEmitter<boolean>();
+    /** @deprecated */ @Output() evaluate = new EventEmitter<boolean>();
+    @Output() eventHandlers = new EventEmitter<ComponentEvent>();
 
     parsedUIModel: UIModel;
 
@@ -32,7 +34,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       this.initParsedModel();
     }
 
-    ngOnChanges({scripts, uiModel}: SimpleChanges) {
+    ngOnChanges({scripts, uiModel}: SimpleChanges): void {
       if (scripts && !scripts.firstChange && scripts.currentValue !== scripts.previousValue) {
         this.initInterpreter();
       }
@@ -50,6 +52,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       }
     }
 
+    /** @deprecated */
     private initInterpreter() {
       if (!this.interpreter) {
         this.interpreter = Interpreter.create();

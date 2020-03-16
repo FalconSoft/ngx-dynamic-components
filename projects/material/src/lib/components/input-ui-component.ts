@@ -9,7 +9,7 @@ import { packageName } from '../constants';
       <mat-form-field>
         <input matInput
           [ngStyle]="itemStyles"
-          [placeholder]="uiModel.itemProperties?.placeholder"
+          [placeholder]="properties.placeholder"
           (input)="changedDataModel.emit(dataModel)"
           [(ngModel)]="componentDataModel"
         />
@@ -35,17 +35,9 @@ export class InputProperties extends DataModelProperties {
 
 const example: ComponentExample<UIModel<InputProperties>> = {
   title: 'Text input example',
-  uiModel: {
-    type: 'mat-input',
-    containerProperties: {},
-    itemProperties: {
-      isNumeric: false,
-      isDate: false,
-      format: '',
-      placeholder: 'Enter your name',
-      dataModelPath: '$.name'
-    }
-  },
+  uiModel: `
+  <mat-input binding="$.name" placeholder="Enter your name"/>
+  `,
   dataModel: {}
 };
 

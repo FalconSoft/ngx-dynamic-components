@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { UIModel, NGXDynamicComponent, formatObjToJsonStr } from '@ngx-dynamic-components/core';
+import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
@@ -52,6 +52,22 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   constructor(private container: ElementRef, private dragService: DragDropService) { }
+
+  eventHandlers({eventName, parameters = null}: ComponentEvent) {
+    if (!this.interpreter) { return; }
+
+    if (this.interpreter.hasFunction(this.scripts, eventName)) {
+      try {
+        this.interpreter.evaluate(this.scripts, {
+          rootUIModel: this.uiModel,
+          dataModel: this.dataModel,
+          ...parameters
+        }, eventName);
+      } catch (e) {
+        this.interpreter.evaluate(`alert("${e.message}")`);
+      }
+    }
+  }
 
   ngOnInit() {
     this.interpreter = jsPython();
@@ -121,7 +137,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
         .subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
 
       this.initEditor('dataModel', this.dataModelEl, this.initDataModel)
-        .subscribe(dataModel => this.refreshPreview(this.uiModel, JSON.parse(dataModel)));
+        .subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel ? JSON.parse(dataModel) : dataModel));
 
       this.initEditor('scripts', this.scriptsEl, this.scripts, 'ace/mode/python')
         .subscribe(sc => this.scripts = sc);

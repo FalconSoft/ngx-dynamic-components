@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseUIComponent, DataModelProperties, ComponentDescriptor,
-  UIModel, ComponentExample, propDescription, Categories } from '@ngx-dynamic-components/core';
+import { BaseUIComponent, DataModelProperties, ComponentDescriptor, UIModel, ComponentExample,
+  propDescription, Categories, XMLResult, AttributesMap, OptionValue, JSONUtils } from '@ngx-dynamic-components/core';
 import { packageName } from '../constants';
 
 @Component({
@@ -11,7 +11,7 @@ import { packageName } from '../constants';
         [placeholder]="uiModel.itemProperties?.placeholder"
         (selectionChange)="onSelect()"
         [(ngModel)]="componentDataModel">
-        <mat-option *ngFor="let option of uiModel.itemProperties?.options" [value]="option.value">
+        <mat-option *ngFor="let option of options" [value]="option.value">
           {{option.label}}
         </mat-option>
       </mat-select>
@@ -21,22 +21,39 @@ import { packageName } from '../constants';
 export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
   onSelect() {
     this.changedDataModel.emit(this.dataModel);
-    this.triggerAction('_selectionChanged');
+    this.emitEvent(this.properties.onSelect);
+  }
+
+  get options(): OptionValue[] {
+    const src = this.properties.itemsSource;
+    if (Array.isArray(src)) {
+      return src;
+    }
+
+    if (typeof src === 'string' && src.startsWith('$.')) {
+      return JSONUtils.find(this.dataModel, src);
+    }
   }
 }
 
 export class SelectProperties extends DataModelProperties {
   @propDescription({
-    description: 'Select options.',
+    description: 'Select options or binding to dataModel.',
     example: '[{label: "One", value: 1}]',
   })
-  options: { label: string, value: string | number }[];
+  itemsSource: string|OptionValue[];
 
   @propDescription({
     description: 'Label shown when no option is selected.',
     example: 'Please select an option',
   })
   placeholder: string;
+
+  @propDescription({
+    description: 'On Select handler name.',
+    example: 'onCountrySelect',
+  })
+  onSelect?: string;
 }
 
 interface SelectUIComponentConstrutor {
@@ -48,19 +65,12 @@ interface SelectPropertiesConstrutor {
 }
 
 const example: ComponentExample<UIModel<SelectProperties>> = {
-  uiModel: {
-    type: 'mat-select',
-    containerProperties: {},
-    id: 'stateSelection',
-    itemProperties: {
-      options: [
-        {label: 'United Kingdom', value: 'uk'},
-        {label: 'Ukraine', value: 'ua'}
-      ],
-      placeholder: 'Country',
-      dataModelPath: '$.country'
-    }
-  },
+  uiModel: `
+    <mat-select placeholder="Country" binding="$.country">
+      <option value="uk">United Kingdom</option>
+      <option value="ua">Ukraine</option>
+    </mat-select>
+  `,
   dataModel: {},
   title: 'Basic select example'
 };
@@ -72,6 +82,20 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
   category: Categories.Basic,
   description: 'Select component',
   itemProperties: SelectProperties,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const itemProperties: AttributesMap = {};
+    if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
+      itemProperties.itemsSource = xmlRes.childNodes.map(r => {
+        return { label: r._, value: r.$.value };
+      });
+      xmlRes.childNodes = null;
+    }
+
+    return {
+      type: 'select',
+      itemProperties
+    };
+  },
   component: SelectUIComponent,
   example
 };

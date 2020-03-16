@@ -16,8 +16,8 @@ const FX_CONTAINER_DIRECTIVES = ['fxFlex', 'fxFlexOrder', 'fxFlexOffset', 'fxFle
 export class CoreService {
   private static COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
 
-  public static registerComponent(desc: ComponentDescriptor) {
-    const {name, packageName, propertiesDescriptor} = desc;
+  public static registerComponent(desc: ComponentDescriptor): void {
+    const { name, packageName, propertiesDescriptor } = desc;
     // @deprecated
     if (propertiesDescriptor) {
       propertiesDescriptor.forEach(prop => {

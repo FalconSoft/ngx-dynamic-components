@@ -24,7 +24,12 @@ import { packageName } from '../../constants';
 export class SelectComponent extends LabeledComponent<SelectProperties> {
   async onSelect() {
     this.changedDataModel.emit(this.dataModel);
-    this.triggerAction('_selectionChanged');
+    this.emitEvent(this.properties.onSelect);
+
+    /** @deprecated */
+    if (this.properties.onSelect) {
+      this.triggerAction(this.properties.onSelect);
+    }
   }
 
   get selectStyles() {
@@ -60,6 +65,12 @@ export class SelectProperties extends LabelProperties {
     example: '30px',
   })
   selectHeight?: string;
+
+  @propDescription({
+    description: 'On Select handler name.',
+    example: 'onCountrySelect',
+  })
+  onSelect?: string;
 }
 
 interface SelectComponentConstrutor {
@@ -73,7 +84,7 @@ interface SelectPropertiesConstrutor {
 export const example: ComponentExample<UIModel<SelectProperties>> = {
   uiModel: `
     <flex-container fxLayout="column">
-      <select id="country" label="Country" labelWidth="50px" width="300px" labelPosition="left" binding="$.country">
+      <select onSelect="countryChanged" label="Country" labelWidth="50px" width="300px" labelPosition="left" binding="$.country">
         <option value="uk">United Kingdom</option>
         <option value="ua">Ukraine</option>
       </select>
@@ -83,7 +94,7 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
   `,
   dataModel: {},
   scripts: `
-  def country_selectionChanged():
+  def countryChanged():
     dataModel.city = null
     if dataModel.country == null:
       dataModel.cities = []

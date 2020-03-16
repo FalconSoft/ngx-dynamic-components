@@ -1,6 +1,6 @@
 import { PropDescriptor } from './models';
 
-export function propDescription(description: PropDescriptor) {
+export function propDescription(description: PropDescriptor): (target: any, key: string) => void {
   function decorate(target: any, key: string) {
     let properties = target.hasOwnProperty('properties') ? target.properties : [];
 

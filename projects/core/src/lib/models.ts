@@ -87,3 +87,8 @@ export interface XMLResult {
   content: string;
   childNodes: any[];
 }
+
+export interface ComponentEvent {
+  eventName: string;
+  parameters?: any;
+}

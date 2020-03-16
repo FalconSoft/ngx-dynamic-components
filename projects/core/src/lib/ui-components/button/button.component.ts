@@ -16,7 +16,11 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
   `
 })
 export class ButtonComponent extends BaseUIComponent<ButtonProperties> {
-  async onClick() {
+  /**
+   * @todo Remove after integration v0.1.0
+   * @deprecated
+   */
+  async onTriggerClick() {
     const clickKey = this.properties['on-click'];
     if (clickKey) {
       this.evaluate.emit(true);
@@ -27,6 +31,18 @@ export class ButtonComponent extends BaseUIComponent<ButtonProperties> {
         this.evaluate.emit(false);
       }
     }
+  }
+
+  async onClick() {
+    this.emitEvent(this.properties.onClick);
+    this.changedDataModel.emit(this.dataModel);
+
+    /**
+     * @todo Remove after integration v0.1.0
+     * @deprecated
+     * Temporary for integration v0.1.0
+     */
+    this.onTriggerClick();
   }
 
   get btnClass() {
@@ -47,7 +63,7 @@ export class ButtonProperties extends StyleProperties {
     description: 'Key for action that fires onclick',
     example: 'submit',
   })
-  'on-click'?: string;
+  onClick?: string;
 
   @propDescription({
     description: 'Button type: button|submit|reset|link. Default: button',
@@ -65,8 +81,7 @@ export class ButtonProperties extends StyleProperties {
 export const example: ComponentExample<UIModel<ButtonProperties>> = {
   title: 'Basic button example',
   uiModel: `
-  <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" on-click="consoleLog" type="button">Click</button>
-  `,
+  <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog" type="button">Click</button>`,
   scripts: `
   def consoleLog():
     print("test")

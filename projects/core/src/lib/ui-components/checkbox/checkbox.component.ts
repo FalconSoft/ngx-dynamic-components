@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { LabeledComponent } from '../../components/labeled.component';
-import { LabelProperties } from '../../properties';
+import { LabelProperties, propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
 
 @Component({
-  selector: 'dc-checkbox-ui',
+  selector: 'dc-checkbox',
   template: `
     <div [fxLayout]="layout" [fxLayoutAlign]="align" [ngStyle]="itemStyles">
       <label *ngIf="hasLabel" [for]="id" class="{{properties.labelPosition}} my-0"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
       <input type="checkbox" class="mx-0" [attr.id]="id"
-        (change)="changedDataModel.emit(this.dataModel)"
+        (change)="onChange()"
         [(ngModel)]="componentDataModel">
     </div>
   `,
@@ -30,11 +30,18 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
   `]
 })
 export class CheckboxComponent extends LabeledComponent<CheckboxProperties> {
-
+  onChange() {
+    this.changedDataModel.emit(this.dataModel);
+    this.emitEvent(this.properties.onChange);
+  }
 }
 
 export class CheckboxProperties extends LabelProperties {
-
+  @propDescription({
+    description: 'On change event handler name.',
+    example: 'onCheck',
+  })
+  'onChange'?: string;
 }
 
 export const example: ComponentExample<UIModel<CheckboxProperties>> = {

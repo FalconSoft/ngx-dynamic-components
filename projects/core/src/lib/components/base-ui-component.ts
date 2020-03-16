@@ -1,17 +1,18 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { Interpreter } from 'jspython-interpreter';
-import { UIModel, AttributesMap } from '../models';
+import { UIModel, AttributesMap, ComponentEvent } from '../models';
 import { JSONUtils } from '../utils/json.utils';
 import { kebabStrToCamel } from '../utils';
-import { StyleProperties, DataModelProperties, StylePropertiesList } from '../properties';
+import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 
 @Directive()
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
-    @Input() interpreter: Interpreter;
-    @Input() scripts: string;
-    @Input() rootUIModel: UIModel<T>;
+    /** @deprecated */ @Input() interpreter: Interpreter;
+    /** @deprecated */ @Input() scripts: string;
+    /** @deprecated */ @Input() rootUIModel: UIModel<T>;
+    @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @Output() evaluate = new EventEmitter<boolean>();
     @HostBinding('style.width') width: string;
     @HostBinding('style.height') height: string;
@@ -30,20 +31,22 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
+      this.emitEvent((this.properties as BaseProperties).onInit);
       await this.triggerAction('_OnInit');
     }
 
     async ngOnDestroy(): Promise<void> {
+      this.emitEvent((this.properties as BaseProperties).onDestroy);
       await this.triggerAction('_OnDestroy');
     }
 
-    async ngOnChanges(changes: SimpleChanges) {
+    async ngOnChanges(changes: SimpleChanges): Promise<void> {
       if (changes.dataModel && !changes.dataModel.firstChange && this.dataModel !== changes.dataModel.currentValue) {
         this.dataModel = changes.dataModel.currentValue;
       }
     }
 
-    get componentDataModel() {
+    get componentDataModel(): any {
       if (this.properties.hasOwnProperty('dataSource')) {
         const value = (this.properties as DataModelProperties).dataSource;
         if (typeof value === 'object') {
@@ -70,10 +73,26 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       }
     }
 
-    get properties() {
+    get properties(): AttributesMap {
       return this.uiModel.itemProperties;
     }
 
+    protected emitEvent(eventName: string, parameters: any = null) {
+      if (eventName) {
+        this.eventHandlers.emit({
+          eventName,
+          parameters: {
+            uiModel: this.uiModel,
+            ...parameters
+          }
+        });
+      }
+    }
+
+    /**
+     * @todo Remove after integration v0.1.0
+     * @deprecated
+     */
     async triggerAction(action: string): Promise<void> {
       if (!this.interpreter || !this.uiModel.id) { return; }
 

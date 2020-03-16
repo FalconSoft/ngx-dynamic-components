@@ -26,6 +26,7 @@
       [uiModel]='item'
       [dataModel]='dataModel'
       [interpreter]='interpreter'
-      [scripts]='scripts'></dc-ui-selector>
+      [scripts]='scripts'
+      (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
   </div>
 </ng-template>

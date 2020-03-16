@@ -5,11 +5,11 @@ import { BaseUIComponent, DataModelProperties, ComponentExample, Categories,
 import { packageName } from '../constants';
 
 @Component({
-  selector: 'dc-ui-checkbox',
+  selector: 'dc-checkbox',
   template: `
     <mat-checkbox [ngStyle]="itemStyles"
       (input)="changedDataModel.emit(this.dataModel)"
-      [(ngModel)]="componentDataModel">{{uiModel.itemProperties.label}}
+      [(ngModel)]="componentDataModel">{{properties.label}}
     </mat-checkbox>`,
 })
 export class CheckboxUIComponent extends BaseUIComponent<CheckboxProperties> {
@@ -26,14 +26,9 @@ export class CheckboxProperties extends DataModelProperties {
 
 const example: ComponentExample<UIModel<CheckboxProperties>> = {
   title: 'Checkbox example',
-  uiModel: {
-    type: 'mat-checkbox',
-    containerProperties: {},
-    itemProperties: {
-      label: 'Accept conditions',
-      dataModelPath: '$.accept'
-    }
-  },
+  uiModel: `
+  <mat-checkbox label="Accept conditions" binding="$.accept"/>
+  `,
   dataModel: {}
 };
 

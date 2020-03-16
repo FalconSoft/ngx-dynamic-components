@@ -13,11 +13,11 @@ export abstract class LabeledComponent<T = LabelProperties> extends BaseUICompon
     return Boolean((this.properties as LabelProperties).labelPosition);
   }
 
-  get layout() {
+  get layout(): 'row'|'column' {
     return ['left', 'right'].includes((this.properties as LabelProperties).labelPosition) ? 'row' : 'column';
   }
 
-  get align() {
+  get align(): string {
     return this.layout === 'row' ? 'start center' : 'center start';
   }
 }

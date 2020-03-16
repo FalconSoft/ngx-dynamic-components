@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, propDescription, StyleProperties, ComponentExample,
-  ComponentDescriptor, UIModel, Categories} from '@ngx-dynamic-components/core';
+  ComponentDescriptor, UIModel, Categories, XMLResult, AttributesMap} from '@ngx-dynamic-components/core';
 import { packageName } from '../constants';
 
 @Component({
-    selector: 'dc-ui-button',
+    selector: 'dc-button',
     template: `
     <button mat-flat-button color="primary"
       [ngStyle]="itemStyles"
@@ -15,10 +15,7 @@ import { packageName } from '../constants';
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
   onClick() {
-    this.interpreter.evaluate(this.scripts, {
-      dataModel: this.dataModel,
-      uiModel: this.uiModel
-    }, this.properties.clickActionKey);
+    this.emitEvent(this.properties.onClick);
   }
 }
 
@@ -33,22 +30,18 @@ export class ButtonProperties extends StyleProperties {
     description: 'Key for action that fires onclick',
     example: 'submit',
   })
-  clickActionKey: string;
+  onClick: string;
 }
 
 const example: ComponentExample<UIModel<ButtonProperties>> = {
   title: 'Basic button example',
-  uiModel: {
-    type: 'mat-button',
-    containerProperties: {},
-    itemProperties: {
-        label: 'SUBMIT',
-        width: '50%',
-        margin: '15px',
-        padding: '10px 5px 10px 0px',
-        clickActionKey: 'consoleLog'
-    }
-  },
+  uiModel: `
+  <mat-button onClick="consloeLog">Log</mat-button>
+  `,
+  scripts: `
+  def consloeLog():
+    print("Log click")
+  `,
   dataModel: {}
 };
 
@@ -69,6 +62,18 @@ export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, 
   itemProperties: ButtonProperties,
   component: ButtonUIComponent,
   example,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const content = xmlRes.content;
+    const itemProperties: AttributesMap = {};
+    if (typeof content === 'string') {
+      itemProperties.label = content;
+    }
+
+    return {
+      type: 'button',
+      itemProperties: { label: content }
+    };
+  },
   defaultModel: {
     type: 'mat-button',
     itemProperties: {
