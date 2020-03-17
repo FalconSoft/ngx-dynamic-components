@@ -100,7 +100,7 @@ export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, Bu
     containerProperties: {},
     itemProperties: {
       label: 'Label',
-      'on-click': 'consoleLog',
+      onClick: 'consoleLog',
       btnClass: 'btn-primary',
       type: 'button'
     }

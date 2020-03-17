@@ -9,6 +9,7 @@
   [fxLayout]="properties?.fxLayout || 'row'"
   [fxLayoutGap]="properties?.fxLayoutGap || '0'"
   [fxLayoutAlign]="getStrValue(properties?.fxLayoutAlign)"
+  [attr.fxFlexFill]="properties?.fxFlexFill || false"
   [ngStyle]="itemStyles">
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
@@ -20,7 +21,7 @@
     [fxFlexOrder]="item.containerProperties?.fxFlexOrder || 0"
     [fxFlexOffset]="item.containerProperties?.fxFlexOffset || '0%'"
     [fxFlexAlign]="item.containerProperties?.fxFlexAlign || 'unset'"
-    [attr.fxFlexFill]="item.containerProperties?.fxFill || false">
+    [attr.fxFlexFill]="item.containerProperties?.fxFlexFill || false">
     <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)"
       [uiModel]='item'
       [dataModel]='dataModel'

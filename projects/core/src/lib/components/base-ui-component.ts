@@ -1,5 +1,4 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges, Directive } from '@angular/core';
-import { Interpreter } from 'jspython-interpreter';
 import { UIModel, AttributesMap, ComponentEvent } from '../models';
 import { JSONUtils } from '../utils/json.utils';
 import { kebabStrToCamel } from '../utils';
@@ -11,7 +10,11 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @Input() uiModel: UIModel<T>;
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @HostBinding('style.width') width: string;
+    @HostBinding('style.min-width') minWidth: string;
+    @HostBinding('style.max-width') maxWidth: string;
     @HostBinding('style.height') height: string;
+    @HostBinding('style.min-height') minHeight: string;
+    @HostBinding('style.max-height') maxHeight: string;
     @HostBinding('style.padding') padding: string;
     @HostBinding('style.margin') margin: string;
     @HostBinding('style.display') display = 'inherit';
@@ -22,7 +25,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
 
     @Output() changedDataModel = new EventEmitter();
 
-    private readonly hostBindings = ['width', 'height', 'padding', 'margin'];
+    private readonly hostBindings = ['width', 'height', 'padding', 'margin',
+    'minHeigh', 'maxHeight', 'minWidth', 'maxWidth'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
     async ngOnInit(): Promise<void> {

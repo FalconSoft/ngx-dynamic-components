@@ -46,9 +46,16 @@ export class FlexContainerProperties extends StyleProperties {
   @propDescription({
     description: 'fxLayoutAlign (Angular Flex-Layout property)',
     example: 'stretch center',
-    link: 'https://github.com/angular/flex-layout/wiki/fxLayoutAlign-API0'
+    link: 'https://github.com/angular/flex-layout/wiki/fxLayoutAlign-API'
   })
   fxLayoutAlign?: string;
+
+  @propDescription({
+    description: 'fxFlexFill (Angular Flex-Layout property)',
+    example: 'true',
+    link: 'https://github.com/angular/flex-layout/wiki/fxFlexFill-API'
+  })
+  fxFlexFill?: string;
 
   @propDescription({
     description: 'If panel is form',

@@ -8,7 +8,7 @@ import { ControlProperties, UIModelProperty } from '../properties';
  * Child Elements directives within Containers
  * @link https://github.com/angular/flex-layout/wiki/API-Documentation
  */
-const FX_CONTAINER_DIRECTIVES = ['fxFlex', 'fxFlexOrder', 'fxFlexOffset', 'fxFlexAlign', 'fxflexfill'];
+const FX_CONTAINER_DIRECTIVES = ['fxFlex', 'fxFlexOrder', 'fxFlexOffset', 'fxFlexAlign', 'fxFlexFill'];
 
 @Injectable({
   providedIn: 'root'
