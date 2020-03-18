@@ -23,8 +23,7 @@ import { registerComponents } from './components/register';
     FlexLayoutModule,
     NgSelectModule,
     TabsModule.forRoot()
-  ],
-  exports: [TabsModule]
+  ]
 })
 export class BootstrapModule {
   constructor() {

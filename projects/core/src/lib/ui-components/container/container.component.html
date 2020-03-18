@@ -1,0 +1,14 @@
+<form *ngIf="properties?.isForm" (ngSubmit)="onFormSubmit($event)" #form
+  [ngStyle]="itemStyles">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</form>
+<ng-container *ngIf="!properties?.isForm">
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</ng-container>
+
+<ng-template #content>
+  <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)" *ngFor="let item of uiModel.children"
+      [uiModel]='item'
+      [dataModel]='dataModel'
+      (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
+</ng-template>

@@ -1,4 +1,3 @@
-import { Interpreter } from 'jspython-interpreter';
 import { BaseUIComponentConstructor } from './utils';
 import { ComponentProperty } from './properties';
 
@@ -46,12 +45,6 @@ export abstract class UIModel<T = AttributesMap> {
   children?: UIModel[];
 }
 
-export interface ComponentConfiguration {
-  uiModel: UIModel;
-  dataModel: any;
-  interpreter?: Interpreter;
-}
-
 export interface IVariableResolver {
   resolve: (obj: object, vars?: object) => object;
   resolveString: (str: string, vars?: object) => object|string;
@@ -91,4 +84,5 @@ export interface XMLResult {
 export interface ComponentEvent {
   eventName: string;
   parameters?: any;
+  rootUIModel?: UIModel;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as xml from 'xml2js';
 import { ComponentDescriptor, UIModel, AttributesMap, XMLResult } from '../models';
-import { BaseUIComponentConstructor } from '../utils';
+import { BaseUIComponentConstructor, toXMLResult } from '../utils';
 import { ControlProperties, UIModelProperty } from '../properties';
 
 /**
@@ -64,7 +64,7 @@ export class CoreService {
       });
       const type = Object.keys(res)[0];
       const xmlObj = res[type];
-      return CoreService.getUIModel(CoreService.getXMLResult(xmlObj));
+      return CoreService.getUIModel(toXMLResult(xmlObj));
     } catch (e) {
       console.log(e);
       return null;
@@ -77,21 +77,11 @@ export class CoreService {
     Object.entries(attrs).forEach(([prop, val]) => {
       if (FX_CONTAINER_DIRECTIVES.includes(prop)) {
         containerProperties[prop] = val;
-      } else {
-        itemProperties[prop] = val;
       }
+      itemProperties[prop] = val;
     });
 
     return { containerProperties, itemProperties };
-  }
-
-  public static getXMLResult(xmlObj: any): XMLResult {
-    return {
-      type: xmlObj['#name'],
-      attrs: xmlObj.$ || {},
-      childNodes: xmlObj.$$,
-      content: xmlObj._
-    };
   }
 
   public static getUIModel(xmlRes: XMLResult): UIModel {
@@ -105,11 +95,17 @@ export class CoreService {
         containerProperties
       };
 
+      if (attrs.id) {
+        uiModel.id = attrs.id;
+      }
+
       const descr = CoreService.COMPONENTS_REGISTER.get(type);
       if (typeof descr.parseUIModel === 'function') {
         const typeUIModel = descr.parseUIModel(xmlRes);
         uiModel.itemProperties = { ...itemProperties, ...typeUIModel.itemProperties };
-        uiModel.children = typeUIModel.children;
+        if (typeUIModel.children) {
+          uiModel.children = typeUIModel.children;
+        }
       }
 
       if (attrs.id) {
@@ -117,7 +113,7 @@ export class CoreService {
       }
 
       if (xmlRes.childNodes && !uiModel.children) {
-        uiModel.children = xmlRes.childNodes.map((r: any) => CoreService.getUIModel(CoreService.getXMLResult(r)));
+        uiModel.children = xmlRes.childNodes.map((r: any) => CoreService.getUIModel(toXMLResult(r)));
       }
       return uiModel;
     }

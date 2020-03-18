@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import {
   BaseUIComponent, CoreService, StyleProperties, UIModel,
-  ComponentExample, ComponentDescriptor, Categories, XMLResult
+  ComponentExample, ComponentDescriptor, Categories, XMLResult, toXMLResult
 } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-tabs-ui',
   template: `
-    <tabset drop-container class="tabset-fx">
-      <tab *ngFor="let item of uiModel.children; let i = index" [heading]="item.containerProperties.header || 'Tab ' + (i + 1)">
+    <tabset class="tabset-fx w-100 overflow-auto">
+      <tab *ngFor="let item of uiModel.children; let i = index" [heading]="item.itemProperties.header || 'Tab ' + (i + 1)">
       <dc-ui-selector
           (changedDataModel)="changedDataModel.emit(dataModel)"
+          (eventHandlers)="eventHandlers.emit($event)"
           [uiModel]="item"
           [dataModel]="dataModel"
           ></dc-ui-selector>
@@ -33,14 +34,13 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
 		<tab header="Test tab" padding="0.5rem">
 			<text text-style="h1">Tab 1 static text content</text>
 		</tab>
-		<!--Tab should be a flex-container as well-->
     <tab header="Btn tab" padding="0.5rem" fxLayout="column" fxLayoutGap="8px">
       <text text-style="h1">Button content</text>
       <button class="btn btn-primary mr-2" on-click="button1_Click">Click</button>
-      <flex-container>
+      <container>
         <text text-style="h4">ClickCount:</text>
         <text text-style="h4">$.clickCount</text>
-      </flex-container>
+      </container>
 		</tab>
 	</tab-container>
   `,
@@ -74,9 +74,11 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
   parseUIModel(xmlData: XMLResult): UIModel {
     const children = xmlData.childNodes.map(child => {
       const { itemProperties, containerProperties } = CoreService.getPropertiesFromAttributes(child.$);
+      itemProperties.height = '100%';
+      itemProperties.width = '100%';
       return {
-        type: 'flex-container',
-        children: child.$$.map((r: any) => CoreService.getUIModel(CoreService.getXMLResult(r))),
+        type: 'container',
+        children: child.$$.map((r: any) => CoreService.getUIModel(toXMLResult(r))),
         containerProperties,
         itemProperties
       };

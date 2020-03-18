@@ -1,4 +1,5 @@
 import { BaseUIComponent } from '../components/base-ui-component';
+import { XMLResult } from '../models';
 
 export interface BaseUIComponentConstructor {
   new (): BaseUIComponent;
@@ -85,4 +86,13 @@ export function formatObjToJsonStr(obj: any): string {
     return obj;
   }
   return JSON.stringify(obj, null, '\t');
+}
+
+export function toXMLResult(xmlObj: any): XMLResult {
+  return {
+    type: xmlObj['#name'],
+    attrs: xmlObj.$ || {},
+    childNodes: xmlObj.$$,
+    content: xmlObj._
+  };
 }

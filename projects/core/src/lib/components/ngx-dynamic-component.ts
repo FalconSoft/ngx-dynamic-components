@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
-import { Interpreter } from 'jspython-interpreter';
 import { UIModel, ComponentEvent } from '../models';
 import { CoreService } from '../services/core.service';
 
@@ -10,7 +9,7 @@ import { CoreService } from '../services/core.service';
         [uiModel]='parsedUIModel'
         [dataModel]='dataModel'
         (changedDataModel)="changedDataModel.emit($event)"
-        (eventHandlers)="eventHandlers.emit($event)"
+        (eventHandlers)="onEventHandler($event)"
         (render)="render.emit($event)"
       >
     </dc-ui-selector>`
@@ -28,10 +27,14 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       this.initParsedModel();
     }
 
-    ngOnChanges({scripts, uiModel}: SimpleChanges): void {
+    ngOnChanges({uiModel}: SimpleChanges): void {
       if (uiModel && !uiModel.firstChange && uiModel.currentValue !== uiModel.previousValue) {
         this.initParsedModel();
       }
+    }
+
+    onEventHandler(evt: ComponentEvent) {
+      this.eventHandlers.emit({...evt, rootUIModel: this.parsedUIModel});
     }
 
     private async initParsedModel(): Promise<void> {

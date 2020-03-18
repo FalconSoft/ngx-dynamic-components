@@ -22,6 +22,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @HostBinding('style.border-top') borderTop: string;
     @HostBinding('style.border-right') borderRight: string;
     @HostBinding('style.border-bottom') borderBottom: string;
+    @HostBinding('class') classes: string;
 
     @Output() changedDataModel = new EventEmitter();
 
@@ -31,6 +32,9 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
+      if (this.properties.class) {
+        this.classes = this.properties.class;
+      }
       this.emitEvent((this.properties as BaseProperties).onInit);
     }
 
