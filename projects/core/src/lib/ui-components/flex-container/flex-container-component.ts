@@ -78,7 +78,7 @@ const example: ComponentExample<UIModel<FlexContainerProperties>> = {
     width="100%" height="100%" margin="8px" background="white">
     <text class="m-0" fxFlex="1 2 500px" text-style="h1">Header 1</text>
     <text class="m-0" fxFlexOrder="2" text-style="h2">Header 2</text>
-    <button class="btn btn-secondary" fxFlexOrder="1" on-click="consoleLog" type="button">Click</button>
+    <button class="btn btn-secondary" fxFlexOrder="1" onСlick="consoleLog" type="button">Click</button>
     <text class="m-0" fxFlexFill="true" background="red" text-style="h3">Header 3</text>
   </flex-container>
   `,

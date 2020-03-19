@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent } from '@ngx-dynamic-components/core';
+import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent, JSONUtils } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
 import { filter, map, startWith, debounceTime } from 'rxjs/operators';
 import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
@@ -53,13 +53,13 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
 
   constructor(private container: ElementRef, private dragService: DragDropService) { }
 
-  eventHandlers({eventName, parameters = null}: ComponentEvent) {
+  eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent) {
     if (!this.interpreter) { return; }
 
     if (this.interpreter.hasFunction(this.scripts, eventName)) {
       try {
         this.interpreter.evaluate(this.scripts, {
-          rootUIModel: this.uiModel,
+          rootUIModel,
           dataModel: this.dataModel,
           ...parameters
         }, eventName);
@@ -71,6 +71,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
 
   ngOnInit() {
     this.interpreter = jsPython();
+    this.interpreter.assignGlobalContext({JSONUtils});
     this.uiModel = this.initUiModel;
     this.dataModel = this.initDataModel;
     this.editMode$.subscribe(editMode => {

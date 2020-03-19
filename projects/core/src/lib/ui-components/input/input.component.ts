@@ -13,13 +13,13 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
       <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
         [fxFlex]="properties.inputWidth"
         [placeholder]="properties.placeholder"
-        [disabled]="properties.enabled === false"
+        [disabled]="properties.disabled === true"
         [required]="properties.required"
         [minlength]="properties.minlength"
         [maxlength]="properties.maxlength"
         [email]="properties.type === 'email'"
         [pattern]="properties.pattern"
-        (input)="changedDataModel.emit(this.dataModel)"
+        (input)="onInput($event)"
         [attr.name]="name"
         [(ngModel)]="componentDataModel">
       <div *ngIf="inputField.invalid && (inputField.dirty || inputField.touched)" class="alert alert-danger py-0 px-1 m-0">
@@ -68,6 +68,11 @@ export class InputComponent extends LabeledComponent<InputProperties> {
   get name() {
     return this.properties.binding?.replace(/[^A-Z]+/gi, '');
   }
+
+  onInput(event) {
+    this.changedDataModel.emit(this.dataModel);
+    this.emitEvent(this.properties.onInput, event.target.value);
+  }
 }
 
 export class InputProperties extends LabelProperties {
@@ -82,10 +87,10 @@ export class InputProperties extends LabelProperties {
   })
   type?: string;
   @propDescription({
-    description: 'Is enabled',
+    description: 'It specifies that the input should be disabled.',
     example: 'true',
   })
-  enabled?: boolean;
+  disabled?: boolean;
   @propDescription({
     description: 'Is visible',
     example: 'true',
@@ -121,12 +126,27 @@ export class InputProperties extends LabelProperties {
     example: '[a-zA-Z ]*'
   })
   pattern?: string;
+
+  @propDescription({
+    description: 'Key for action that fires on input',
+    example: 'onInput()',
+  })
+  onInput?: string;
 }
 
 export const example: ComponentExample<UIModel<InputProperties>> = {
   title: 'Text input example',
   uiModel: `
-  <input label="Label" labelPosition="left" width="50%" placeholder="Enter your name" binding="$.name"/>
+  <section class="d-flex flex-column align-items-start">
+    <input label="Name" labelWidth="80px" onInput="onNameInput(name)" labelPosition="left" placeholder="Enter your name" binding="$.name"/>
+    <input label="Last name" id="lastName" labelWidth="80px" disabled="true"
+    labelPosition="left" placeholder="Enter your last name" binding="$.lastName"/>
+  </section>
+  `,
+  scripts: `
+  def onNameInput(name):
+    disabled = name == ""
+    JSONUtils.setValue(rootUIModel, "$(children:id=lastName)/itemProperties/disabled", disabled)
   `,
   dataModel: {}
 };
@@ -156,7 +176,7 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
       placeholder: 'Enter your text',
       binding: '$.path',
       visible: true,
-      enabled: true,
+      disabled: true,
       inputWidth: '100%',
       labelWidth: '80px',
       width: '200px',

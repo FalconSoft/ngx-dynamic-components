@@ -34,13 +34,13 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
 		<tab header="Test tab" padding="0.5rem">
 			<text text-style="h1">Tab 1 static text content</text>
 		</tab>
-    <tab header="Btn tab" padding="0.5rem" fxLayout="column" fxLayoutGap="8px">
+    <tab header="Btn tab" class="align-items-start p-2 flex-column">
       <text text-style="h1">Button content</text>
-      <button class="btn btn-primary mr-2" on-click="button1_Click">Click</button>
-      <container>
+      <button class="btn btn-primary mr-2" onClick="button1_Click">Click</button>
+      <section>
         <text text-style="h4">ClickCount:</text>
         <text text-style="h4">$.clickCount</text>
-      </container>
+      </section>
 		</tab>
 	</tab-container>
   `,
@@ -77,7 +77,7 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
       itemProperties.height = '100%';
       itemProperties.width = '100%';
       return {
-        type: 'container',
+        type: 'section',
         children: child.$$.map((r: any) => CoreService.getUIModel(toXMLResult(r))),
         containerProperties,
         itemProperties
@@ -93,7 +93,7 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
     containerProperties: {},
     itemProperties: {},
     children: [{
-      type: 'flex-container',
+      type: 'section',
       containerProperties: {
         width: '100%',
         height: '100%',
@@ -105,7 +105,7 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
         height: '100%',
       }
     }, {
-      type: 'flex-container',
+      type: 'section',
       containerProperties: {
         width: '100%',
         height: '100%',

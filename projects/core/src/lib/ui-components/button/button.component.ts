@@ -1,31 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, OnInit, HostListener } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription, PropertyCategories } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
-  selector: 'dc-button',
+  selector: 'button', // tslint:disable-line
   template: `
-    <a *ngIf="properties.type == 'link' else btn"
-      [ngClass]="btnClass" [ngStyle]="itemStyles" [href]="properties.href">{{properties.label}}</a>
-    <ng-template #btn>
-      <button [ngClass]="btnClass"
-        [type]="properties.type || 'button'" [ngStyle]="itemStyles"
-        (click)="onClick()">{{properties.label}}</button>
-    </ng-template>
+  {{properties.label}}
   `
 })
-export class ButtonComponent extends BaseUIComponent<ButtonProperties> {
+export class ButtonComponent extends BaseUIComponent<ButtonProperties> implements OnInit {
 
+  @HostBinding('attr.type') type = 'button';
+  @HostBinding('attr.disabled') disabled = null;
+  @HostListener('click')
   async onClick() {
     this.emitEvent(this.properties.onClick);
     this.changedDataModel.emit(this.dataModel);
   }
 
-  get btnClass() {
-    return {
-      [`${this.properties.class}`]: this.properties.class
-    };
+  ngOnInit(): Promise<void> {
+    if (this.properties.type) {
+      this.type = this.properties.type;
+    }
+
+    if (this.properties.disabled === true) {
+      this.disabled = true;
+    }
+
+    return super.ngOnInit();
   }
 }
 
@@ -38,7 +41,7 @@ export class ButtonProperties extends StyleProperties {
 
   @propDescription({
     description: 'Key for action that fires onclick',
-    example: 'submit',
+    example: 'onBtnClick()',
   })
   onClick?: string;
 
@@ -49,16 +52,21 @@ export class ButtonProperties extends StyleProperties {
   type?: string;
 
   @propDescription({
-    description: 'Link href used in case of type=link.',
-    example: 'submit',
+    description: 'It specifies that the button should be disabled.',
+    example: 'true',
   })
-  href?: string;
+  disabled?: boolean;
 }
 
 export const example: ComponentExample<UIModel<ButtonProperties>> = {
   title: 'Basic button example',
   uiModel: `
-  <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog" type="button">Click</button>`,
+  <section class="row align-items-center">
+    <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog">Click</button>
+    <button class="btn btn-secondary" disabled="true" onClick="consoleLog" type="submit">Submit</button>
+    <button class="btn btn-danger" display="none">Hidden</button>
+  </section>
+  `,
   scripts: `
   def consoleLog():
     print("test")
@@ -92,11 +100,11 @@ export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, Bu
 
     return {
       type: 'button',
-      itemProperties: { label: content }
+      itemProperties
     };
   },
   defaultModel: {
-    type: `core:button`,
+    type: `button`,
     containerProperties: {},
     itemProperties: {
       label: 'Label',

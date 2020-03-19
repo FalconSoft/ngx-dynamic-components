@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostBinding } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription, PropertyCategories } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
@@ -8,6 +8,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
     templateUrl: './container.component.html'
 })
 export class ContainerComponent extends BaseUIComponent<ContainerProperties> {
+  @HostBinding('style.display') display = 'flex';
   @ViewChild('form') form: ElementRef<HTMLFormElement>;
   getStrValue(value: string) {
     if (value) {
@@ -45,12 +46,12 @@ export class ContainerProperties extends StyleProperties {
 const example: ComponentExample<UIModel<ContainerProperties>> = {
   title: 'Flex example',
   uiModel: `
-  <container class="row" width="100%" height="100%" margin="8px" background="white">
+  <section class="row align-items-center justify-content-between" width="100%" height="100%" margin="8px" background="white">
     <text class="m-0" text-style="h1">Header 1</text>
     <text class="m-0" text-style="h2">Header 2</text>
-    <button class="btn btn-secondary" on-click="consoleLog" type="button">Click</button>
+    <button class="btn btn-secondary" onСlick="consoleLog" type="button">Click</button>
     <text class="m-0" background="red" text-style="h3">Header 3</text>
-  </container>
+  </section>
   `,
   dataModel: {}
 };
@@ -64,7 +65,7 @@ interface ContainerPropertiesConstrutor {
 }
 
 export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrutor, ContainerPropertiesConstrutor> = {
-  name: 'container',
+  name: 'section',
   packageName: 'core',
   label: 'Container',
   category: Categories.Containers,

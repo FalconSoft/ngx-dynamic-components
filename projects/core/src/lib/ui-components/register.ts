@@ -9,6 +9,7 @@ import { checkboxDescriptor } from './checkbox/checkbox.component';
 import { radioGroupDescriptor } from './radio-group/radio-group.component';
 import { textareaDescriptor } from './textarea/textarea.component';
 import { containerDescriptor } from './container/container.component';
+import { linkDescriptor } from './link/link.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   flexContainerDescriptor,
@@ -19,7 +20,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   radioGroupDescriptor,
   textareaDescriptor,
   buttonDescriptor,
-  containerDescriptor
+  containerDescriptor,
+  linkDescriptor
 ];
 
 // Register components.

@@ -96,3 +96,16 @@ export function toXMLResult(xmlObj: any): XMLResult {
     content: xmlObj._
   };
 }
+
+/**
+ * Parses function signature to function name and parameter.
+ * @param funcSignature Function signature.
+ */
+export function parseArgFunction(funcSignature: string = ''): string[] {
+  const match = funcSignature.match(/(.{1,})\((.{0,})\)/);
+  if (!match) {
+    return [funcSignature];
+  }
+
+  return [match[1], ...match[2].split(',')];
+}

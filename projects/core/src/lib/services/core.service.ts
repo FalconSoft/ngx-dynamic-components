@@ -88,6 +88,13 @@ export class CoreService {
     const attrs = xmlRes.attrs;
     const type = xmlRes.type;
     const { itemProperties, containerProperties } = CoreService.getPropertiesFromAttributes(attrs);
+
+    if (itemProperties.disabled === 'true') {
+      itemProperties.disabled = true;
+    } else if (itemProperties.hasOwnProperty('disabled')) {
+      itemProperties.disabled = null;
+    }
+
     if (CoreService.COMPONENTS_REGISTER.has(type)) {
       const uiModel: UIModel = {
         type,

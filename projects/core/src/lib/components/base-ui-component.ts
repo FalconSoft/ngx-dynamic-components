@@ -1,7 +1,7 @@
 import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { UIModel, AttributesMap, ComponentEvent } from '../models';
 import { JSONUtils } from '../utils/json.utils';
-import { kebabStrToCamel } from '../utils';
+import { kebabStrToCamel, parseArgFunction } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 
 @Directive()
@@ -17,16 +17,17 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @HostBinding('style.max-height') maxHeight: string;
     @HostBinding('style.padding') padding: string;
     @HostBinding('style.margin') margin: string;
-    @HostBinding('style.display') display = 'inherit';
+    @HostBinding('style.display') display = 'initial';
     @HostBinding('style.border-left') borderLeft: string;
     @HostBinding('style.border-top') borderTop: string;
     @HostBinding('style.border-right') borderRight: string;
     @HostBinding('style.border-bottom') borderBottom: string;
+    @HostBinding('style.background') background: string;
     @HostBinding('class') classes: string;
 
     @Output() changedDataModel = new EventEmitter();
 
-    private readonly hostBindings = ['width', 'height', 'padding', 'margin',
+    private readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeigh', 'maxHeight', 'minWidth', 'maxWidth'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
@@ -79,13 +80,14 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       return this.uiModel.itemProperties;
     }
 
-    protected emitEvent(eventName: string, parameters: any = null) {
-      if (eventName) {
+    protected emitEvent(funcSign: string, parameters: any = null) {
+      if (funcSign) {
+        const [eventName, parameter] = parseArgFunction(funcSign);
         this.eventHandlers.emit({
           eventName,
           parameters: {
             uiModel: this.uiModel,
-            ...parameters
+            [parameter]: parameters
           }
         });
       }

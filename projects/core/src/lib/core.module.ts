@@ -17,6 +17,7 @@ import { CheckboxComponent } from './ui-components/checkbox/checkbox.component';
 import { RadioGroupComponent } from './ui-components/radio-group/radio-group.component';
 import { TextareaComponent } from './ui-components/textarea/textarea.component';
 import { registerComponents } from './ui-components/register';
+import { LinkComponent } from './ui-components/link/link.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { registerComponents } from './ui-components/register';
     CheckboxComponent,
     RadioGroupComponent,
     TextareaComponent,
+    LinkComponent,
     UISelectorComponent,
     NGXDynamicComponent],
   imports: [
