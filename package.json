@@ -1,6 +1,6 @@
 {
   "name": "ngx-dynamic-components",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "NGX Dynamic Components is a dynamic configuration driven web page builder. It is designed to build anything from a single one form web page to more complex web app.",
   "author": "FalconSoft Ltd",
   "repository": {
@@ -16,8 +16,8 @@
     "start": "ng serve",
     "build": "ng build",
     "build:libs": "ng build core --prod && ng build material --prod && ng build bootstrap --prod && ng build tools --prod",
-    "build:publish": "npm run build:libs && npm run public_publish",
-    "public_publish": "cd dist/@ngx-dynamic-components/core && npm publish && cd ../material && npm publish && cd ../bootstrap && npm publish && cd ../tools && npm publish && cd ../../../",
+    "public:publish": "cd dist/@ngx-dynamic-components/core && npm publish && cd ../bootstrap && npm publish && cd ../tools && npm publish && cd ../../../",
+    "build:publish": "npm run build:libs && npm run public:publish",
     "build:gh": "ng build --prod --base-href='/ngx-dynamic-components/'",
     "deploy:gh": "npm run build:libs && npm run build:gh && npx ngh --dir=dist/ngx-dynamic-components/",
     "test": "ng test",
@@ -49,7 +49,7 @@
     "ngx-bootstrap": "^5.5.0",
     "rxjs": "^6.5.3",
     "stream": "0.0.2",
-    "timers": "^0.1.1",
+    "timers": "^0.1.2",
     "tslib": "^1.10.0",
     "xml2js": "^0.4.23",
     "zone.js": "~0.10.2"
