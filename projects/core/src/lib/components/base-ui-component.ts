@@ -93,7 +93,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       }
     }
 
-    get itemStyles() {
+    get itemStyles(): {[key: string]: string} {
       return this.getStyles(this.properties);
     }
 

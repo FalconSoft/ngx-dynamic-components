@@ -30,7 +30,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
   `]
 })
 export class CheckboxComponent extends LabeledComponent<CheckboxProperties> {
-  onChange() {
+  onChange(): void {
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onChange);
   }

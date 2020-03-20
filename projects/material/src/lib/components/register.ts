@@ -9,8 +9,10 @@ import { radioGroupDescriptor } from './radio-group-ui/radio-group-ui.component'
 import { tabsDescriptor } from './tabs-ui/tabs-ui.component';
 import { datableDescriptor } from './datable-ui/datable-ui.component';
 import { packageName } from '../constants';
+import { flexContainerDescriptor } from './flex-container/flex-container-component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
+  flexContainerDescriptor,
   selectDescriptor,
   inputDescriptor,
   buttonDescriptor,

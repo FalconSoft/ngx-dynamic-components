@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { BaseUIComponent } from '../../components/base-ui-component';
-import { StyleProperties, propDescription, PropertyCategories } from '../../properties';
-import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
+import { BaseUIComponent, StyleProperties, propDescription, UIModel, ComponentExample,
+  ComponentDescriptor, Categories, PropertyCategories } from '@ngx-dynamic-components/core';
+import { packageName } from '../../constants';
 
 @Component({
     selector: 'dc-flex-container',
@@ -9,14 +9,14 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 })
 export class FlexContainerComponent extends BaseUIComponent<FlexContainerProperties> {
   @ViewChild('form') form: ElementRef<HTMLFormElement>;
-  getStrValue(value: string) {
+  getStrValue(value: string): string {
     if (value) {
       return value.split('|').join(' ');
     }
     return '';
   }
 
-  onFormSubmit(evt) {
+  onFormSubmit(evt: any): void {
     this.emitEvent(this.properties.onSubmit);
     // Trigger ui validation messages.
     this.form.nativeElement.querySelectorAll('input,textarea,select').forEach((el: HTMLFormElement, i, list) => {
@@ -95,7 +95,7 @@ interface FlexContainerPropertiesConstrutor {
 
 export const flexContainerDescriptor: ComponentDescriptor<FlexContainerComponentConstrutor, FlexContainerPropertiesConstrutor> = {
   name: 'flex-container',
-  packageName: 'core',
+  packageName,
   label: 'Flex Panel',
   category: Categories.Containers,
   description: 'Flex layout component',

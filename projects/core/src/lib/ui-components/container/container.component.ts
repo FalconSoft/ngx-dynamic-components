@@ -10,14 +10,8 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 export class ContainerComponent extends BaseUIComponent<ContainerProperties> {
   @HostBinding('style.display') display = 'flex';
   @ViewChild('form') form: ElementRef<HTMLFormElement>;
-  getStrValue(value: string) {
-    if (value) {
-      return value.split('|').join(' ');
-    }
-    return '';
-  }
 
-  onFormSubmit(evt) {
+  onFormSubmit(evt: any): void {
     this.emitEvent(this.properties.onSubmit);
     // Trigger ui validation messages.
     this.form.nativeElement.querySelectorAll('input,textarea,select').forEach((el: HTMLFormElement, i, list) => {

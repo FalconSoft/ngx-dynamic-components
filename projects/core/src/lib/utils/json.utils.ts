@@ -88,7 +88,7 @@ export class JSONUtils {
 
       const fMatch = JSONUtils.getFlatternPathMatch(path);
       if (fMatch) {
-        return JSONUtils.setFlatternProps(objectValue, fMatch.groups as any, value);
+        return JSONUtils.setFlatternProps(objectValue, fMatch.groups, value);
       }
     }
 
@@ -159,7 +159,7 @@ export class JSONUtils {
      * @param obj - Javascript object.
      * @param filter - flattern path filter string.
      */
-    private static filterObj(obj, filter: string) {
+    private static filterObj(obj, filter: string): boolean {
       if (!obj) {
         return false;
       }
@@ -176,7 +176,7 @@ export class JSONUtils {
      * @param dataPath - data path.
      * @param defaultValue - default value for property.
      */
-    private static getDataPathProps(obj, dataPath: string, defaultValue) {
+    private static getDataPathProps(obj, dataPath: string, defaultValue: any): any {
       const props = dataPath.split('/');
       if (Array.isArray(obj)) {
         return obj.map(o => JSONUtils.getPropsValue(o, props, defaultValue));
@@ -191,7 +191,7 @@ export class JSONUtils {
      * @param props - path string array to requested property.
      * @param defaultValue - default value for requested property.
      */
-    private static getPropsValue(obj, props: string[], defaultValue) {
+    private static getPropsValue(obj, props: string[], defaultValue: any): any {
       if (defaultValue !== undefined) {
         return createObjProperties(obj, props, defaultValue);
       }
@@ -204,7 +204,7 @@ export class JSONUtils {
      * @param dataPath - data path string.
      * @param val - value to set.
      */
-    private static setDataPathProp(obj, dataPath: string, val) {
+    private static setDataPathProp(obj, dataPath: string, val: any): void {
       if (!dataPath) {
         obj = val;
       } else {
@@ -223,8 +223,8 @@ export class JSONUtils {
      * @param props - path string array to requested property.
      * @param val - value to set.
      */
-    private static setPropsValue(obj, props: string[], val) {
-      function reducer(o, prop: string, index: number) {
+    private static setPropsValue(obj: object, props: string[], val: any): object {
+      function reducer(o, prop: string, index: number): any {
         if  (index === props.length - 1) {
           o[prop] = val;
         } else if (!o.hasOwnProperty(prop)) {
@@ -241,7 +241,7 @@ export class JSONUtils {
      * @param groups - flattern match groups.
      * @param value - value to set.
      */
-    private static setFlatternProps(obj, groups, value) {
+    private static setFlatternProps(obj: object|[], groups: {[key: string]: string}, value: any): void {
       const entries = Array.isArray(obj) ? obj : [obj];
       const {flattern, filter, dataPath} = groups;
 
@@ -272,8 +272,8 @@ export class JSONUtils {
  * @param props - list of tree properties to be created.
  * @param val - value for last property.
  */
-function createObjProperties(obj, props: string[], val = null) {
-  function reducer(o, prop, index) {
+function createObjProperties(obj, props: string[], val = null): object {
+  function reducer(o, prop, index): any {
     if  (index === props.length - 1 && !o.hasOwnProperty(prop)) {
       o[prop] = val;
     } else if (!o.hasOwnProperty(prop)) {
@@ -289,8 +289,8 @@ function createObjProperties(obj, props: string[], val = null) {
  * @param obj - Javascript object.
  * @param props - list of tree properties to be created.
  */
-function getObjPropertyVal(obj, props: string[]) {
-  let value = obj;
+function getObjPropertyVal(obj: object, props: string[]): any {
+  let value: any = obj;
   for (const prop of props) {
     if (value && value.hasOwnProperty(prop)) {
       value = value[prop];

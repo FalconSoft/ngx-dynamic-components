@@ -6,7 +6,16 @@
     "umdModuleIds": {
       "@ngx-dynamic-components/core": "NgxDynamicComponentsCore",
       "@ngx-dynamic-components/material": "NgxDynamicComponentsMaterial",
-      "@ngx-dynamic-components/bootstrap": "NgxDynamicComponentsBootstrap"
+      "@ngx-dynamic-components/bootstrap": "NgxDynamicComponentsBootstrap",
+      "ng2-dragula": "ng2Dragula",
+      "ngx-bootstrap/tabs": "NgxBootstrapTabs",
+      "ngx-bootstrap/accordion": "NgxBootstrapAccordion",
+      "ngx-bootstrap/collapse": "NgxBootstrapCollapse",
+      "ngx-bootstrap/popover": "NgxBootstrapPopover",
+      "angular-split": "angularSplit",
+      "@ng-select/ng-select": "ngSelect",
+      "jspython-interpreter": "jspythonInterpreter",
+      "ace-builds": "aceBuilds"
     }
   }
 }

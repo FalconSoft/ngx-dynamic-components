@@ -22,12 +22,12 @@ import { packageName } from '../../constants';
 })
 
 export class SelectComponent extends LabeledComponent<SelectProperties> {
-  async onSelect() {
+  onSelect(): void {
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onSelect);
   }
 
-  get selectStyles() {
+  get selectStyles(): AttributesMap {
     if (this.properties.selectHeight) {
       return {
         height: this.properties.selectHeight

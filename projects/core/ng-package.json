@@ -4,13 +4,7 @@
   "lib": {
     "entryFile": "src/public_api.ts",
     "umdModuleIds": {
-      "ng2-dragula": "ng2Dragula",
-      "ngx-bootstrap/tabs": "NgxBootstrapTabs",
-      "ngx-bootstrap/accordion": "NgxBootstrapAccordion",
-      "ngx-bootstrap/collapse": "NgxBootstrapCollapse",
-      "ngx-bootstrap/popover": "NgxBootstrapPopover",
-      "angular-split": "angularSplit",
-      "@ng-select/ng-select": "ngSelect"
+      "xml2js": "xml2js"
     }
   }
 }

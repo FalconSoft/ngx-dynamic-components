@@ -36,7 +36,8 @@ export function mapToObj(map: Map<string, any>, excludeKeys: string[] = []): {[k
   return obj;
 }
 
-export function getCssPath(el: Node, parent: Element) {
+/** TODO: check if still used */
+export function getCssPath(el: Node, parent: Element): string {
   if (el instanceof Element) {
     const path = [];
     while (el !== parent) {
@@ -63,7 +64,7 @@ export const kebabStrToCamel = (s: string) => {
   });
 };
 
-export function setFields(fields: Array<string|string[]>, data: object[]) {
+export function setFields(fields: Array<string|string[]>, data: object[]): object[] {
   if (!fields) {
     return data;
   }

@@ -14,7 +14,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 })
 export class IconComponent extends BaseUIComponent<IconProperties> {
   @HostBinding('style.display') display = 'inline-block';
-  get iconClass() {
+  get iconClass(): string {
     return this.componentDataModel || this.properties.iconClass;
   }
 }

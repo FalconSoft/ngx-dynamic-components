@@ -17,10 +17,9 @@ import { JSONUtils } from '../../utils/json.utils';
   styleUrls: ['../../styles/label.scss']
 })
 export class RadioGroupComponent extends LabeledComponent<RadioGroupProperties> {
-  onChange(option: OptionValue) {
+  onChange(option: OptionValue): void {
     this.componentDataModel = option.value;
     this.changedDataModel.emit(this.dataModel);
-
     this.emitEvent(this.properties.onChange);
   }
 
@@ -58,7 +57,7 @@ export class RadioGroupProperties extends LabelProperties {
 export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   title: 'Radio group example',
   uiModel: `
-  <flex-container>
+  <section>
     <radio-group labelPosition="right" binding="$.color">
       <option value="white">White</option>
       <option value="black">Black</option>
@@ -66,7 +65,7 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
       <option value="blue">Blue</option>
     </radio-group>
     <radio-group itemsSource="$.genderOptions" labelPosition="right" binding="$.gender"></radio-group>
-  </flex-container>
+  </section>
   `,
   dataModel: {
     genderOptions: [{label: 'Man', value: 'm'}, {label: 'Woman', value: 'w'}]

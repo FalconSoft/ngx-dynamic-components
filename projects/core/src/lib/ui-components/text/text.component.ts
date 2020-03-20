@@ -21,11 +21,11 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
 })
 export class TextComponent extends BaseUIComponent<TextProperties> {
   @HostBinding('style.display') display = 'inline-block';
-  get txtStyle() {
+  get txtStyle(): string {
     return this.properties['text-style'] + ' ' + (this.properties.class || '');
   }
 
-  get text() {
+  get text(): string {
     return this.componentDataModel || this.properties.text;
   }
 }

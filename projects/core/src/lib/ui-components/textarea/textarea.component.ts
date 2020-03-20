@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LabeledComponent } from '../../components/labeled.component';
 import { LabelProperties, propDescription } from '../../properties';
-import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
+import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 
 @Component({
   selector: 'dc-textarea',
@@ -10,7 +10,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
       <label *ngIf="hasLabel" [class]="properties.labelPosition" [for]="id"
         [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
       <div class="w-100 flex-column">
-        <textarea #txtAreaField="ngModel" [attr.id]="id" class="form-control"
+        <textarea #txtAreaField="ngModel" [attr.id]="id" [class]="controlCssClasses"
           [rows]="properties.rows"
           [placeholder]="properties.placeholder"
           [ngStyle]="itemStyles"
@@ -18,6 +18,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
           [minlength]="properties.minlength"
           [maxlength]="properties.maxlength"
           (input)="changedDataModel.emit(this.dataModel)"
+          [attr.readonly]="properties.readonly || null"
           [(ngModel)]="componentDataModel"></textarea>
         <div *ngIf="txtAreaField.invalid && (txtAreaField.dirty || txtAreaField.touched)" class="alert alert-danger py-0 px-1 m-0">
           <div *ngIf="txtAreaField.errors.required">Field is required.</div>
@@ -30,6 +31,9 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
   styleUrls: ['../../styles/label.scss']
 })
 export class TextareaComponent extends LabeledComponent<TextareaProperties> {
+  get controlCssClasses(): string {
+    return this.properties.readonly ? 'form-control-plaintext' : 'form-control';
+  }
 }
 
 export class TextareaProperties extends LabelProperties {
@@ -37,13 +41,13 @@ export class TextareaProperties extends LabelProperties {
     description: 'Number of rows in textarea',
     example: '5',
   })
-  rows: number;
+  rows?: number;
 
   @propDescription({
     description: 'Text shown when field is empty',
     example: 'Type about yourself',
   })
-  placeholder: string;
+  placeholder?: string;
 
   @propDescription({
     description: 'Is field required',
@@ -60,6 +64,11 @@ export class TextareaProperties extends LabelProperties {
     example: '10'
   })
   maxlength?: number;
+  @propDescription({
+    description: 'It specifies that the textarea should be read only.',
+    example: 'true',
+  })
+  readonly?: boolean;
 }
 
 export const example: ComponentExample<UIModel<TextareaProperties>> = {
@@ -87,6 +96,15 @@ export const textareaDescriptor: ComponentDescriptor<TextareaComponentConstrutor
   itemProperties: TextareaProperties,
   component: TextareaComponent,
   example,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const itemProperties: TextareaProperties = {
+      readonly: xmlRes.attrs.readonly === 'true'
+    };
+    return {
+      type: 'textarea',
+      itemProperties
+    };
+  },
   defaultModel: {
     type: `core:textarea`,
     containerProperties: {},
@@ -94,7 +112,7 @@ export const textareaDescriptor: ComponentDescriptor<TextareaComponentConstrutor
       label: 'Label',
       rows: 5,
       placeholder: 'Placeholder text',
-      dataModelPath: '$.textarea'
+      binding: '$.textarea'
     }
   }
 };

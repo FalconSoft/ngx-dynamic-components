@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LabeledComponent } from '../../components/labeled.component';
 import { LabelProperties, propDescription, PropertyCategories } from '../../properties';
-import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
+import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
   selector: 'dc-input',
@@ -10,7 +10,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
     <label class="mr-1 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
       [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
     <div class="w-100 flex-column" [ngStyle]="wrapperStyles">
-      <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" class="form-control" [ngStyle]="inputStyles"
+      <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" [class]="inputCssClasses" [ngStyle]="inputStyles"
         [fxFlex]="properties.inputWidth"
         [placeholder]="properties.placeholder"
         [disabled]="properties.disabled === true"
@@ -21,6 +21,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
         [pattern]="properties.pattern"
         (input)="onInput($event)"
         [attr.name]="name"
+        [attr.readonly]="properties.readonly || null"
         [(ngModel)]="componentDataModel">
       <div *ngIf="inputField.invalid && (inputField.dirty || inputField.touched)" class="alert alert-danger py-0 px-1 m-0">
         <div *ngIf="inputField.errors.required">Field is required.</div>
@@ -44,7 +45,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
   `]
 })
 export class InputComponent extends LabeledComponent<InputProperties> {
-  get cssClasses() {
+  get cssClasses(): {[key: string]: boolean} {
     return {
       invisible: this.properties.visible === false,
       required: this.properties.required,
@@ -52,11 +53,15 @@ export class InputComponent extends LabeledComponent<InputProperties> {
     };
   }
 
-  get inputStyles() {
+  get inputCssClasses(): string {
+    return this.properties.readonly ? 'form-control-plaintext' : 'form-control';
+  }
+
+  get inputStyles(): {[key: string]: string} {
     return this.getStyles(this.uiModel.itemProperties, ['background', 'color']);
   }
 
-  get wrapperStyles() {
+  get wrapperStyles(): AttributesMap {
     if (this.properties.inputHeight) {
       return {
         height: this.properties.inputHeight
@@ -65,11 +70,11 @@ export class InputComponent extends LabeledComponent<InputProperties> {
     return null;
   }
 
-  get name() {
+  get name(): string {
     return this.properties.binding?.replace(/[^A-Z]+/gi, '');
   }
 
-  onInput(event) {
+  onInput(event: any): void {
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onInput, event.target.value);
   }
@@ -92,6 +97,11 @@ export class InputProperties extends LabelProperties {
   })
   disabled?: boolean;
   @propDescription({
+    description: 'It specifies that the input should be read only.',
+    example: 'true',
+  })
+  readonly?: boolean;
+  @propDescription({
     description: 'Is visible',
     example: 'true',
   })
@@ -102,8 +112,8 @@ export class InputProperties extends LabelProperties {
   })
   inputWidth?: string;
   @propDescription({
-    description: 'Is field required',
-    example: 'true'
+    description: 'Field input height',
+    example: '20px'
   })
   inputHeight?: string;
   @propDescription({
@@ -168,6 +178,16 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
   itemProperties: InputProperties,
   component: InputComponent,
   example,
+  parseUIModel(xmlRes: XMLResult): UIModel {
+    const itemProperties: AttributesMap = {
+      readonly: xmlRes.attrs.readonly === 'true'
+    };
+
+    return {
+      type: 'input',
+      itemProperties
+    };
+  },
   defaultModel: {
     type: `input`,
     containerProperties: {},

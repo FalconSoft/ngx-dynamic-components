@@ -29,9 +29,11 @@ import { registerComponents } from './components/register';
 import { RadioGroupUIComponent } from './components/radio-group-ui/radio-group-ui.component';
 import { TabsUIComponent } from './components/tabs-ui/tabs-ui.component';
 import { DatableUIComponent } from './components/datable-ui/datable-ui.component';
+import { FlexContainerComponent } from './components/flex-container/flex-container-component';
 
 @NgModule({
     declarations: [
+      FlexContainerComponent,
       ButtonUIComponent,
       CardUIComponent,
       CheckboxUIComponent,

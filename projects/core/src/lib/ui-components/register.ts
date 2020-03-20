@@ -1,5 +1,4 @@
 import { CoreService } from '../services/core.service';
-import { flexContainerDescriptor } from './flex-container/flex-container-component';
 import { ComponentDescriptor } from '../models';
 import { textDescriptor } from './text/text.component';
 import { buttonDescriptor } from './button/button.component';
@@ -12,7 +11,7 @@ import { containerDescriptor } from './container/container.component';
 import { linkDescriptor } from './link/link.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
-  flexContainerDescriptor,
+  containerDescriptor,
   textDescriptor,
   iconDescriptor,
   inputDescriptor,
@@ -20,12 +19,11 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   radioGroupDescriptor,
   textareaDescriptor,
   buttonDescriptor,
-  containerDescriptor,
   linkDescriptor
 ];
 
 // Register components.
-export function registerComponents() {
+export function registerComponents(): void {
   COMPONENTS_LIST.forEach(component => CoreService.registerComponent(component));
 }
 
