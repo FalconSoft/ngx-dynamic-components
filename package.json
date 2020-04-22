@@ -1,6 +1,6 @@
 {
   "name": "ngx-dynamic-components",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "NGX Dynamic Components is a dynamic configuration driven web page builder. It is designed to build anything from a single one form web page to more complex web app.",
   "author": "FalconSoft Ltd",
   "repository": {
@@ -15,6 +15,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:core": "ng build core --prod && ng build bootstrap --prod",
     "build:libs": "ng build core --prod && ng build material --prod && ng build bootstrap --prod && ng build tools --prod",
     "public:publish": "cd dist/@ngx-dynamic-components/core && npm publish && cd ../bootstrap && npm publish && cd ../tools && npm publish && cd ../../../",
     "build:publish": "npm run build:libs && npm run public:publish",
@@ -46,7 +47,7 @@
     "json-formatter-js": "^2.3.3",
     "jspython-interpreter": "^0.1.4",
     "ng2-dragula": "^2.1.1",
-    "ngx-bootstrap": "^5.5.0",
+    "ngx-bootstrap": "^5.6.1",
     "rxjs": "^6.5.3",
     "stream": "0.0.2",
     "timers": "^0.1.1",
@@ -63,6 +64,7 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^12.11.1",
+    "@types/xml2js": "^0.4.5",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

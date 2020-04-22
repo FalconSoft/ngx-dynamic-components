@@ -33,9 +33,6 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
-      if (this.properties.class) {
-        this.classes = this.properties.class;
-      }
       this.emitEvent((this.properties as BaseProperties).onInit);
     }
 
@@ -43,9 +40,14 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       this.emitEvent((this.properties as BaseProperties).onDestroy);
     }
 
-    async ngOnChanges(changes: SimpleChanges): Promise<void> {
-      if (changes.dataModel && !changes.dataModel.firstChange && this.dataModel !== changes.dataModel.currentValue) {
-        this.dataModel = changes.dataModel.currentValue;
+    async ngOnChanges({dataModel, uiModel}: SimpleChanges): Promise<void> {
+      if (dataModel && !dataModel.firstChange && this.dataModel !== dataModel.currentValue) {
+        this.dataModel = dataModel.currentValue;
+      }
+
+      if (uiModel && !uiModel.firstChange) {
+        this.uiModel = uiModel.currentValue;
+        this.setHostStyles();
       }
     }
 
@@ -107,6 +109,9 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     }
 
     private setHostStyles() {
+      if (this.properties.class) {
+        this.classes = this.properties.class;
+      }
       const props = this.properties as StyleProperties;
       if (props) {
         this.hostBindings.forEach(b => {

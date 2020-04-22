@@ -78,14 +78,14 @@ interface SelectPropertiesConstrutor {
 
 export const example: ComponentExample<UIModel<SelectProperties>> = {
   uiModel: `
-    <flex-container fxLayout="column">
+    <section class="flex-column">
       <select onSelect="countryChanged" label="Country" labelWidth="50px" width="300px" labelPosition="left" binding="$.country">
         <option value="uk">United Kingdom</option>
         <option value="ua">Ukraine</option>
       </select>
       <select label="City" labelWidth="50px" width="300px"
         itemsSource="$.cities" labelPosition="left" binding="$.city"></select>
-    </flex-container>
+    </section>
   `,
   dataModel: {},
   scripts: `
@@ -124,19 +124,8 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
       itemProperties
     };
   },
-  defaultModel: {
-    type: `core:select`,
-    containerProperties: {},
-    itemProperties: {
-      itemsSource: [
-        {label: 'First option', value: '1'},
-        {label: 'Second option', value: '2'}
-      ],
-      width: '200px',
-      label: 'Select option',
-      binding: '$.option'
-    }
-  },
+  defaultModel: `<select label="Label" labelWidth="50px" width="100px"
+    itemsSource="$.list" labelPosition="left" binding="$.value"></select>`,
   propertiesDescriptor: [
     ['selectHeight', {name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout}],
   ]

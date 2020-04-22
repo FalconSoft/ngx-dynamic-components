@@ -40,7 +40,7 @@ export class ContainerProperties extends StyleProperties {
 const example: ComponentExample<UIModel<ContainerProperties>> = {
   title: 'Flex example',
   uiModel: `
-  <section class="row align-items-center justify-content-between" width="100%" height="100%" margin="8px" background="white">
+  <section class="row align-items-center justify-content-between m-0" width="100%" height="100%" padding="8px">
     <text class="m-0" text-style="h1">Header 1</text>
     <text class="m-0" text-style="h2">Header 2</text>
     <button class="btn btn-secondary" onСlick="consoleLog" type="button">Click</button>
@@ -67,20 +67,7 @@ export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrut
   itemProperties: ContainerProperties,
   component: ContainerComponent,
   example,
-  defaultModel: {
-    type: 'container',
-    containerProperties: {},
-    itemProperties: {
-      class: 'row',
-      width: '100%',
-      height: '100%',
-      'min-height': '50px',
-      'min-width': '50px',
-      isForm: false,
-      id: 'form'
-    },
-    children: []
-  },
+  defaultModel: `<section class="d-flex"></section>`,
   propertiesDescriptor: [['isForm', {
     name: 'isForm', label: 'Form', category: PropertyCategories.Main,
     combo: [[{label: 'false', value: false}, {label: 'true', value: true}]]

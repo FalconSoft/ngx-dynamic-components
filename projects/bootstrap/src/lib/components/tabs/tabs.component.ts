@@ -88,34 +88,12 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
       children
     };
   },
-  defaultModel: {
-    type: `${packageName}:tab-container`,
-    containerProperties: {},
-    itemProperties: {},
-    children: [{
-      type: 'section',
-      containerProperties: {
-        width: '100%',
-        height: '100%',
-        label: 'Tab 1',
-      },
-      itemProperties: {
-        children: [],
-        width: '100%',
-        height: '100%',
-      }
-    }, {
-      type: 'section',
-      containerProperties: {
-        width: '100%',
-        height: '100%',
-        label: 'Tab 2',
-      },
-      itemProperties: {
-        children: [],
-        width: '100%',
-        height: '100%',
-      }
-    }]
-  }
+  defaultModel: `<tab-container width="100%" height="100%" margin="8px">
+  <tab header="Tab 1" padding="0.5rem">
+    <text text-style="h1">Tab 1 static text content</text>
+  </tab>
+  <tab header="Tab 2" padding="0.5rem">
+    <text text-style="h1">Tab 2 static text content</text>
+  </tab>
+  </tab-container>`
 };
