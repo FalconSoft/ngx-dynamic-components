@@ -188,23 +188,8 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
       itemProperties
     };
   },
-  defaultModel: {
-    type: `input`,
-    containerProperties: {},
-    itemProperties: {
-      label: 'Label',
-      placeholder: 'Enter your text',
-      binding: '$.path',
-      visible: true,
-      disabled: true,
-      inputWidth: '100%',
-      labelWidth: '80px',
-      width: '200px',
-      margin: '0',
-      type: 'text',
-      labelPosition: ''
-    }
-  },
+  defaultModel: `<input label="Name" labelWidth="80px" onInput="onInputHandler(name)" labelPosition="left"
+placeholder="Enter your name" binding="$.name"/>`,
   propertiesDescriptor: [
     ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Main,
       combo: [['text', 'number', 'email', 'file', 'url', 'date', 'time', 'datetime-local']]
@@ -217,5 +202,6 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
     ['visible', { name: 'visible', label: 'Visible', category: PropertyCategories.Main,
       combo: [[{label: 'Visible', value: true}, {label: 'Hidden', value: false}]]
     }]
-  ]
+  ],
+  children: false
 };

@@ -88,6 +88,13 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
       children
     };
   },
+  children: {
+    tag: 'tab',
+    properties: [{
+      name: 'header',
+      description: 'Tab title'
+    }]
+  },
   defaultModel: `<tab-container width="100%" height="100%" margin="8px">
   <tab header="Tab 1" padding="0.5rem">
     <text text-style="h1">Tab 1 static text content</text>
@@ -95,5 +102,5 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
   <tab header="Tab 2" padding="0.5rem">
     <text text-style="h1">Tab 2 static text content</text>
   </tab>
-  </tab-container>`
+</tab-container>`
 };

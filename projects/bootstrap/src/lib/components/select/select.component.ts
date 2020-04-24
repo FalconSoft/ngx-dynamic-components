@@ -128,5 +128,12 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
     itemsSource="$.list" labelPosition="left" binding="$.value"></select>`,
   propertiesDescriptor: [
     ['selectHeight', {name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout}],
-  ]
+  ],
+  children: {
+    tag: 'option',
+    properties: [{
+      name: 'value',
+      description: 'Option value'
+    }]
+  }
 };

@@ -105,14 +105,6 @@ export const textareaDescriptor: ComponentDescriptor<TextareaComponentConstrutor
       itemProperties
     };
   },
-  defaultModel: {
-    type: `core:textarea`,
-    containerProperties: {},
-    itemProperties: {
-      label: 'Label',
-      rows: 5,
-      placeholder: 'Placeholder text',
-      binding: '$.textarea'
-    }
-  }
+  defaultModel: '<textarea binding="$.info" rows="5"></textarea>',
+  children: false
 };

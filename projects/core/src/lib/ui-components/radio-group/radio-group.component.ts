@@ -101,13 +101,12 @@ export const radioGroupDescriptor: ComponentDescriptor<RadioGroupComponentConstr
       itemProperties
     };
   },
-  defaultModel: {
-    type: `core:radio-group`,
-    containerProperties: {},
-    itemProperties: {
-      label: 'Select option',
-      binding: '$.radioGroup',
-      options: [{label: 'Option 1', value: '1'}, {label: 'Option 2', value: 'black'}],
-    }
+  defaultModel: '<radio-group itemsSource="$.options" labelPosition="right" binding="$.radioValue"></radio-group>',
+  children: {
+    tag: 'option',
+    properties: [{
+      name: 'value',
+      description: 'Radio option value'
+    }]
   }
 };

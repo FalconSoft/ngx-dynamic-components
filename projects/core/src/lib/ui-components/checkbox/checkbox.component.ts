@@ -78,6 +78,6 @@ export const checkboxDescriptor: ComponentDescriptor<CheckboxComponentConstrutor
       binding: '$.accept',
       labelPosition: 'left'
     }
-  }
+  },
+  children: false
 };
-

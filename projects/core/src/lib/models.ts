@@ -23,6 +23,11 @@ interface AttributesMapConstructor {
   new (): AttributesMap;
 }
 
+export interface ChildComponent {
+  tag: string;
+  properties: any[];
+}
+
 export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor, PropertiesType = AttributesMapConstructor> {
   packageName: string;
   label: string;
@@ -35,6 +40,7 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor,
   defaultModel?: UIModel | string;
   propertiesDescriptor?: Array<[string, ComponentProperty]>;
   parseUIModel?: (xmlData: XMLResult) => UIModel;
+  children?: ChildComponent | false;
 }
 
 export abstract class UIModel<T = AttributesMap> {

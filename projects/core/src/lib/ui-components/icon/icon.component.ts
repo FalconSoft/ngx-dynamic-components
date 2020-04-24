@@ -64,13 +64,7 @@ export const iconDescriptor: ComponentDescriptor<IconComponentConstrutor, IconPr
   itemProperties: IconProperties,
   component: IconComponent,
   example,
-  defaultModel: {
-    type: `icon`,
-    itemProperties: {
-      class: 'fa fa-play',
-      width: '100%'
-    },
-    containerProperties: {}
-  }
+  defaultModel: '<icon class="fa fa-play"/>',
+  children: false
 };
 

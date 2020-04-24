@@ -42,7 +42,7 @@ export const example: ComponentExample<UIModel<LinkProperties>> = {
   uiModel: `
   <section class="row align-items-center">
     <link class="btn btn-primary mr-2" href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</link>
-    <link target="_blank" disabled="true" href="https://www.google.com/" type="submit">Google</link>
+    <link target="_blank" disabled="true" href="https://www.google.com/">Google</link>
   </section>
   `,
   dataModel: {}
@@ -77,12 +77,5 @@ export const linkDescriptor: ComponentDescriptor<LinkComponentConstrutor, LinkPr
       itemProperties: { label: content }
     };
   },
-  defaultModel: {
-    type: `link`,
-    containerProperties: {},
-    itemProperties: {
-      label: 'Label',
-      href: 'url/path'
-    }
-  }
+  defaultModel: '<link target="_blank" href="https://www.google.com/">Google</link>'
 };

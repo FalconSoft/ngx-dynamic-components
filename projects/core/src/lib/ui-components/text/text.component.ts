@@ -79,14 +79,7 @@ export const textDescriptor: ComponentDescriptor<TextComponentConstrutor, TextPr
     }
     return {type: 'text', itemProperties};
   },
-  defaultModel: {
-    type: `core:text`,
-    itemProperties: {
-      text: 'Text',
-      width: '100%'
-    },
-    containerProperties: {}
-  },
+  children: false,
   propertiesDescriptor: [
     ['text-style', {
       name: 'text-style', label: 'Text style', category: PropertyCategories.Main,
