@@ -84,15 +84,16 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
       };
     });
     return {
-      type: `${packageName}:tab-container`,
+      type: 'tab-container',
       children
     };
   },
   children: {
     tag: 'tab',
+    hasChildren: true,
     properties: [{
       name: 'header',
-      description: 'Tab title'
+      label: 'Tab title'
     }]
   },
   defaultModel: `<tab-container width="100%" height="100%" margin="8px">

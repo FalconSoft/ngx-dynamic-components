@@ -133,7 +133,7 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
     tag: 'option',
     properties: [{
       name: 'value',
-      description: 'Option value'
+      label: 'Option value'
     }]
   }
 };

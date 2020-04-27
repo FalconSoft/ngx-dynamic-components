@@ -25,7 +25,8 @@ interface AttributesMapConstructor {
 
 export interface ChildComponent {
   tag: string;
-  properties: any[];
+  properties: ComponentProperty[];
+  hasChildren?: boolean;
 }
 
 export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor, PropertiesType = AttributesMapConstructor> {

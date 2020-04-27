@@ -5,11 +5,12 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 
 @Component({
   selector: 'dc-icon-ui',
-  template: `
-    <div [ngStyle]="itemStyles">
-      <i [class]="iconClass" [ngStyle]="{fontSize: properties.size || '1rem'}"></i>
-    </div>
-    `,
+  template: '',
+  // template: `
+  //   <div [ngStyle]="itemStyles">
+  //     <i [class]="iconClass" [ngStyle]="{fontSize: properties.size || '1rem'}"></i>
+  //   </div>
+  //   `,
   styles: ['./icon.component.sass']
 })
 export class IconComponent extends BaseUIComponent<IconProperties> {

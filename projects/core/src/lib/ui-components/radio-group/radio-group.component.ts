@@ -106,7 +106,7 @@ export const radioGroupDescriptor: ComponentDescriptor<RadioGroupComponentConstr
     tag: 'option',
     properties: [{
       name: 'value',
-      description: 'Radio option value'
+      label: 'Radio option value'
     }]
   }
 };

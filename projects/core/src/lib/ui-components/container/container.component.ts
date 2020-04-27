@@ -70,6 +70,6 @@ export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrut
   defaultModel: `<section class="d-flex"></section>`,
   propertiesDescriptor: [['isForm', {
     name: 'isForm', label: 'Form', category: PropertyCategories.Main,
-    combo: [[{label: 'false', value: false}, {label: 'true', value: true}]]
+    values: ['true', 'false']
   }]]
 };

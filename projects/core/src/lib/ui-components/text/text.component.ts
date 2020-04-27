@@ -83,7 +83,7 @@ export const textDescriptor: ComponentDescriptor<TextComponentConstrutor, TextPr
   propertiesDescriptor: [
     ['text-style', {
       name: 'text-style', label: 'Text style', category: PropertyCategories.Main,
-      combo: [['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'display-1', 'display-2', 'display-3', 'display-4']]
+      values: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'display-1', 'display-2', 'display-3', 'display-4']
     }]
   ]
 };

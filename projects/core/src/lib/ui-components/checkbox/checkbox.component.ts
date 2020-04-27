@@ -69,15 +69,6 @@ export const checkboxDescriptor: ComponentDescriptor<CheckboxComponentConstrutor
   itemProperties: CheckboxProperties,
   component: CheckboxComponent,
   example,
-  defaultModel: {
-    type: `core:checkbox`,
-    containerProperties: {},
-    itemProperties: {
-      label: 'Accept conditions',
-      width: '200px',
-      binding: '$.accept',
-      labelPosition: 'left'
-    }
-  },
+  defaultModel: `<checkbox label="Check me" labelPosition="left" binding="$.checked"></checkbox>`,
   children: false
 };

@@ -192,15 +192,12 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
 placeholder="Enter your name" binding="$.name"/>`,
   propertiesDescriptor: [
     ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Main,
-      combo: [['text', 'number', 'email', 'file', 'url', 'date', 'time', 'datetime-local']]
+      values: ['text', 'number', 'email', 'file', 'url', 'date', 'time', 'datetime-local']
     }],
     ['inputWidth', {name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout}],
     ['inputHeight', {name: 'inputHeight', label: 'Input Height', category: PropertyCategories.Layout}],
-    ['enabled', { name: 'enabled', label: 'Enabled', category: PropertyCategories.Main,
-      combo: [[{label: 'Enable', value: true}, {label: 'Disable', value: false}]]
-    }],
     ['visible', { name: 'visible', label: 'Visible', category: PropertyCategories.Main,
-      combo: [[{label: 'Visible', value: true}, {label: 'Hidden', value: false}]]
+      values: [true, false]
     }]
   ],
   children: false

@@ -1,6 +1,7 @@
 import { ComponentProperty, PropertyCategories } from './models';
 
 /**
+ * @deprecated
  * Container properties related to each component.
  */
 export const ContainerControlProperties = new Map<string, ComponentProperty>([
@@ -44,25 +45,24 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   ['label', { name: 'label', label: 'Label', category: PropertyCategories.Main }],
   ['labelPosition', {
     name: 'labelPosition', label: 'Label Position', category: PropertyCategories.Main,
-    combo: [['left', 'top', 'right', 'bottom']]
+    values: ['left', 'top', 'right', 'bottom']
   }],
   ['labelWidth', { name: 'labelWidth', label: 'Label Width', category: PropertyCategories.Layout }],
-  ['dataModelPath', { name: 'dataModelPath', label: 'Binding', category: PropertyCategories.Main }],
 
   // Appearence
   ['background', { name: 'background', label: 'Background', category: PropertyCategories.Appearance }],
   ['color', { name: 'color', label: 'Color', category: PropertyCategories.Appearance }],
   ['font-weight', {
     name: 'font-weight', label: 'Font weight', category: PropertyCategories.Appearance,
-    combo: [['bold', 'bolder', 'lighter', 100, 200, 300, 400, 500, 600, 700, 800, 900]]
+    values: ['bold', 'bolder', 'lighter', 100, 200, 300, 400, 500, 600, 700, 800, 900]
   }],
   ['font-size', {
     name: 'font-size', label: 'Font size', category: PropertyCategories.Appearance,
-    combo: [['large', 'larger', 'medium', 'small', 'smaller', 'x-large', 'xx-large', 'x-small', 'xx-small']]
+    values: ['large', 'larger', 'medium', 'small', 'smaller', 'x-large', 'xx-large', 'x-small', 'xx-small']
   }],
   ['font-style', {
     name: 'font-style', label: 'Font style', category: PropertyCategories.Appearance,
-    combo: [['italic', 'oblique', 'normal']]
+    values: ['italic', 'oblique', 'normal']
   }],
   ['border', {
     name: 'border', label: 'Border', category: PropertyCategories.Appearance,
@@ -72,7 +72,7 @@ export const ControlProperties = new Map<string, ComponentProperty>([
 
   // Validation properties
   ['required', {name: 'required', label: 'Required', category: PropertyCategories.Validation,
-  combo: [[{label: 'true', value: true}, {label: 'false', value: false}]]}],
+    values: ['true', 'false']}],
   ['minlength', {name: 'minlength', label: 'Min length', category: PropertyCategories.Validation}],
   ['maxlength', {name: 'maxlength', label: 'Max length', category: PropertyCategories.Validation}],
   ['pattern', {name: 'pattern', label: 'Pattern', category: PropertyCategories.Validation}]

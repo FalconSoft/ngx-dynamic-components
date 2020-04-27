@@ -5,6 +5,7 @@ import { kebabStrToCamel, parseArgFunction } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 
 @Directive()
+// tslint:disable-next-line
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
@@ -61,10 +62,10 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         }
       }
 
-      if (!this.properties.hasOwnProperty('dataModelPath') && !this.properties.hasOwnProperty('binding')) {
+      if (!this.properties.hasOwnProperty('binding')) {
         return null;
       }
-      const path = (this.properties as DataModelProperties).dataModelPath || (this.properties as DataModelProperties).binding;
+      const path = (this.properties as DataModelProperties).binding;
       // TODO: Handle case for Array type.
       if (!Array.isArray(this.dataModel)) {
         return JSONUtils.find(this.dataModel, path);
@@ -72,8 +73,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     }
 
     set componentDataModel(val) {
-      if (this.properties.hasOwnProperty('dataModelPath') || this.properties.hasOwnProperty('binding')) {
-        const path = (this.properties as DataModelProperties).dataModelPath || (this.properties as DataModelProperties).binding;
+      if (this.properties.hasOwnProperty('binding')) {
+        const path = (this.properties as DataModelProperties).binding;
         JSONUtils.setValue(this.dataModel, path, val);
       }
     }

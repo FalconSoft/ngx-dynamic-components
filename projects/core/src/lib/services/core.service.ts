@@ -67,7 +67,7 @@ export class CoreService {
       return CoreService.getUIModel(toXMLResult(xmlObj));
     } catch (e) {
       console.log(e);
-      return null;
+      throw e;
     }
   }
 
@@ -123,6 +123,8 @@ export class CoreService {
         uiModel.children = xmlRes.childNodes.map((r: any) => CoreService.getUIModel(toXMLResult(r)));
       }
       return uiModel;
+    } else {
+      throw Error(`No component for tag ${type}`);
     }
   }
 }

@@ -39,7 +39,14 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
 
     private async initParsedModel(): Promise<void> {
       if (typeof this.uiModel === 'string') {
-        this.parsedUIModel = await CoreService.parseXMLModel(this.uiModel);
+        try {
+          this.parsedUIModel = await CoreService.parseXMLModel(this.uiModel);
+        } catch (e) {
+          this.parsedUIModel = null;
+          this.eventHandlers.emit({eventName: 'parseError', parameters: {
+            error: e
+          }});
+        }
       } else {
         this.parsedUIModel = this.uiModel;
       }

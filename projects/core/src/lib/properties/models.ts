@@ -21,17 +21,16 @@ export enum PropertyCategories {
 
 export interface ComponentProperty {
   name: string;
-  label: string;
-  category: PropertyCategories;
+  label?: string;
+  category?: PropertyCategories;
+  values?: Array<string | number | boolean>;
+  valuesFn?: (prefix?: string) => Array<string | number | boolean>;
+
+  // @deprecated
   isContainerProperty?: boolean;
   combo?: Array<(string|number|OptionValue)[]|string>;
   descriptor?: PropDescriptor;
 }
-
-export interface ComponentPropertyValue extends ComponentProperty {
-  value: any;
-}
-
 
 export abstract class BaseProperties implements AttributesMap {
   @propDescription({
@@ -128,13 +127,6 @@ export abstract class StyleProperties extends BaseProperties {
 }
 
 export abstract class BindingProperties extends StyleProperties {
-  /** @deprecated */
-  @propDescription({
-    description: 'Path to id in data model. (DEPRECATED)',
-    example: 'name'
-  })
-  dataModelPath?: string;
-
   @propDescription({
     description: 'Path to data model property.',
     example: 'name'
