@@ -21,7 +21,6 @@
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0",
-    "@angular/flex-layout": "^9.0.0-beta.29",
     "@ngx-dynamic-components/core": ">=0.1.5",
     "bootstrap-scss": "^4.4.1",
     "ngx-bootstrap": "^5.5.0"

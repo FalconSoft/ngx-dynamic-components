@@ -42,7 +42,7 @@ const example: ComponentExample<UIModel<TextareaProperties>> = {
     itemProperties: {
       rows: 10,
       placeholder: 'Type information about yourself',
-      dataModelPath: '$.info'
+      binding: '$.info'
     }
   },
   dataModel: {}

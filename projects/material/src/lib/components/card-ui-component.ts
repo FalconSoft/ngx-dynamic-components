@@ -107,7 +107,7 @@ const example: ComponentExample<UIModel<CardProperties>> = {
       itemProperties: {
         rows: 4,
         placeholder: 'Type card information',
-        dataModelPath: '$.card/info',
+        binding: '$.card/info',
         width: '100%',
       }
     }, {

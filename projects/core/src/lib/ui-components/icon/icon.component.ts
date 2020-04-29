@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { BindingProperties, propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
@@ -6,15 +6,15 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 @Component({
   selector: 'dc-icon-ui',
   template: '',
-  // template: `
-  //   <div [ngStyle]="itemStyles">
-  //     <i [class]="iconClass" [ngStyle]="{fontSize: properties.size || '1rem'}"></i>
-  //   </div>
-  //   `,
   styles: ['./icon.component.sass']
 })
-export class IconComponent extends BaseUIComponent<IconProperties> {
+export class IconComponent extends BaseUIComponent<IconProperties> implements OnInit {
   @HostBinding('style.display') display = 'inline-block';
+  @HostBinding('style.font-size') fontSize: string;
+  async ngOnInit(): Promise<void> {
+    await super.ngOnInit();
+    this.fontSize = this.properties.size || '1rem';
+  }
   get iconClass(): string {
     return this.componentDataModel || this.properties.iconClass;
   }

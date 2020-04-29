@@ -1,42 +1,35 @@
 import { Component } from '@angular/core';
-import { LabeledComponent } from '../../components/labeled.component';
-import { LabelProperties, propDescription } from '../../properties';
+import { BindingProperties, propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
+import { BaseUIComponent } from '../../components/base-ui-component';
 
 @Component({
   selector: 'dc-textarea',
   template: `
-    <div class="form-group" [ngStyle]="itemStyles"  [fxLayout]="layout">
-      <label *ngIf="hasLabel" [class]="properties.labelPosition" [for]="id"
-        [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-      <div class="w-100 flex-column">
-        <textarea #txtAreaField="ngModel" [attr.id]="id" [class]="controlCssClasses"
-          [rows]="properties.rows"
-          [placeholder]="properties.placeholder"
-          [ngStyle]="itemStyles"
-          [required]="properties.required"
-          [minlength]="properties.minlength"
-          [maxlength]="properties.maxlength"
-          (input)="changedDataModel.emit(this.dataModel)"
-          [attr.readonly]="properties.readonly || null"
-          [(ngModel)]="componentDataModel"></textarea>
-        <div *ngIf="txtAreaField.invalid && (txtAreaField.dirty || txtAreaField.touched)" class="alert alert-danger py-0 px-1 m-0">
-          <div *ngIf="txtAreaField.errors.required">Field is required.</div>
-          <div *ngIf="txtAreaField.errors.minlength">Min length {{properties.minlength}} characters.</div>
-          <div *ngIf="txtAreaField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
-        </div>
-      </div>
+    <textarea #txtAreaField="ngModel" [class]="controlCssClasses"
+      [rows]="properties.rows"
+      [placeholder]="properties.placeholder"
+      [ngStyle]="itemStyles"
+      [required]="properties.required"
+      [minlength]="properties.minlength"
+      [maxlength]="properties.maxlength"
+      (input)="changedDataModel.emit(this.dataModel)"
+      [attr.readonly]="properties.readonly || null"
+      [(ngModel)]="componentDataModel"></textarea>
+    <div *ngIf="txtAreaField.invalid && (txtAreaField.dirty || txtAreaField.touched)" class="alert alert-danger py-0 px-1 m-0">
+      <div *ngIf="txtAreaField.errors.required">Field is required.</div>
+      <div *ngIf="txtAreaField.errors.minlength">Min length {{properties.minlength}} characters.</div>
+      <div *ngIf="txtAreaField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
     </div>
-  `,
-  styleUrls: ['../../styles/label.scss']
+  `
 })
-export class TextareaComponent extends LabeledComponent<TextareaProperties> {
+export class TextareaComponent extends BaseUIComponent<TextareaProperties> {
   get controlCssClasses(): string {
     return this.properties.readonly ? 'form-control-plaintext' : 'form-control';
   }
 }
 
-export class TextareaProperties extends LabelProperties {
+export class TextareaProperties extends BindingProperties {
   @propDescription({
     description: 'Number of rows in textarea',
     example: '5',
@@ -80,11 +73,11 @@ export const example: ComponentExample<UIModel<TextareaProperties>> = {
 };
 
 interface TextareaComponentConstrutor {
-  new (): TextareaComponent;
+  new(): TextareaComponent;
 }
 
 interface TextareaPropertiesConstrutor {
-  new (): TextareaProperties;
+  new(): TextareaProperties;
 }
 
 export const textareaDescriptor: ComponentDescriptor<TextareaComponentConstrutor, TextareaPropertiesConstrutor> = {

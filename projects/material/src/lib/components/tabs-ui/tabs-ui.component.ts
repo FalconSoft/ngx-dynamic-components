@@ -45,7 +45,7 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
         isDate: false,
         format: '',
         placeholder: 'Inout text component',
-        dataModelPath: '$.tabOne/inputValue'
+        binding: '$.tabOne/inputValue'
       }
     }, {
       type: 'text',
@@ -66,7 +66,7 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
           { label: 'Ukraine', value: 'ua' }
         ],
         placeholder: 'Country',
-        dataModelPath: '$.country'
+        binding: '$.country'
       }
     }]
   },

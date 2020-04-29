@@ -1,42 +1,19 @@
 import { Component } from '@angular/core';
-import { LabeledComponent } from '../../components/labeled.component';
-import { LabelProperties, propDescription, PropertyCategories } from '../../properties';
+import { propDescription, PropertyCategories, BindingProperties } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
+import { BaseUIComponent } from '../../components/base-ui-component';
 
 @Component({
   selector: 'dc-input',
-  template: `
-  <div class="form-group align-items-baseline" [fxLayout]="layout" [ngClass]="cssClasses">
-    <label class="mr-1 {{properties.labelPosition}}" [for]="id" *ngIf="hasLabel"
-      [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-    <div class="w-100 flex-column" [ngStyle]="wrapperStyles">
-      <input [attr.id]="id" #inputField="ngModel" [type]="properties.type" [class]="inputCssClasses" [ngStyle]="inputStyles"
-        [fxFlex]="properties.inputWidth"
-        [placeholder]="properties.placeholder"
-        [disabled]="properties.disabled === true"
-        [required]="properties.required"
-        [minlength]="properties.minlength"
-        [maxlength]="properties.maxlength"
-        [email]="properties.type === 'email'"
-        [pattern]="properties.pattern"
-        (input)="onInput($event)"
-        [attr.name]="name"
-        [attr.readonly]="properties.readonly || null"
-        [(ngModel)]="componentDataModel">
-      <div *ngIf="inputField.invalid && (inputField.dirty || inputField.touched)" class="alert alert-danger py-0 px-1 m-0">
-        <div *ngIf="inputField.errors.required">Field is required.</div>
-        <div *ngIf="inputField.errors.minlength">Min length {{properties.minlength}} characters.</div>
-        <div *ngIf="inputField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
-        <div *ngIf="inputField.errors.email">Email is invalid.</div>
-        <div *ngIf="inputField.errors.pattern">Field should match required pattern.</div>
-      </div>
-    </div>
-  </div>
-  `,
-  styleUrls: ['../../styles/label.scss'],
+  templateUrl: './input.component.html',
   styles: [`
     :host {
       display: inline-block;
+    }
+
+    :host.form-check-input > input {
+      width: auto;
+      height: auto;
     }
 
     .required label:after {
@@ -44,7 +21,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
     }
   `]
 })
-export class InputComponent extends LabeledComponent<InputProperties> {
+export class InputComponent extends BaseUIComponent<InputProperties> {
   get cssClasses(): {[key: string]: boolean} {
     return {
       invisible: this.properties.visible === false,
@@ -75,12 +52,24 @@ export class InputComponent extends LabeledComponent<InputProperties> {
   }
 
   onInput(event: any): void {
+    this.setValue(event, this.properties.onInput);
+  }
+
+  onChange(event?: any): void {
+     this.setValue(event, this.properties.onChange);
+  }
+
+  private setValue(event: any, prop: string): void {
     this.changedDataModel.emit(this.dataModel);
-    this.emitEvent(this.properties.onInput, event.target.value);
+    if (this.properties.type === 'checkbox') {
+      this.emitEvent(prop, event.target.checked);
+    } else {
+      this.emitEvent(prop, event.target.value);
+    }
   }
 }
 
-export class InputProperties extends LabelProperties {
+export class InputProperties extends BindingProperties {
   @propDescription({
     description: 'Text shown when field is empty',
     example: 'Type your name',
@@ -91,6 +80,11 @@ export class InputProperties extends LabelProperties {
     example: 'text',
   })
   type?: string;
+  @propDescription({
+    description: 'It specifies that the input value.',
+    example: 'option1',
+  })
+  value?: string;
   @propDescription({
     description: 'It specifies that the input should be disabled.',
     example: 'true',
@@ -142,15 +136,42 @@ export class InputProperties extends LabelProperties {
     example: 'onInput()',
   })
   onInput?: string;
+
+  @propDescription({
+    description: 'On change event handler name.',
+    example: 'onChange',
+  })
+  'onChange'?: string;
 }
 
 export const example: ComponentExample<UIModel<InputProperties>> = {
   title: 'Text input example',
   uiModel: `
-  <section class="d-flex flex-column align-items-start">
-    <input label="Name" labelWidth="80px" onInput="onNameInput(name)" labelPosition="left" placeholder="Enter your name" binding="$.name"/>
-    <input label="Last name" id="lastName" labelWidth="80px" disabled="true"
-    labelPosition="left" placeholder="Enter your last name" binding="$.lastName"/>
+  <section class="flex-column">
+    <section class="form-group">
+      <label class="col-form-label" width="80px">Name</label>
+      <input onInput="onNameInput(name)" placeholder="Enter your name" binding="$.name"/>
+    </section>
+    <section class="form-group">
+      <label class="col-form-label" width="80px">Last name</label>
+      <input disabled="true" placeholder="Enter your last name" binding="$.lastName"/>
+    </section>
+    <section class="form-group form-check">
+      <input type="checkbox" class="form-check-input" binding="$.subscribed"/>
+      <label class="form-check-label" width="80px">Subscribe</label>
+    </section>
+    <section class="form-group form-check mt-5">
+      <input type="radio" class="form-check-input" value="option-1" binding="$.option"/>
+      <label class="form-check-label" width="80px">Option 1</label>
+    </section>
+    <section class="form-group form-check">
+      <input type="radio" class="form-check-input" value="option-2" binding="$.option"/>
+      <label class="form-check-label" width="80px">Option 2</label>
+    </section>
+    <section class="form-group form-check">
+      <input type="radio" class="form-check-input" value="option-3" binding="$.option"/>
+      <label class="form-check-label" width="80px">Option 3</label>
+    </section>
   </section>
   `,
   scripts: `
@@ -188,8 +209,7 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
       itemProperties
     };
   },
-  defaultModel: `<input label="Name" labelWidth="80px" onInput="onInputHandler(name)" labelPosition="left"
-placeholder="Enter your name" binding="$.name"/>`,
+  defaultModel: `<input onInput="onInputHandler(name)" placeholder="Enter your name" binding="$.name"/>`,
   propertiesDescriptor: [
     ['type', {name: 'type', label: 'Data Type', category: PropertyCategories.Main,
       values: ['text', 'number', 'email', 'file', 'url', 'date', 'time', 'datetime-local']

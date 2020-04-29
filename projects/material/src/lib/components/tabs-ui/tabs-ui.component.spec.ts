@@ -6,7 +6,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { CoreModule } from '@ngx-dynamic-components/core';
+import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { TabsUIComponent, example } from './tabs-ui.component';
 import { registerComponents } from '../register';
 import { InputUIComponent } from '../input-ui-component';
@@ -20,7 +20,7 @@ describe('TabsUiComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TabsUIComponent, InputUIComponent, TextUIComponent, SelectUIComponent],
-      imports: [MatTabsModule, MatInputModule, MatSelectModule, CoreModule, NoopAnimationsModule, FormsModule],
+      imports: [MatTabsModule, MatInputModule, MatSelectModule, DynamicComponentsCoreModule, NoopAnimationsModule, FormsModule],
     });
 
     TestBed.compileComponents();

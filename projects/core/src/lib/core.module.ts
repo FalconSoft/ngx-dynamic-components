@@ -12,20 +12,20 @@ import { TextComponent } from './ui-components/text/text.component';
 import { ButtonComponent } from './ui-components/button/button.component';
 import { InputComponent } from './ui-components/input/input.component';
 import { IconComponent } from './ui-components/icon/icon.component';
-import { CheckboxComponent } from './ui-components/checkbox/checkbox.component';
 import { RadioGroupComponent } from './ui-components/radio-group/radio-group.component';
 import { TextareaComponent } from './ui-components/textarea/textarea.component';
 import { registerComponents } from './ui-components/register';
 import { LinkComponent } from './ui-components/link/link.component';
+import { LabelComponent } from './ui-components/label/label.component';
 
 @NgModule({
   declarations: [
     ContainerComponent,
     TextComponent,
+    LabelComponent,
     ButtonComponent,
     InputComponent,
     IconComponent,
-    CheckboxComponent,
     RadioGroupComponent,
     TextareaComponent,
     LinkComponent,
@@ -39,7 +39,7 @@ import { LinkComponent } from './ui-components/link/link.component';
   ],
   exports: [UISelectorComponent, NGXDynamicComponent]
 })
-export class CoreModule {
+export class DynamicComponentsCoreModule {
   constructor() {
     registerComponents();
   }

@@ -34,14 +34,14 @@ npm install @ngx-dynamic-components/bootstrap
 
 2. Import module
 ```
-import { BootstrapModule } from '@ngx-dynamic-components/bootstrap';
+import { DynamicComponentsBootstrapModule } from '@ngx-dynamic-components/bootstrap';
 
 ...
 @NgModule({
   ...
   imports: [
     ...
-    BootstrapModule
+    DynamicComponentsBootstrapModule
   ],
   ...
 })

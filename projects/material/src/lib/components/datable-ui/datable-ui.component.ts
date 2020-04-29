@@ -51,7 +51,7 @@ export const example: ComponentExample<UIModel<DatableProperties>> = {
           {title: 'Weight', dataProperty: 'weight'},
           {title: 'Symbol', dataProperty: 'symbol'},
         ],
-        dataModelPath: '$.tableData',
+        binding: '$.tableData',
         width: '90%',
         margin: '15px auto',
         padding: '20px 5px',

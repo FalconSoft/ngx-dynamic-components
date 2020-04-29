@@ -2,7 +2,7 @@ import { DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableModule } from '@angular/material/table';
-import { CoreModule } from '@ngx-dynamic-components/core';
+import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 
 import { DatableUIComponent, example } from './datable-ui.component';
 
@@ -13,7 +13,7 @@ describe('DatableUiComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DatableUIComponent],
-      imports: [MatTableModule, FormsModule, CoreModule]
+      imports: [MatTableModule, FormsModule, DynamicComponentsCoreModule]
     })
     .compileComponents();
   }));

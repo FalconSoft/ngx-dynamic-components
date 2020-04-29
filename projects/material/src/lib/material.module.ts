@@ -16,7 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 
-import { CoreModule } from '@ngx-dynamic-components/core';
+import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 
 import { InputUIComponent } from './components/input-ui-component';
 import { ButtonUIComponent } from './components/button-ui-component';
@@ -60,7 +60,7 @@ import { FlexContainerComponent } from './components/flex-container/flex-contain
         MatTableModule,
         MatTooltipModule,
         MatIconModule,
-        CoreModule
+        DynamicComponentsCoreModule
     ],
     exports: [
         ButtonUIComponent,

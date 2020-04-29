@@ -142,24 +142,6 @@ export abstract class DataModelProperties extends BindingProperties {
   dataSource?: string;
 }
 
-export abstract class LabelProperties extends BindingProperties {
-  @propDescription({
-    description: 'Label orientation',
-    example: 'bottom',
-  })
-  labelPosition?: string;
-  @propDescription({
-    description: 'Label',
-    example: 'Username',
-  })
-  label?: string;
-  @propDescription({
-    description: 'Label width',
-    example: '80px',
-  })
-  labelWidth?: string;
-}
-
 export abstract class ContainerProperties extends StyleProperties {
   @propDescription({
     description: 'Array of children ui Models',

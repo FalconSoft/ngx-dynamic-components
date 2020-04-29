@@ -16,10 +16,10 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { CoreModule } from '@ngx-dynamic-components/core';
+import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { ToolsModule } from '@ngx-dynamic-components/tools';
 import { MaterialModule } from '@ngx-dynamic-components/material';
-import { BootstrapModule } from '@ngx-dynamic-components/bootstrap';
+import { DynamicComponentsBootstrapModule } from '@ngx-dynamic-components/bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -64,10 +64,10 @@ import { StaticExampleViewComponent } from './components/static-example-view.com
   ],
   imports: [
     BrowserModule,
-    CoreModule,
+    DynamicComponentsCoreModule,
     ToolsModule,
     MaterialModule,
-    BootstrapModule,
+    DynamicComponentsBootstrapModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatToolbarModule,

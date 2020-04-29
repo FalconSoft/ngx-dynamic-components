@@ -19,9 +19,9 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DragulaModule } from 'ng2-dragula';
 
-import { CoreModule } from '@ngx-dynamic-components/core';
+import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
-import { BootstrapModule } from '@ngx-dynamic-components/bootstrap';
+import { DynamicComponentsBootstrapModule } from '@ngx-dynamic-components/bootstrap';
 
 import { PreviewEditorComponent } from './components/preview-editor/preview-editor.component';
 import { ControlEditorComponent } from './components/control-editor/control-editor.component';
@@ -34,9 +34,9 @@ import { AddDialogComponent } from './components/add-dialog/add-dialog.component
   ],
   imports: [
     CommonModule,
-    CoreModule,
+    DynamicComponentsCoreModule,
     MaterialModule,
-    BootstrapModule,
+    DynamicComponentsBootstrapModule,
     MatToolbarModule,
     MatButtonModule,
     MatTabsModule,

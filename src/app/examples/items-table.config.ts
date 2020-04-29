@@ -17,7 +17,7 @@ const itemsTableUIModel: UIModel = {
             displayedProperties: [
               {title: 'Todo', dataProperty: 'todo'},
             ],
-            dataModelPath: '$.todoList'
+            binding: '$.todoList'
         }
       }]
     },
@@ -31,7 +31,7 @@ const itemsTableUIModel: UIModel = {
         containerProperties: {},
         itemProperties: {
           placeholder: 'Enter new task',
-          dataModelPath: '$.todoInput'
+          binding: '$.todoInput'
         }
       }, {
         type: 'bootstrap:button',

@@ -62,6 +62,10 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         }
       }
 
+      if (this.properties.hasOwnProperty('value')) {
+        return this.properties.value;
+      }
+
       if (!this.properties.hasOwnProperty('binding')) {
         return null;
       }

@@ -1,18 +1,14 @@
 import { Component } from '@angular/core';
-import { LabeledComponent, JSONUtils, LabelProperties, propDescription, PropertyCategories,
-  OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '@ngx-dynamic-components/core';
+import { JSONUtils, BindingProperties, propDescription, PropertyCategories,  OptionValue,  ComponentExample,
+  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-select',
   template: `
-    <div class="form-group mb-0" [fxLayout]="layout" [fxLayoutAlign]="align" [ngStyle]="itemStyles">
-      <label selected *ngIf="hasLabel" [for]="id" class="my-0" [class]="properties.labelPosition"
-      [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{properties.label}}</label>
-      <ng-select [items]="options" (change)="onSelect()" fxFlexFill [ngStyle]="selectStyles"
+  <ng-select [items]="options" (change)="onSelect()" [ngStyle]="selectStyles"
       [(ngModel)]="componentDataModel" bindValue="value"></ng-select>
-    </div>`,
-  styleUrls: ['../../styles/label.scss'],
+    `,
   styles: [`
     :host ::ng-deep .ng-select.ng-select-single .ng-select-container {
       height: inherit;
@@ -21,7 +17,7 @@ import { packageName } from '../../constants';
   `]
 })
 
-export class SelectComponent extends LabeledComponent<SelectProperties> {
+export class SelectComponent extends BaseUIComponent<SelectProperties> {
   onSelect(): void {
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onSelect);
@@ -48,7 +44,7 @@ export class SelectComponent extends LabeledComponent<SelectProperties> {
   }
 }
 
-export class SelectProperties extends LabelProperties {
+export class SelectProperties extends BindingProperties {
   @propDescription({
     description: 'Select options or binding to dataModel.',
     example: '[{label: "One", value: 1}]',
@@ -79,12 +75,17 @@ interface SelectPropertiesConstrutor {
 export const example: ComponentExample<UIModel<SelectProperties>> = {
   uiModel: `
     <section class="flex-column">
-      <select onSelect="countryChanged" label="Country" labelWidth="50px" width="300px" labelPosition="left" binding="$.country">
-        <option value="uk">United Kingdom</option>
-        <option value="ua">Ukraine</option>
-      </select>
-      <select label="City" labelWidth="50px" width="300px"
-        itemsSource="$.cities" labelPosition="left" binding="$.city"></select>
+      <section class="form-group">
+        <label class="col-form-label" width="60px">Country</label>
+        <select onSelect="countryChanged" width="300px" binding="$.country">
+          <option value="uk">United Kingdom</option>
+          <option value="ua">Ukraine</option>
+        </select>
+      </section>
+      <section class="form-group">
+        <label class="col-form-label" width="60px">City</label>
+        <select width="300px" itemsSource="$.cities" binding="$.city"></select>
+      </section>
     </section>
   `,
   dataModel: {},
@@ -124,8 +125,7 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
       itemProperties
     };
   },
-  defaultModel: `<select label="Label" labelWidth="50px" width="100px"
-    itemsSource="$.list" labelPosition="left" binding="$.value"></select>`,
+  defaultModel: `<select width="100px" itemsSource="$.list" binding="$.value"></select>`,
   propertiesDescriptor: [
     ['selectHeight', {name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout}],
   ],

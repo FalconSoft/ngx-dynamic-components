@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { CoreModule } from '@ngx-dynamic-components/core';
+import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -17,7 +17,7 @@ import { registerComponents } from './components/register';
 @NgModule({
   declarations: [SelectComponent, TabsComponent],
   imports: [
-    CoreModule,
+    DynamicComponentsCoreModule,
     CommonModule,
     FormsModule,
     FlexLayoutModule,
@@ -25,7 +25,7 @@ import { registerComponents } from './components/register';
     TabsModule.forRoot()
   ]
 })
-export class BootstrapModule {
+export class DynamicComponentsBootstrapModule {
   constructor() {
     setTheme('bs4');
     registerComponents();

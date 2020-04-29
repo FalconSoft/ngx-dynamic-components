@@ -21,14 +21,14 @@ Add to file src/polyfills.ts
 
 Import module
 ```
-import { CoreModule } from '@ngx-dynamic-components/core';
+import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 
 ...
 @NgModule({
   ...
   imports: [
     ...
-    CoreModule
+    DynamicComponentsCoreModule
   ],
   ...
 })

@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
-import { LabeledComponent } from '../../components/labeled.component';
-import { LabelProperties, propDescription } from '../../properties';
+import { propDescription, BindingProperties } from '../../properties';
 import { OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult, AttributesMap } from '../../models';
 import { JSONUtils } from '../../utils/json.utils';
+import { BaseUIComponent } from '../../components/base-ui-component';
 
 @Component({
   selector: 'dc-radio-group',
   template: `
-    <div class="form-check my-1" *ngFor="let option of options"
-      [fxLayout]="layout" [fxLayoutAlign]="align" [ngStyle]="itemStyles">
-      <label class="my-0 {{properties.labelPosition}}" [for]="getId(option.value)" *ngIf="hasLabel"
-        [fxFlex]="layout === 'row' ? properties.labelWidth : false">{{option.label}}</label>
-      <input type="radio" (change)="onChange(option)" [attr.id]="getId(option.value)" [name]="properties.binding" [value]="option.value">
-    </div>
+    <ng-container *ngFor="let option of options">
+      <div class="d-flex align-items-center justify-content-between">
+        <label class="my-0 mr-2" [for]="getId(option.value)" *ngIf="option.label">{{option.label}}</label>
+        <input type="radio" (change)="onChange(option)" [attr.id]="getId(option.value)" [name]="properties.binding" [value]="option.value">
+      </div>
+    </ng-container>
   `,
   styleUrls: ['../../styles/label.scss']
 })
-export class RadioGroupComponent extends LabeledComponent<RadioGroupProperties> {
+export class RadioGroupComponent extends BaseUIComponent<RadioGroupProperties> {
   onChange(option: OptionValue): void {
     this.componentDataModel = option.value;
     this.changedDataModel.emit(this.dataModel);
@@ -40,7 +40,7 @@ export class RadioGroupComponent extends LabeledComponent<RadioGroupProperties> 
   }
 }
 
-export class RadioGroupProperties extends LabelProperties {
+export class RadioGroupProperties extends BindingProperties {
   @propDescription({
     description: 'Radio group options or binding to dataModel.',
     example: '[{label: "One", value: 1}]',
@@ -58,13 +58,13 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   title: 'Radio group example',
   uiModel: `
   <section>
-    <radio-group labelPosition="right" binding="$.color">
+    <radio-group class="d-flex flex-column mr-4" binding="$.color">
       <option value="white">White</option>
       <option value="black">Black</option>
       <option value="green">Green</option>
       <option value="blue">Blue</option>
     </radio-group>
-    <radio-group itemsSource="$.genderOptions" labelPosition="right" binding="$.gender"></radio-group>
+    <radio-group itemsSource="$.genderOptions" binding="$.gender"></radio-group>
   </section>
   `,
   dataModel: {

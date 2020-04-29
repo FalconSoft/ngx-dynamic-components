@@ -6,7 +6,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
 @Component({
   selector: 'dc-text',
   template: `
-    <div [ngSwitch]="txtStyle">
+    <ng-container [ngSwitch]="txtStyle">
       <h1 *ngSwitchCase="'h1'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h1>
       <h2 *ngSwitchCase="'h2'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h2>
       <h3 *ngSwitchCase="'h3'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h3>
@@ -14,9 +14,9 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
       <h5 *ngSwitchCase="'h5'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h5>
       <h6 *ngSwitchCase="'h6'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h6>
       <p *ngSwitchCase="''" [ngStyle]="itemStyles">{{text}}</p>
-      <p *ngSwitchCase="undefined" [ngStyle]="itemStyles">{{text}}</p>
+      <ng-container *ngSwitchCase="undefined" [ngStyle]="itemStyles">{{text}}</ng-container>
       <span *ngSwitchDefault [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</span>
-    </div>
+    </ng-container>
     `
 })
 export class TextComponent extends BaseUIComponent<TextProperties> {
