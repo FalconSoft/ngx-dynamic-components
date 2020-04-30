@@ -44,6 +44,18 @@ export abstract class BaseProperties implements AttributesMap {
     example: 'OnComponentDestroy'
   })
   onDestroy?: string;
+
+  @propDescription({
+    description: 'Component identifier',
+    example: 'component1'
+  })
+  id?: string;
+
+  @propDescription({
+    description: 'Is component visible',
+    example: 'false'
+  })
+  visible?: boolean;
 }
 
 export abstract class StyleProperties extends BaseProperties {

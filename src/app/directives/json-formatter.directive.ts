@@ -9,7 +9,7 @@ export class JsonFormatterDirective implements OnChanges {
 
   constructor(private elRef: ElementRef) { }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     if (this.json) {
       const formatter = new JSONFormatter(this.json);
       this.elRef.nativeElement.innerHTML = '';

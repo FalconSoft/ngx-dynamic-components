@@ -16,7 +16,7 @@ export class ItemPropertiesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.itemProperties = this.component.itemProperties.prototype.properties;
   }
 }

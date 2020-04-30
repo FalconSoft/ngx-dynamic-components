@@ -5,12 +5,6 @@ export interface BaseUIComponentConstructor {
   new (): BaseUIComponent;
 }
 
-export function actionDescriptor(descriptor) {
-  return (target) => {
-    target.descriptor = descriptor;
-  };
-}
-
 /**
  * Safe get item by index from array.
  * @param arr - array.

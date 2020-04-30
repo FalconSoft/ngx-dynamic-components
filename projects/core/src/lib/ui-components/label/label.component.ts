@@ -4,10 +4,9 @@ import { BindingProperties } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
-  selector: 'dc-label',
-  template: `
-    <label>{{text}}</label>
-  `,
+  // tslint:disable-next-line
+  selector: 'label',
+  template: `{{text}}`,
   styles: [`
     :host.form-check-label > label {
       margin-bottom: 0;

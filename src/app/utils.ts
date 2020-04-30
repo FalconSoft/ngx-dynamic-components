@@ -8,11 +8,11 @@ export function getSlugFromStr(str: string): string {
 
 export const COMPONENTS_LIST = [...core.COMPONENTS_LIST, ...bs.COMPONENTS_LIST, ...mat.COMPONENTS_LIST];
 
-export function getCategories() {
+export function getCategories(): any[] {
   return [...core.getCategories(), ...bs.getCategories(), ...mat.getCategories()];
 }
 
-export function getPackageCategories() {
+export function getPackageCategories(): any[] {
   return [{
     packageName: 'Core',
     categories: core.getCategories()

@@ -31,7 +31,7 @@ export class StaticExampleViewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
-  eventHandlers({eventName, parameters = null}: ComponentEvent) {
+  eventHandlers({eventName, parameters = null}: ComponentEvent): void {
     if (!this.interpreter) { return; }
     const { scripts, uiModel, dataModel } = this.ex;
     if (this.interpreter.hasFunction(scripts, eventName)) {
@@ -47,7 +47,7 @@ export class StaticExampleViewComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.example = this.route.params
       .pipe(
         filter(p => p.example),

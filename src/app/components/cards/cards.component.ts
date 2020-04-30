@@ -1,18 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'dc-cards',
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.scss']
 })
-export class CardsComponent implements OnInit {
+export class CardsComponent {
 
-  @Input()
-  cards;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  @Input() cards;
 
 }

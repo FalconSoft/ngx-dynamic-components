@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { getPackageCategories } from '../utils';
-import { GroupItem } from './side-bar/side-bar.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,16 +25,13 @@ import { map } from 'rxjs/operators';
 export class ComponentsPageComponent implements OnInit {
 
   sections = [];
-
   isHandSet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
-
   mode: Observable<string> = this.isHandSet$.pipe(map(r => r ? 'over' : 'side'));
-
   opened = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const mapToGroup = ({name, components, packageName}) => ({name, list: components, url: [packageName]});
     this.sections = getPackageCategories().map(({packageName, categories}) => {
       return {

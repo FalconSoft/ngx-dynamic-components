@@ -31,7 +31,7 @@ export class EditorPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.scripts = flex.scripts;
   }
 }

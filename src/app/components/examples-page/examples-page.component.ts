@@ -13,7 +13,7 @@ export class ExamplesPageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.examples = getGroupedExamples().map(({name, examples}) => ({name, list: examples}));
   }
 }

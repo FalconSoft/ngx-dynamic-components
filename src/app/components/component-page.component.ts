@@ -39,13 +39,13 @@ export interface PeriodicElement {
 export class ComponentPageComponent implements OnInit, OnDestroy {
 
   component: ComponentDescriptor;
-  private destroy = new Subject();
   loading = false;
+  private destroy$ = new Subject();
 
   constructor(private route: ActivatedRoute) { }
 
-  ngOnInit() {
-    this.route.params.pipe(takeUntil(this.destroy),
+  ngOnInit(): void {
+    this.route.params.pipe(takeUntil(this.destroy$),
     tap(() => {
       if (this.component) {
         this.loading = true;
@@ -56,8 +56,8 @@ export class ComponentPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.destroy.next();
-    this.destroy.complete();
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

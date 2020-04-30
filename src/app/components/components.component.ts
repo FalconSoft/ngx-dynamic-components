@@ -24,22 +24,24 @@ export class ComponentsComponent implements OnInit {
   components$: Observable<any>;
   category$: Observable<string>;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
     const filterComponents = (p) => {
       return (c: ComponentDescriptor) => (!p.category || getSlugFromStr(c.category) === p.category) && c.packageName === p.packageName;
     };
-    this.components$ = this.route.params.pipe(
-      map(p => COMPONENTS_LIST.filter(filterComponents(p))
-                              .map(c => ({
-                                header: `${c.packageName} ${c.name}`,
-                                content: c.description,
-                                link: ['/components', c.packageName, c.name]}))));
+    this.components$ = this.route.params
+      .pipe(
+        map(p => COMPONENTS_LIST.filter(filterComponents(p))
+          .map(c => ({
+            header: `${c.packageName} ${c.name}`,
+            content: c.description,
+            link: ['/components', c.packageName, c.name]
+          }))));
 
-    this.category$ = this.route.params.pipe(
-      map(p => p.category ? p.category.replace(/-/g, ' ') : 'all categories'));
-  }
-
-  ngOnInit() {
+    this.category$ = this.route.params
+      .pipe(
+        map(p => p.category ? p.category.replace(/-/g, ' ') : 'all categories'));
   }
 
 }

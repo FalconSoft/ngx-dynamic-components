@@ -24,12 +24,12 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @HostBinding('style.border-right') borderRight: string;
     @HostBinding('style.border-bottom') borderBottom: string;
     @HostBinding('style.background') background: string;
-    @HostBinding('class') classes: string;
+    @HostBinding('class') classAttr: string;
 
     @Output() changedDataModel = new EventEmitter();
 
     private readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
-    'minHeigh', 'maxHeight', 'minWidth', 'maxWidth'];
+    'minHeigh', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
     async ngOnInit(): Promise<void> {
@@ -51,6 +51,8 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         this.setHostStyles();
       }
     }
+
+
 
     get componentDataModel(): any {
       if (this.properties.hasOwnProperty('dataSource')) {
@@ -87,7 +89,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       return this.uiModel.itemProperties;
     }
 
-    protected emitEvent(funcSign: string, parameters: any = null) {
+    protected emitEvent(funcSign: string, parameters: any = null): void {
       if (funcSign) {
         const [eventName, parameter] = parseArgFunction(funcSign);
         this.eventHandlers.emit({
@@ -107,15 +109,16 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     getStyles(properties: StyleProperties = {}, stylesList = StylePropertiesList): {[key: string]: string} {
       return stylesList.reduce((styles, prop) => {
         if (properties.hasOwnProperty(prop)) {
-          styles[prop] = this.getPropValue(properties, prop);
+          styles[prop] = this .getPropValue(properties, prop);
         }
         return styles;
       }, {});
     }
 
-    private setHostStyles() {
+    private setHostStyles(): void {
+      console.log('setHostStyles');
       if (this.properties.class) {
-        this.classes = this.properties.class;
+        this.classAttr = this.properties.class;
       }
       const props = this.properties as StyleProperties;
       if (props) {
@@ -128,7 +131,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       }
     }
 
-    private getPropValue(properties: AttributesMap, prop: string) {
+    private getPropValue(properties: AttributesMap, prop: string): any {
       const val = properties[prop];
       if (prop === 'font-size') {
         if (!isNaN(properties[prop])) {
@@ -138,7 +141,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       return val;
     }
 
-    private setBorder(properties: StyleProperties) {
+    private setBorder(properties: StyleProperties): void {
       const border = properties.border;
       if (typeof border === 'string') {
         const [prop, value] = border.split('|');

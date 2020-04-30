@@ -29,7 +29,7 @@ export const ControlProperties = new Map<string, ComponentProperty>([
   ['margin', { name: 'margin', label: 'Margin', category: PropertyCategories.Layout }],
   ['padding', { name: 'padding', label: 'Padding', category: PropertyCategories.Layout }],
 
-  // Flex Container properties
+  // Flex Container properties - DEPRECATED
   ['fxLayout', {
     name: 'fxLayout', label: 'Flex Direction', category: PropertyCategories.Main,
     combo: [[{ label: 'Row', value: 'row' }, { label: 'Column', value: 'column' }]]

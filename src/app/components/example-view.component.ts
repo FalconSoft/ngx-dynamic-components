@@ -34,7 +34,7 @@ export class ExampleViewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.example = this.route.params
       .pipe(
         filter(p => p.example),

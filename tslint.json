@@ -61,6 +61,11 @@
       "single"
     ],
     "trailing-comma": false,
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ],
     "no-output-on-prefix": true,
     "no-inputs-metadata-property": true,
     "no-outputs-metadata-property": true,

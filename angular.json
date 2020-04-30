@@ -34,11 +34,22 @@
               "src/styles.scss"
             ],
             "scripts": [
-              { "input": "node_modules/ace-builds/src-noconflict/ace.js", "bundleName": "ace-editor" },
-              { "input": "node_modules/ace-builds/src-noconflict/mode-json.js"},
-              { "input": "node_modules/ace-builds/src-noconflict/mode-xml.js"},
-              { "input": "node_modules/jspython-interpreter/dist/assets/mode-jspython.js"},
-              { "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js"}
+              {
+                "input": "node_modules/ace-builds/src-noconflict/ace.js",
+                "bundleName": "ace-editor"
+              },
+              {
+                "input": "node_modules/ace-builds/src-noconflict/mode-json.js"
+              },
+              {
+                "input": "node_modules/ace-builds/src-noconflict/mode-xml.js"
+              },
+              {
+                "input": "node_modules/jspython-interpreter/dist/assets/mode-jspython.js"
+              },
+              {
+                "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js"
+              }
             ],
             "es5BrowserSupport": true
           },
@@ -161,13 +172,13 @@
           "options": {
             "tsConfig": "projects/core/tsconfig.lib.json",
             "project": "projects/core/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/core/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -201,13 +212,13 @@
           "options": {
             "tsConfig": "projects/material/tsconfig.lib.json",
             "project": "projects/material/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/material/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -241,13 +252,13 @@
           "options": {
             "tsConfig": "projects/tools/tsconfig.lib.json",
             "project": "projects/tools/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/tools/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -282,13 +293,13 @@
           "options": {
             "tsConfig": "projects/bootstrap/tsconfig.lib.json",
             "project": "projects/bootstrap/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/bootstrap/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {

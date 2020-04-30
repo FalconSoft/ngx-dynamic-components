@@ -60,6 +60,8 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       this.renderer2.addClass(componentRef.location.nativeElement, 'dc-wrapper');
       this.component.dataModel = this.dataModel;
       this.component.uiModel = this.uiModel;
+      this.uiModel.show = () => componentRef.location.nativeElement.classList.remove('hidden');
+      this.uiModel.hide = () => componentRef.location.nativeElement.classList.add('hidden');
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);
       });

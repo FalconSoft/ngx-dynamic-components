@@ -9,7 +9,7 @@ NGX Dynamic Components is a dynamic configuration driven web page builder. It is
 ```
 ng new my-dynamic-project
 cd my-dynamic-project
-npm install @angular/flex-layout @ngx-dynamic-components/core
+npm install @ngx-dynamic-components/core
 ```
 
 Add to file src/polyfills.ts

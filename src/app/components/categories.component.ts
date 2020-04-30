@@ -24,7 +24,7 @@ export class CategoriesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.categories = getCategories()
       .map(c => ({
         header: `${c.packageName} ${c.name}`,
@@ -33,7 +33,7 @@ export class CategoriesComponent implements OnInit {
       }));
   }
 
-  getComponentsNames(components: ComponentDescriptor[]) {
+  getComponentsNames(components: ComponentDescriptor[]): string {
     return components.map(c => c.name).join(', ');
   }
 }

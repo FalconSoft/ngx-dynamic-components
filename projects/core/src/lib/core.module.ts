@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { UISelectorComponent } from './components/ui-selector-component';
 import { NGXDynamicComponent } from './components/ngx-dynamic-component';
@@ -34,8 +33,7 @@ import { LabelComponent } from './ui-components/label/label.component';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
-    FlexLayoutModule
+    HttpClientModule
   ],
   exports: [UISelectorComponent, NGXDynamicComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'dc-guides-page',
@@ -7,11 +7,4 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class GuidesPageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class GuidesPageComponent { }

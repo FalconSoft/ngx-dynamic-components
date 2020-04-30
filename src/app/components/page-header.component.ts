@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'dc-page-header',
@@ -25,7 +25,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     }
   `]
 })
-export class PageHeaderComponent implements OnInit {
+export class PageHeaderComponent {
 
   @Input()
   title: string;
@@ -37,10 +37,5 @@ export class PageHeaderComponent implements OnInit {
 
   @Output()
   open = new EventEmitter<boolean>();
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }

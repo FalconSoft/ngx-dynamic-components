@@ -50,6 +50,8 @@ export abstract class UIModel<T = AttributesMap> {
   itemProperties?: T;
   containerProperties?: AttributesMap;
   children?: UIModel[];
+  show?(): void {}
+  hide?(): void {}
 }
 
 export interface IVariableResolver {

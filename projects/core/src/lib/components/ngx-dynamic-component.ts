@@ -33,7 +33,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       }
     }
 
-    onEventHandler(evt: ComponentEvent) {
+    onEventHandler(evt: ComponentEvent): void {
       this.eventHandlers.emit({...evt, rootUIModel: this.parsedUIModel});
     }
 
