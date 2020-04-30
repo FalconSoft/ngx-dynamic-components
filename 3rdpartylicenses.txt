@@ -720,8 +720,6 @@ SOFTWARE.
 
 
 
-ngx-bootstrap/utils
-
 regenerator-runtime
 MIT
 MIT License
