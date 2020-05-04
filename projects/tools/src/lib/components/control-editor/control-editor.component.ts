@@ -41,17 +41,17 @@ export class ControlEditorComponent {
     });
   }
 
-  onHover(evt) {
+  onHover(evt): void {
     const dragEl = this.getParentDrag(evt.target as HTMLElement);
     dragEl.classList.add('drag-selected');
   }
 
-  onMouseLeave(evt: Event) {
+  onMouseLeave(evt: Event): void {
     const dragEl = this.getParentDrag(evt.target as HTMLElement);
     dragEl.classList.remove('drag-selected');
   }
 
-  getDragTooltip() {
+  getDragTooltip(): string {
     return this.uiModel.type === 'material:flex-container' ? 'Drag container' : 'Drag component';
   }
 

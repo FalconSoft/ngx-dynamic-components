@@ -1,0 +1,10 @@
+<form (ngSubmit)="onFormSubmit($event)" #form [ngStyle]="itemStyles">
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</form>
+
+<ng-template #content>
+  <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)" *ngFor="let item of uiModel.children"
+    [uiModel]='item'
+    [dataModel]='dataModel'
+    (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
+</ng-template>

@@ -30,7 +30,7 @@ export class DragDropService {
 
   containerUIModelMap = new Map();
 
-  public init(container, uiModel: UIModel) {
+  public init(container, uiModel: UIModel): void {
     this.container = container;
     this.uiModel = uiModel;
 
@@ -42,7 +42,7 @@ export class DragDropService {
     this.initEditor();
   }
 
-  public cleanUpEditor() {
+  public cleanUpEditor(): void {
     this.controls.forEach(componentRef => {
       this.appRef.detachView(componentRef.hostView);
       componentRef.destroy();
@@ -71,8 +71,8 @@ export class DragDropService {
     return arrElements as HTMLElement[];
   }
 
-  private mapChildren(container, childrenUIModel) {
-    let children = Array.from(container.querySelectorAll(`
+  private mapChildren(container, childrenUIModel): HTMLElement[] {
+    let children = Array.from<HTMLElement>(container.querySelectorAll(`
         :scope>div>dc-container,
         :scope>div>dc-container>dc-container-row.row,
         :scope>div>dc-ui-flex-container .container
@@ -85,7 +85,7 @@ export class DragDropService {
     return children;
   }
 
-  private initEditor() {
+  private initEditor(): void {
     this.cleanUpEditor();
     this.drake.containers.forEach((container, index) => {
       this.getContainerItems(container).forEach((element, i) => {
@@ -99,7 +99,7 @@ export class DragDropService {
     return Array.from(container.children).filter(item => item.tagName !== 'DC-CONTROL-EDITOR');
   }
 
-  appendControlEditor(element: HTMLElement, children, i) {
+  appendControlEditor(element: HTMLElement, children, i): void {
     const uiModel = children[i];
     const componentRef = this.componentFactoryResolver
       .resolveComponentFactory(ControlEditorComponent)
@@ -122,7 +122,7 @@ export class DragDropService {
     this.controls.push(componentRef);
   }
 
-  private initDrake(elements) {
+  private initDrake(elements: HTMLElement[]): void {
     this.drake = dragula(elements, {
       moves: (el, container, handle: HTMLElement): boolean => {
         return this.isMoveElement(handle);

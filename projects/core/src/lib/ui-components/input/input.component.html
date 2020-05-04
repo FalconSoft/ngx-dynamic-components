@@ -1,3 +1,4 @@
+<!-- @deprecated -->
 <input *ngIf="properties.type === 'checkbox'; else inputTmpl" type="checkbox"
   [class]="inputCssClasses" [ngStyle]="inputStyles" (change)="onChange()" [disabled]="properties.disabled === true"
   [required]="properties.required" [(ngModel)]="componentDataModel" [attr.name]="name"
@@ -5,7 +6,7 @@
 
 <ng-template #inputTmpl>
   <input #inputField="ngModel" [type]="properties.type" [class]="inputCssClasses" [ngStyle]="inputStyles"
-    [placeholder]="properties.placeholder" [disabled]="properties.disabled === true" [required]="properties.required"
+    [placeholder]="properties.placeholder || ''" [disabled]="properties.disabled === true" [required]="properties.required"
     [email]="properties.type === 'email'" [pattern]="properties.pattern" (input)="onInput($event)" (change)="onChange()"
     [attr.name]="name" [attr.readonly]="properties.readonly || null" [(ngModel)]="componentDataModel">
   <div *ngIf="inputField && inputField.invalid && (inputField.dirty || inputField.touched)"

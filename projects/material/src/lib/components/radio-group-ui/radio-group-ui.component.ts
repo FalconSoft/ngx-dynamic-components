@@ -21,7 +21,7 @@ import { packageName } from '../../constants';
   styles: []
 })
 export class RadioGroupUIComponent extends BaseUIComponent<RadioGroupProperties> {
-  get orientation() {
+  get orientation(): string {
     return this.properties.orientation === 'vertical' ? 'column' : 'row';
   }
 

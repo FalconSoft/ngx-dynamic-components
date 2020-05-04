@@ -14,7 +14,7 @@ import { packageName } from '../constants';
     `
 })
 export class ButtonUIComponent extends BaseUIComponent<ButtonProperties> {
-  onClick() {
+  onClick(): void {
     this.emitEvent(this.properties.onClick);
   }
 }

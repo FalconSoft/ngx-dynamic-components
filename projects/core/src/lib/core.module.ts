@@ -16,10 +16,12 @@ import { TextareaComponent } from './ui-components/textarea/textarea.component';
 import { registerComponents } from './ui-components/register';
 import { LinkComponent } from './ui-components/link/link.component';
 import { LabelComponent } from './ui-components/label/label.component';
+import { FormComponent } from './ui-components/form/form.component';
 
 @NgModule({
   declarations: [
     ContainerComponent,
+    FormComponent,
     TextComponent,
     LabelComponent,
     ButtonComponent,

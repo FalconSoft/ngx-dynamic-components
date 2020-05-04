@@ -112,7 +112,7 @@ describe('PreviewEditorComponent', () => {
    * @param uiModel - UI model.
    * @param index - index of element type in container.
    */
-  function verifyRenderedTree(container: HTMLElement, uiModel: UIModel, index: number = 0) {
+  function verifyRenderedTree(container: HTMLElement, uiModel: UIModel, index: number = 0): void {
     const componentEl = container.getElementsByTagName(getTagFromType(uiModel.type))[index] as HTMLElement;
     expect(componentEl).toBeTruthy();
     if (uiModel.children) {
@@ -132,7 +132,7 @@ describe('PreviewEditorComponent', () => {
     return TYPE_MAP[type] || `dc-ui-${type.replace('material:', '')}`;
   }
 
-  function toggleCodeSection() {
+  function toggleCodeSection(): void {
     const codeBtn = getBtnByIcon(editorEl.querySelector('mat-card-header'), 'code') as HTMLButtonElement;
     codeBtn.click();
     fixture.detectChanges();

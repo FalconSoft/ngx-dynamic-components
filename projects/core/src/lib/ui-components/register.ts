@@ -9,9 +9,11 @@ import { textareaDescriptor } from './textarea/textarea.component';
 import { containerDescriptor } from './container/container.component';
 import { linkDescriptor } from './link/link.component';
 import { labelDescriptor } from './label/label.component';
+import { formDescriptor } from './form/form.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   containerDescriptor,
+  formDescriptor,
   textDescriptor,
   labelDescriptor,
   iconDescriptor,

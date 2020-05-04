@@ -64,17 +64,16 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         }
       }
 
-      if (this.properties.hasOwnProperty('value')) {
-        return this.properties.value;
+      if (this.properties.hasOwnProperty('binding')) {
+        const path = (this.properties as DataModelProperties).binding;
+        // TODO: Handle case for Array type.
+        if (!Array.isArray(this.dataModel)) {
+          return JSONUtils.find(this.dataModel, path);
+        }
       }
 
-      if (!this.properties.hasOwnProperty('binding')) {
-        return null;
-      }
-      const path = (this.properties as DataModelProperties).binding;
-      // TODO: Handle case for Array type.
-      if (!Array.isArray(this.dataModel)) {
-        return JSONUtils.find(this.dataModel, path);
+      if (this.properties.hasOwnProperty('value')) {
+        return this.properties.value;
       }
     }
 
@@ -116,7 +115,6 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     }
 
     private setHostStyles(): void {
-      console.log('setHostStyles');
       if (this.properties.class) {
         this.classAttr = this.properties.class;
       }

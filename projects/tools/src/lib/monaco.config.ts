@@ -5,12 +5,12 @@ export const defaultOptions = {
   automaticLayout: true
 };
 
-export function registerMonacoCompletion() {
+export function registerMonacoCompletion(): any {
   if (!window.hasOwnProperty('monaco')) {
     return setTimeout(registerMonacoCompletion, 1e2);
   }
   monaco.languages.registerCompletionItemProvider('json', {
-    provideCompletionItems(model, position) {
+    provideCompletionItems(model, position): any {
       const textUntilPosition = model.getValueInRange({
         startLineNumber: 1,
         startColumn: 1,
@@ -30,7 +30,7 @@ export function registerMonacoCompletion() {
 });
 }
 
-function getItemProposals() {
+function getItemProposals(): any[] {
   return [{
     label: '"fxLayout"',
     kind: monaco.languages.CompletionItemKind.Function,
@@ -39,7 +39,7 @@ function getItemProposals() {
   }];
 }
 
-function getBasicProposals() {
+function getBasicProposals(): any[] {
   return [{
     label: '"type"',
     kind: monaco.languages.CompletionItemKind.Function,

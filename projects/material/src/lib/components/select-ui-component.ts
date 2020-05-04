@@ -19,7 +19,7 @@ import { packageName } from '../constants';
   `
 })
 export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
-  onSelect() {
+  onSelect(): void {
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onSelect);
   }

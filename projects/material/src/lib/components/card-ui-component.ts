@@ -44,15 +44,15 @@ import { packageName } from '../constants';
 })
 
 export class CardUIComponent extends BaseUIComponent<CardProperties> {
-  get header() {
+  get header(): UIModel {
     return this.getChildByIndex(0);
   }
 
-  get content() {
+  get content(): UIModel {
     return this.getChildByIndex(1);
   }
 
-  get footer() {
+  get footer(): UIModel {
     return this.getChildByIndex(2);
   }
 

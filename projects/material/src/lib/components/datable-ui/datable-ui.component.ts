@@ -21,7 +21,7 @@ import { packageName } from '../../constants';
   styles: []
 })
 export class DatableUIComponent extends BaseUIComponent<DatableProperties> {
-  get displayedColumns() {
+  get displayedColumns(): string[] {
     return this.uiModel.itemProperties.displayedProperties.map(({dataProperty}) => dataProperty);
   }
 }

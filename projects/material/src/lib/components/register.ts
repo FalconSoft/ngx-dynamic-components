@@ -25,7 +25,7 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
 ];
 
 // Register components.
-export function registerComponents() {
+export function registerComponents(): void {
   COMPONENTS_LIST.forEach(component => CoreService.registerComponent(component));
 }
 

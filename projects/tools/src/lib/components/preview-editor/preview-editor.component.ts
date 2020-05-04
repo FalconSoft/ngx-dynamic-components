@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent, JSONUtils } from '@ngx-dynamic-components/core';
 import { FormControl } from '@angular/forms';
-import { filter, map, startWith, debounceTime } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
@@ -18,7 +18,7 @@ enum Layout {
   templateUrl: './preview-editor.component.html',
   styleUrls: ['./preview-editor.component.scss']
 })
-export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit {
+export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   @Input() scripts: string;
   @Input() initUiModel: UIModel;
@@ -47,13 +47,13 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     automaticLayout: true
   };
 
-  get editorTooltip$() {
+  get editorTooltip$(): Observable<string> {
     return this.editMode$.pipe(map(mode => mode ? 'Disable preview edit' : 'Enable preview edit'));
   }
 
   constructor(private container: ElementRef, private dragService: DragDropService) { }
 
-  eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent) {
+  eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent): void {
     if (!this.interpreter) { return; }
 
     if (this.interpreter.hasFunction(this.scripts, eventName)) {
@@ -69,8 +69,11 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.interpreter = jsPython();
+    this.interpreter.addFunction('getComponentById', (uiModel: UIModel, id: string): UIModel => {
+      return JSONUtils.find(uiModel, `$(children:id=${id})`) as UIModel;
+    });
     this.interpreter.assignGlobalContext({JSONUtils});
     this.uiModel = this.initUiModel;
     this.dataModel = this.initDataModel;
@@ -83,22 +86,16 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     });
   }
 
-  ngOnChanges({initUiModel}: SimpleChanges) {
-    if (initUiModel && !initUiModel.firstChange) {
-      // this.initUIPreview();
-    }
-  }
-
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.onDataModelChange(this.dynamicComponent.dataModel);
     this.initUIPreview();
   }
 
-  get isHorizontal() {
+  get isHorizontal(): boolean {
     return this.layout === Layout.horizontal;
   }
 
-  toggleSourceCode() {
+  toggleSourceCode(): void {
     this.sourceCode = !this.sourceCode;
     this.flex = this.sourceCode ? '1 1 auto' : 'initial';
     if (!this.sourceCode) {
@@ -109,11 +106,11 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     });
   }
 
-  toggleLayout() {
+  toggleLayout(): void {
     this.layout = this.layout === Layout.horizontal ? Layout.vertical : Layout.horizontal;
   }
 
-  addRow() {
+  addRow(): void {
     this.uiModel.children.unshift({
       type: 'bootstrap:bs-row',
       containerProperties: {},
@@ -124,7 +121,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     this.onDataModelChange(null);
   }
 
-  onDataModelChange(data: any) {
+  onDataModelChange(data: any): void {
     if (data && this.dataModelEditor) {
       this.dataModelEditor.setValue(formatObjToJsonStr(data));
     } else if (this.uiModelEditor) {
@@ -132,7 +129,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     }
   }
 
-  private initUIPreview() {
+  private initUIPreview(): void {
     if (this.uiModelEl) {
       this.initEditor('uiModel', this.uiModelEl, this.initUiModel, 'ace/mode/xml')
         .subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
@@ -147,7 +144,7 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     this.dragService.uiModelUpdates$.subscribe(() => this.onDataModelChange(null));
   }
 
-  private refreshPreview(uiModel: UIModel, dataModel: any) {
+  private refreshPreview(uiModel: UIModel, dataModel: any): void {
     this.uiModel = uiModel;
     this.dataModel = dataModel;
     if (this.scriptControl) {
@@ -182,51 +179,5 @@ export class PreviewEditorComponent implements OnInit, OnChanges, AfterViewInit 
     return fromEvent(editor, 'change').pipe(map(() => {
       return editor.getValue();
     }));
-  }
-
-  private initUIModelControl(): Observable<any> {
-    this.uiModelEditor = edit(this.uiModelEl.nativeElement, {
-      mode: 'ace/mode/python',
-      autoScrollEditorIntoView: true,
-      value: this.scripts,
-      tabSize: 2,
-      useSoftTabs: true,
-      indentedSoftWrap: true
-    });
-
-    this.uiModelEditor.setOptions({
-      enableBasicAutocompletion: true,
-      enableSnippets: false,
-      enableLiveAutocompletion: true
-    });
-
-    return fromEvent(this.uiModelEditor, 'change');
-  }
-
-  private initDataModelControl(): Observable<any> {
-    const strDataModel = JSON.stringify(this.initDataModel, null, 4);
-    this.dataModelControl = new FormControl(strDataModel);
-    return this.dataModelControl.valueChanges
-      .pipe(
-        debounceTime(5e2),
-        filter(this.jsonValidFilter),
-        startWith(strDataModel),
-        map(str => JSON.parse(str)));
-  }
-
-  private initScriptsControl() {
-    this.scriptControl = new FormControl(this.scripts);
-    this.scriptControl.valueChanges.subscribe(sc => {
-      this.scripts = sc;
-    });
-  }
-
-  private jsonValidFilter(jsonStr: string): boolean {
-    try {
-      JSON.parse(jsonStr);
-      return true;
-    } catch {
-      return false;
-    }
   }
 }

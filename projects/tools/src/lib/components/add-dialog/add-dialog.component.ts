@@ -36,11 +36,11 @@ export class AddDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.categories = getCategories();
   }
 
-  selectComponent(item) {
+  selectComponent(item): void {
     this.dialogRef.close(item.defaultModel || item.example.uiModel || {
       type: `${item.packageName}:${item.name}`,
       itemProperties: {},

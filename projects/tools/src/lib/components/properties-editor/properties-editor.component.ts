@@ -50,14 +50,14 @@ export class PropertiesEditorComponent implements OnInit {
 
   showEditor = false;
 
-  get positionClass() {
+  get positionClass(): string {
     const btnPos = this.editBtn._elementRef.nativeElement.getBoundingClientRect().right;
     const docWidth = document.body.offsetWidth;
     return docWidth - btnPos < 200 ? 'left' : '';
   }
 
   @HostListener('document:click', ['$event.target'])
-  onClick(targetElement) {
+  onClick(targetElement): void {
     if (this.editorContainer) {
       const clickedInside = this.editorContainer.nativeElement.contains(targetElement);
       if (!clickedInside && this.editBtn._elementRef.nativeElement.contains(targetElement)) {
@@ -81,11 +81,11 @@ export class PropertiesEditorComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.itemProperties = CoreService.getComponentProperties(this.uiModel.type);
   }
 
-  updateProperty(evt, prop) {
+  updateProperty(evt, prop): void {
     try {
       // If property value is an object or an array.
       this.uiModel.itemProperties[prop] = JSON.parse(evt.target.value);
