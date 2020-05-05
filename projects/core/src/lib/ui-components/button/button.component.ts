@@ -6,6 +6,10 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
 @Component({
   selector: 'button', // tslint:disable-line
   template: `
+  <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)" *ngFor="let item of uiModel.children"
+      [uiModel]='item'
+      [dataModel]='dataModel'
+      (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
   {{properties.label}}
   `
 })
@@ -61,7 +65,8 @@ export class ButtonProperties extends StyleProperties {
 export const example: ComponentExample<UIModel<ButtonProperties>> = {
   title: 'Basic button example',
   uiModel: `
-  <section class="row align-items-center">
+  <section>
+    <button class="btn btn-primary" type="button"><icon class="fa fa-search"></icon>Search</button>
     <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog">Click</button>
     <button class="btn btn-secondary" disabled="true" onClick="consoleLog" type="submit">Submit</button>
     <button class="btn btn-danger" display="none">Hidden</button>
@@ -109,5 +114,5 @@ export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, Bu
       values: ['button', 'submit', 'reset']
     }]
   ],
-  children: false
+  // children: false
 };

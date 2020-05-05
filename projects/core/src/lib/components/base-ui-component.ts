@@ -3,6 +3,7 @@ import { UIModel, AttributesMap, ComponentEvent } from '../models';
 import { JSONUtils } from '../utils/json.utils';
 import { kebabStrToCamel, parseArgFunction } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
+import { InputProperties } from '../ui-components/input/input.component';
 
 @Directive()
 // tslint:disable-next-line
@@ -73,7 +74,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       }
 
       if (this.properties.hasOwnProperty('value')) {
-        return this.properties.value;
+        return (this.properties as InputProperties).value;
       }
     }
 
@@ -84,7 +85,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       }
     }
 
-    get properties(): AttributesMap {
+    get properties(): T {
       return this.uiModel.itemProperties;
     }
 
@@ -115,10 +116,10 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     }
 
     private setHostStyles(): void {
-      if (this.properties.class) {
-        this.classAttr = this.properties.class;
-      }
       const props = this.properties as StyleProperties;
+      if (props.class) {
+        this.classAttr = props.class;
+      }
       if (props) {
         this.hostBindings.forEach(b => {
           if (props && props.hasOwnProperty(b)) {

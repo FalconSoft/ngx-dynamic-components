@@ -6,13 +6,15 @@ import { inputDescriptor } from './input/input.component';
 import { iconDescriptor } from './icon/icon.component';
 import { radioGroupDescriptor } from './radio-group/radio-group.component';
 import { textareaDescriptor } from './textarea/textarea.component';
-import { containerDescriptor } from './container/container.component';
+import { containerDescriptor, divDescriptor } from './container/container.component';
 import { linkDescriptor } from './link/link.component';
 import { labelDescriptor } from './label/label.component';
 import { formDescriptor } from './form/form.component';
+import { selectDescriptor } from './select/select.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   containerDescriptor,
+  divDescriptor,
   formDescriptor,
   textDescriptor,
   labelDescriptor,
@@ -21,7 +23,8 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   radioGroupDescriptor,
   textareaDescriptor,
   buttonDescriptor,
-  linkDescriptor
+  linkDescriptor,
+  selectDescriptor
 ];
 
 // Register components.

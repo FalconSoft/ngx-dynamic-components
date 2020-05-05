@@ -1,35 +1,32 @@
-import { Component } from '@angular/core';
-import { BindingProperties, propDescription } from '../../properties';
+import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
+import { propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
-import { BaseUIComponent } from '../../components/base-ui-component';
+import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
 
 @Component({
-  selector: 'dc-textarea',
-  template: `
-    <textarea #txtAreaField="ngModel" [class]="controlCssClasses"
-      [rows]="properties.rows"
-      [placeholder]="properties.placeholder"
-      [ngStyle]="itemStyles"
-      [required]="properties.required"
-      [minlength]="properties.minlength"
-      [maxlength]="properties.maxlength"
-      (input)="changedDataModel.emit(this.dataModel)"
-      [attr.readonly]="properties.readonly || null"
-      [(ngModel)]="componentDataModel"></textarea>
-    <div *ngIf="txtAreaField.invalid && (txtAreaField.dirty || txtAreaField.touched)" class="alert alert-danger py-0 px-1 m-0">
-      <div *ngIf="txtAreaField.errors.required">Field is required.</div>
-      <div *ngIf="txtAreaField.errors.minlength">Min length {{properties.minlength}} characters.</div>
-      <div *ngIf="txtAreaField.errors.maxlength">Max length {{properties.minlength}} characters.</div>
-    </div>
-  `
+  selector: 'textarea', // tslint:disable-line
+  template: '{{value}}'
 })
-export class TextareaComponent extends BaseUIComponent<TextareaProperties> {
-  get controlCssClasses(): string {
-    return this.properties.readonly ? 'form-control-plaintext' : 'form-control';
+export class TextareaComponent extends FormElementComponent<TextareaProperties> implements OnInit {
+  @HostBinding('attr.cols') cols: number;
+  @HostBinding('attr.rows') rows: number;
+
+  @HostListener('input', ['$event.target'])
+  onInput(txtArea: HTMLTextAreaElement): void {
+    this.componentDataModel = txtArea.value;
+    this.emitEvent(this.properties.onInput, txtArea.value);
+    this.changedDataModel.emit(this.dataModel);
+  }
+
+  async ngOnInit(): Promise<void> {
+    await super.ngOnInit();
+    this.cols = this.properties.cols || undefined;
+    this.rows = this.properties.rows || undefined;
+    this.value = this.componentDataModel;
   }
 }
 
-export class TextareaProperties extends BindingProperties {
+export class TextareaProperties extends FormElementProperties {
   @propDescription({
     description: 'Number of rows in textarea',
     example: '5',
@@ -37,31 +34,10 @@ export class TextareaProperties extends BindingProperties {
   rows?: number;
 
   @propDescription({
-    description: 'Text shown when field is empty',
-    example: 'Type about yourself',
+    description: 'The visible width of the text control',
+    example: '20',
   })
-  placeholder?: string;
-
-  @propDescription({
-    description: 'Is field required',
-    example: 'true'
-  })
-  required?: boolean;
-  @propDescription({
-    description: 'Min field value length',
-    example: '5'
-  })
-  minlength?: number;
-  @propDescription({
-    description: 'Max field value length',
-    example: '10'
-  })
-  maxlength?: number;
-  @propDescription({
-    description: 'It specifies that the textarea should be read only.',
-    example: 'true',
-  })
-  readonly?: boolean;
+  cols?: number;
 }
 
 export const example: ComponentExample<UIModel<TextareaProperties>> = {
@@ -69,7 +45,9 @@ export const example: ComponentExample<UIModel<TextareaProperties>> = {
   uiModel: `
   <textarea binding="$.info" placeholder="Type information about yourself" rows="10"></textarea>
   `,
-  dataModel: {}
+  dataModel: {
+    info: 'Data model textarea value'
+  }
 };
 
 interface TextareaComponentConstrutor {

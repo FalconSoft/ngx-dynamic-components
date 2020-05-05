@@ -1,47 +1,17 @@
 import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef } from '@angular/core';
-import { propDescription, PropertyCategories, BindingProperties } from '../../properties';
+import { propDescription, PropertyCategories } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
-import { BaseUIComponent } from '../../components/base-ui-component';
-import { NgModel } from '@angular/forms';
+import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
 
 @Component({
   selector: 'input', // tslint:disable-line
-  template: '',
-  // templateUrl: './input.component.html',
-  styles: [`
-    :host {
-      display: inline-block;
-    }
-
-    :host.form-check-input > input {
-      width: auto;
-      height: auto;
-    }
-
-    .required label:after {
-      content: '*';
-    }
-  `],
-  providers: [NgModel]
+  template: ''
 })
-export class InputComponent extends BaseUIComponent<InputProperties> implements OnInit, OnDestroy, OnChanges {
+export class InputComponent extends FormElementComponent<InputProperties> implements OnInit, OnDestroy, OnChanges {
   @HostBinding('attr.type') type = 'text';
-  @HostBinding('attr.value') value = null;
-  @HostBinding('attr.checked') checked: boolean;
-  @HostBinding('attr.name') attrName: string;
-  @HostBinding('attr.readonly') readonly: string;
-  @HostBinding('attr.disabled') disabled: string;
-  @HostBinding('attr.placeholder') placeholder: string;
-
-  @HostBinding('attr.required') required: string;
-  @HostBinding('attr.pattern') pattern: string;
-  @HostBinding('attr.maxlength') maxlength: number;
-  @HostBinding('attr.minlength') minlength: number;
-  @HostBinding('attr.max') max: number;
-  @HostBinding('attr.min') min: number;
   @HostBinding('attr.step') step: number;
-
-  private error: HTMLDivElement;
+  @HostBinding('attr.checked') checked: boolean;
+  @HostBinding('attr.multiple') multiple: boolean;
 
   constructor(private element?: ElementRef<HTMLInputElement>) {
     super();
@@ -59,26 +29,11 @@ export class InputComponent extends BaseUIComponent<InputProperties> implements 
     this.setValue(input, this.properties.onChange);
   }
 
-  @HostListener('blur', ['$event.target'])
-  onBlur(input: HTMLInputElement): void {
-    this.validate(input);
-  }
-
   async ngOnInit(): Promise<void> {
     await super.ngOnInit();
     this.type = this.properties.type || 'text';
-    this.attrName = this.properties.name || this.name;
-    this.readonly = this.properties.readonly || undefined;
-    this.placeholder = this.properties.placeholder || '';
-
-    this.required = this.properties.required || undefined;
-    this.pattern = this.properties.pattern || undefined;
-    this.max = this.properties.max || undefined;
-    this.min = this.properties.min || undefined;
-    this.maxlength = this.properties.maxlength || undefined;
-    this.minlength = this.properties.minlength || undefined;
+    this.multiple = this.properties.multiple || undefined;
     this.step = this.properties.step || undefined;
-    this.disabled = this.properties.disabled || undefined;
 
     if (this.type !== 'radio') {
       this.value = this.componentDataModel;
@@ -88,10 +43,6 @@ export class InputComponent extends BaseUIComponent<InputProperties> implements 
   }
 
   async ngOnDestroy(): Promise<void> {
-    if (this.error) {
-      this.error.parentNode.removeChild(this.error);
-      this.error = null;
-    }
     return super.ngOnDestroy();
   }
 
@@ -108,62 +59,6 @@ export class InputComponent extends BaseUIComponent<InputProperties> implements 
         this.element.nativeElement.value = val;
       }
     }
-  }
-
-  get cssClasses(): { [key: string]: boolean } {
-    return {
-      invisible: this.properties.visible === false,
-      required: this.properties.required,
-      [this.properties.class]: Boolean(this.properties.class)
-    };
-  }
-
-  get inputCssClasses(): string {
-    return this.properties.readonly ? 'form-control-plaintext' : 'form-control';
-  }
-
-  get inputStyles(): { [key: string]: string } {
-    return this.getStyles(this.uiModel.itemProperties, ['background', 'color']);
-  }
-
-  get wrapperStyles(): AttributesMap {
-    if (this.properties.inputHeight) {
-      return {
-        height: this.properties.inputHeight
-      };
-    }
-    return null;
-  }
-
-  get name(): string {
-    return this.properties.binding?.replace(/[^A-Z]+/gi, '');
-  }
-
-  private validate(input: HTMLInputElement): void {
-    if (!input.validity.valid) {
-      this.error = this.error || document.createElement('DIV') as HTMLDivElement;
-      this.error.className = 'alert alert-danger py-0 px-1 m-0';
-      this.error.textContent = this.getError(input.validity);
-      input.parentNode.insertBefore(this.error, input.nextSibling);
-    } else if (this.error) {
-      input.parentNode.removeChild(this.error);
-      this.error = null;
-    }
-  }
-
-  private getError(validity: ValidityState): string {
-    if (validity.typeMismatch && this.type === 'email') {
-      return 'Email not valid';
-    } else if (this.type !== 'email') {
-      return `Incorrect value for input type ${this.properties.type}`;
-    }
-    if (validity.patternMismatch) {
-      return `Does not match the specified pattern ${this.pattern}`;
-    }
-    if (validity.valueMissing) {
-      return 'Field is required';
-    }
-    return 'Input value is not valid';
   }
 
   private setValue(input: HTMLInputElement, prop: string): void {
@@ -183,73 +78,24 @@ export class InputComponent extends BaseUIComponent<InputProperties> implements 
   }
 }
 
-export class InputProperties extends BindingProperties {
-  @propDescription({
-    description: 'Text shown when field is empty',
-    example: 'Type your name',
-  })
-  placeholder?: string;
+export class InputProperties extends FormElementProperties {
   @propDescription({
     description: 'Input type',
     example: 'text',
   })
   type?: string;
-  @propDescription({
-    description: 'It specifies that the input value.',
-    example: 'option1',
-  })
-  value?: string;
-  @propDescription({
-    description: 'It specifies that the input should be disabled.',
-    example: 'true',
-  })
-  disabled?: boolean;
-  @propDescription({
-    description: 'It specifies that the input should be read only.',
-    example: 'true',
-  })
-  readonly?: boolean;
-  @propDescription({
-    description: 'Is visible',
-    example: 'true',
-  })
-  visible?: boolean;
-  @propDescription({
-    description: 'Input width',
-    example: '200px',
-  })
-  inputWidth?: string;
-  @propDescription({
-    description: 'Field input height',
-    example: '20px'
-  })
-  inputHeight?: string;
-  @propDescription({
-    description: 'Is field required',
-    example: 'true'
-  })
-  required?: boolean;
-  @propDescription({
-    description: 'Min field value length',
-    example: '5'
-  })
-  minlength?: number;
-  @propDescription({
-    description: 'Max field value length',
-    example: '10'
-  })
-  maxlength?: number;
-  @propDescription({
-    description: 'RegExp pattern',
-    example: '[a-zA-Z ]*'
-  })
-  pattern?: string;
 
   @propDescription({
-    description: 'Key for action that fires on input',
-    example: 'onInput()',
+    description: 'Whether to allow multiple values.',
+    example: 'true',
   })
-  onInput?: string;
+  multiple?: boolean;
+
+  @propDescription({
+    description: 'Specifies the granularity that the value must adhere to',
+    example: '2'
+  })
+  step?: number;
 
   @propDescription({
     description: 'On change event handler name.',
@@ -271,20 +117,20 @@ export const example: ComponentExample<UIModel<InputProperties>> = {
       <input disabled="true" id="lastName" placeholder="Enter your last name" binding="$.lastName"/>
     </section>
     <section class="form-group form-check">
-      <input type="checkbox" class="form-check-input" binding="$.subscribed"/>
-      <label class="form-check-label" width="80px">Subscribe</label>
+      <input type="checkbox" id="subscribed" class="form-check-input" binding="$.subscribed"/>
+      <label class="form-check-label" for="subscribed" width="80px">Subscribe</label>
     </section>
     <section class="form-group form-check mt-5">
-      <input type="radio" class="form-check-input" name="option" value="option-1" binding="$.option"/>
-      <label class="form-check-label" width="80px">Option 1</label>
+      <input id="opt1" type="radio" class="form-check-input" name="option" value="option-1" binding="$.option"/>
+      <label for="opt1" class="form-check-label" width="80px">Option 1</label>
     </section>
     <section class="form-group form-check">
-      <input type="radio" class="form-check-input" name="option" value="option-2" binding="$.option"/>
-      <label class="form-check-label" width="80px">Option 2</label>
+      <input id="opt2" type="radio" class="form-check-input" name="option" value="option-2" binding="$.option"/>
+      <label for="opt2" class="form-check-label" width="80px">Option 2</label>
     </section>
     <section class="form-group form-check">
-      <input type="radio" class="form-check-input" name="option" value="option-3" binding="$.option"/>
-      <label class="form-check-label" width="80px">Option 3</label>
+      <input id="opt3" type="radio" class="form-check-input" name="option" value="option-3" binding="$.option"/>
+      <label for="opt3" class="form-check-label" width="80px">Option 3</label>
     </section>
   </section>
   `,
@@ -294,7 +140,9 @@ export const example: ComponentExample<UIModel<InputProperties>> = {
     comp = getComponentById(rootUIModel, "lastName")
     comp.itemProperties.disabled = disabled # should set undefined not false
   `,
-  dataModel: {}
+  dataModel: {
+    name: 'John'
+  }
 };
 
 interface InputComponentConstrutor {
@@ -334,12 +182,6 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
       name: 'required', label: 'Required field',
       values: ['true']
     }]
-    // ['inputWidth', { name: 'inputWidth', label: 'Input Width', category: PropertyCategories.Layout }],
-    // ['inputHeight', { name: 'inputHeight', label: 'Input Height', category: PropertyCategories.Layout }],
-    // ['visible', {
-    //   name: 'visible', label: 'Visible', category: PropertyCategories.Main,
-    //   values: [true, false]
-    // }]
   ],
   children: false
 };

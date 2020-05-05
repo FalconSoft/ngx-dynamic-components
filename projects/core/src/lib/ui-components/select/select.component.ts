@@ -1,24 +1,23 @@
-import { Component } from '@angular/core';
-import { JSONUtils, BindingProperties, propDescription, PropertyCategories,  OptionValue,  ComponentExample,
-  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent } from '@ngx-dynamic-components/core';
-import { packageName } from '../../constants';
+import { Component, HostListener } from '@angular/core';
+import { BaseUIComponent } from '../../components/base-ui-component';
+import { AttributesMap, OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
+import { JSONUtils } from '../../utils/json.utils';
+import { BindingProperties, propDescription, PropertyCategories } from '../../properties';
 
 @Component({
-  selector: 'dc-select',
+  selector: 'select', // tslint:disable-line
   template: `
-  <ng-select [items]="options" (change)="onSelect()" [ngStyle]="selectStyles"
-      [(ngModel)]="componentDataModel" bindValue="value"></ng-select>
+      <ng-container>
+        <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
+      </ng-container>
     `,
-  styles: [`
-    :host ::ng-deep .ng-select.ng-select-single .ng-select-container {
-      height: inherit;
-      min-height: 30px;
-    }
-  `]
+  styles: [``]
 })
 
 export class SelectComponent extends BaseUIComponent<SelectProperties> {
-  onSelect(): void {
+  @HostListener('change', ['$event.target'])
+  onSelect(select: HTMLSelectElement): void {
+    this.componentDataModel = select.value;
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onSelect);
   }
@@ -77,14 +76,14 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
     <section class="flex-column">
       <section class="form-group">
         <label class="col-form-label" width="60px">Country</label>
-        <ng-select onSelect="countryChanged" width="300px" binding="$.country">
+        <select class="form-control" onSelect="countryChanged" width="300px" binding="$.country">
           <option value="uk">United Kingdom</option>
           <option value="ua">Ukraine</option>
-        </ng-select>
+        </select>
       </section>
       <section class="form-group">
         <label class="col-form-label" width="60px">City</label>
-        <ng-select width="300px" itemsSource="$.cities" binding="$.city"></ng-select>
+        <select class="form-control" width="300px" itemsSource="$.cities" binding="$.city"></select>
       </section>
     </section>
   `,
@@ -95,19 +94,19 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
     if dataModel.country == null:
       dataModel.cities = []
     if dataModel.country == "uk":
-      dataModel.cities = [{label: "London", value: "lon"}, {label: "Liverpool", value: "liv"}]
+      dataModel.cities = [{label: "Select city", value: null}, {label: "London", value: "lon"}, {label: "Liverpool", value: "liv"}]
     if dataModel.country == "ua":
-      dataModel.cities = [{label: "Kyiv", value: "kyiv"}, {label: "Lviv", value: "lvi"}]
+      dataModel.cities = [{label: "Select city", value: null}, {label: "Kyiv", value: "kyiv"}, {label: "Lviv", value: "lvi"}]
   `,
   title: 'Basic select example'
 };
 
 export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, SelectPropertiesConstrutor> = {
-  name: 'ng-select',
+  name: 'select',
   label: 'UI Select Input',
-  packageName,
+  packageName: 'core',
   category: Categories.Basic,
-  description: 'NG Select component',
+  description: 'Select component',
   itemProperties: SelectProperties,
   component: SelectComponent,
   example,
@@ -121,11 +120,11 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
     }
 
     return {
-      type: 'ng-select',
+      type: 'select',
       itemProperties
     };
   },
-  defaultModel: `<ng-select width="100px" itemsSource="$.list" binding="$.value"></ng-select>`,
+  defaultModel: `<select width="100px" itemsSource="$.list" binding="$.value"></select>`,
   propertiesDescriptor: [
     ['selectHeight', {name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout}],
   ],

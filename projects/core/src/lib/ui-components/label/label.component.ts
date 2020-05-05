@@ -1,7 +1,8 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
-import { BindingProperties } from '../../properties';
+import { BindingProperties, propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
+import { TextProperties } from '../text/text.component';
 
 @Component({
   // tslint:disable-next-line
@@ -13,14 +14,27 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
     }
   `]
 })
-export class LabelComponent extends BaseUIComponent<LabelProperties> {
+export class LabelComponent extends BaseUIComponent<LabelProperties> implements OnInit {
   @HostBinding('style.display') display = 'inline-block';
+  @HostBinding('attr.for') for: string;
+
+  async ngOnInit(): Promise<void> {
+    await super.ngOnInit();
+    this.for = this.properties.for || undefined;
+  }
+
   get text(): string {
     return this.componentDataModel || this.properties.text;
   }
 }
 
-export class LabelProperties extends BindingProperties { }
+export class LabelProperties extends TextProperties {
+  @propDescription({
+    description: 'The id of a labelable form-related element',
+    example: 'checkboxId'
+  })
+  for?: string;
+}
 
 interface LabelComponentConstrutor {
   new(): LabelComponent;

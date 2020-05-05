@@ -8,12 +8,11 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
     templateUrl: './form.component.html'
 })
 export class FormComponent extends BaseUIComponent<FormProperties> {
-  @HostBinding('style.display') display = 'flex';
   @ViewChild('form', { static: true }) form: ElementRef<HTMLFormElement>;
 
   onFormSubmit(evt): void {
-    console.log('evt', evt, this.form);
-    this.emitEvent(this.properties.onSubmit, { form: this.form });
+    const formData = new FormData(this.form.nativeElement);
+    this.emitEvent(this.properties.onSubmit, { formData });
     // Trigger ui validation messages.
     this.form.nativeElement.querySelectorAll('input,textarea,select').forEach((el: HTMLFormElement, i, list) => {
       el.focus();

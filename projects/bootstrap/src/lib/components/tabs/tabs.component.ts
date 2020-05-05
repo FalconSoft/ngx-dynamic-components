@@ -8,7 +8,7 @@ import { packageName } from '../../constants';
 @Component({
   selector: 'dc-tabs-ui',
   template: `
-    <tabset class="tabset-fx w-100 overflow-auto">
+    <tabset class="tabset-fx w-100 overflow-auto nav-tabs-boxed">
       <tab *ngFor="let item of uiModel.children; let i = index" [heading]="item.itemProperties.header || 'Tab ' + (i + 1)">
       <dc-ui-selector
           (changedDataModel)="changedDataModel.emit(dataModel)"
