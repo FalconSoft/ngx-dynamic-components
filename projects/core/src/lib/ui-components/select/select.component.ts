@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, HostBinding } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { AttributesMap, OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { JSONUtils } from '../../utils/json.utils';
@@ -10,16 +10,20 @@ import { BindingProperties, propDescription, PropertyCategories } from '../../pr
       <ng-container>
         <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
       </ng-container>
-    `,
-  styles: [``]
+    `
 })
 
 export class SelectComponent extends BaseUIComponent<SelectProperties> {
+
+  @HostBinding('attr.value') value: string;
+  private optionsList: OptionValue[];
+  private src: string|OptionValue[];
+
   @HostListener('change', ['$event.target'])
   onSelect(select: HTMLSelectElement): void {
     this.componentDataModel = select.value;
-    this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.onSelect);
+    this.changedDataModel.emit(this.dataModel);
   }
 
   get selectStyles(): AttributesMap {
@@ -33,13 +37,36 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> {
 
   get options(): OptionValue[] {
     const src = this.properties.itemsSource;
+
+    if (this.optionsList && typeof src === 'object' && src === this.src) {
+      return this.optionsList;
+    }
+    let list: any[];
     if (Array.isArray(src)) {
-      return src;
+      list = src;
     }
 
     if (typeof src === 'string' && src.startsWith('$.')) {
-      return JSONUtils.find(this.dataModel, src);
+      list = JSONUtils.find(this.dataModel, src);
     }
+
+    if (list && (this.properties.labelProp || this.properties.valueProp)) {
+      const labelProp = this.properties.labelProp || 'label';
+      const valueProp = this.properties.valueProp || 'value';
+      list = list.map(o => ({
+        label: o[labelProp],
+        value: o[valueProp]
+      }));
+    } else {
+      list = list || [];
+    }
+    this.src = src;
+
+    if (JSON.stringify(list) !== JSON.stringify(this.optionsList)) {
+      this.optionsList = list;
+    }
+
+    return this.optionsList;
   }
 }
 
@@ -61,6 +88,9 @@ export class SelectProperties extends BindingProperties {
     example: 'onCountrySelect',
   })
   onSelect?: string;
+
+  labelProp?: string;
+  valueProp?: string;
 }
 
 interface SelectComponentConstrutor {
@@ -76,7 +106,8 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
     <section class="flex-column">
       <section class="form-group">
         <label class="col-form-label" width="60px">Country</label>
-        <select class="form-control" onSelect="countryChanged" width="300px" binding="$.country">
+        <select class="form-control" onSelect="countryChanged()" width="300px" binding="$.country">
+          <option>Select country</option>
           <option value="uk">United Kingdom</option>
           <option value="ua">Ukraine</option>
         </select>
@@ -91,12 +122,13 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
   scripts: `
   def countryChanged():
     dataModel.city = null
+    print(dataModel.country)
     if dataModel.country == null:
       dataModel.cities = []
     if dataModel.country == "uk":
       dataModel.cities = [{label: "Select city", value: null}, {label: "London", value: "lon"}, {label: "Liverpool", value: "liv"}]
     if dataModel.country == "ua":
-      dataModel.cities = [{label: "Select city", value: null}, {label: "Kyiv", value: "kyiv"}, {label: "Lviv", value: "lvi"}]
+      dataModel.cities = [{label: "Select city", value: null}, {label: "Kyiv", value: "kyiv"}, {label: "Lviv", value: "lviv"}]
   `,
   title: 'Basic select example'
 };

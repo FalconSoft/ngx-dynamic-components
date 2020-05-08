@@ -95,13 +95,12 @@ export const radioGroupDescriptor: ComponentDescriptor<RadioGroupComponentConstr
       itemProperties.itemsSource = xmlRes.childNodes.map(r => ({ label: r._, value: r.$.value }));
       xmlRes.childNodes = null;
     }
-
     return {
       type: 'radio-group',
       itemProperties
     };
   },
-  defaultModel: '<radio-group itemsSource="$.options" labelPosition="right" binding="$.radioValue"></radio-group>',
+  defaultModel: '<radio-group itemsSource="$.options" binding="$.radioValue"></radio-group>',
   children: {
     tag: 'option',
     properties: [{

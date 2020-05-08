@@ -53,8 +53,6 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       }
     }
 
-
-
     get componentDataModel(): any {
       if (this.properties.hasOwnProperty('dataSource')) {
         const value = (this.properties as DataModelProperties).dataSource;
