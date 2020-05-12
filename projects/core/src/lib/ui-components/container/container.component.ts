@@ -84,5 +84,5 @@ export const divDescriptor: ComponentDescriptor<ContainerComponentConstrutor, Co
     uiModel: (example.uiModel as string).replace(/<section/g, '<div').replace(/<\/section>/g, '</div>'),
     dataModel: {}
   },
-  defaultModel: `<div class="d-flex"></div>`,
+  defaultModel: `<div class="col"></div>`,
 };

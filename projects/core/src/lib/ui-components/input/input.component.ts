@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef, DoCheck } from '@angular/core';
 import { propDescription, PropertyCategories } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
@@ -7,13 +7,15 @@ import { FormElementComponent, FormElementProperties } from '../../components/fo
   selector: 'input', // tslint:disable-line
   template: ''
 })
-export class InputComponent extends FormElementComponent<InputProperties> implements OnInit, OnDestroy, OnChanges {
+export class InputComponent extends FormElementComponent<InputProperties> implements OnInit, OnDestroy, OnChanges, DoCheck {
   @HostBinding('attr.type') type = 'text';
   @HostBinding('attr.step') step: number;
   @HostBinding('attr.checked') checked: boolean;
   @HostBinding('attr.multiple') multiple: boolean;
 
-  constructor(private element?: ElementRef<HTMLInputElement>) {
+  private modelValue: any;
+
+  constructor(private inputElement?: ElementRef<HTMLInputElement>) {
     super();
   }
 
@@ -34,12 +36,11 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
     this.type = this.properties.type || 'text';
     this.multiple = this.properties.multiple || undefined;
     this.step = this.properties.step || undefined;
+    this.updateValue();
+  }
 
-    if (this.type !== 'radio') {
-      this.value = this.componentDataModel;
-    } else {
-      this.value = this.properties.value;
-    }
+  ngDoCheck(): void {
+    this.updateValue();
   }
 
   async ngOnDestroy(): Promise<void> {
@@ -49,14 +50,23 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     await super.ngOnChanges(changes);
     if (changes.dataModel) {
-      const val = this.componentDataModel;
-      if (this.type === 'checkbox') {
-        this.checked = val === true;
+      this.updateValue();
+    }
+  }
+
+  private updateValue(): void {
+    const val = this.componentDataModel;
+    if (val !== this.modelValue) {
+      this.modelValue = val;
+      if (this.type === 'date' && val instanceof Date) {
+        this.value = val.toISOString().slice(0, 10);
+        this.inputElement.nativeElement.value = this.value;
       } else if (this.type === 'radio') {
-        this.checked = val === this.value ? true : undefined;
-      } else if (this.element.nativeElement.value !== val) {
+        this.value = this.properties.value;
+        this.checked = (val && val.toString()) === this.value ? true : undefined;
+      } else {
         this.value = val;
-        this.element.nativeElement.value = val;
+        this.inputElement.nativeElement.value = val;
       }
     }
   }

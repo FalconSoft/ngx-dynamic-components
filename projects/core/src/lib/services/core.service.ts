@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as xml from 'xml2js';
 import { ComponentDescriptor, UIModel, AttributesMap, XMLResult } from '../models';
-import { BaseUIComponentConstructor, toXMLResult } from '../utils';
+import { BaseUIComponentConstructor, toXMLResult, BaseHTMLElementConstructor } from '../utils';
 import { ControlProperties, UIModelProperty } from '../properties';
 
 /**
@@ -27,7 +27,7 @@ export class CoreService {
     CoreService.COMPONENTS_REGISTER.set(name, desc);
   }
 
-  public static getComponent(type: string): BaseUIComponentConstructor {
+  public static getComponent(type: string): BaseUIComponentConstructor|BaseHTMLElementConstructor {
     if (CoreService.COMPONENTS_REGISTER.has(type)) {
       return CoreService.COMPONENTS_REGISTER.get(type).component;
     }
@@ -113,10 +113,6 @@ export class CoreService {
         if (typeUIModel.children) {
           uiModel.children = typeUIModel.children;
         }
-      }
-
-      if (attrs.id) {
-        uiModel.id = attrs.id;
       }
 
       if (xmlRes.childNodes && !uiModel.children) {

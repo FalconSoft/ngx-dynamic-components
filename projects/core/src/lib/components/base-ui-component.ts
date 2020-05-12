@@ -10,6 +10,7 @@ import { InputProperties } from '../ui-components/input/input.component';
 export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
     @Input() dataModel: any;
     @Input() uiModel: UIModel<T>;
+    element: HTMLElement;
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @HostBinding('style.width') width: string;
     @HostBinding('style.min-width') minWidth: string;
@@ -29,7 +30,7 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
 
     @Output() changedDataModel = new EventEmitter();
 
-    private readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
+    protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeigh', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
@@ -51,6 +52,10 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
         this.uiModel = uiModel.currentValue;
         this.setHostStyles();
       }
+    }
+
+    create(locationElement: HTMLElement): void {
+      this.element = locationElement;
     }
 
     get componentDataModel(): any {
@@ -107,13 +112,13 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     getStyles(properties: StyleProperties = {}, stylesList = StylePropertiesList): {[key: string]: string} {
       return stylesList.reduce((styles, prop) => {
         if (properties.hasOwnProperty(prop)) {
-          styles[prop] = this .getPropValue(properties, prop);
+          styles[prop] = this.getPropValue(properties, prop);
         }
         return styles;
       }, {});
     }
 
-    private setHostStyles(): void {
+    protected setHostStyles(): void {
       const props = this.properties as StyleProperties;
       if (props.class) {
         this.classAttr = props.class;

@@ -1,31 +1,34 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
-  SimpleChanges, OnChanges, EventEmitter, Output, Renderer2 } from '@angular/core';
+  SimpleChanges, OnChanges, EventEmitter, Output, Renderer2, Injector, ApplicationRef, OnDestroy } from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
 import { CoreService } from '../services/core.service';
-import { ComponentEvent } from '../models';
+import { ComponentEvent, Categories } from '../models';
+import { BaseUIComponentConstructor, BaseDynamicComponent } from '../utils';
 
 @Component({
     selector: 'dc-ui-selector',
     template: ''
 })
-export class UISelectorComponent extends BaseUIComponent implements OnInit, OnChanges {
+export class UISelectorComponent extends BaseUIComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private containerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private renderer2: Renderer2) {
+    // private renderer2: Renderer2,
+    private injector: Injector,
+    private appRef: ApplicationRef) {
     super();
   }
 
   @Output() render = new EventEmitter();
 
-  public component: BaseUIComponent;
+  public component: BaseDynamicComponent;
 
   async ngOnInit(): Promise<void> {
     this.createComponent();
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    if (changes.firstChange) { return; }
+    if (!changes.uiModel || changes.uiModel.firstChange) { return; }
     if (!this.component || this.component.uiModel.type !== this.uiModel.type) {
         const shouldInit = !this.component || this.component.uiModel.id !== this.uiModel.id;
         // Recreate component with new type.
@@ -51,17 +54,32 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       }
   }
 
+  async ngOnDestroy(): Promise<void> {
+    this.component.ngOnDestroy();
+  }
+
   private createComponent(): void {
     try {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CoreService.getComponent(this.uiModel.type));
+      const descriptor = CoreService.getComponentDescriptor(this.uiModel.type);
+      const ComponentClass = descriptor.component;
       this.containerRef.clear();
-      const componentRef = this.containerRef.createComponent(componentFactory);
-      this.component = componentRef.instance as BaseUIComponent;
-      this.renderer2.addClass(componentRef.location.nativeElement, 'dc-wrapper');
-      this.component.dataModel = this.dataModel;
-      this.component.uiModel = this.uiModel;
-      this.uiModel.show = () => componentRef.location.nativeElement.classList.remove('hidden');
-      this.uiModel.hide = () => componentRef.location.nativeElement.classList.add('hidden');
+      if (descriptor.category === Categories.HTML) {
+        const BaseHtml = ComponentClass as any;
+        this.component = new BaseHtml(this.appRef, this.componentFactoryResolver, this.injector);
+        this.component.dataModel = this.dataModel;
+        this.component.uiModel = this.uiModel;
+        this.component.create(this.containerRef.element.nativeElement);
+      } else if (ComponentClass.prototype instanceof BaseUIComponent) {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ComponentClass as BaseUIComponentConstructor);
+        const componentRef = this.containerRef.createComponent(componentFactory);
+        this.component = componentRef.instance as BaseUIComponent;
+        this.component.dataModel = this.dataModel;
+        this.component.uiModel = this.uiModel;
+        this.component.create(componentRef.location.nativeElement);
+      }
+      this.component.element.classList.add('dc-element');
+      this.uiModel.show = () => this.component.element.classList.remove('hidden');
+      this.uiModel.hide = () => this.component.element.classList.add('hidden');
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);
       });

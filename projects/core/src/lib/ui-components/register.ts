@@ -11,6 +11,11 @@ import { linkDescriptor } from './link/link.component';
 import { labelDescriptor } from './label/label.component';
 import { formDescriptor } from './form/form.component';
 import { selectDescriptor } from './select/select.component';
+import { aDescriptor } from '../html-elements/a/a.component';
+import { ulDescriptor } from '../html-elements/ul/ul.element';
+import { liDescriptor } from '../html-elements/li/li.element';
+import { olDescriptor } from '../html-elements/ol/ol.element';
+import { htmlDescriptors } from '../html-elements';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   containerDescriptor,
@@ -24,7 +29,12 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   textareaDescriptor,
   buttonDescriptor,
   linkDescriptor,
-  selectDescriptor
+  selectDescriptor,
+  aDescriptor,
+  ulDescriptor,
+  olDescriptor,
+  liDescriptor,
+  ...htmlDescriptors
 ];
 
 // Register components.

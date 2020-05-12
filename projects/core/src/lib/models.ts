@@ -1,4 +1,4 @@
-import { BaseUIComponentConstructor } from './utils';
+import { BaseUIComponentConstructor, BaseHTMLElementConstructor } from './utils';
 import { ComponentProperty } from './properties';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
@@ -29,7 +29,8 @@ export interface ChildComponent {
   hasChildren?: boolean;
 }
 
-export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor, PropertiesType = AttributesMapConstructor> {
+export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor|BaseHTMLElementConstructor,
+  PropertiesType = AttributesMapConstructor> {
   packageName: string;
   label: string;
   category: string;
@@ -71,6 +72,7 @@ export interface OptionValue {
 
 export const enum Categories {
   Basic = 'Basic',
+  HTML = 'HTML',
   Containers = 'Containers',
   Data = 'Data',
   CustomControls = 'Custom Controls',

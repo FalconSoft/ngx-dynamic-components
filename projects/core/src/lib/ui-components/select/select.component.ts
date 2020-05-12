@@ -1,4 +1,4 @@
-import { Component, HostListener, HostBinding } from '@angular/core';
+import { Component, HostListener, HostBinding, DoCheck } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { AttributesMap, OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { JSONUtils } from '../../utils/json.utils';
@@ -8,12 +8,12 @@ import { BindingProperties, propDescription, PropertyCategories } from '../../pr
   selector: 'select', // tslint:disable-line
   template: `
       <ng-container>
-        <option *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
+        <option [selected]="option.value === value" *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
       </ng-container>
     `
 })
 
-export class SelectComponent extends BaseUIComponent<SelectProperties> {
+export class SelectComponent extends BaseUIComponent<SelectProperties> implements DoCheck {
 
   @HostBinding('attr.value') value: string;
   private optionsList: OptionValue[];
@@ -22,8 +22,14 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> {
   @HostListener('change', ['$event.target'])
   onSelect(select: HTMLSelectElement): void {
     this.componentDataModel = select.value;
-    this.emitEvent(this.properties.onSelect);
+    this.emitEvent(this.properties.onSelect, this.optionsList.find(o => o.value === select.value));
     this.changedDataModel.emit(this.dataModel);
+  }
+
+  ngDoCheck(): void {
+    if (this.componentDataModel !== this.value) {
+      this.value = this.componentDataModel;
+    }
   }
 
   get selectStyles(): AttributesMap {
@@ -55,7 +61,8 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> {
       const valueProp = this.properties.valueProp || 'value';
       list = list.map(o => ({
         label: o[labelProp],
-        value: o[valueProp]
+        value: o[valueProp],
+        data: o
       }));
     } else {
       list = list || [];
