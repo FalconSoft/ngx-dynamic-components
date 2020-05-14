@@ -77,9 +77,11 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
         this.component.uiModel = this.uiModel;
         this.component.create(componentRef.location.nativeElement);
       }
+
       this.component.element.classList.add('dc-element');
       this.uiModel.show = () => this.component.element.classList.remove('hidden');
       this.uiModel.hide = () => this.component.element.classList.add('hidden');
+      this.uiModel.getElement = () => this.component.element;
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);
       });

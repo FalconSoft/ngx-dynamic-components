@@ -49,8 +49,10 @@ export abstract class UIModel<T = AttributesMap> {
   id?: string;
   type: string;
   itemProperties?: T;
+  /** @deprecated */
   containerProperties?: AttributesMap;
   children?: UIModel[];
+  getElement?(): HTMLElement;
   show?(): void {}
   hide?(): void {}
 }
