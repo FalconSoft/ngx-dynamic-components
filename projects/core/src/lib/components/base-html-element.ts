@@ -4,8 +4,9 @@ import { UIModel, ComponentEvent, XMLResult } from '../models';
 import { parseArgFunction } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
 import { UISelectorComponent } from './ui-selector-component';
+import { BaseDynamicComponent } from './base-dynamic-component';
 
-export class BaseHTMLElement<T = HTMLProperties> implements OnInit, OnDestroy, OnChanges {
+export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges {
     dataModel: any;
     uiModel: UIModel<T>;
     eventHandlers = new EventEmitter<ComponentEvent>();
@@ -16,12 +17,9 @@ export class BaseHTMLElement<T = HTMLProperties> implements OnInit, OnDestroy, O
     constructor(
       private appRef?: ApplicationRef,
       private componentFactoryResolver?: ComponentFactoryResolver,
-      private injector?: Injector) {}
-
-    async ngOnInit(): Promise<void> {
-      this.setHostStyles();
-      this.emitEvent((this.properties as BaseProperties).onInit);
-    }
+      private injector?: Injector) {
+        super();
+      }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
@@ -79,17 +77,8 @@ export class BaseHTMLElement<T = HTMLProperties> implements OnInit, OnDestroy, O
       return this.uiModel.itemProperties;
     }
 
-    protected emitEvent(funcSign: string, parameters: any = null): void {
-      if (funcSign) {
-        const [eventName, parameter] = parseArgFunction(funcSign);
-        this.eventHandlers.emit({
-          eventName,
-          parameters: {
-            uiModel: this.uiModel,
-            [parameter]: parameters
-          }
-        });
-      }
+    get attrs(): T {
+      return this.uiModel.itemProperties;
     }
 
     protected setHostStyles(): void {
@@ -121,9 +110,7 @@ export class HTMLProperties extends StyleProperties {
   htmlContent?: string;
 }
 
-export interface HTMLPropertiesConstrutor {
-  new (): HTMLProperties;
-}
+export type HTMLPropertiesConstrutor = new () => HTMLProperties;
 
 export function parseHTMLUIModel(xmlRes: XMLResult): UIModel {
   const content = xmlRes.content;

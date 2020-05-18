@@ -5,26 +5,20 @@ const table = COMPONENTS_LIST.find(item => item.name === 'datable');
 
 export const dashboardUIModel = {
   type: 'bootstrap:container',
-  containerProperties: {
-    width: '100%'
-  },
   itemProperties: {
     fullWidth: true
   },
   children: [{
     type: 'bootstrap:bs-row',
-    containerProperties: {},
     itemProperties: {},
     children: [
       ['Widget 1', '#187da0'], ['Widget 2', '#2eadd3'], ['Widget 3', '#c69500'], ['Widget 4', '#f5302e']
     ].map(([t, c]) => getCardWidget(null, t, c))
   }, {
       type: 'bootstrap:bs-row',
-      containerProperties: {},
       itemProperties: {},
       children: [{
         type: 'material:card',
-        containerProperties: {},
         itemProperties: {
           margin: '10px auto',
           width: '100%',
@@ -33,9 +27,6 @@ export const dashboardUIModel = {
         },
         children: [{
           type: 'material:text',
-          containerProperties: {
-            fxFlex: '1 1 auto'
-          },
           itemProperties: {
             text: 'Chart',
             width: '100%',
@@ -44,7 +35,6 @@ export const dashboardUIModel = {
       }]
   }, {
     type: 'bootstrap:bs-row',
-    containerProperties: {},
     itemProperties: {},
     children: [
       ['First', 'Second Widget 1', 'lightblue'],
@@ -53,11 +43,9 @@ export const dashboardUIModel = {
       ['Forth', 'Second Widget 4', 'aliceblue']].map(([h, c, col]) => getCardWidget(h, c, col))
   }, {
     type: 'bootstrap:bs-row',
-    containerProperties: {},
     itemProperties: {},
     children: [{
       type: 'material:card',
-      containerProperties: {},
       itemProperties: {
         padding: '10px',
         margin: '10px auto',
@@ -66,9 +54,6 @@ export const dashboardUIModel = {
       },
       children: [{
         type: 'material:text',
-        containerProperties: {
-          width: '100%'
-        },
         itemProperties: {
           text: 'Table data',
           width: '100%'
@@ -146,7 +131,6 @@ function getCardWidget(header: string, content: string, background = 'white'): U
 
   const headerComponent = header ? {
     type: 'material:text',
-    containerProperties: {},
     itemProperties: {
       text: header,
       width: '100%'
@@ -155,7 +139,6 @@ function getCardWidget(header: string, content: string, background = 'white'): U
 
   return {
     type: 'material:card',
-    containerProperties: {},
     itemProperties: {
       padding: '10px',
       margin: '10px auto',
@@ -164,7 +147,6 @@ function getCardWidget(header: string, content: string, background = 'white'): U
     },
     children: [headerComponent, {
       type: 'material:text',
-      containerProperties: {},
       itemProperties: {
         text: content,
         width: '100%'

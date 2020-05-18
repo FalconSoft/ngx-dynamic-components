@@ -47,13 +47,9 @@ const example: ComponentExample<UIModel<FormProperties>> = {
   dataModel: {}
 };
 
-interface FormComponentConstrutor {
-  new (): FormComponent;
-}
+type FormComponentConstrutor = new () => FormComponent;
 
-interface FormPropertiesConstrutor {
-  new (): FormProperties;
-}
+type FormPropertiesConstrutor = new () => FormProperties;
 
 export const formDescriptor: ComponentDescriptor<FormComponentConstrutor, FormPropertiesConstrutor> = {
   name: 'form',

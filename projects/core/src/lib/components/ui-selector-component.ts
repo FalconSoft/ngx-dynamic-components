@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
-  SimpleChanges, OnChanges, EventEmitter, Output, Renderer2, Injector, ApplicationRef, OnDestroy } from '@angular/core';
+  SimpleChanges, OnChanges, EventEmitter, Output, Injector, ApplicationRef, OnDestroy } from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
 import { CoreService } from '../services/core.service';
 import { ComponentEvent, Categories } from '../models';
-import { BaseUIComponentConstructor, BaseDynamicComponent } from '../utils';
+import { BaseUIComponentConstructor } from '../utils';
+import { BaseDynamicComponent } from './base-dynamic-component';
 
 @Component({
     selector: 'dc-ui-selector',
@@ -13,7 +14,6 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
   constructor(
     private containerRef: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
-    // private renderer2: Renderer2,
     private injector: Injector,
     private appRef: ApplicationRef) {
     super();
@@ -79,9 +79,10 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       }
 
       this.component.element.classList.add('dc-element');
-      this.uiModel.show = () => this.component.element.classList.remove('hidden');
-      this.uiModel.hide = () => this.component.element.classList.add('hidden');
-      this.uiModel.getElement = () => this.component.element;
+      // this.uiModel.show = () => this.component.element.classList.remove('hidden');
+      // this.uiModel.hide = () => this.component.element.classList.add('hidden');
+      // this.uiModel.getElement = () => this.component.element;
+      this.uiModel.getComponent = () => this.component;
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);
       });

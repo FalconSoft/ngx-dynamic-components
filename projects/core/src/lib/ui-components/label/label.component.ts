@@ -36,13 +36,9 @@ export class LabelProperties extends TextProperties {
   for?: string;
 }
 
-interface LabelComponentConstrutor {
-  new(): LabelComponent;
-}
+type LabelComponentConstrutor = new() => LabelComponent;
 
-interface LabelPropertiesConstrutor {
-  new(): LabelProperties;
-}
+type LabelPropertiesConstrutor = new() => LabelProperties;
 
 const example: ComponentExample<UIModel<LabelProperties>> = {
   title: 'Label compoent example',

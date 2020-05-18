@@ -54,13 +54,9 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
   dataModel: {}
 };
 
-interface TabsComponentConstrutor {
-  new(): TabsComponent;
-}
+type TabsComponentConstrutor = new() => TabsComponent;
 
-interface TabsPropertiesConstrutor {
-  new(): TabsProperties;
-}
+type TabsPropertiesConstrutor = new() => TabsProperties;
 
 export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPropertiesConstrutor> = {
   name: 'tab-container',
@@ -73,13 +69,12 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
   example,
   parseUIModel(xmlData: XMLResult): UIModel {
     const children = xmlData.childNodes.map(child => {
-      const { itemProperties, containerProperties } = CoreService.getPropertiesFromAttributes(child.$);
+      const itemProperties = child.$;
       itemProperties.height = '100%';
       itemProperties.width = '100%';
       return {
         type: 'section',
         children: child.$$.map((r: any) => CoreService.getUIModel(toXMLResult(r))),
-        containerProperties,
         itemProperties
       };
     });
@@ -88,14 +83,14 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
       children
     };
   },
-  children: {
+  children: [{
     tag: 'tab',
     hasChildren: true,
     properties: [{
       name: 'header',
       label: 'Tab title'
     }]
-  },
+  }],
   defaultModel: `<tab-container width="100%" height="100%" margin="8px">
   <tab header="Tab 1" padding="0.5rem">
     <text text-style="h1">Tab 1 static text content</text>

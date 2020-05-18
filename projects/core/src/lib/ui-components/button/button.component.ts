@@ -79,13 +79,9 @@ export const example: ComponentExample<UIModel<ButtonProperties>> = {
   dataModel: {}
 };
 
-interface ButtonComponentConstrutor {
-  new (): ButtonComponent;
-}
+type ButtonComponentConstrutor = new () => ButtonComponent;
 
-interface ButtonPropertiesConstrutor {
-  new (): ButtonProperties;
-}
+type ButtonPropertiesConstrutor = new () => ButtonProperties;
 
 export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, ButtonPropertiesConstrutor> = {
   name: 'button',

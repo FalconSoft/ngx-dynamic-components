@@ -2,15 +2,9 @@ import { BaseUIComponent } from '../components/base-ui-component';
 import { XMLResult } from '../models';
 import { BaseHTMLElement } from '../components/base-html-element';
 
-export interface BaseUIComponentConstructor {
-  new (): BaseUIComponent;
-}
+export type BaseUIComponentConstructor = new () => BaseUIComponent;
 
-export interface BaseHTMLElementConstructor {
-  new (): BaseHTMLElement;
-}
-
-export type BaseDynamicComponent = BaseUIComponent|BaseHTMLElement;
+export type BaseHTMLElementConstructor = new () => BaseHTMLElement;
 
 /**
  * Safe get item by index from array.

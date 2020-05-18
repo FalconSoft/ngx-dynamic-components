@@ -50,13 +50,9 @@ export const example: ComponentExample<UIModel<TextareaProperties>> = {
   }
 };
 
-interface TextareaComponentConstrutor {
-  new(): TextareaComponent;
-}
+type TextareaComponentConstrutor = new() => TextareaComponent;
 
-interface TextareaPropertiesConstrutor {
-  new(): TextareaProperties;
-}
+type TextareaPropertiesConstrutor = new() => TextareaProperties;
 
 export const textareaDescriptor: ComponentDescriptor<TextareaComponentConstrutor, TextareaPropertiesConstrutor> = {
   name: 'textarea',

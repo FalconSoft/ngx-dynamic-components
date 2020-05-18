@@ -100,13 +100,9 @@ export class SelectProperties extends BindingProperties {
   valueProp?: string;
 }
 
-interface SelectComponentConstrutor {
-  new (): SelectComponent;
-}
+type SelectComponentConstrutor = new () => SelectComponent;
 
-interface SelectPropertiesConstrutor {
-  new (): SelectProperties;
-}
+type SelectPropertiesConstrutor = new () => SelectProperties;
 
 export const example: ComponentExample<UIModel<SelectProperties>> = {
   uiModel: `
@@ -167,11 +163,11 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
   propertiesDescriptor: [
     ['selectHeight', {name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout}],
   ],
-  children: {
+  children: [{
     tag: 'option',
     properties: [{
       name: 'value',
       label: 'Option value'
     }]
-  }
+  }]
 };

@@ -34,13 +34,9 @@ export class IconProperties extends BindingProperties {
   iconClass: string;
 }
 
-interface IconComponentConstrutor {
-  new(): IconComponent;
-}
+type IconComponentConstrutor = new() => IconComponent;
 
-interface IconPropertiesConstrutor {
-  new(): IconProperties;
-}
+type IconPropertiesConstrutor = new() => IconProperties;
 
 const example: ComponentExample<UIModel<IconProperties>> = {
   title: 'Icon compoent example',

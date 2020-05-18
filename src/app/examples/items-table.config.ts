@@ -6,12 +6,8 @@ const itemsTableUIModel: UIModel = {
   children: [{
       type: 'bootstrap:bs-row',
       id: 'itemsList',
-      containerProperties: {
-        width: '100%'
-      },
       children: [{
         type: 'material:datable',
-        containerProperties: {},
         itemProperties: {
             margin: '15px auto',
             displayedProperties: [
@@ -23,12 +19,8 @@ const itemsTableUIModel: UIModel = {
     },
     {
       type: 'bootstrap:bs-row',
-      containerProperties: {
-        width: '100%'
-      },
       children: [{
         type: `bootstrap:text-input`,
-        containerProperties: {},
         itemProperties: {
           placeholder: 'Enter new task',
           binding: '$.todoInput'

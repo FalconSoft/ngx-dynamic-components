@@ -87,13 +87,9 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   }
 };
 
-interface RadioGroupUIComponentConstrutor {
-  new (): RadioGroupUIComponent;
-}
+type RadioGroupUIComponentConstrutor = new () => RadioGroupUIComponent;
 
-interface RadioGroupPropertiesConstrutor {
-  new (): RadioGroupProperties;
-}
+type RadioGroupPropertiesConstrutor = new () => RadioGroupProperties;
 
 export const radioGroupDescriptor: ComponentDescriptor<RadioGroupUIComponentConstrutor, RadioGroupPropertiesConstrutor> = {
   name: 'mat-radio-group',

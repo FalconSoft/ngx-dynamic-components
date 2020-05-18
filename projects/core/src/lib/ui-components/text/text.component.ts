@@ -44,13 +44,9 @@ export class TextProperties extends BindingProperties {
   'text-style'?: string;
 }
 
-interface TextComponentConstrutor {
-  new(): TextComponent;
-}
+type TextComponentConstrutor = new() => TextComponent;
 
-interface TextPropertiesConstrutor {
-  new(): TextProperties;
-}
+type TextPropertiesConstrutor = new() => TextProperties;
 
 const example: ComponentExample<UIModel<TextProperties>> = {
   title: 'Text compoent example',

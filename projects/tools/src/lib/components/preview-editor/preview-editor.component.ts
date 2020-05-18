@@ -113,7 +113,6 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   addRow(): void {
     this.uiModel.children.unshift({
       type: 'bootstrap:bs-row',
-      containerProperties: {},
       itemProperties: {},
       children: []
     });

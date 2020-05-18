@@ -41,13 +41,9 @@ const example: ComponentExample<UIModel<InputProperties>> = {
   dataModel: {}
 };
 
-interface InputUIComponentConstrutor {
-  new (): InputUIComponent;
-}
+type InputUIComponentConstrutor = new () => InputUIComponent;
 
-interface InputPropertiesConstrutor {
-  new (): InputProperties;
-}
+type InputPropertiesConstrutor = new () => InputProperties;
 
 export const inputDescriptor: ComponentDescriptor<InputUIComponentConstrutor, InputPropertiesConstrutor> = {
   name: 'mat-input',

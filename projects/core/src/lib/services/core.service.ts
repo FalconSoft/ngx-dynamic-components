@@ -62,32 +62,20 @@ export class CoreService {
         explicitChildren: true,
         preserveChildrenOrder: true
       });
-      const type = Object.keys(res)[0];
-      const xmlObj = res[type];
-      return CoreService.getUIModel(toXMLResult(xmlObj));
+      if (res) {
+        const type = Object.keys(res)[0];
+        const xmlObj = res[type];
+        return CoreService.getUIModel(toXMLResult(xmlObj));
+      }
     } catch (e) {
       console.log(e);
       throw e;
     }
   }
 
-  public static getPropertiesFromAttributes(attrs: any = {}): {containerProperties: AttributesMap, itemProperties: AttributesMap} {
-    const itemProperties = {};
-    const containerProperties = {};
-    Object.entries(attrs).forEach(([prop, val]) => {
-      if (FX_CONTAINER_DIRECTIVES.includes(prop)) {
-        containerProperties[prop] = val;
-      }
-      itemProperties[prop] = val;
-    });
-
-    return { containerProperties, itemProperties };
-  }
-
   public static getUIModel(xmlRes: XMLResult): UIModel {
-    const attrs = xmlRes.attrs;
+    const itemProperties = xmlRes.attrs;
     const type = xmlRes.type;
-    const { itemProperties, containerProperties } = CoreService.getPropertiesFromAttributes(attrs);
 
     if (itemProperties.disabled === 'true') {
       itemProperties.disabled = true;
@@ -98,12 +86,11 @@ export class CoreService {
     if (CoreService.COMPONENTS_REGISTER.has(type)) {
       const uiModel: UIModel = {
         type,
-        itemProperties,
-        containerProperties
+        itemProperties
       };
 
-      if (attrs.id) {
-        uiModel.id = attrs.id;
+      if (itemProperties.id) {
+        uiModel.id = itemProperties.id;
       }
 
       const descr = CoreService.COMPONENTS_REGISTER.get(type);

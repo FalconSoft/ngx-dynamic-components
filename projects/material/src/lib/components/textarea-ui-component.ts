@@ -36,9 +36,6 @@ const example: ComponentExample<UIModel<TextareaProperties>> = {
   title: 'Text area example',
   uiModel: {
     type: 'mat-textarea',
-    containerProperties: {
-      fxFlex: '1 1 auto'
-    },
     itemProperties: {
       rows: 10,
       placeholder: 'Type information about yourself',
@@ -48,13 +45,9 @@ const example: ComponentExample<UIModel<TextareaProperties>> = {
   dataModel: {}
 };
 
-interface TextareaUIComponentConstrutor {
-  new (): TextareaUIComponent;
-}
+type TextareaUIComponentConstrutor = new () => TextareaUIComponent;
 
-interface TextareaPropertiesConstrutor {
-  new (): TextareaProperties;
-}
+type TextareaPropertiesConstrutor = new () => TextareaProperties;
 
 export const textareaDescriptor: ComponentDescriptor<TextareaUIComponentConstrutor, TextareaPropertiesConstrutor> = {
   name: 'mat-textarea',

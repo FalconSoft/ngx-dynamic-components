@@ -75,7 +75,6 @@ export class CardProperties extends ContainerProperties {
     description: 'Card can have 3 children, 1 - header, 2 - content, 3 - footer.',
     example: `[null, {
       type: 'text',
-      containerProperties: {},
       itemProperties: {
         text: 'Card content text',
       }
@@ -88,7 +87,6 @@ const example: ComponentExample<UIModel<CardProperties>> = {
   title: 'Card panel example',
   uiModel: {
     type: 'mat-card',
-    containerProperties: {},
     itemProperties: {
       padding: '10px',
       margin: '10px auto',
@@ -96,14 +94,12 @@ const example: ComponentExample<UIModel<CardProperties>> = {
     },
     children: [{
       type: 'text',
-      containerProperties: {},
       itemProperties: {
         text: 'Card header text',
         width: '100%'
       }
     }, {
       type: 'mat-textarea',
-      containerProperties: {},
       itemProperties: {
         rows: 4,
         placeholder: 'Type card information',
@@ -112,7 +108,6 @@ const example: ComponentExample<UIModel<CardProperties>> = {
       }
     }, {
       type: 'mat-button',
-      containerProperties: {},
       itemProperties: {
           label: 'Submit',
           margin: '16px',
@@ -124,13 +119,9 @@ const example: ComponentExample<UIModel<CardProperties>> = {
   dataModel: {}
 };
 
-interface CardUIComponentConstrutor {
-  new (): CardUIComponent;
-}
+type CardUIComponentConstrutor = new () => CardUIComponent;
 
-interface CardPropertiesConstrutor {
-  new (): CardProperties;
-}
+type CardPropertiesConstrutor = new () => CardProperties;
 
 export const cardDescriptor: ComponentDescriptor<CardUIComponentConstrutor, CardPropertiesConstrutor> = {
   name: 'mat-card',

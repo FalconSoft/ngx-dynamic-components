@@ -32,13 +32,9 @@ const example: ComponentExample<UIModel<CheckboxProperties>> = {
   dataModel: {}
 };
 
-interface CheckboxUIComponentConstrutor {
-  new (): CheckboxUIComponent;
-}
+type CheckboxUIComponentConstrutor = new () => CheckboxUIComponent;
 
-interface CheckboxPropertiesConstrutor {
-  new (): CheckboxProperties;
-}
+type CheckboxPropertiesConstrutor = new () => CheckboxProperties;
 
 export const checkboxDescriptor: ComponentDescriptor<CheckboxUIComponentConstrutor, CheckboxPropertiesConstrutor> = {
   name: 'mat-checkbox',

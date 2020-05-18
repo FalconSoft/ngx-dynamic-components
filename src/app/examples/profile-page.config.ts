@@ -10,9 +10,6 @@ export const ProfileFormUIModel = {
   children: [
     {
       type: 'material:text-input',
-      containerProperties: {
-        width: '100%'
-      },
       itemProperties: {
         isNumeric: false,
         isDate: false,
@@ -23,9 +20,6 @@ export const ProfileFormUIModel = {
     },
     {
       type: 'material:flex-container',
-      containerProperties: {
-        width: '100%'
-      },
       itemProperties: {
         fxLayout: 'row',
         fxLayoutGap: '1rem',
@@ -33,9 +27,6 @@ export const ProfileFormUIModel = {
       },
       children: [{
         type: 'material:text-input',
-        containerProperties: {
-          width: '100%'
-        },
         itemProperties: {
           isNumeric: false,
           isDate: false,
@@ -46,9 +37,6 @@ export const ProfileFormUIModel = {
       },
       {
         type: 'material:text-input',
-        containerProperties: {
-          width: '100%'
-        },
         itemProperties: {
           isNumeric: false,
           isDate: false,
@@ -61,7 +49,6 @@ export const ProfileFormUIModel = {
     },
     {
       type: 'material:text',
-      containerProperties: {},
       itemProperties: {
         text: 'Address',
         width: '100%'
@@ -82,9 +69,6 @@ export const ProfileFormUIModel = {
     },
     {
       type: 'material:text-input',
-      containerProperties: {
-        width: '100%'
-      },
       itemProperties: {
         isNumeric: false,
         isDate: false,
@@ -95,9 +79,6 @@ export const ProfileFormUIModel = {
     },
     {
       type: 'material:select',
-      containerProperties: {
-        width: '100%'
-      },
       id: 'stateSelection',
       itemProperties: {
         width: '100%',
@@ -111,9 +92,6 @@ export const ProfileFormUIModel = {
     },
     {
       type: 'material:flex-container',
-      containerProperties: {
-        width: '100%'
-      },
       itemProperties: {
         fxLayout: 'row',
         fxLayoutGap: '1rem',
@@ -122,10 +100,6 @@ export const ProfileFormUIModel = {
       children: [{
         id: 'citySelection',
         type: 'material:select',
-        containerProperties: {
-          fxFlex: '1 1 auto',
-          width: '100%',
-        },
         itemProperties: {
           placeholder: 'City',
           dataModelPath: '$.address/city'
@@ -133,10 +107,6 @@ export const ProfileFormUIModel = {
       },
       {
         type: 'material:text-input',
-        containerProperties: {
-          fxFlex: '1 1 auto',
-          width: '100%',
-        },
         itemProperties: {
           isNumeric: false,
           isDate: false,
@@ -154,9 +124,6 @@ export const ProfileFormUIModel = {
       children: [
         {
           type: 'material:button',
-          containerProperties: {
-            fxLayout: 'row'
-          },
           itemProperties: {
             label: 'SUBMIT',
             clickActionKey: 'SubmitForm'
@@ -168,9 +135,6 @@ export const ProfileFormUIModel = {
 
 export const ProfileCardUIModel = {
   type: 'material:card',
-  containerProperties: {
-    width: '100%'
-  },
   itemProperties: {
     title: 'Profile form',
   } as AttributesMap,

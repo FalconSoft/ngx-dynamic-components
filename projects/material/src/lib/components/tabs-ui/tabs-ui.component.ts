@@ -10,7 +10,7 @@ import { packageName } from '../../constants';
   selector: 'dc-tabs',
   template: `
     <mat-tab-group >
-      <mat-tab *ngFor="let item of uiModel.children; let i = index" [label]="item.containerProperties.label || 'Tab ' + (i + 1)">
+      <mat-tab *ngFor="let item of uiModel.children; let i = index" [label]="'Tab ' + (i + 1)">
         <dc-ui-selector
           (changedDataModel)="changedDataModel.emit(dataModel)"
           [uiModel]='item'
@@ -32,14 +32,9 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
   title: 'Tabs group example',
   uiModel: {
     type: 'mat-tab-group',
-    containerProperties: {},
     itemProperties: {},
     children: [{
       type: 'mat-input',
-      containerProperties: {
-        width: '100%',
-        label: 'Input tab',
-      },
       itemProperties: {
         isNumeric: false,
         isDate: false,
@@ -49,17 +44,11 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
       }
     }, {
       type: 'text',
-      containerProperties: {
-        label: 'Text tab',
-      },
       itemProperties: {
         text: 'Text information',
       }
     }, {
       type: 'mat-select',
-      containerProperties: {
-        label: 'Country select',
-      },
       itemProperties: {
         options: [
           { label: 'United Kingdom', value: 'uk' },
@@ -73,13 +62,9 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
   dataModel: {}
 };
 
-interface TabsUIComponentConstrutor {
-  new(): TabsUIComponent;
-}
+type TabsUIComponentConstrutor = new() => TabsUIComponent;
 
-interface TabsPropertiesConstrutor {
-  new(): TabsProperties;
-}
+type TabsPropertiesConstrutor = new() => TabsProperties;
 
 export const tabsDescriptor: ComponentDescriptor<TabsUIComponentConstrutor, TabsPropertiesConstrutor> = {
   name: 'mat-tab-group',

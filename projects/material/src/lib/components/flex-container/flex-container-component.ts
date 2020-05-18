@@ -85,13 +85,9 @@ const example: ComponentExample<UIModel<FlexContainerProperties>> = {
   dataModel: {}
 };
 
-interface FlexContainerComponentConstrutor {
-  new (): FlexContainerComponent;
-}
+type FlexContainerComponentConstrutor = new () => FlexContainerComponent;
 
-interface FlexContainerPropertiesConstrutor {
-  new (): FlexContainerProperties;
-}
+type FlexContainerPropertiesConstrutor = new () => FlexContainerProperties;
 
 export const flexContainerDescriptor: ComponentDescriptor<FlexContainerComponentConstrutor, FlexContainerPropertiesConstrutor> = {
   name: 'flex-container',
@@ -104,7 +100,6 @@ export const flexContainerDescriptor: ComponentDescriptor<FlexContainerComponent
   example,
   defaultModel: {
     type: 'flex-container',
-    containerProperties: {},
     itemProperties: {
       fxLayout: 'row',
       fxLayoutGap: '8px',

@@ -45,13 +45,9 @@ const example: ComponentExample<UIModel<ButtonProperties>> = {
   dataModel: {}
 };
 
-interface ButtonUIComponentConstrutor {
-  new (): ButtonUIComponent;
-}
+type ButtonUIComponentConstrutor = new () => ButtonUIComponent;
 
-interface ButtonPropertiesConstrutor {
-  new (): ButtonProperties;
-}
+type ButtonPropertiesConstrutor = new () => ButtonProperties;
 
 export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, ButtonPropertiesConstrutor> = {
   name: 'mat-button',
@@ -78,8 +74,7 @@ export const buttonDescriptor: ComponentDescriptor<ButtonUIComponentConstrutor, 
     type: 'mat-button',
     itemProperties: {
       label: 'Button'
-    },
-    containerProperties: {}
+    }
   }
 };
 

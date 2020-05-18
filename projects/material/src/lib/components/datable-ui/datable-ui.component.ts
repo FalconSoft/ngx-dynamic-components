@@ -43,7 +43,6 @@ export const example: ComponentExample<UIModel<DatableProperties>> = {
   title: 'Datable example',
   uiModel: {
     type: 'material:datable',
-    containerProperties: {},
     itemProperties: {
         displayedProperties: [
           {title: 'No.', dataProperty: 'position'},
@@ -73,13 +72,9 @@ export const example: ComponentExample<UIModel<DatableProperties>> = {
   }
 };
 
-interface DatableUIComponentConstrutor {
-  new (): DatableUIComponent;
-}
+type DatableUIComponentConstrutor = new () => DatableUIComponent;
 
-interface DatablePropertiesConstrutor {
-  new (): DatableProperties;
-}
+type DatablePropertiesConstrutor = new () => DatableProperties;
 
 export const datableDescriptor: ComponentDescriptor<DatableUIComponentConstrutor, DatablePropertiesConstrutor> = {
   name: 'datable',

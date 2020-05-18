@@ -72,13 +72,9 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   }
 };
 
-interface RadioGroupComponentConstrutor {
-  new (): RadioGroupComponent;
-}
+type RadioGroupComponentConstrutor = new () => RadioGroupComponent;
 
-interface RadioGroupPropertiesConstrutor {
-  new (): RadioGroupProperties;
-}
+type RadioGroupPropertiesConstrutor = new () => RadioGroupProperties;
 
 export const radioGroupDescriptor: ComponentDescriptor<RadioGroupComponentConstrutor, RadioGroupPropertiesConstrutor> = {
   name: 'radio-group',
@@ -101,11 +97,11 @@ export const radioGroupDescriptor: ComponentDescriptor<RadioGroupComponentConstr
     };
   },
   defaultModel: '<radio-group itemsSource="$.options" binding="$.radioValue"></radio-group>',
-  children: {
+  children: [{
     tag: 'option',
     properties: [{
       name: 'value',
       label: 'Radio option value'
     }]
-  }
+  }]
 };

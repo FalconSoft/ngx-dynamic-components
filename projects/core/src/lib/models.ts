@@ -1,5 +1,6 @@
 import { BaseUIComponentConstructor, BaseHTMLElementConstructor } from './utils';
 import { ComponentProperty } from './properties';
+import { BaseDynamicComponent } from './components/base-dynamic-component';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
 
@@ -19,9 +20,7 @@ export interface ComponentExample<T = UIModel> {
   scripts?: string;
 }
 
-interface AttributesMapConstructor {
-  new (): AttributesMap;
-}
+type AttributesMapConstructor = new () => AttributesMap;
 
 export interface ChildComponent {
   tag: string;
@@ -42,19 +41,17 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor|
   defaultModel?: UIModel | string;
   propertiesDescriptor?: Array<[string, ComponentProperty]>;
   parseUIModel?: (xmlData: XMLResult) => UIModel;
-  children?: ChildComponent | false;
+  children?: ChildComponent[] | false;
 }
 
 export abstract class UIModel<T = AttributesMap> {
   id?: string;
   type: string;
   itemProperties?: T;
-  /** @deprecated */
-  containerProperties?: AttributesMap;
   children?: UIModel[];
-  getElement?(): HTMLElement;
-  show?(): void {}
-  hide?(): void {}
+  getComponent?(): BaseDynamicComponent {
+    return null;
+  }
 }
 
 export interface IVariableResolver {

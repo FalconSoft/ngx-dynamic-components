@@ -6,14 +6,10 @@ const itemsListUIModel: UIModel = {
   children: [{
       type: 'bootstrap:bs-row',
       id: 'itemsList',
-      containerProperties: {
-        width: '100%'
-      },
       children: [{
         type: 'bootstrap:bs-row',
         children: [{
           type: 'material:text',
-          containerProperties: {},
           itemProperties: {
             text: 'Item - 1',
             width: '100%'
@@ -23,9 +19,6 @@ const itemsListUIModel: UIModel = {
     },
     {
       type: 'bootstrap:bs-row',
-      containerProperties: {
-        width: '100%'
-      },
       children: [{
         type: 'bootstrap:button',
         itemProperties: {

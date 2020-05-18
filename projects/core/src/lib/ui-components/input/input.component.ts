@@ -155,13 +155,9 @@ export const example: ComponentExample<UIModel<InputProperties>> = {
   }
 };
 
-interface InputComponentConstrutor {
-  new(): InputComponent;
-}
+type InputComponentConstrutor = new() => InputComponent;
 
-interface InputPropertiesConstrutor {
-  new(): InputProperties;
-}
+type InputPropertiesConstrutor = new() => InputProperties;
 
 export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, InputPropertiesConstrutor> = {
   name: 'input',

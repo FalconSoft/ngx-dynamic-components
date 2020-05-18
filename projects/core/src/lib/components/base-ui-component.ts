@@ -1,17 +1,14 @@
-import { OnInit, Input, OnDestroy, Output, EventEmitter, HostBinding, SimpleChanges, OnChanges, Directive } from '@angular/core';
-import { UIModel, AttributesMap, ComponentEvent } from '../models';
+import { OnDestroy, HostBinding, SimpleChanges, OnChanges, Directive, Input, Output, EventEmitter } from '@angular/core';
+import { AttributesMap, UIModel, ComponentEvent } from '../models';
 import { JSONUtils } from '../utils/json.utils';
-import { kebabStrToCamel, parseArgFunction } from '../utils';
+import { kebabStrToCamel } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 import { InputProperties } from '../ui-components/input/input.component';
+import { BaseDynamicComponent } from './base-dynamic-component';
 
 @Directive()
 // tslint:disable-next-line
-export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, OnChanges {
-    @Input() dataModel: any;
-    @Input() uiModel: UIModel<T>;
-    element: HTMLElement;
-    @Output() eventHandlers = new EventEmitter<ComponentEvent>();
+export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges {
     @HostBinding('style.width') width: string;
     @HostBinding('style.min-width') minWidth: string;
     @HostBinding('style.max-width') maxWidth: string;
@@ -28,16 +25,14 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
     @HostBinding('style.background') background: string;
     @HostBinding('class') classAttr: string;
 
+    @Input() dataModel: any;
+    @Input() uiModel: UIModel<T>;
+    @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @Output() changedDataModel = new EventEmitter();
 
     protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeigh', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
-
-    async ngOnInit(): Promise<void> {
-      this.setHostStyles();
-      this.emitEvent((this.properties as BaseProperties).onInit);
-    }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
@@ -85,23 +80,6 @@ export class BaseUIComponent<T = StyleProperties> implements OnInit, OnDestroy, 
       if (this.properties.hasOwnProperty('binding')) {
         const path = (this.properties as DataModelProperties).binding;
         JSONUtils.setValue(this.dataModel, path, val);
-      }
-    }
-
-    get properties(): T {
-      return this.uiModel.itemProperties;
-    }
-
-    protected emitEvent(funcSign: string, parameters: any = null): void {
-      if (funcSign) {
-        const [eventName, parameter] = parseArgFunction(funcSign);
-        this.eventHandlers.emit({
-          eventName,
-          parameters: {
-            uiModel: this.uiModel,
-            [parameter]: parameters
-          }
-        });
       }
     }
 

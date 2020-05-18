@@ -40,13 +40,9 @@ const example: ComponentExample<UIModel<ContainerProperties>> = {
   dataModel: {}
 };
 
-interface ContainerComponentConstrutor {
-  new(): ContainerComponent;
-}
+type ContainerComponentConstrutor = new() => ContainerComponent;
 
-interface ContainerPropertiesConstrutor {
-  new(): ContainerProperties;
-}
+type ContainerPropertiesConstrutor = new() => ContainerProperties;
 
 function getParseFunction(tag: string): (xmlRes: XMLResult) => UIModel {
   return (xmlRes: XMLResult) => ({

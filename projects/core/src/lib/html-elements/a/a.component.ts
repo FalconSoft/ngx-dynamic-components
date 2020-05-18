@@ -43,13 +43,9 @@ export const example: ComponentExample<UIModel<LinkProperties>> = {
   dataModel: {}
 };
 
-interface AComponentConstrutor {
-  new (): AComponent;
-}
+type AComponentConstrutor = new () => AComponent;
 
-interface LinkPropertiesConstrutor {
-  new (): LinkProperties;
-}
+type LinkPropertiesConstrutor = new () => LinkProperties;
 
 export const aDescriptor: ComponentDescriptor<AComponentConstrutor, LinkPropertiesConstrutor> = {
   name: 'a',

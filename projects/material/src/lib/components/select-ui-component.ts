@@ -56,13 +56,9 @@ export class SelectProperties extends DataModelProperties {
   onSelect?: string;
 }
 
-interface SelectUIComponentConstrutor {
-  new (): SelectUIComponent;
-}
+type SelectUIComponentConstrutor = new () => SelectUIComponent;
 
-interface SelectPropertiesConstrutor {
-  new (): SelectProperties;
-}
+type SelectPropertiesConstrutor = new () => SelectProperties;
 
 const example: ComponentExample<UIModel<SelectProperties>> = {
   uiModel: `

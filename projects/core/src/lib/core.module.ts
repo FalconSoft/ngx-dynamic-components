@@ -39,7 +39,7 @@ import { SelectComponent } from './ui-components/select/select.component';
     FormsModule,
     HttpClientModule
   ],
-  exports: [UISelectorComponent, NGXDynamicComponent]
+  exports: [UISelectorComponent, NGXDynamicComponent, TextComponent]
 })
 export class DynamicComponentsCoreModule {
   constructor() {

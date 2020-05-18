@@ -157,7 +157,7 @@ export abstract class DataModelProperties extends BindingProperties {
 export abstract class ContainerProperties extends StyleProperties {
   @propDescription({
     description: 'Array of children ui Models',
-    example: '[{type: \'text\', itemProperties: {}, containerProperties: {}}]',
+    example: '[{type: \'text\', itemProperties: {}}]',
   })
   children?: UIModel[];
 }
