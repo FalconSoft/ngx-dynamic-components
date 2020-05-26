@@ -1,7 +1,6 @@
 import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges,
   ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef } from '@angular/core';
 import { UIModel, ComponentEvent, XMLResult } from '../models';
-import { parseArgFunction } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
 import { UISelectorComponent } from './ui-selector-component';
 import { BaseDynamicComponent } from './base-dynamic-component';
@@ -17,7 +16,7 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
     constructor(
       private appRef?: ApplicationRef,
       private componentFactoryResolver?: ComponentFactoryResolver,
-      private injector?: Injector) {
+      protected injector?: Injector) {
         super();
       }
 
