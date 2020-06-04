@@ -122,22 +122,27 @@ export class JSONUtils {
      */
     private static getFlatternProps(obj, flattern: string): any[] {
       let props = [];
-      const entries = Array.isArray(obj) ? obj : [obj];
-      entries.forEach(o => {
-        Object.entries(o).forEach(([key, val]) => {
-          if (key === flattern) {
-            if (Array.isArray(val)) {
-              props = props.concat(...val);
-            } else {
-              props.push(val);
+      try {
+        const entries = Array.isArray(obj) ? obj : [obj];
+        entries.forEach(o => {
+          Object.entries(o).forEach(([key, val]) => {
+            if (key === flattern) {
+              if (Array.isArray(val)) {
+                props = props.concat(...val);
+              } else {
+                props.push(val);
+              }
             }
-          }
-          if (typeof val === 'object') {
-            props = props.concat(...JSONUtils.getFlatternProps(val, flattern));
-          }
+            if (typeof val === 'object' && val !== null) {
+              props = props.concat(...JSONUtils.getFlatternProps(val, flattern));
+            }
+          });
         });
-      });
-      return props;
+        return props;
+      } catch (e) {
+        console.error(e);
+        return props;
+      }
     }
 
     /**

@@ -18,6 +18,7 @@ export class AComponent extends BaseHTMLElement<LinkProperties> {
 
     if (this.properties.routerLink) {
       this.element.style.cursor = 'pointer';
+      this.element.setAttribute('href', 'javascript:void(0);');
     }
 
     this.element.onclick = (evt) => {
@@ -34,11 +35,13 @@ export class AComponent extends BaseHTMLElement<LinkProperties> {
   private getPath(): string {
     let routerLink = this.properties.routerLink;
     const matches = routerLink.match(/{\$\.[\w/]+}/g);
-    matches.forEach(m => {
-      const path = m.replace(/[{}]+/, '');
-      const res = JSONUtils.find(this.dataModel, path);
-      routerLink = routerLink.replace(m, res);
-    });
+    if (matches) {
+      matches.forEach(m => {
+        const path = m.replace(/[{}]+/, '');
+        const res = JSONUtils.find(this.dataModel, path);
+        routerLink = routerLink.replace(m, res);
+      });
+    }
     return routerLink;
   }
 }
