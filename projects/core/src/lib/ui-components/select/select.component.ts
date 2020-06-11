@@ -96,7 +96,16 @@ export class SelectProperties extends BindingProperties {
   })
   onSelect?: string;
 
+  @propDescription({
+    description: 'Label property.',
+    example: 'name',
+  })
   labelProp?: string;
+
+  @propDescription({
+    description: 'Value property.',
+    example: 'id',
+  })
   valueProp?: string;
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, HostListener } from '@angular/core';
+import { Component, OnInit, HostBinding, HostListener, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
 import { propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
@@ -7,7 +7,7 @@ import { FormElementComponent, FormElementProperties } from '../../components/fo
   selector: 'textarea', // tslint:disable-line
   template: '{{value}}'
 })
-export class TextareaComponent extends FormElementComponent<TextareaProperties> implements OnInit {
+export class TextareaComponent extends FormElementComponent<TextareaProperties> implements OnInit, OnChanges, DoCheck {
   @HostBinding('attr.cols') cols: number;
   @HostBinding('attr.rows') rows: number;
 
@@ -22,6 +22,17 @@ export class TextareaComponent extends FormElementComponent<TextareaProperties> 
     await super.ngOnInit();
     this.cols = this.properties.cols || undefined;
     this.rows = this.properties.rows || undefined;
+    this.value = this.componentDataModel;
+  }
+
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    await super.ngOnChanges(changes);
+    if (changes.dataModel) {
+      this.value = this.componentDataModel;
+    }
+  }
+
+  ngDoCheck(): void {
     this.value = this.componentDataModel;
   }
 }

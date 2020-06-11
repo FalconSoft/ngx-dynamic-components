@@ -31,7 +31,7 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     @Output() changedDataModel = new EventEmitter();
 
     protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
-    'minHeigh', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
+    'minHeight', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
     async ngOnDestroy(): Promise<void> {
