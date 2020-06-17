@@ -64,6 +64,9 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
       } else if (this.type === 'radio') {
         this.value = this.properties.value;
         this.checked = (val && val.toString()) === this.value ? true : undefined;
+      } else if (this.type === 'checkbox') {
+        this.value = this.properties.value;
+        this.checked = val ? true : undefined;
       } else {
         this.value = val;
         this.inputElement.nativeElement.value = val;

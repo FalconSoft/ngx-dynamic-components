@@ -7,7 +7,8 @@ import { packageName } from '../../constants';
   selector: 'dc-select',
   template: `
   <ng-select [items]="options" (change)="onSelect()" [ngStyle]="selectStyles"
-      [(ngModel)]="componentDataModel" bindValue="value"></ng-select>
+      [(ngModel)]="componentDataModel" [bindLabel]="properties.bindLabel"
+      [bindValue]="properties.bindValue || 'value'" [placeholder]="properties.placeholder"></ng-select>
     `,
   styles: [`
     :host ::ng-deep .ng-select.ng-select-single .ng-select-container {
@@ -62,6 +63,24 @@ export class SelectProperties extends BindingProperties {
     example: 'onCountrySelect',
   })
   onSelect?: string;
+
+  @propDescription({
+    description: 'Placeholder',
+    example: 'Select name',
+  })
+  placeholder?: string;
+
+  @propDescription({
+    description: 'Label property.',
+    example: 'name',
+  })
+  bindLabel?: string;
+
+  @propDescription({
+    description: 'Value property.',
+    example: 'id',
+  })
+  bindValue?: string;
 }
 
 type SelectComponentConstrutor = new () => SelectComponent;
