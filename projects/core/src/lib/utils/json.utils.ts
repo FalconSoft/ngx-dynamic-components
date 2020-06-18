@@ -123,7 +123,7 @@ export class JSONUtils {
     private static getFlatternProps(obj, flattern: string): any[] {
       let props = [];
       try {
-        const entries = Array.isArray(obj) ? obj : [obj];
+        const entries = Array.isArray(obj) ? obj.filter(i => typeof i === 'object' && i !== null) : [obj];
         entries.forEach(o => {
           Object.entries(o).forEach(([key, val]) => {
             if (key === flattern) {

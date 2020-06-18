@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef, DoCheck } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef, DoCheck, Inject } from '@angular/core';
 import { propDescription, PropertyCategories } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
@@ -14,6 +14,7 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
   @HostBinding('attr.multiple') multiple: boolean;
 
   private modelValue: any;
+  private dataList: HTMLDataListElement;
 
   constructor(private inputElement?: ElementRef<HTMLInputElement>) {
     super();
@@ -37,10 +38,30 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
     this.multiple = this.properties.multiple || undefined;
     this.step = this.properties.step || undefined;
     this.updateValue();
+    if (this.properties.autocomplete) {
+      const input = this.inputElement.nativeElement;
+      input.setAttribute('autocomplete', 'on');
+      this.dataList = document.createElement('DATALIST') as HTMLDataListElement;
+      this.dataList.id = `list-${this.name}`;
+      input.setAttribute('list', this.dataList.id);
+      input.parentNode.insertBefore(this.dataList, input);
+      this.setList(this.properties.list);
+    }
   }
 
   ngDoCheck(): void {
     this.updateValue();
+  }
+
+  setList(list: string[]): void {
+    if (this.properties.autocomplete) {
+      if (!list) {
+        this.dataList.innerHTML = '';
+      } else {
+        this.dataList.innerHTML = list.map(v => `<option value="${v}">`).join('');
+      }
+      this.properties.list = list;
+    }
   }
 
   async ngOnDestroy(): Promise<void> {
@@ -115,6 +136,12 @@ export class InputProperties extends FormElementProperties {
     example: 'onChange',
   })
   onChange?: string;
+
+  @propDescription({
+    description: 'Datalist array',
+    example: '["option1" ,"option2"]'
+  })
+  list?: string[];
 }
 
 export const example: ComponentExample<UIModel<InputProperties>> = {
@@ -173,7 +200,8 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
   example,
   parseUIModel(xmlRes: XMLResult): UIModel {
     const itemProperties: AttributesMap = {
-      readonly: xmlRes.attrs.readonly === 'true'
+      readonly: xmlRes.attrs.readonly === 'true',
+      list: xmlRes.attrs.list?.split(',').map(o => o.trim())
     };
 
     return {
