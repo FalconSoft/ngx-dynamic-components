@@ -1,7 +1,8 @@
 import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef, DoCheck, Inject } from '@angular/core';
-import { propDescription, PropertyCategories } from '../../properties';
-import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
+import { propDescription, PropertyCategories, PropTypes } from '../../properties';
+import { UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
+import example from './input.examples';
 
 @Component({
   selector: 'input', // tslint:disable-line
@@ -134,6 +135,7 @@ export class InputProperties extends FormElementProperties {
   @propDescription({
     description: 'On change event handler name.',
     example: 'onChange',
+    type: PropTypes.EVENT
   })
   onChange?: string;
 
@@ -143,47 +145,6 @@ export class InputProperties extends FormElementProperties {
   })
   list?: string[];
 }
-
-export const example: ComponentExample<UIModel<InputProperties>> = {
-  title: 'Text input example',
-  uiModel: `
-  <section class="flex-column">
-    <section class="form-group">
-      <label class="col-form-label" width="80px">Name</label>
-      <input onInput="onNameInput(name)" placeholder="Enter your name" binding="$.name"/>
-    </section>
-    <section class="form-group">
-      <label class="col-form-label" width="80px">Last name</label>
-      <input disabled="true" id="lastName" placeholder="Enter your last name" binding="$.lastName"/>
-    </section>
-    <section class="form-group form-check">
-      <input type="checkbox" id="subscribed" class="form-check-input" binding="$.subscribed"/>
-      <label class="form-check-label" for="subscribed" width="80px">Subscribe</label>
-    </section>
-    <section class="form-group form-check mt-5">
-      <input id="opt1" type="radio" class="form-check-input" name="option" value="option-1" binding="$.option"/>
-      <label for="opt1" class="form-check-label" width="80px">Option 1</label>
-    </section>
-    <section class="form-group form-check">
-      <input id="opt2" type="radio" class="form-check-input" name="option" value="option-2" binding="$.option"/>
-      <label for="opt2" class="form-check-label" width="80px">Option 2</label>
-    </section>
-    <section class="form-group form-check">
-      <input id="opt3" type="radio" class="form-check-input" name="option" value="option-3" binding="$.option"/>
-      <label for="opt3" class="form-check-label" width="80px">Option 3</label>
-    </section>
-  </section>
-  `,
-  scripts: `
-  def onNameInput(name):
-    disabled = name == ""
-    comp = getComponentById(rootUIModel, "lastName")
-    comp.itemProperties.disabled = disabled # should set undefined not false
-  `,
-  dataModel: {
-    name: 'John'
-  }
-};
 
 type InputComponentConstrutor = new() => InputComponent;
 

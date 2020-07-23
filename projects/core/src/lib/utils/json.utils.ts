@@ -1,4 +1,5 @@
-import { getItemByIndex } from '../utils';
+
+import { getItemByIndex } from '../utils/helpers';
 
 /**
  * Provides utility classes to traverse JSON objects.

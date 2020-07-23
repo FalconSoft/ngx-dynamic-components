@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit, HostListener } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
-import { StyleProperties, propDescription, PropertyCategories } from '../../properties';
+import { StyleProperties, propDescription, PropertyCategories, PropTypes } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
@@ -46,18 +46,21 @@ export class ButtonProperties extends StyleProperties {
   @propDescription({
     description: 'Key for action that fires onclick',
     example: 'onBtnClick()',
+    type: PropTypes.EVENT
   })
   onClick?: string;
 
   @propDescription({
     description: 'Button type: button|submit|reset|link. Default: button',
     example: 'submit',
+    defaultValue: 'button'
   })
   type?: string;
 
   @propDescription({
     description: 'It specifies that the button should be disabled.',
     example: 'true',
+    defaultValue: 'false'
   })
   disabled?: boolean;
 }

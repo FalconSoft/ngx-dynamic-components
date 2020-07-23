@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { ResizableModule } from 'angular-resizable-element';
 import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { ToolsModule } from '@ngx-dynamic-components/tools';
 import { MaterialModule } from '@ngx-dynamic-components/material';
@@ -79,7 +79,8 @@ import { StaticExampleViewComponent } from './components/static-example-view.com
     MatTableModule,
     MatExpansionModule,
     MatIconModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ResizableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

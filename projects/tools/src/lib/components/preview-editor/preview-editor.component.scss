@@ -22,6 +22,12 @@ $color: rgba(0, 0, 0, .5);
   }
 }
 
+.preview-card mat-card-content {
+  ::ng-deep .as-init .as-split-gutter, .as-split-area {
+    height: auto;
+  }
+}
+
 mat-card {
   width: 100%;
   padding: 0;

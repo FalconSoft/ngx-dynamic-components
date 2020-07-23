@@ -1,10 +1,17 @@
 import { OptionValue, AttributesMap, UIModel } from '../models';
 import { propDescription } from './descriptor';
 
+export enum PropTypes {
+  EVENT = 'event',
+  PROPERTY = 'property'
+}
+
 export interface PropDescriptor {
   description: string;
   example: string;
   link?: string;
+  type?: PropTypes;
+  defaultValue?: string;
 }
 
 export interface UIModelProperty extends PropDescriptor {
@@ -35,13 +42,15 @@ export interface ComponentProperty {
 export abstract class BaseProperties implements AttributesMap {
   @propDescription({
     description: 'On init event handler name.',
-    example: 'OnComponentInit'
+    example: 'OnComponentInit',
+    type: PropTypes.EVENT
   })
   onInit?: string;
 
   @propDescription({
     description: 'On destroy event handler name.',
-    example: 'OnComponentDestroy'
+    example: 'OnComponentDestroy',
+    type: PropTypes.EVENT
   })
   onDestroy?: string;
 

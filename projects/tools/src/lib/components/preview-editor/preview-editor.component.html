@@ -1,13 +1,7 @@
-<mat-card *ngIf="initUiModel" fxLayout="column">
+<mat-card *ngIf="initUiModel" fxLayout="column" class="h-100 preview-card">
   <mat-card-header fxLayoutAlign="start center">
     <span fxFlex="1 1 auto">{{title}}</span>
-    <!-- <button mat-icon-button matTooltip="Add row" *ngIf="editMode$ | async" (click)="addRow()">
-      <mat-icon>add_box</mat-icon>
-    </button> -->
-    <!-- <button mat-icon-button [matTooltip]="editorTooltip$ | async" (click)="editMode$.next(!editMode$.value)">
-      <mat-icon [ngStyle]="{opacity: (editMode$ | async) ? 1 : 0.5}">edit</mat-icon>
-    </button> -->
-    <button mat-icon-button *ngIf="sourceCode" (click)="toggleLayout()"
+    <button mat-icon-button *ngIf="codeSize" (click)="toggleLayout()"
       [matTooltip]="(isHorizontal ? 'Vertical' : 'Horizontal') + ' layout'">
       <mat-icon>{{isHorizontal ? 'vertical_split' : 'horizontal_split'}}</mat-icon>
     </button>
@@ -15,28 +9,30 @@
       <mat-icon>code</mat-icon>
     </button>
   </mat-card-header>
-  <mat-card-content [fxLayout]="layout">
-    <div *ngIf="sourceCode" fxLayout="row">
-      <mat-tab-group [ngStyle]="{width: isHorizontal ? '100%' : '100%'}">
-        <mat-tab label="UI Model">
-          <div #uiModel class="h-100"></div>
-        </mat-tab>
-        <mat-tab label="Scripts">
-          <div #scripts class="h-100"></div>
-        </mat-tab>
-        <mat-tab label="Data Model">
-          <div #dataModel class="h-100"></div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-    <mat-divider *ngIf="isHorizontal"></mat-divider>
-    <div class="preview" fxFlex="1 1 auto" [ngClass]="{'edit-mode': editMode$ | async}">
-      <ngx-dynamic-component class="d-block" *ngIf="uiModel" #dynamicComponent
-        [uiModel]='uiModel'
-        [dataModel]='dataModel'
-        (changedDataModel)="onDataModelChange($event)"
-        (eventHandlers)="eventHandlers($event)"></ngx-dynamic-component>
-    </div>
-
+  <mat-card-content class="h-100">
+    <as-split [useTransition]="true" [direction]="direction" unit="percent" [gutterSize]="codeSize ? 11 : 0">
+      <as-split-area #area0="asSplitArea" class="d-flex" [size]="codeSize">
+        <mat-tab-group class="w-100">
+          <mat-tab label="UI Model">
+            <div #uiModelEl class="h-100"></div>
+          </mat-tab>
+          <mat-tab label="Scripts">
+            <div #scriptsEl class="h-100"></div>
+          </mat-tab>
+          <mat-tab label="Data Model">
+            <div #dataModelEl class="h-100"></div>
+          </mat-tab>
+        </mat-tab-group>
+      </as-split-area>
+      <as-split-area [size]="100 - codeSize" #area1="asSplitArea">
+        <div class="preview" fxFlex="1 1 auto">
+          <ngx-dynamic-component class="d-block" *ngIf="uiModel" #dynamicComponent
+            [uiModel]='uiModel'
+            [dataModel]='dataModel'
+            (changedDataModel)="onDataModelChange($event)"
+            (eventHandlers)="eventHandlers($event)"></ngx-dynamic-component>
+        </div>
+      </as-split-area>
+    </as-split>
   </mat-card-content>
 </mat-card>

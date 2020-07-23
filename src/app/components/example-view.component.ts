@@ -8,12 +8,13 @@ import { Observable } from 'rxjs';
   selector: 'dc-example',
   template: `
     <ng-container *ngIf="example | async as ex">
-      <dc-preview-editor
+      <dc-preview-editor class="pb-4"
           #editor
           [title]="ex.name"
           [scripts]="ex.scripts"
           [initUiModel]="ex.uiModel"
-          [initDataModel]="ex.dataModel"></dc-preview-editor>
+          [initDataModel]="ex.dataModel"
+          ></dc-preview-editor>
       <h3 class="">Data Model: </h3>
       <div dcJsonFormatter [json]="editor.dataModel"></div>
     </ng-container>

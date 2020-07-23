@@ -18,6 +18,7 @@ export interface ComponentExample<T = UIModel> {
   dataModel: any;
   title: string;
   scripts?: string;
+  description?: string;
 }
 
 type AttributesMapConstructor = new () => AttributesMap;
@@ -37,7 +38,7 @@ export interface ComponentDescriptor<ComponentType = BaseUIComponentConstructor|
   description: string;
   itemProperties: PropertiesType;
   component: ComponentType;
-  example?: ComponentExample;
+  example?: ComponentExample | ComponentExample[];
   defaultModel?: UIModel | string;
   propertiesDescriptor?: Array<[string, ComponentProperty]>;
   parseUIModel?: (xmlData: XMLResult) => UIModel;
@@ -49,7 +50,7 @@ export abstract class UIModel<T = AttributesMap> {
   type: string;
   itemProperties?: T;
   children?: UIModel[];
-  getComponent?(): BaseDynamicComponent {
+  getComponent?(): BaseDynamicComponent<T> {
     return null;
   }
 }

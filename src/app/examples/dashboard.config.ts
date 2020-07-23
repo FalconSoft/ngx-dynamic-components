@@ -1,7 +1,9 @@
-import { UIModel } from '@ngx-dynamic-components/core';
+import { UIModel, ComponentExample } from '@ngx-dynamic-components/core';
 import { COMPONENTS_LIST } from '@ngx-dynamic-components/material';
 
 const table = COMPONENTS_LIST.find(item => item.name === 'datable');
+
+const tableExample = table.example as ComponentExample;
 
 export const dashboardUIModel = {
   type: 'bootstrap:container',
@@ -58,7 +60,7 @@ export const dashboardUIModel = {
           text: 'Table data',
           width: '100%'
         }
-      }, table.example.uiModel
+      }, tableExample.uiModel
 
       // Inner container.
       /*{
@@ -124,7 +126,7 @@ export const dashboardConfig = {
   type: 'Dashboard',
   name: 'dashboard-example',
   uiModel: dashboardUIModel,
-  dataModel: {...table.example.dataModel}
+  dataModel: {...tableExample.dataModel}
 };
 
 function getCardWidget(header: string, content: string, background = 'white'): UIModel {

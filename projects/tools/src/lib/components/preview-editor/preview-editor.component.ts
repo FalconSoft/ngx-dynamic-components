@@ -1,16 +1,16 @@
 import { Component, OnInit, Input, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent, JSONUtils } from '@ngx-dynamic-components/core';
-import { FormControl } from '@angular/forms';
+import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent, JSONUtils,
+  getComponentById, BaseDynamicComponent} from '@ngx-dynamic-components/core';
 import { map } from 'rxjs/operators';
-import { Observable, BehaviorSubject, fromEvent } from 'rxjs';
+import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
 
 import { DragDropService } from '../../services/drag-drop.service';
 
 enum Layout {
-  horizontal = 'column',
-  vertical = 'row'
+  horizontal = 'horizontal',
+  vertical = 'vertical'
 }
 
 @Component({
@@ -24,9 +24,9 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   @Input() initUiModel: UIModel;
   @Input() initDataModel: any;
   @Input() title: string;
-  @ViewChild('uiModel') uiModelEl: ElementRef<HTMLElement>;
-  @ViewChild('scripts') scriptsEl: ElementRef<HTMLElement>;
-  @ViewChild('dataModel') dataModelEl: ElementRef<HTMLElement>;
+  @ViewChild('uiModelEl') uiModelEl: ElementRef<HTMLElement>;
+  @ViewChild('scriptsEl') scriptsEl: ElementRef<HTMLElement>;
+  @ViewChild('dataModelEl') dataModelEl: ElementRef<HTMLElement>;
   @ViewChild('dynamicComponent') dynamicComponent: NGXDynamicComponent;
   @HostBinding('style.flex') flex = 'initial';
 
@@ -35,23 +35,15 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   uiModelEditor: Ace.Editor;
   dataModelEditor: Ace.Editor;
   scriptsEditor: Ace.Editor;
-  uiModelControl: FormControl;
-  dataModelControl: FormControl;
-  scriptControl: FormControl;
   interpreter: Interpreter;
-  layout: Layout = Layout.vertical;
-  sourceCode = false;
-  editMode$ = new BehaviorSubject<boolean>(false);
   editorOptions = {
     language: 'json',
     automaticLayout: true
   };
+  direction: Layout = Layout.horizontal;
+  codeSize = 50;
 
-  get editorTooltip$(): Observable<string> {
-    return this.editMode$.pipe(map(mode => mode ? 'Disable preview edit' : 'Enable preview edit'));
-  }
-
-  constructor(private container: ElementRef, private dragService: DragDropService) { }
+  constructor(private dragService: DragDropService) { }
 
   eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent): void {
     if (!this.interpreter) { return; }
@@ -71,19 +63,12 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.interpreter = jsPython();
-    this.interpreter.addFunction('getComponentById', (uiModel: UIModel, id: string): UIModel => {
-      return JSONUtils.find(uiModel, `$(children:id=${id})`) as UIModel;
+    this.interpreter.addFunction('getComponentById', (uiModel: UIModel, id: string): BaseDynamicComponent => {
+      return getComponentById(uiModel, `$(children:id=${id})`);
     });
     this.interpreter.assignGlobalContext({JSONUtils});
     this.uiModel = this.initUiModel;
     this.dataModel = this.initDataModel;
-    this.editMode$.subscribe(editMode => {
-      if (editMode) {
-        this.dragService.init(this.container, this.uiModel);
-      } else {
-        this.dragService.cleanUpEditor();
-      }
-    });
   }
 
   ngAfterViewInit(): void {
@@ -91,33 +76,16 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     this.initUIPreview();
   }
 
-  get isHorizontal(): boolean {
-    return this.layout === Layout.horizontal;
-  }
-
   toggleSourceCode(): void {
-    this.sourceCode = !this.sourceCode;
-    this.flex = this.sourceCode ? '1 1 auto' : 'initial';
-    if (!this.sourceCode) {
-      this.layout = Layout.horizontal;
-    }
-    setTimeout(() => {
-      this.initUIPreview();
-    });
+    this.codeSize = !this.codeSize ? 50 : 0;
   }
 
   toggleLayout(): void {
-    this.layout = this.layout === Layout.horizontal ? Layout.vertical : Layout.horizontal;
+    this.direction = this.direction === Layout.horizontal ? Layout.vertical : Layout.horizontal;
   }
 
-  addRow(): void {
-    this.uiModel.children.unshift({
-      type: 'bootstrap:bs-row',
-      itemProperties: {},
-      children: []
-    });
-    this.refreshPreview(this.uiModel, this.dataModel);
-    this.onDataModelChange(null);
+  get isHorizontal(): boolean {
+    return this.direction === Layout.horizontal;
   }
 
   onDataModelChange(data: any): void {
@@ -146,22 +114,13 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   private refreshPreview(uiModel: UIModel, dataModel: any): void {
     this.uiModel = uiModel;
     this.dataModel = dataModel;
-    if (this.scriptControl) {
-      this.scriptControl.setValue(this.scripts);
-    }
-
-    if (this.editMode$.value) {
-      setTimeout(() => {
-        this.dragService.init(this.container, uiModel);
-      }, 1e1);
-    }
   }
 
   private initEditor(name: string, element: ElementRef, value: object|string, mode = 'ace/mode/json'): Observable<any> {
     const editor = edit(element.nativeElement, {
       mode,
       autoScrollEditorIntoView: true,
-      value: typeof value === 'string' ? value : formatObjToJsonStr(value),
+      value: formatObjToJsonStr(value),
       tabSize: 2,
       useSoftTabs: true,
       indentedSoftWrap: true
