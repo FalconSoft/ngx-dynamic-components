@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { propDescription, BindingProperties } from '../../properties';
+import { propDescription, BindingProperties, PropTypes } from '../../properties';
 import { OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult, AttributesMap } from '../../models';
 import { JSONUtils } from '../../utils/json.utils';
 import { BaseUIComponent } from '../../components/base-ui-component';
@@ -50,6 +50,7 @@ export class RadioGroupProperties extends BindingProperties {
   @propDescription({
     description: 'On change event handler name.',
     example: 'onSelect',
+    type: PropTypes.EVENT
   })
   onChange?: string;
 }
@@ -57,7 +58,7 @@ export class RadioGroupProperties extends BindingProperties {
 export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
   title: 'Radio group example',
   uiModel: `
-  <section>
+  <div>
     <radio-group class="d-flex flex-column mr-4" binding="$.color">
       <option value="white">White</option>
       <option value="black">Black</option>
@@ -65,7 +66,7 @@ export const example: ComponentExample<UIModel<RadioGroupProperties>> = {
       <option value="blue">Blue</option>
     </radio-group>
     <radio-group itemsSource="$.genderOptions" binding="$.gender"></radio-group>
-  </section>
+  </div>
   `,
   dataModel: {
     genderOptions: [{label: 'Man', value: 'm'}, {label: 'Woman', value: 'w'}]

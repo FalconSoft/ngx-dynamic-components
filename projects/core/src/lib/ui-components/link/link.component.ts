@@ -40,10 +40,10 @@ export class LinkProperties extends StyleProperties {
 export const example: ComponentExample<UIModel<LinkProperties>> = {
   title: 'Basic link example',
   uiModel: `
-  <section class="row align-items-center">
+  <div class="row align-items-center">
     <link class="btn btn-primary mr-2" href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</link>
     <link target="_blank" disabled="true" href="https://www.google.com/">Google</link>
-  </section>
+  </div>
   `,
   dataModel: {}
 };

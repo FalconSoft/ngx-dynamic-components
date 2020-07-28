@@ -37,10 +37,10 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
     <tab header="Btn tab" class="align-items-start p-2 flex-column">
       <text text-style="h1">Button content</text>
       <button class="btn btn-primary mr-2" onClick="button1_Click">Click</button>
-      <section>
-        <text text-style="h4">ClickCount:</text>
+      <div>
+        <h4>ClickCount:</h4>
         <text text-style="h4">$.clickCount</text>
-      </section>
+      </div>
 		</tab>
 	</tab-container>
   `,

@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, HostBinding } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
-import { StyleProperties, propDescription, PropertyCategories } from '../../properties';
+import { StyleProperties, propDescription, PropertyCategories, PropTypes } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';
 
 @Component({
@@ -27,6 +27,7 @@ export class FormProperties extends StyleProperties {
   @propDescription({
     description: 'Submit handler',
     example: 'onFormSubmit(form)',
+    type: PropTypes.EVENT
   })
   onSubmit?: string;
 }

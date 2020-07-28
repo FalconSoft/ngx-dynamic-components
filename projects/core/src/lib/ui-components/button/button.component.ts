@@ -112,6 +112,5 @@ export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, Bu
     ['type', {name: 'type', label: 'Type', category: PropertyCategories.Main,
       values: ['button', 'submit', 'reset']
     }]
-  ],
-  // children: false
+  ]
 };

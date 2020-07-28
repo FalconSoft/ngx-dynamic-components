@@ -1,5 +1,14 @@
-<ng-container *ngIf="itemProperties as properties">
-  <h3>Item properties</h3>
+<div *ngIf="properties?.length" class="mb-4">
+  <h3>Component properties</h3>
+  <ng-container *ngTemplateOutlet="propsTable;context:{properties: properties, hasDefault: true}"></ng-container>
+</div>
+
+<div *ngIf="events?.length" class="mb-4">
+  <h3>Component events</h3>
+  <ng-container *ngTemplateOutlet="propsTable;context:{properties: events}"></ng-container>
+</div>
+
+<ng-template #propsTable let-properties="properties" let-defaultValue="hasDefault">
   <mat-table [dataSource]="properties">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -17,4 +26,4 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-</ng-container>
+</ng-template>

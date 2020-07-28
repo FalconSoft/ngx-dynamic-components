@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { JSONUtils, BindingProperties, propDescription, PropertyCategories,  OptionValue,  ComponentExample,
-  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent } from '@ngx-dynamic-components/core';
+import { JSONUtils, BindingProperties, propDescription, PropertyCategories,  OptionValue,
+  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent, PropTypes } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
+import example from './select.examples';
 
 @Component({
   selector: 'dc-select',
@@ -105,66 +106,77 @@ export class SelectProperties extends BindingProperties {
   @propDescription({
     description: 'Output add event handler.',
     example: 'onAdd()',
+    type: PropTypes.EVENT
   })
   add?: string;
 
   @propDescription({
     description: 'Output blur event handler.',
     example: 'onBlur()',
+    type: PropTypes.EVENT
   })
   blur?: string;
 
   @propDescription({
     description: 'Output change event handler.',
     example: 'onChange()',
+    type: PropTypes.EVENT
   })
   change?: string;
 
   @propDescription({
     description: 'Output close event handler.',
     example: 'onClose()',
+    type: PropTypes.EVENT
   })
   close?: string;
 
   @propDescription({
     description: 'Output clear event handler.',
     example: 'onClear()',
+    type: PropTypes.EVENT
   })
   clear?: string;
 
   @propDescription({
     description: 'Output focus event handler.',
     example: 'onFocus()',
+    type: PropTypes.EVENT
   })
   focus?: string;
 
   @propDescription({
     description: 'Output search event handler.',
     example: 'onSearch()',
+    type: PropTypes.EVENT
   })
   search?: string;
 
   @propDescription({
     description: 'Output open event handler.',
     example: 'onOpen()',
+    type: PropTypes.EVENT
   })
   open?: string;
 
   @propDescription({
     description: 'Output remove event handler.',
     example: 'onRemove()',
+    type: PropTypes.EVENT
   })
   remove?: string;
 
   @propDescription({
     description: 'Output scroll event handler.',
     example: 'onScroll()',
+    type: PropTypes.EVENT
   })
   scroll?: string;
 
   @propDescription({
     description: 'Output scrollToEnd event handler.',
     example: 'onScrollToEnd()',
+    type: PropTypes.EVENT
   })
   scrollToEnd?: string;
 }
@@ -172,36 +184,6 @@ export class SelectProperties extends BindingProperties {
 type SelectComponentConstrutor = new () => SelectComponent;
 
 type SelectPropertiesConstrutor = new () => SelectProperties;
-
-export const example: ComponentExample<UIModel<SelectProperties>> = {
-  uiModel: `
-    <section class="flex-column">
-      <section class="form-group">
-        <label class="col-form-label" width="60px">Country</label>
-        <ng-select onSelect="countryChanged" width="300px" binding="$.country">
-          <option value="uk">United Kingdom</option>
-          <option value="ua">Ukraine</option>
-        </ng-select>
-      </section>
-      <section class="form-group">
-        <label class="col-form-label" width="60px">City</label>
-        <ng-select width="300px" itemsSource="$.cities" binding="$.city"></ng-select>
-      </section>
-    </section>
-  `,
-  dataModel: {},
-  scripts: `
-  def countryChanged():
-    dataModel.city = null
-    if dataModel.country == null:
-      dataModel.cities = []
-    if dataModel.country == "uk":
-      dataModel.cities = [{label: "London", value: "lon"}, {label: "Liverpool", value: "liv"}]
-    if dataModel.country == "ua":
-      dataModel.cities = [{label: "Kyiv", value: "kyiv"}, {label: "Lviv", value: "lvi"}]
-  `,
-  title: 'Basic select example'
-};
 
 export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, SelectPropertiesConstrutor> = {
   name: 'ng-select',

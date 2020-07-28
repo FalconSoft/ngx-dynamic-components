@@ -2,7 +2,7 @@ import { Component, HostListener, HostBinding, DoCheck } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { AttributesMap, OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { JSONUtils } from '../../utils/json.utils';
-import { BindingProperties, propDescription, PropertyCategories } from '../../properties';
+import { BindingProperties, propDescription, PropertyCategories, PropTypes } from '../../properties';
 
 @Component({
   selector: 'select', // tslint:disable-line
@@ -93,6 +93,7 @@ export class SelectProperties extends BindingProperties {
   @propDescription({
     description: 'On Select handler name.',
     example: 'onCountrySelect',
+    type: PropTypes.EVENT
   })
   onSelect?: string;
 

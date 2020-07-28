@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { StyleProperties, propDescription } from '../../properties';
+import { StyleProperties, propDescription, PropTypes } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { BaseHTMLElement, parseHTMLUIModel } from '../../components/base-html-element';
 import { JSONUtils } from '../../utils/json.utils';
@@ -68,6 +68,7 @@ export class LinkProperties extends StyleProperties {
   @propDescription({
     description: 'Key for action that fires onclick',
     example: 'onLinkClick()',
+    type: PropTypes.EVENT
   })
   onClick?: string;
 
