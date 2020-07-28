@@ -5,10 +5,9 @@ NGX Dynamic Components is a configuration based dynamic components library for A
 Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods to tap into key events in the lifecycle of a component.
 
 We have three libraries to consider
-
-  - [**@ngx-dynamic-components\core**](.\projects\core\readme.md) - a core dynamic rendering engine with no dependencies to external library. It contains a basic HTML components.
-  - [**@ngx-dynamic-components\bootstrap**](.\projects\bootstrap\readme.md) - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
-  - [**@ngx-dynamic-components\material**](.\projects\material\readme.md) - a set of [Angular Material Components](https://material.angular.io/)
+  - [**@ngx-dynamic-components\core**](./projects/core/readme.md) - a core dynamic rendering engine with no dependencies to external library. It contains a basic HTML components.
+  - [**@ngx-dynamic-components\bootstrap**](./projects/bootstrap/readme.md) - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
+  - [**@ngx-dynamic-components\material**](./projects/material/readme.md) - a set of [Angular Material Components](https://material.angular.io/)
 
 ## Getting started
 
