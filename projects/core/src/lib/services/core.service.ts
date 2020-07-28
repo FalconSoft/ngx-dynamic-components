@@ -27,7 +27,7 @@ export class CoreService {
     CoreService.COMPONENTS_REGISTER.set(name, desc);
   }
 
-  public static getComponent(type: string): BaseUIComponentConstructor|BaseHTMLElementConstructor {
+  public static getComponent(type: string): BaseUIComponentConstructor | BaseHTMLElementConstructor {
     if (CoreService.COMPONENTS_REGISTER.has(type)) {
       return CoreService.COMPONENTS_REGISTER.get(type).component;
     }

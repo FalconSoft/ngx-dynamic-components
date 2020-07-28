@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'dc-home-page',
   template: `
     <header>
-      <h1 class="mat-h1">Dynamic Content Editor</h1>
-      <h3 class="mat-h3">Dynamic components for Angular</h3>
+      <h1 class="mat-h1">NGX Dynamic Components</h1>
+      <h3 class="mat-h3">Configuration based dynamic components library for Angular.</h3>
     </header>
   `,
   styles: [`

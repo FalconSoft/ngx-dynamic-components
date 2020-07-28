@@ -55,11 +55,6 @@ export abstract class UIModel<T = AttributesMap> {
   }
 }
 
-export interface IVariableResolver {
-  resolve: (obj: object, vars?: object) => object;
-  resolveString: (str: string, vars?: object) => object|string;
-}
-
 export interface SelectedComponent {
   uiModel: UIModel;
   cssPath: string;
