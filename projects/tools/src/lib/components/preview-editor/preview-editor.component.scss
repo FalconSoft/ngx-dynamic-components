@@ -28,6 +28,11 @@ $color: rgba(0, 0, 0, .5);
   }
 }
 
+.ui-model-tab ::ng-deep .mat-tab-label {
+  height: 24px;
+  font-size: .85rem;
+}
+
 mat-card {
   width: 100%;
   padding: 0;

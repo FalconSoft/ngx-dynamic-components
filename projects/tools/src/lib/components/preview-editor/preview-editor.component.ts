@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent, JSONUtils,
-  getComponentById, BaseDynamicComponent} from '@ngx-dynamic-components/core';
+  getComponentById, BaseDynamicComponent, CoreService} from '@ngx-dynamic-components/core';
 import { map } from 'rxjs/operators';
 import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
@@ -21,18 +21,20 @@ enum Layout {
 export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   @Input() scripts: string;
-  @Input() initUiModel: UIModel;
+  @Input() initUiModel: UIModel | string;
   @Input() initDataModel: any;
   @Input() title: string;
   @ViewChild('uiModelEl') uiModelEl: ElementRef<HTMLElement>;
+  @ViewChild('uiModelJSONEl') uiModelJSONEl: ElementRef<HTMLElement>;
   @ViewChild('scriptsEl') scriptsEl: ElementRef<HTMLElement>;
   @ViewChild('dataModelEl') dataModelEl: ElementRef<HTMLElement>;
   @ViewChild('dynamicComponent') dynamicComponent: NGXDynamicComponent;
   @HostBinding('style.flex') flex = 'initial';
 
-  uiModel: UIModel;
+  uiModel: UIModel | string;
   dataModel: any;
   uiModelEditor: Ace.Editor;
+  uiModelJSONEditor: Ace.Editor;
   dataModelEditor: Ace.Editor;
   scriptsEditor: Ace.Editor;
   interpreter: Interpreter;
@@ -96,10 +98,30 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     }
   }
 
+  resize(): void {
+    this.scriptsEditor.resize();
+    this.uiModelEditor.resize();
+    this.uiModelJSONEditor.resize();
+    this.dataModelEditor.resize();
+  }
+
   private initUIPreview(): void {
     if (this.uiModelEl) {
+      this.uiModelJSONEditor = edit(this.uiModelJSONEl.nativeElement, {
+        mode: 'ace/mode/json',
+        autoScrollEditorIntoView: true,
+        tabSize: 2,
+        useSoftTabs: true,
+        readOnly: true
+      });
+
+      this.setJSONEditor(this.initUiModel as string);
+
       this.initEditor('uiModel', this.uiModelEl, this.initUiModel, 'ace/mode/xml')
-        .subscribe(uiModel => this.refreshPreview(uiModel, this.dataModel));
+        .subscribe(uiModel => {
+          this.setJSONEditor(uiModel);
+          this.refreshPreview(uiModel, this.dataModel);
+        });
 
       this.initEditor('dataModel', this.dataModelEl, this.initDataModel)
         .subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel ? JSON.parse(dataModel) : dataModel));
@@ -111,7 +133,14 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     this.dragService.uiModelUpdates$.subscribe(() => this.onDataModelChange(null));
   }
 
-  private refreshPreview(uiModel: UIModel, dataModel: any): void {
+  private setJSONEditor(uiModel: string): void {
+    CoreService.parseXMLModel(uiModel).then(res => {
+      this.uiModelJSONEditor.setValue(formatObjToJsonStr(res), -1);
+      this.uiModelJSONEditor.resize();
+    });
+  }
+
+  private refreshPreview(uiModel: UIModel|string, dataModel: any): void {
     this.uiModel = uiModel;
     this.dataModel = dataModel;
   }

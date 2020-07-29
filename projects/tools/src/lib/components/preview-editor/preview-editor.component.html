@@ -12,9 +12,16 @@
   <mat-card-content class="h-100">
     <as-split [useTransition]="true" [direction]="direction" unit="percent" [gutterSize]="codeSize ? 11 : 0">
       <as-split-area #area0="asSplitArea" class="d-flex" [size]="codeSize">
-        <mat-tab-group class="w-100">
+        <mat-tab-group class="w-100 ui-model-tab">
           <mat-tab label="UI Model">
-            <div #uiModelEl class="h-100"></div>
+            <mat-tab-group class="w-100 h-100" headerPosition="below">
+              <mat-tab label="XML">
+                <div #uiModelEl style="min-height: 200px;" class="h-100"></div>
+              </mat-tab>
+              <mat-tab label="JSON">
+                <div #uiModelJSONEl style="min-height: 200px;" class="h-100"></div>
+              </mat-tab>
+            </mat-tab-group>
           </mat-tab>
           <mat-tab label="Scripts">
             <div #scriptsEl class="h-100"></div>

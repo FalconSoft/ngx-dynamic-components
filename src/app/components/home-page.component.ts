@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
       <h1 class="mat-h1">NGX Dynamic Components</h1>
       <h3 class="mat-h3">Configuration based dynamic components library for Angular.</h3>
     </header>
-    <main class="container">
+    <main class="container pt-5">
       <markdown src="README.md" lineNumbers [start]="5"></markdown>
     </main>
   `,

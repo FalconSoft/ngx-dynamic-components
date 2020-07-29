@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { ResizeEvent } from 'angular-resizable-element';
 import { ComponentDescriptor, ComponentExample } from '@ngx-dynamic-components/core';
 import { COMPONENTS_LIST } from '../utils';
+import { PreviewEditorComponent } from '@ngx-dynamic-components/tools';
 
 export interface PeriodicElement {
   name: string;
@@ -22,7 +23,7 @@ export interface PeriodicElement {
       <ng-container *ngIf="!loading">
         <div class="mb-4" *ngFor="let ex of examples">
           <div #exWraper mwlResizable [enableGhostResize]="true" [resizeEdges]="{ bottom: true }"
-            (resizeEnd)="onResizeEnd($event, exWraper)">
+            (resizeEnd)="onResizeEnd($event, exWraper)" [validateResize]="validateSize">
             <dc-preview-editor
               [title]="ex.title"
               [scripts]="ex.scripts"
@@ -69,6 +70,7 @@ export interface PeriodicElement {
 })
 export class ComponentPageComponent implements OnInit, OnDestroy {
 
+  @ViewChild(PreviewEditorComponent) editor: PreviewEditorComponent;
   component: ComponentDescriptor;
   loading = false;
   examples: ComponentExample[] = [];
@@ -97,7 +99,18 @@ export class ComponentPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  validateSize(event: ResizeEvent): boolean {
+    const height = event.rectangle.height;
+    console.log(height)
+    if (height < 345) {
+      return false;
+    }
+    return true;
+  }
+
   onResizeEnd(event: ResizeEvent, element: HTMLDivElement): void {
-    element.style.height = `${event.rectangle.height}px`;
+    const height = event.rectangle.height;
+    element.style.height = `${height}px`;
+    this.editor.resize();
   }
 }
