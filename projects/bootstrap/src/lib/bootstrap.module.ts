@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,6 +12,8 @@ import { SelectComponent } from './components/select/select.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { registerComponents } from './components/register';
 
+export const TabsModuleForRoot: ModuleWithProviders<TabsModule> = TabsModule.forRoot()
+
 @NgModule({
   declarations: [SelectComponent, TabsComponent],
   imports: [
@@ -19,7 +21,7 @@ import { registerComponents } from './components/register';
     CommonModule,
     FormsModule,
     NgSelectModule,
-    TabsModule.forRoot()
+    TabsModuleForRoot
   ]
 })
 export class DynamicComponentsBootstrapModule {

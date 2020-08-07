@@ -1,10 +1,12 @@
+import { Directive } from '@angular/core';
 import { Router } from '@angular/router';
 import { StyleProperties, propDescription, PropTypes } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { BaseHTMLElement, parseHTMLUIModel } from '../../components/base-html-element';
 import { JSONUtils } from '../../utils/json.utils';
 
-export class AComponent extends BaseHTMLElement<LinkProperties> {
+@Directive()
+export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disable-line
   create(selectorElement: HTMLElement): void {
     super.create(selectorElement);
 

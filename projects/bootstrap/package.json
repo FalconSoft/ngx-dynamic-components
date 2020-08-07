@@ -19,10 +19,10 @@
     "form library"
   ],
   "peerDependencies": {
-    "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0",
+    "@angular/common": "^10.0.8",
+    "@angular/core": "^10.0.8",
     "@ngx-dynamic-components/core": ">=0.1.20",
     "bootstrap-scss": "^4.4.1",
-    "ngx-bootstrap": "^5.5.0"
+    "ngx-bootstrap": "^6.0.0"
   }
 }

@@ -1,9 +1,10 @@
-import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy, Directive } from '@angular/core';
 import { UIModel, ComponentEvent } from '../models';
 import { parseArgFunction } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties } from '../properties';
 
-export abstract class BaseDynamicComponent<T = StyleProperties> implements OnInit, OnChanges, OnDestroy {
+@Directive()
+export abstract class BaseDynamicComponent<T = StyleProperties> implements OnInit, OnChanges, OnDestroy { // tslint:disable-line
     dataModel: any;
     uiModel: UIModel<T>;
     abstract eventHandlers: EventEmitter<ComponentEvent>;

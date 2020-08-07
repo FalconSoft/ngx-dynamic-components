@@ -1,11 +1,12 @@
-import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges,
-  ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef } from '@angular/core';
+import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, ComponentFactoryResolver, Injector, ApplicationRef,
+  EmbeddedViewRef, Directive } from '@angular/core';
 import { UIModel, ComponentEvent, XMLResult } from '../models';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
 import { UISelectorComponent } from './ui-selector-component';
 import { BaseDynamicComponent } from './base-dynamic-component';
 
-export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges {
+@Directive()
+export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // tslint:disable-line
     dataModel: any;
     uiModel: UIModel<T>;
     eventHandlers = new EventEmitter<ComponentEvent>();

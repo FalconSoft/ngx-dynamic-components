@@ -7,7 +7,6 @@
       "@ngx-dynamic-components/core": "NgxDynamicComponentsCore",
       "@ngx-dynamic-components/material": "NgxDynamicComponentsMaterial",
       "@ngx-dynamic-components/bootstrap": "NgxDynamicComponentsBootstrap",
-      "ng2-dragula": "ng2Dragula",
       "ngx-bootstrap/tabs": "NgxBootstrapTabs",
       "ngx-bootstrap/accordion": "NgxBootstrapAccordion",
       "ngx-bootstrap/collapse": "NgxBootstrapCollapse",

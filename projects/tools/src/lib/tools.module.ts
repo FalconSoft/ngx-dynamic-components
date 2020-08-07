@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +17,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DragulaModule } from 'ng2-dragula';
 
 import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { MaterialModule } from '@ngx-dynamic-components/material';
@@ -27,6 +26,8 @@ import { PreviewEditorComponent } from './components/preview-editor/preview-edit
 import { ControlEditorComponent } from './components/control-editor/control-editor.component';
 import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
+
+export const AngularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> = AngularSplitModule.forRoot()
 
 @NgModule({
   declarations: [
@@ -51,8 +52,7 @@ import { AddDialogComponent } from './components/add-dialog/add-dialog.component
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AngularSplitModule.forRoot(),
-    DragulaModule.forRoot()
+    AngularSplitModuleForRoot
   ],
   exports: [ PreviewEditorComponent ]
 })

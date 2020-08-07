@@ -52,8 +52,7 @@
                 "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js"
               },
               "node_modules/marked/lib/marked.js"
-            ],
-            "es5BrowserSupport": true
+            ]
           },
           "configurations": {
             "production": {

@@ -1,8 +1,9 @@
-import { HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges } from '@angular/core';
+import { HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { propDescription, BindingProperties } from '../properties';
 import { BaseUIComponent } from '../components/base-ui-component';
 
-export class FormElementComponent<T = FormElementProperties> extends BaseUIComponent<T> implements OnInit, OnDestroy, OnChanges {
+@Directive()
+export class FormElementComponent<T = FormElementProperties> extends BaseUIComponent<T> implements OnInit, OnDestroy, OnChanges { // tslint:disable-line
   @HostBinding('attr.value') value = null;
   @HostBinding('attr.name') attrName: string;
   @HostBinding('attr.readonly') readonly: boolean;

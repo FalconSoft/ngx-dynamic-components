@@ -6,8 +6,6 @@ import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
 
-import { DragDropService } from '../../services/drag-drop.service';
-
 enum Layout {
   horizontal = 'horizontal',
   vertical = 'vertical'
@@ -45,7 +43,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   direction: Layout = Layout.horizontal;
   codeSize = 50;
 
-  constructor(private dragService: DragDropService) { }
+  constructor() { }
 
   eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent): void {
     if (!this.interpreter) { return; }
@@ -129,8 +127,6 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
       this.initEditor('scripts', this.scriptsEl, this.scripts, 'ace/mode/python')
         .subscribe(sc => this.scripts = sc);
     }
-
-    this.dragService.uiModelUpdates$.subscribe(() => this.onDataModelChange(null));
   }
 
   private setJSONEditor(uiModel: string): void {
