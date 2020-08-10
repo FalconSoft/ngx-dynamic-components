@@ -1,12 +1,10 @@
 # @ngx-dynamic-components/core
 
-NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms and any other web or mobile-friendly layouts.
+NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms or any other mobile-friendly web layouts.
 
-Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods to tap into key events in the lifecycle of a component.
+Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods.
 
-We have three libraries to consider
-
-**@ngx-dynamic-components\core** - a core dynamic rendering engine with no dependencies to external library. It contains a basic HTML components.
+**@ngx-dynamic-components\core** - a core dynamic rendering engine with no dependencies to any external library. It contains all basic HTML components.
 
 ## Getting started
 
@@ -117,8 +115,6 @@ From the example above you see that have four main properties:
  - **uiModel** - is you XML based configuration or JS Object
  - **dataModel** - data object what you can bind to
  - **eventHandlers** - event handlers function where you can subscribe to any events
-
-## FAQ
 
 ### Why would you use it.
 

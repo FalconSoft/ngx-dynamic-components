@@ -1,8 +1,8 @@
 # @ngx-dynamic-components/bootstrap
 
-NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms and any other web or mobile-friendly layouts.
+NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms or any other mobile-friendly web layouts.
 
-Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods to tap into key events in the lifecycle of a component.
+Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods.
 
 **@ngx-dynamic-components\bootstrap** - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
 

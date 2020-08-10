@@ -1,13 +1,13 @@
 # ngx-dynamic-components
 
-NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms and any other web or mobile-friendly layouts.
+NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms or any other mobile-friendly web layouts.
 
-Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods to tap into key events in the lifecycle of a component.
+Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods.
 
-We have three libraries to consider
-  - [**@ngx-dynamic-components\core**](./projects/core/readme.md) - a core dynamic rendering engine with no dependencies to external library. It contains a basic HTML components.
-  - [**@ngx-dynamic-components\bootstrap**](./projects/bootstrap/readme.md) - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
-  - [**@ngx-dynamic-components\material**](./projects/material/readme.md) - a set of [Angular Material Components](https://material.angular.io/)
+We have three libraries to offer
+  - [**@ngx-dynamic-components\core**](https://github.com/FalconSoft/ngx-dynamic-components/blob/master/projects/core/README.md) - a core dynamic rendering engine with no dependencies to any external library. And contains all basic HTML components.
+  - [**@ngx-dynamic-components\bootstrap**](https://github.com/FalconSoft/ngx-dynamic-components/blob/master/projects/bootstrap/readme.md) - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
+  - [**@ngx-dynamic-components\material**](https://github.com/FalconSoft/ngx-dynamic-components/blob/master/projects/material/readme.md) - a set of [Angular Material Components](https://material.angular.io/)
 
 ## Getting started
 
