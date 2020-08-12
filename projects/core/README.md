@@ -4,14 +4,14 @@ NGX Dynamic Components is a configuration based dynamic components library for A
 
 Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods.
 
-**@ngx-dynamic-components\core** - a core dynamic rendering engine with no dependencies to any external library. It contains all basic HTML components.
+**@ngx-dynamic-components/core** - a core dynamic rendering engine with no dependencies to any external library. It contains all basic HTML components.
 
 ## Getting started
 
 ### 1. Create Angular project with [Angular CLI](https://cli.angular.io/)
-### 2. Add **@ngx-dynamic-components\core** 
+### 2. Add **@ngx-dynamic-components/core** 
 
-`npm install @ngx-dynamic-components\core stream timers --save`
+`npm install @ngx-dynamic-components/core stream timers --save`
 
 ### 3. Import module
 

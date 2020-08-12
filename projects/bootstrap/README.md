@@ -10,9 +10,9 @@ Any web content can be dynamically rendered from JSON or XML based configuration
 
 ### 1. Create Angular project with [Angular CLI](https://cli.angular.io/)
 ### 2. Follow [installation instruction for ngx-bootstrap](https://valor-software.com/ngx-bootstrap/#/documentation#getting-started)
-### 3. Add **@ngx-dynamic-components\bootstrap** and **@ngx-dynamic-components\core**
+### 3. Add **@ngx-dynamic-components\bootstrap** and **@ngx-dynamic-components/core**
 
-`npm install @ngx-dynamic-components\core @ngx-dynamic-components\bootstrap stream timers --save`
+`npm install @ngx-dynamic-components/core @ngx-dynamic-components\bootstrap stream timers --save`
 
 ### 4. Import module
 
