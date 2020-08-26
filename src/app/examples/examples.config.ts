@@ -1,31 +1,15 @@
-import { ProfileFormUIModel, ProfileCardUIModel, ProfileDataModel, ProfileScripts } from './profile-page.config';
-import { dashboardConfig } from './dashboard.config';
-import { bsFormConfig } from './profile-bs.config';
-import { itemsListConfig } from './items-list.config';
-import { itemsTableConfig } from './items-table.config';
-import * as flex from './flex.config';
+
+import * as contactUs from './contact-us.form.config';
 
 export const EXAMPLES_LIST = [{
-  type: 'Flex panels',
-  name: 'flex-panels',
-  uiModel: flex.uIModel,
-  dataModel: flex.dataModel,
-  scripts: flex.scripts
-}, {
-  type: 'Form Controls',
-  name: 'profile-form',
-  uiModel: ProfileFormUIModel,
-  dataModel: ProfileDataModel,
-  scripts: ProfileScripts
-}, {
-  type: 'Form Controls',
-  name: 'profile-form-card',
-  uiModel: ProfileCardUIModel,
-  dataModel: ProfileDataModel,
-  scripts: ProfileScripts
-}, dashboardConfig, bsFormConfig, itemsListConfig, itemsTableConfig];
+  type: 'contact-us',
+  name: 'contact-us',
+  uiModel: contactUs.uIModel,
+  dataModel: contactUs.dataModel,
+  scripts: contactUs.scripts
+}];
 
-export function getGroupedExamples(): {name: string, examples: []}[] {
+export function getGroupedExamples(): { name: string, examples: [] }[] {
   const groups = EXAMPLES_LIST.reduce((map, ex) => {
     map[ex.type] = map[ex.type] || [];
     map[ex.type].push(ex);

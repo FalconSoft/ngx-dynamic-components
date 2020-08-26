@@ -19,8 +19,11 @@ export function getPackageCategories(): any[] {
   }, {
     packageName: 'Bootstrap',
     categories: bs.getCategories()
-  }, {
-    packageName: 'Material',
-    categories: mat.getCategories()
-  }];
+  }
+  // , {
+  //   packageName: 'Material',
+  //   categories: mat.getCategories()
+  // }
+
+];
 }

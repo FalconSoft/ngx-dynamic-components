@@ -42,7 +42,6 @@ import { JsonFormatterDirective } from './directives/json-formatter.directive';
 import { ExamplesPageComponent } from './components/examples-page/examples-page.component';
 import { ExampleViewComponent } from './components/example-view.component';
 import { SidenavLayoutComponent } from './components/sidenav-layout.component';
-import { StaticExampleViewComponent } from './components/static-example-view.component';
 
 @NgModule({
   declarations: [
@@ -62,8 +61,7 @@ import { StaticExampleViewComponent } from './components/static-example-view.com
     JsonFormatterDirective,
     ExamplesPageComponent,
     ExampleViewComponent,
-    SidenavLayoutComponent,
-    StaticExampleViewComponent
+    SidenavLayoutComponent
   ],
   imports: [
     BrowserModule,

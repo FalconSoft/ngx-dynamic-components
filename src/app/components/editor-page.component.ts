@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as flex from '../examples/flex.config';
+import * as contactUs from '../examples/contact-us.form.config';
 
 @Component({
   selector: 'dc-editor-page',
@@ -25,13 +25,13 @@ import * as flex from '../examples/flex.config';
 })
 export class EditorPageComponent implements OnInit {
 
-  defaultModel = flex.uIModel;
-  defaultDataModel = flex.dataModel;
+  defaultModel = contactUs.uIModel;
+  defaultDataModel = contactUs.dataModel;
   scripts: string;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.scripts = flex.scripts;
+    this.scripts = contactUs.scripts;
   }
 }

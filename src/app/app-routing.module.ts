@@ -10,13 +10,13 @@ import { ComponentsComponent } from './components/components.component';
 import { CategoriesComponent } from './components/categories.component';
 import { ExamplesPageComponent } from './components/examples-page/examples-page.component';
 import { ExampleViewComponent } from './components/example-view.component';
-import { StaticExampleViewComponent } from './components/static-example-view.component';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'editor', component: EditorPageComponent },
   { path: 'guides', component: GuidesPageComponent },
-  { path: 'components', component: ComponentsPageComponent,
+  {
+    path: 'components', component: ComponentsPageComponent,
     children: [
       { path: '', component: ComponentsComponent },
       { path: 'categories', component: CategoriesComponent },
@@ -24,16 +24,11 @@ export const routes: Routes = [
       { path: ':packageName/:component', component: ComponentPageComponent },
     ]
   },
-  { path: 'examples', component: ExamplesPageComponent,
+  {
+    path: 'examples', component: ExamplesPageComponent,
     children: [
-      { path: '', component: ExampleViewComponent},
-      { path: ':example', component: ExampleViewComponent}
-    ]
-  },
-  { path: 'static/examples', component: ExamplesPageComponent,
-    children: [
-      { path: '', component: StaticExampleViewComponent},
-      { path: ':example', component: StaticExampleViewComponent},
+      { path: '', component: ExampleViewComponent },
+      { path: ':example', component: ExampleViewComponent }
     ]
   }
 ];
@@ -44,6 +39,6 @@ export const routes: Routes = [
     CommonModule,
     RouterModule.forRoot(routes)
   ],
-  exports: [ RouterModule ]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
