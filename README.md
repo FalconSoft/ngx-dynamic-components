@@ -6,8 +6,8 @@ Any web content can be dynamically rendered from JSON or XML based configuration
 
 We have three libraries to offer
   - [**@ngx-dynamic-components/core**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/core) - a core dynamic rendering engine with no dependencies to any external library. And contains all basic HTML components.
-  - [**@ngx-dynamic-components\bootstrap**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/bootstrap) - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
-  - [**@ngx-dynamic-components\material**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/material) - a set of [Angular Material Components](https://material.angular.io/)
+  - [**@ngx-dynamic-components/bootstrap**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/bootstrap) - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
+  - [**@ngx-dynamic-components/material**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/material) - a set of [Angular Material Components](https://material.angular.io/)
 
 ## Getting started
 
@@ -48,7 +48,7 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
   `,
 
   styles: [`
-  ::ng-deep input[type=text], ::ng-deep select, ::ng-deep textarea {
+  input[type=text], select, textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -58,7 +58,7 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
     margin-bottom: 16px;
     resize: vertical
   }`,
-    `::ng-deep input[type=submit] {
+    `input[type=submit] {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -66,17 +66,18 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
     border-radius: 4px;
     cursor: pointer;
   }`,
-    `::ng-deep input[type=submit]:hover {
+    `input[type=submit]:hover {
     background-color: #45a049;
   }`,
-    `::ng-deep .container {
+    `.container {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
     max-width: 960px;
     margin: auto;
   }
-  `]
+  `],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
   uiModel = `

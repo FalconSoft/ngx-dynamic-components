@@ -43,9 +43,8 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
     (eventHandlers)="eventHandlers($event)">
   </ngx-dynamic-component>
   `,
-
   styles: [`
-  ::ng-deep input[type=text], ::ng-deep select, ::ng-deep textarea {
+  input[type=text], select, textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -55,7 +54,7 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
     margin-bottom: 16px;
     resize: vertical
   }`,
-    `::ng-deep input[type=submit] {
+    `input[type=submit] {
     background-color: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -63,18 +62,19 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
     border-radius: 4px;
     cursor: pointer;
   }`,
-    `::ng-deep input[type=submit]:hover {
+    `input[type=submit]:hover {
     background-color: #45a049;
   }`,
-    `::ng-deep .container {
+    `.container {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
     max-width: 960px;
     margin: auto;
   }
-  `]
-})
+  `],
+  encapsulation: ViewEncapsulation.None
+  })
 export class AppComponent {
   uiModel = `
   <div class="container">

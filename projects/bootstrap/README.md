@@ -4,15 +4,15 @@ NGX Dynamic Components is a configuration based dynamic components library for A
 
 Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods.
 
-**@ngx-dynamic-components\bootstrap** - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
+**@ngx-dynamic-components/bootstrap** - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
 
 ## Getting started
 
 ### 1. Create Angular project with [Angular CLI](https://cli.angular.io/)
 ### 2. Follow [installation instruction for ngx-bootstrap](https://valor-software.com/ngx-bootstrap/#/documentation#getting-started)
-### 3. Add **@ngx-dynamic-components\bootstrap** and **@ngx-dynamic-components/core**
+### 3. Add **@ngx-dynamic-components/bootstrap** and **@ngx-dynamic-components/core**
 
-`npm install @ngx-dynamic-components/core @ngx-dynamic-components\bootstrap stream timers --save`
+`npm install @ngx-dynamic-components/core @ngx-dynamic-components/bootstrap stream timers --save`
 
 ### 4. Import module
 
