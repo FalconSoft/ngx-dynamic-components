@@ -1,5 +1,6 @@
 
 import { getItemByIndex } from '../utils/helpers';
+import { deprecate } from 'util';
 
 /**
  * Provides utility classes to traverse JSON objects.
@@ -24,8 +25,11 @@ export class JSONUtils {
      * const newObject = { someObject: 11 };
      * const result = JSONUtils.find(testObject, '$.parent/newProperty', newObject);
      */
+    /** @deprecated */
     public static find(objectValue: object, path: string, defaultValue?: any): any {
-      if (path === '$') {
+      // console.log('==> find ==>', objectValue, path);
+
+      if (path === '$' || path === '') {
         return objectValue;
       }
 

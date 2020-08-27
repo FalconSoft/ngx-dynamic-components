@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { propDescription, BindingProperties, PropTypes } from '../../properties';
 import { OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult, AttributesMap } from '../../models';
-import { JSONUtils } from '../../utils/json.utils';
 import { BaseUIComponent } from '../../components/base-ui-component';
+import { queryValue } from '../../utils';
 
 @Component({
   selector: 'dc-radio-group',
@@ -35,7 +35,7 @@ export class RadioGroupComponent extends BaseUIComponent<RadioGroupProperties> {
     }
 
     if (typeof src === 'string' && src.startsWith('$.')) {
-      return JSONUtils.find(this.dataModel, src);
+      return queryValue(this.dataModel, src);
     }
   }
 }

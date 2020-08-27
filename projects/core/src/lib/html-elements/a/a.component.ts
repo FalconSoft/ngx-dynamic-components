@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { StyleProperties, propDescription, PropTypes } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { BaseHTMLElement, parseHTMLUIModel } from '../../components/base-html-element';
-import { JSONUtils } from '../../utils/json.utils';
+import { queryValue } from '../../utils';
 
 @Directive()
 export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disable-line
@@ -40,7 +40,7 @@ export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disa
     if (matches) {
       matches.forEach(m => {
         const path = m.replace(/[{}]+/, '');
-        const res = JSONUtils.find(this.dataModel, path);
+        const res = queryValue(this.dataModel, path);
         routerLink = routerLink.replace(m, res);
       });
     }

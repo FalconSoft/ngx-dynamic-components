@@ -14,6 +14,50 @@ export type BaseHTMLElementConstructor = new () => BaseHTMLElement;
  * @param id Component identifier.
  */
 export function getComponentById(uiModel: UIModel, id: string): BaseDynamicComponent {
-  const componentUIModel = JSONUtils.find(uiModel, `$(children:id=${id})`) as UIModel;
+
+  function traverseUiModel(uModel: UIModel, predicate: (uModel) => boolean): UIModel {
+    if (predicate(uModel)) {
+      return uModel;
+    }
+
+    if (uModel.children?.length) {
+      for (const chileModel of uModel.children) {
+        const res = traverseUiModel(chileModel, predicate);
+        if (res) {
+          return res;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  const componentUIModel = traverseUiModel(uiModel, uim => uim.id === id);
   return componentUIModel?.getComponent();
+}
+
+export function setValue(objectValue: object, path: string, value: any): void {
+  JSONUtils.setValue(objectValue, path, value);
+}
+
+export function queryValue(obj: any, path: string, defaultValue: any = null): any {
+  if (path === '$' || path === '') {
+    return defaultValue;
+  }
+
+  if (path.startsWith('$.')) {
+    path = path.substring(2);
+  }
+
+  const props = path.indexOf('/') > 0 ? path.split('/') : path.split('.')
+
+  let res = obj;
+  for (const p of props) {
+    res = obj[p];
+    if (!res && res !== 0) {
+      return res || defaultValue;
+    }
+  }
+
+  return res;
 }

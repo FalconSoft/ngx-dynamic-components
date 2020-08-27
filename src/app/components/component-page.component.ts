@@ -80,18 +80,18 @@ export class ComponentPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.pipe(takeUntil(this.destroy$),
-    tap(() => {
-      if (this.component) {
-        this.loading = true;
-      }
-    }), debounceTime(1)).subscribe(p => {
-      this.component = COMPONENTS_LIST.find(c => c.name === p.component && c.packageName === p.packageName);
-      this.examples = [];
-      if (this.component.example) {
-        this.examples = Array.isArray(this.component.example) ? this.component.example : [this.component.example];
-      }
-      this.loading = false;
-    });
+      tap(() => {
+        if (this.component) {
+          this.loading = true;
+        }
+      }), debounceTime(1)).subscribe(p => {
+        this.component = COMPONENTS_LIST.find(c => c.name === p.component && c.packageName === p.packageName);
+        this.examples = [];
+        if (this.component.example) {
+          this.examples = Array.isArray(this.component.example) ? this.component.example : [this.component.example];
+        }
+        this.loading = false;
+      });
   }
 
   ngOnDestroy(): void {
@@ -101,7 +101,7 @@ export class ComponentPageComponent implements OnInit, OnDestroy {
 
   validateSize(event: ResizeEvent): boolean {
     const height = event.rectangle.height;
-    console.log(height)
+
     if (height < 345) {
       return false;
     }

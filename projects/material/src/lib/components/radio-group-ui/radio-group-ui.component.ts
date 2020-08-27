@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentExample, propDescription, ComponentDescriptor,
-  UIModel, AttributesMap, Categories, XMLResult, OptionValue, JSONUtils } from '@ngx-dynamic-components/core';
+  UIModel, AttributesMap, Categories, XMLResult, OptionValue, queryValue } from '@ngx-dynamic-components/core';
 
 import { packageName } from '../../constants';
 
@@ -32,7 +32,7 @@ export class RadioGroupUIComponent extends BaseUIComponent<RadioGroupProperties>
     }
 
     if (typeof src === 'string' && src.startsWith('$.')) {
-      return JSONUtils.find(this.dataModel, src);
+      return queryValue(this.dataModel, src);
     }
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, HostBinding, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent, JSONUtils,
-  getComponentById, BaseDynamicComponent, CoreService} from '@ngx-dynamic-components/core';
+import {
+  UIModel, NGXDynamicComponent, formatObjToJsonStr, ComponentEvent,
+  getComponentById, BaseDynamicComponent, CoreService
+} from '@ngx-dynamic-components/core';
 import { map } from 'rxjs/operators';
 import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
@@ -45,7 +47,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
-  async eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent): Promise<void> {
+  async eventHandlers({ eventName, rootUIModel, parameters = null }: ComponentEvent): Promise<void> {
     if (!this.interpreter) { return; }
 
     if (this.interpreter.hasFunction(this.scripts, eventName)) {
@@ -56,17 +58,20 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
           ...parameters
         }, eventName);
       } catch (e) {
-        alert('${e.message}')
+        alert(`${e.message}`)
       }
     }
   }
 
   ngOnInit(): void {
     this.interpreter = jsPython();
-    this.interpreter.addFunction('getComponentById', (uiModel: UIModel, id: string): BaseDynamicComponent => {
-      return getComponentById(uiModel, `$(children:id=${id})`);
-    });
-    this.interpreter.assignGlobalContext({JSONUtils});
+    this.interpreter.addFunction('getComponentById',
+      (uiModel: UIModel, id: string): BaseDynamicComponent => getComponentById(uiModel, id)
+    );
+
+    this.interpreter.addFunction('alert', (msg: string): void => alert(msg));
+
+    this.interpreter.assignGlobalContext({});
     this.uiModel = this.initUiModel;
     this.dataModel = this.initDataModel;
   }
@@ -136,12 +141,12 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private refreshPreview(uiModel: UIModel|string, dataModel: any): void {
+  private refreshPreview(uiModel: UIModel | string, dataModel: any): void {
     this.uiModel = uiModel;
     this.dataModel = dataModel;
   }
 
-  private initEditor(name: string, element: ElementRef, value: object|string, mode = 'ace/mode/json'): Observable<any> {
+  private initEditor(name: string, element: ElementRef, value: object | string, mode = 'ace/mode/json'): Observable<any> {
     const editor = edit(element.nativeElement, {
       mode,
       autoScrollEditorIntoView: true,

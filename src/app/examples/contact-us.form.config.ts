@@ -1,5 +1,5 @@
 export const uIModel = `
-  <form onSubmit="contactUs(data)">
+  <form onSubmit="contactUs()">
     <h3>Contact us</h3>
     <div class="row">
       <div class="col-12 col-md-4 mb-2">
@@ -34,7 +34,7 @@ export const dataModel = {}
 export const scripts = `
 # Evaluated with JSPython https://jspython.dev/
 
-async def onChange():
+def onChange():
   btn = getComponentById(rootUIModel, "submitBtn")
 
   if dataModel.fullName == null or dataModel.email == null or dataModel.message == null:
@@ -43,5 +43,6 @@ async def onChange():
     btn.disabled = null
 
 def contactUs():
-  alert("contactUs " + )
+  alert(JSON.stringify(dataModel))
+
 `;

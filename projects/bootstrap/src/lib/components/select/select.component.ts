@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { JSONUtils, BindingProperties, propDescription, PropertyCategories,  OptionValue,
-  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent, PropTypes } from '@ngx-dynamic-components/core';
+import { BindingProperties, propDescription, PropertyCategories,  OptionValue,
+  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent, PropTypes, queryValue } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 import example from './select.examples';
 
@@ -58,7 +58,7 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> {
     }
 
     if (typeof src === 'string' && src.startsWith('$.')) {
-      return JSONUtils.find(this.dataModel, src);
+      return queryValue(this.dataModel, src);
     }
   }
 }

@@ -1,8 +1,8 @@
 import { Component, HostListener, HostBinding, DoCheck } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { AttributesMap, OptionValue, ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
-import { JSONUtils } from '../../utils/json.utils';
 import { BindingProperties, propDescription, PropertyCategories, PropTypes } from '../../properties';
+import { queryValue } from '../../utils';
 
 @Component({
   selector: 'select', // tslint:disable-line
@@ -53,7 +53,7 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> implement
     }
 
     if (typeof src === 'string' && src.startsWith('$.')) {
-      list = JSONUtils.find(this.dataModel, src);
+      list = queryValue(this.dataModel, src);
     }
 
     if (list && (this.properties.labelProp || this.properties.valueProp)) {
@@ -133,15 +133,19 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
   `,
   dataModel: {},
   scripts: `
+  # Evaluated with JSPython https://jspython.dev/
+
   def countryChanged():
     dataModel.city = null
-    print(dataModel.country)
     if dataModel.country == null:
       dataModel.cities = []
     if dataModel.country == "uk":
       dataModel.cities = [{label: "Select city", value: null}, {label: "London", value: "lon"}, {label: "Liverpool", value: "liv"}]
     if dataModel.country == "ua":
       dataModel.cities = [{label: "Select city", value: null}, {label: "Kyiv", value: "kyiv"}, {label: "Lviv", value: "lviv"}]
+
+    print(dataModel)
+
   `,
   title: 'Basic select example'
 };

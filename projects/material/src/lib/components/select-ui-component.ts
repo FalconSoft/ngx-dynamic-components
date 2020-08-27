@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseUIComponent, DataModelProperties, ComponentDescriptor, UIModel, ComponentExample,
-  propDescription, Categories, XMLResult, AttributesMap, OptionValue, JSONUtils } from '@ngx-dynamic-components/core';
+  propDescription, Categories, XMLResult, AttributesMap, OptionValue, queryValue } from '@ngx-dynamic-components/core';
 import { packageName } from '../constants';
 
 @Component({
@@ -31,7 +31,7 @@ export class SelectUIComponent extends BaseUIComponent<SelectProperties> {
     }
 
     if (typeof src === 'string' && src.startsWith('$.')) {
-      return JSONUtils.find(this.dataModel, src);
+      return queryValue(this.dataModel, src);
     }
   }
 }

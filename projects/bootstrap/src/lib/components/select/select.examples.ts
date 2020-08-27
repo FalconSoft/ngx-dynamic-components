@@ -50,6 +50,8 @@ export const example3: ComponentExample<UIModel<SelectProperties>> = {
   `,
   dataModel: {},
   scripts: `
+  # Evaluated with JSPython https://jspython.dev/
+
   def countryChanged():
     dataModel.city = null
     if dataModel.country == null:
