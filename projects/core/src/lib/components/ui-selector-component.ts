@@ -24,7 +24,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
   public component: BaseDynamicComponent;
 
   async ngOnInit(): Promise<void> {
-    this.createComponent();
+    await this.createComponent();
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
@@ -32,7 +32,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
     if (!this.component || this.component.uiModel.type !== this.uiModel.type) {
         const shouldInit = !this.component || this.component.uiModel.id !== this.uiModel.id;
         // Recreate component with new type.
-        this.createComponent();
+        await this.createComponent();
         if (shouldInit && Object.values(changes).some(c => c.firstChange === false)) {
           this.emitEvent(this.properties.onInit);
         }
@@ -49,7 +49,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
           }
         }
         if (changed) {
-          this.component.ngOnChanges(changes);
+          await this.component.ngOnChanges(changes);
         }
       }
   }
@@ -58,7 +58,7 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
     this.component.ngOnDestroy();
   }
 
-  private createComponent(): void {
+  private async createComponent(): Promise<void> {
     try {
       const descriptor = CoreService.getComponentDescriptor(this.uiModel.type);
       const ComponentClass = descriptor.component;

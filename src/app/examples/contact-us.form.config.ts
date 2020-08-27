@@ -23,7 +23,7 @@ export const uIModel = `
     </div>
     <div class="row">
       <div class="col ml-auto">
-        <button class="btn btn-primary" id="submitBtn" type="submit">SEND MESSAGE</button>
+        <button class="btn btn-primary" id="submitBtn" disabled="false" type="submit">SEND MESSAGE</button>
       </div>
     </div>
   </form>
@@ -34,9 +34,13 @@ export const dataModel = {}
 export const scripts = `
 # Evaluated with JSPython https://jspython.dev/
 
-def onChange():
+async def onChange():
   btn = getComponentById(rootUIModel, "submitBtn")
-  btn.disabled = dataModel.fullName == null or dataModel.email == null or dataModel.message == null
+
+  if dataModel.fullName == null or dataModel.email == null or dataModel.message == null:
+    btn.disabled = true
+  else:
+    btn.disabled = null
 
 def contactUs():
   alert("contactUs " + )

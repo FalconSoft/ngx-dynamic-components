@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import * as xml from 'xml2js';
 import { ComponentDescriptor, UIModel, AttributesMap, XMLResult } from '../models';
 import { BaseUIComponentConstructor, toXMLResult, BaseHTMLElementConstructor } from '../utils';
 import { ControlProperties, UIModelProperty } from '../properties';
+import * as iXml from 'isomorphic-xml2js';
 
 /**
  * Child Elements directives within Containers
@@ -57,14 +57,37 @@ export class CoreService {
   }
 
   public static async parseXMLModel(uiModelXml: string): Promise<UIModel> {
-    try {
-      const res = await xml.parseStringPromise(uiModelXml, {
-        explicitChildren: true,
-        preserveChildrenOrder: true
+
+    function parseStringPromise(xmlString: string): Promise<any> {
+      return new Promise((s, e) => {
+        const ops = {
+          explicitChildren: true,
+          preserveChildrenOrder: true
+        };
+
+        iXml.parseString(xmlString, ops, (err, res) => {
+          if (res) {
+            // need to clone result as it would mutate instance
+            return s(JSON.parse(JSON.stringify(res)));
+          }
+          if (err) {
+            // quite dirty way to get meaningful error message
+            let msg = err.message.substring(err.message.indexOf('12px">') + 6);
+            msg = msg.substring(0, msg.indexOf('</div>'));
+            return e(msg);
+          }
+          return null;
+        });
       });
+    }
+
+    try {
+      const res = await parseStringPromise(uiModelXml);
+
       if (res) {
         const type = Object.keys(res)[0];
         const xmlObj = res[type];
+        xmlObj['#name'] = type;
         return CoreService.getUIModel(toXMLResult(xmlObj));
       }
     } catch (e) {

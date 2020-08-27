@@ -45,18 +45,18 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
-  eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent): void {
+  async eventHandlers({eventName, rootUIModel, parameters = null}: ComponentEvent): Promise<void> {
     if (!this.interpreter) { return; }
 
     if (this.interpreter.hasFunction(this.scripts, eventName)) {
       try {
-        this.interpreter.evaluate(this.scripts, {
+        await this.interpreter.evaluate(this.scripts, {
           rootUIModel,
           dataModel: this.dataModel,
           ...parameters
         }, eventName);
       } catch (e) {
-        this.interpreter.evaluate(`alert("${e.message}")`);
+        alert('${e.message}')
       }
     }
   }
