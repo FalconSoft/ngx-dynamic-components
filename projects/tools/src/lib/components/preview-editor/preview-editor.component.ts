@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
-import { JSONUtils } from '@ngx-dynamic-components/core/public_api';
 
 enum Layout {
   horizontal = 'horizontal',
