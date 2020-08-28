@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
           [initDataModel]="ex.dataModel"
           ></dc-preview-editor>
       <h3 class="">Data Model: </h3>
-      <div dcJsonFormatter [json]="editor.dataModel"></div>
+      <div dcJsonFormatter [json]="editor.dataModelCopy"></div>
     </ng-container>
   `,
   styles: [`

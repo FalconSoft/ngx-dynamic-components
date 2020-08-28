@@ -1,6 +1,5 @@
 import { OnDestroy, HostBinding, SimpleChanges, OnChanges, Directive, Input, Output, EventEmitter } from '@angular/core';
 import { AttributesMap, UIModel, ComponentEvent } from '../models';
-import { JSONUtils } from '../utils/json.utils';
 import { kebabStrToCamel, queryValue, setValue } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 import { InputProperties } from '../ui-components/input/input.component';

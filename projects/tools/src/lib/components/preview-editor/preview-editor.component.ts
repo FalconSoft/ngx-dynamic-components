@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
+import { JSONUtils } from '@ngx-dynamic-components/core/public_api';
 
 enum Layout {
   horizontal = 'horizontal',
@@ -31,8 +32,10 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   @ViewChild('dynamicComponent') dynamicComponent: NGXDynamicComponent;
   @HostBinding('style.flex') flex = 'initial';
 
-  uiModel: UIModel | string;
   dataModel: any;
+  dataModelCopy: any;
+  uiModel: UIModel | string;
+
   uiModelEditor: Ace.Editor;
   uiModelJSONEditor: Ace.Editor;
   dataModelEditor: Ace.Editor;
@@ -51,6 +54,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     if (!this.interpreter) { return; }
 
     if (this.interpreter.hasFunction(this.scripts, eventName)) {
+      const inDataModel = this.dataModel;
       try {
         await this.interpreter.evaluate(this.scripts, {
           rootUIModel,
@@ -143,7 +147,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   private refreshPreview(uiModel: UIModel | string, dataModel: any): void {
     this.uiModel = uiModel;
-    this.dataModel = dataModel;
+    this.dataModelCopy = JSON.parse(JSON.stringify(dataModel));
   }
 
   private initEditor(name: string, element: ElementRef, value: object | string, mode = 'ace/mode/json'): Observable<any> {

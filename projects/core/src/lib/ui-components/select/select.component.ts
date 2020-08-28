@@ -119,7 +119,7 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
     <section class="flex-column">
       <section class="form-group">
         <label class="col-form-label" width="60px">Country</label>
-        <select class="form-control" onSelect="countryChanged()" width="300px" binding="$.country">
+        <select class="form-control" onSelect="countryChanged(selectedItem)" width="300px" binding="$.country">
           <option>Select country</option>
           <option value="uk">United Kingdom</option>
           <option value="ua">Ukraine</option>
@@ -137,14 +137,20 @@ export const example: ComponentExample<UIModel<SelectProperties>> = {
 
   def countryChanged():
     dataModel.city = null
-    if dataModel.country == null:
-      dataModel.cities = []
-    if dataModel.country == "uk":
-      dataModel.cities = [{label: "Select city", value: null}, {label: "London", value: "lon"}, {label: "Liverpool", value: "liv"}]
-    if dataModel.country == "ua":
-      dataModel.cities = [{label: "Select city", value: null}, {label: "Kyiv", value: "kyiv"}, {label: "Lviv", value: "lviv"}]
 
-    print(dataModel)
+    if selectedItem?.value == "uk":
+      dataModel.cities = [
+        {label: "Select city", value: null},
+        {label: "London", value: "lon"},
+        {label: "Liverpool", value: "liv"}
+      ]
+
+    if selectedItem?.value == "ua":
+      dataModel.cities = [
+        {label: "Select city", value: null},
+        {label: "Kyiv", value: "kyiv"},
+        {label: "Lviv", value: "lviv"}
+      ]
 
   `,
   title: 'Basic select example'

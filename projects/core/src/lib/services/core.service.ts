@@ -87,11 +87,15 @@ export class CoreService {
       if (res) {
         const type = Object.keys(res)[0];
         const xmlObj = res[type];
+        if(typeof xmlObj === 'string')
+        {
+          throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
+        }
         xmlObj['#name'] = type;
         return CoreService.getUIModel(toXMLResult(xmlObj));
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
       throw e;
     }
   }
@@ -126,7 +130,9 @@ export class CoreService {
       }
 
       if (xmlRes.childNodes && !uiModel.children) {
-        uiModel.children = xmlRes.childNodes.map((r: any) => CoreService.getUIModel(toXMLResult(r)));
+        uiModel.children = xmlRes.childNodes
+          .filter(n => n['#name'] !== '#comment')
+          .map((r: any) => CoreService.getUIModel(toXMLResult(r)));
       }
       return uiModel;
     } else {

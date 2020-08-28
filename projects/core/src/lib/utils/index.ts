@@ -2,7 +2,6 @@ import { BaseUIComponent } from '../components/base-ui-component';
 import { BaseHTMLElement } from '../components/base-html-element';
 import { BaseDynamicComponent } from '../components/base-dynamic-component';
 import { UIModel } from '../models';
-import { JSONUtils } from './json.utils';
 
 export * from './helpers';
 export type BaseUIComponentConstructor = new () => BaseUIComponent;
@@ -36,10 +35,41 @@ export function getComponentById(uiModel: UIModel, id: string): BaseDynamicCompo
   return componentUIModel?.getComponent();
 }
 
+/**
+ * A helper method that sets value based on path.
+ * e.g. setValue({}, 'obj.prop1.value', 22) will create a corresponding object and assign value = 22
+ */
 export function setValue(objectValue: object, path: string, value: any): void {
-  JSONUtils.setValue(objectValue, path, value);
+  if (!objectValue) {
+    objectValue = {};
+  }
+
+  if (path === '$' || path === '') {
+    Object.assign(objectValue, value);
+    return;
+  }
+
+  if (path.startsWith('$.')) {
+    path = path.substring(2);
+  }
+
+  const props = path.indexOf('/') > 0 ? path.split('/') : path.split('.');
+  let res: any = objectValue;
+
+  for (let i = 0; i < props.length - 1; i++) {
+    res = objectValue[props[i]];
+    if (typeof res !== 'object') {
+      objectValue[props[i]] = {};
+      res = objectValue[props[i]];
+    }
+  }
+
+  res[props[props.length - 1]] = value;
 }
 
+/**
+ * a helper methods that query JS Object for a value based on path. obj.subObject.value
+ */
 export function queryValue(obj: any, path: string, defaultValue: any = null): any {
   if (path === '$' || path === '') {
     return defaultValue;
@@ -49,7 +79,7 @@ export function queryValue(obj: any, path: string, defaultValue: any = null): an
     path = path.substring(2);
   }
 
-  const props = path.indexOf('/') > 0 ? path.split('/') : path.split('.')
+  const props = path.indexOf('/') > 0 ? path.split('/') : path.split('.');
 
   let res = obj;
   for (const p of props) {

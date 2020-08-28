@@ -10,6 +10,5 @@ export * from './lib/components/ngx-dynamic-component';
 export * from './lib/core.module';
 export * from './lib/models';
 export * from './lib/properties';
-export * from './lib/utils/json.utils';
 export * from './lib/utils';
 export * from './lib/ui-components/register';
