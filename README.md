@@ -14,7 +14,7 @@ We have three libraries to offer
 ### 1. Create Angular project with [Angular CLI](https://cli.angular.io/)
 ### 2. Add **@ngx-dynamic-components/core** 
 
-`npm install @ngx-dynamic-components/core stream timers --save`
+`npm install @ngx-dynamic-components/core --save`
 
 ### 3. Import module
 
