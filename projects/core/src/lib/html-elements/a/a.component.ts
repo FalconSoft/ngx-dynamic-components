@@ -44,6 +44,7 @@ export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disa
         routerLink = routerLink.replace(m, res);
       });
     }
+
     return routerLink;
   }
 }

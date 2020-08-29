@@ -12,14 +12,23 @@ export const olDescriptor: ComponentDescriptor<BaseHTMLElementConstructor, HTMLP
   component: BaseHTMLElement,
   example: {
     title: 'HTML <ol> example',
-    uiModel: `<div>
-    <ol>
-    <li>item</li>
-    <li>item</li>
-    <li>item</li>
+    uiModel: `
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb px-0">
+      <li class="breadcrumb-item"><a routerLink="app/{$.appInfo/ownerName}/{$.appInfo/appName}">Home</a></li>
+      <li class="breadcrumb-item"><a routerLink="app/{$.appInfo/ownerName}/{$.appInfo/appName}/orders-list">Orders</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Details</li>
     </ol>
-    </div>`,
-    dataModel: {}
+  </nav>
+
+    `,
+    dataModel: {
+      appInfo: {
+        ownerName: 'TestUser',
+        appName: 'LongAppName'
+      }
+    }
   },
   parseUIModel: parseHTMLUIModel,
   defaultModel: '<ol></ol>'

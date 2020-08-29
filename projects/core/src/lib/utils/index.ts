@@ -78,6 +78,8 @@ export function queryValue(obj: any, path: string, defaultValue: any = null): an
   if (path.startsWith('$.')) {
     path = path.substring(2);
   }
+  path = path.replace('}', '')
+  path = path.replace('{', '')
 
   const props = path.indexOf('/') > 0 ? path.split('/') : path.split('.');
 
