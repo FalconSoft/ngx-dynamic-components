@@ -70,6 +70,9 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
       if (htmlProps.content) {
         this.element.textContent = htmlProps.content;
       }
+      if (htmlProps.title) {
+        this.element.title = htmlProps.title;
+      }
       this.setHostStyles();
     }
 
@@ -108,6 +111,12 @@ export class HTMLProperties extends StyleProperties {
     example: '<span>Text</span>'
   })
   htmlContent?: string;
+
+  @propDescription({
+    description: 'HTML element title',
+    example: 'Description text'
+  })
+  title?: string;
 }
 
 export type HTMLPropertiesConstrutor = new () => HTMLProperties;

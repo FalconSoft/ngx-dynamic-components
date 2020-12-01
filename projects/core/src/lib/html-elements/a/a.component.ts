@@ -86,7 +86,7 @@ export const example: ComponentExample<UIModel<LinkProperties>> = {
   title: 'Basic link example',
   uiModel: `
   <section class="row align-items-center m-1">
-    <a class="btn btn-primary mr-2" href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</a>
+    <a title="Link to Google" class="btn btn-primary mr-2" href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</a>
     <a target="_blank" href="https://www.google.com/">Google</a>
   </section>
   `,
