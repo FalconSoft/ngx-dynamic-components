@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatRadioModule } from '@angular/material/radio';
 import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -12,7 +12,7 @@ describe('RadioGroupUIComponent', () => {
   let component: RadioGroupUIComponent;
   let fixture: ComponentFixture<RadioGroupUIComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RadioGroupUIComponent ],
       imports: [DynamicComponentsCoreModule, NoopAnimationsModule, MatRadioModule, FormsModule, FlexLayoutModule],
@@ -20,7 +20,7 @@ describe('RadioGroupUIComponent', () => {
     TestBed.compileComponents();
   }));
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(RadioGroupUIComponent);
     component = fixture.componentInstance;
     component.uiModel = example.uiModel;

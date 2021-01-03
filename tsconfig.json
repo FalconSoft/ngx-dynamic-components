@@ -47,6 +47,7 @@
       ],
       "@ngx-dynamic-components/tools/*": [
         "dist/@ngx-dynamic-components/tools/*"
+        // "projects/tools/src/*"
       ],
       "core": [
         "dist/@ngx-dynamic-components/core"

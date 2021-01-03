@@ -18,11 +18,13 @@ import { LinkComponent } from './ui-components/link/link.component';
 import { LabelComponent } from './ui-components/label/label.component';
 import { FormComponent } from './ui-components/form/form.component';
 import { SelectComponent } from './ui-components/select/select.component';
+import { RepeaterComponent } from './ui-components/repeater/repeater.component';
 
 @NgModule({
   declarations: [
     ContainerComponent,
     FormComponent,
+    RepeaterComponent,
     TextComponent,
     LabelComponent,
     ButtonComponent,

@@ -70,8 +70,8 @@ export const example: ComponentExample<UIModel<ButtonProperties>> = {
   uiModel: `
   <section>
     <button class="btn btn-primary" type="button"><icon class="fa fa-search"></icon>Search</button>
-    <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog">Click</button>
-    <button class="btn btn-secondary" disabled="true" onClick="consoleLog" type="submit">Submit</button>
+    <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog()">Click</button>
+    <button class="btn btn-secondary" disabled="true" onClick="consoleLog()" type="submit">Submit</button>
     <button class="btn btn-danger" display="none">Hidden</button>
   </section>
   `,

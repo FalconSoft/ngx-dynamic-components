@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTableModule } from '@angular/material/table';
 import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 
@@ -10,7 +10,7 @@ describe('DatableUiComponent', () => {
   let component: DatableUIComponent;
   let fixture: ComponentFixture<DatableUIComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [DatableUIComponent],
       imports: [MatTableModule, FormsModule, DynamicComponentsCoreModule]

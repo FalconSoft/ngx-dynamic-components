@@ -1,8 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -17,7 +16,7 @@ describe('TabsUiComponent', () => {
   let component: TabsUIComponent;
   let fixture: ComponentFixture<TabsUIComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TabsUIComponent, InputUIComponent, TextUIComponent, SelectUIComponent],
       imports: [MatTabsModule, MatInputModule, MatSelectModule, DynamicComponentsCoreModule, NoopAnimationsModule, FormsModule],
@@ -27,7 +26,7 @@ describe('TabsUiComponent', () => {
     registerComponents();
   }));
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(TabsUIComponent);
     component = fixture.componentInstance;
     component.uiModel = example.uiModel;

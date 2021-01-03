@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ControlEditorComponent } from './control-editor.component';
 
@@ -6,7 +6,7 @@ xdescribe('ControlEditorComponent', () => {
   let component: ControlEditorComponent;
   let fixture: ComponentFixture<ControlEditorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ControlEditorComponent ]
     })
