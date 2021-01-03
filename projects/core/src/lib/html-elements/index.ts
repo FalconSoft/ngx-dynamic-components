@@ -26,11 +26,12 @@ const htmlElementDescriptor: ComponentDescriptor<BaseHTMLElementConstructor, HTM
   defaultModel: '<HTML_ELEMENT_TAG></HTML_ELEMENT_TAG>'
 };
 
-export const htmlDescriptors: ComponentDescriptor<BaseHTMLElementConstructor, HTMLPropertiesConstrutor>[] = tags.map(tag => {
-  return replaceStringValues<ComponentDescriptor<BaseHTMLElementConstructor, HTMLPropertiesConstrutor>>(htmlElementDescriptor, tag);
-});
+export const htmlDescriptors: ComponentDescriptor<BaseHTMLElementConstructor, HTMLPropertiesConstrutor>[] =
+  tags.map(
+    tag => replaceStringValues<ComponentDescriptor<BaseHTMLElementConstructor, HTMLPropertiesConstrutor>>(htmlElementDescriptor, tag)
+  );
 
-function replaceStringValues<T = object>(target: T, tag: string): T {
+function replaceStringValues<T = Record<string, unknown>>(target: T, tag: string): T {
   const res = {} as T;
   return Object.entries(target).reduce((obj, [key, value]) => {
     obj[key] = value;

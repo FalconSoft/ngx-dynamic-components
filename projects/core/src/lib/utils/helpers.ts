@@ -47,13 +47,9 @@ export function getCssPath(el: Node, parent: Element): string {
   }
 }
 
-export const kebabStrToCamel = (s: string) => {
-  return s.replace(/([-][a-z])/ig, ($1) => {
-    return $1.toUpperCase().replace('-', '');
-  });
-};
+export const kebabStrToCamel = (s: string) => s.replace(/([-][a-z])/ig, ($1) => $1.toUpperCase().replace('-', ''));
 
-export function setFields(fields: Array<string|string[]>, data: object[]): object[] {
+export function setFields(fields: Array<string|string[]>, data: Record<string, unknown>[]): Record<string, unknown>[] {
   if (!fields) {
     return data;
   }

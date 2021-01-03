@@ -4,7 +4,7 @@ import { StyleProperties, propDescription, PropertyCategories, PropTypes } from 
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
-  selector: 'button', // tslint:disable-line
+  selector: 'button', // eslint-disable-line
   template: `
   <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)" *ngFor="let item of uiModel.children"
       [uiModel]='item'

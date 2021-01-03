@@ -3,7 +3,7 @@ import { UIModel, ComponentEvent } from '../models';
 import { CoreService } from '../services/core.service';
 
 @Component({
-    selector: 'ngx-dynamic-component', // tslint:disable-line
+    selector: 'ngx-dynamic-component', // eslint-disable-line
     template: `
     <dc-ui-selector *ngIf="parsedUIModel"
         [uiModel]='parsedUIModel'

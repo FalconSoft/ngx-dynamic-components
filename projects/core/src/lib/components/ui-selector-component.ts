@@ -61,16 +61,16 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
   private async createComponent(): Promise<void> {
     try {
       const descriptor = CoreService.getComponentDescriptor(this.uiModel.type);
-      const ComponentClass = descriptor.component;
+      const componentClass = descriptor.component;
       this.containerRef.clear();
       if (descriptor.category === Categories.HTML) {
-        const BaseHtml = ComponentClass as any;
-        this.component = new BaseHtml(this.appRef, this.componentFactoryResolver, this.injector);
+        const baseHtml = componentClass as any;
+        this.component = new baseHtml(this.appRef, this.componentFactoryResolver, this.injector);
         this.component.dataModel = this.dataModel;
         this.component.uiModel = this.uiModel;
         this.component.create(this.containerRef.element.nativeElement);
-      } else if (ComponentClass.prototype instanceof BaseUIComponent) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ComponentClass as BaseUIComponentConstructor);
+      } else if (componentClass.prototype instanceof BaseUIComponent) {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass as BaseUIComponentConstructor);
         const componentRef = this.containerRef.createComponent(componentFactory);
         this.component = componentRef.instance as BaseUIComponent;
         this.component.dataModel = this.dataModel;
@@ -79,9 +79,6 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       }
 
       this.component.element.classList.add('dc-element');
-      // this.uiModel.show = () => this.component.element.classList.remove('hidden');
-      // this.uiModel.hide = () => this.component.element.classList.add('hidden');
-      // this.uiModel.getElement = () => this.component.element;
       this.uiModel.getComponent = () => this.component;
       this.component.changedDataModel.subscribe((evt) => {
         this.changedDataModel.emit(evt);

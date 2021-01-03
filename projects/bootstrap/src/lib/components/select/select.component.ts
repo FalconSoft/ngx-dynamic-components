@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BindingProperties, propDescription, PropertyCategories,  OptionValue,
-  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent, PropTypes, queryValue } from '@ngx-dynamic-components/core';
+  UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent,
+  PropTypes, queryValue } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 import example from './select.examples';
 
@@ -197,9 +198,9 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
   parseUIModel(xmlRes: XMLResult): UIModel {
     const itemProperties: AttributesMap = {};
     if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
-      itemProperties.itemsSource = xmlRes.childNodes.map(r => {
-        return { label: r._, value: r.$ && r.$.hasOwnProperty('value') ? r.$.value : r._ };
-      });
+      itemProperties.itemsSource = xmlRes.childNodes.map(r => (
+        { label: r._, value: r.$ && r.$.hasOwnProperty('value') ? r.$.value : r._ }
+      ));
       xmlRes.childNodes = null;
     }
 

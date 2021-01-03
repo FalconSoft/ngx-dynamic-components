@@ -6,7 +6,7 @@ import { UISelectorComponent } from './ui-selector-component';
 import { BaseDynamicComponent } from './base-dynamic-component';
 
 @Directive()
-export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // tslint:disable-line
+export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line
     dataModel: any;
     uiModel: UIModel<T>;
     eventHandlers = new EventEmitter<ComponentEvent>();

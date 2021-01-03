@@ -21,7 +21,7 @@ export class RepeaterComponent extends BaseUIComponent<RepeaterProperties> imple
 
   async ngOnInit(): Promise<void> {
     await super.ngOnInit();
-    this.childUIModel = CoreService.getUIModel(toXMLResult(this.properties.childUIModel))
+    this.childUIModel = CoreService.getUIModel(toXMLResult(this.properties.childUIModel));
   }
 
   get dataList(): any[] {
@@ -90,7 +90,7 @@ function repeaterParser(xmlRes: XMLResult): UIModel<RepeaterProperties> {
       itemsSource: xmlRes.attrs.itemsSource,
       childUIModel: xmlRes.childNodes[0]
     }
-  }
+  };
 
   return uiModel;
 }

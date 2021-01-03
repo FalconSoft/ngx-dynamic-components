@@ -6,7 +6,7 @@ import { BaseHTMLElement, parseHTMLUIModel } from '../../components/base-html-el
 import { queryValue } from '../../utils';
 
 @Directive()
-export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disable-line
+export class AComponent extends BaseHTMLElement<LinkProperties> { // eslint-disable-line
   create(selectorElement: HTMLElement): void {
     super.create(selectorElement);
 
@@ -31,7 +31,7 @@ export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disa
         router.navigate([this.getPath()]);
         evt.preventDefault();
       }
-    }
+    };
   }
 
   private getPath(): string {
@@ -86,7 +86,8 @@ export const example: ComponentExample<UIModel<LinkProperties>> = {
   title: 'Basic link example',
   uiModel: `
   <section class="row align-items-center m-1">
-    <a title="Link to Google" class="btn btn-primary mr-2" href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</a>
+    <a title="Link to Google" class="btn btn-primary mr-2"
+    href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</a>
     <a target="_blank" href="https://www.google.com/">Google</a>
   </section>
   `,

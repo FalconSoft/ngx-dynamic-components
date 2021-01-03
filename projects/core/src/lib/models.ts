@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { BaseUIComponentConstructor, BaseHTMLElementConstructor } from './utils';
 import { ComponentProperty } from './properties';
 import { BaseDynamicComponent } from './components/base-dynamic-component';
@@ -65,6 +66,7 @@ export interface OptionValue {
   value: any;
 }
 
+// eslint-disable-next-line no-shadow
 export const enum Categories {
   Basic = 'Basic',
   HTML = 'HTML',
@@ -74,7 +76,9 @@ export const enum Categories {
   DataTable = 'Data table'
 }
 
+// eslint-disable-next-line no-shadow
 export enum DesignerVisibility {
+  // eslint-disable-next-line no-shadow
   UIModel = 1,
   Scripts = 2,
   All = 3

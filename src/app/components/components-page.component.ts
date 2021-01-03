@@ -33,11 +33,9 @@ export class ComponentsPageComponent implements OnInit {
 
   ngOnInit(): void {
     const mapToGroup = ({name, components, packageName}) => ({name, list: components, url: [packageName]});
-    this.sections = getPackageCategories().map(({packageName, categories}) => {
-      return {
+    this.sections = getPackageCategories().map(({packageName, categories}) => ({
         packageName,
         categories: categories.map(mapToGroup)
-      };
-    });
+      }));
   }
 }

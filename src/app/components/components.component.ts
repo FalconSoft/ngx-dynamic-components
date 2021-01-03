@@ -27,9 +27,8 @@ export class ComponentsComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const filterComponents = (p) => {
-      return (c: ComponentDescriptor) => (!p.category || getSlugFromStr(c.category) === p.category) && c.packageName === p.packageName;
-    };
+    const filterComponents = (p) => (c: ComponentDescriptor) => (!p.category || getSlugFromStr(c.category) === p.category)
+      && c.packageName === p.packageName;
     this.components$ = this.route.params
       .pipe(
         map(p => COMPONENTS_LIST.filter(filterComponents(p))

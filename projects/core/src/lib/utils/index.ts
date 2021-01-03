@@ -15,7 +15,7 @@ export type BaseHTMLElementConstructor = new () => BaseHTMLElement;
  */
 export function getComponentById(uiModel: UIModel, id: string): BaseDynamicComponent {
 
-  function traverseUiModel(uModel: UIModel, predicate: (uModel) => boolean): UIModel {
+  function traverseUiModel(uModel: UIModel, predicate: (u) => boolean): UIModel {
     if (predicate(uModel)) {
       return uModel;
     }
@@ -40,7 +40,7 @@ export function getComponentById(uiModel: UIModel, id: string): BaseDynamicCompo
  * A helper method that sets value based on path.
  * e.g. setValue({}, 'obj.prop1.value', 22) will create a corresponding object and assign value = 22
  */
-export function setValue(objectValue: object, path: string, value: any): void {
+export function setValue(objectValue: Record<string, unknown>, path: string, value: any): void {
   if (!objectValue) {
     objectValue = {};
   }
@@ -78,8 +78,8 @@ export function queryValue(obj: any, path: string, defaultValue: any = null): an
   if (path.startsWith('$.')) {
     path = path.substring(2);
   }
-  path = path.replace('}', '')
-  path = path.replace('{', '')
+  path = path.replace('}', '');
+  path = path.replace('{', '');
 
   const props = path.indexOf('/') > 0 ? path.split('/') : path.split('.');
 

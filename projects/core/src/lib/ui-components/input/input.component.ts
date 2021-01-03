@@ -1,13 +1,14 @@
-import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef, DoCheck, Inject } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef, DoCheck } from '@angular/core';
 import { propDescription, PropertyCategories, PropTypes } from '../../properties';
 import { UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
 import example from './input.examples';
 
 @Component({
-  selector: 'input', // tslint:disable-line
+  selector: 'input', // eslint-disable-line
   template: ''
 })
+// eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
 export class InputComponent extends FormElementComponent<InputProperties> implements OnInit, OnDestroy, OnChanges, DoCheck {
   @HostBinding('attr.type') type = 'text';
   @HostBinding('attr.step') step: number;
@@ -33,6 +34,7 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
     this.setValue(input, this.properties.onChange);
   }
 
+  // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   async ngOnInit(): Promise<void> {
     await super.ngOnInit();
     this.type = this.properties.type || 'text';
@@ -50,6 +52,7 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
     }
   }
 
+  // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   ngDoCheck(): void {
     this.updateValue();
   }
@@ -65,10 +68,12 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
     }
   }
 
+  // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   async ngOnDestroy(): Promise<void> {
     return super.ngOnDestroy();
   }
 
+  // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     await super.ngOnChanges(changes);
     if (changes.dataModel) {

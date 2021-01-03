@@ -4,7 +4,7 @@ import { parseArgFunction } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties } from '../properties';
 
 @Directive()
-export abstract class BaseDynamicComponent<T = StyleProperties> implements OnInit, OnChanges, OnDestroy { // tslint:disable-line
+export abstract class BaseDynamicComponent<T = StyleProperties> implements OnInit, OnChanges, OnDestroy { // eslint-disable-line
     dataModel: any;
     uiModel: UIModel<T>;
     abstract eventHandlers: EventEmitter<ComponentEvent>;

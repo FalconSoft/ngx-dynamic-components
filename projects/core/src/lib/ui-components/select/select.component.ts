@@ -5,7 +5,7 @@ import { BindingProperties, propDescription, PropertyCategories, PropTypes } fro
 import { queryValue } from '../../utils';
 
 @Component({
-  selector: 'select', // tslint:disable-line
+  selector: 'select', // eslint-disable-line
   template: `
       <ng-container>
         <option [selected]="option.value === value" *ngFor="let option of options" [value]="option.value">{{option.label}}</option>
@@ -168,9 +168,9 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
   parseUIModel(xmlRes: XMLResult): UIModel {
     const itemProperties: AttributesMap = {};
     if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
-      itemProperties.itemsSource = xmlRes.childNodes.map(r => {
-        return { label: r._, value: r.$ && r.$.hasOwnProperty('value') ? r.$.value : r._ };
-      });
+      itemProperties.itemsSource = xmlRes.childNodes.map(r => ({
+        label: r._, value: r.$ && r.$.hasOwnProperty('value') ? r.$.value : r._
+      }));
       xmlRes.childNodes = null;
     }
 

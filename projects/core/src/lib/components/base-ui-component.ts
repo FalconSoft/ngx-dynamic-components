@@ -6,7 +6,7 @@ import { InputProperties } from '../ui-components/input/input.component';
 import { BaseDynamicComponent } from './base-dynamic-component';
 
 @Directive()
-// tslint:disable-next-line
+// eslint-disable-next-line
 export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges {
     @HostBinding('style.width') width: string;
     @HostBinding('style.min-width') minWidth: string;

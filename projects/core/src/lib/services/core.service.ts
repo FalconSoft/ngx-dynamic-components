@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ComponentDescriptor, UIModel, AttributesMap, XMLResult } from '../models';
 import { BaseUIComponentConstructor, toXMLResult, BaseHTMLElementConstructor, parseXmlStringPromise } from '../utils';
-import { ControlProperties, UIModelProperty } from '../properties';
+import { controlProperties, UIModelProperty } from '../properties';
 
 /**
  * Child Elements directives within Containers
@@ -13,14 +13,15 @@ const FX_CONTAINER_DIRECTIVES = ['fxFlex', 'fxFlexOrder', 'fxFlexOffset', 'fxFle
   providedIn: 'root'
 })
 export class CoreService {
-  private static COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  private static readonly COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
 
   public static registerComponent(desc: ComponentDescriptor): void {
     const { name, packageName, propertiesDescriptor } = desc;
     // @deprecated
     if (propertiesDescriptor) {
       propertiesDescriptor.forEach(prop => {
-        ControlProperties.set(`${name}:${prop[0]}`, prop[1]);
+        controlProperties.set(`${name}:${prop[0]}`, prop[1]);
       });
     }
     CoreService.COMPONENTS_REGISTER.set(name, desc);

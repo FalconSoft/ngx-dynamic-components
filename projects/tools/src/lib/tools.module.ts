@@ -27,7 +27,7 @@ import { ControlEditorComponent } from './components/control-editor/control-edit
 import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 
-export const AngularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> = AngularSplitModule.forRoot()
+export const angularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> = AngularSplitModule.forRoot();
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ export const AngularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> 
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AngularSplitModuleForRoot
+    angularSplitModuleForRoot
   ],
   exports: [ PreviewEditorComponent ]
 })

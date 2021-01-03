@@ -9,17 +9,15 @@ export const EXAMPLES_LIST = [{
   scripts: contactUs.scripts
 }];
 
-export function getGroupedExamples(): { name: string, examples: [] }[] {
+export function getGroupedExamples(): { name: string; examples: [] }[] {
   const groups = EXAMPLES_LIST.reduce((map, ex) => {
     map[ex.type] = map[ex.type] || [];
     map[ex.type].push(ex);
     return map;
   }, {});
 
-  return Object.entries(groups).map(([key, val]: [string, []]) => {
-    return {
+  return Object.entries(groups).map(([key, val]: [string, []]) => ({
       name: key,
       examples: val
-    };
-  });
+    }));
 }

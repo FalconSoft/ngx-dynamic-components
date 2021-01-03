@@ -26,7 +26,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "README.md", "input": "./", "output": "/" }
+              {
+                "glob": "README.md",
+                "input": "./",
+                "output": "/"
+              }
             ],
             "styles": [
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
@@ -37,19 +41,24 @@
             "scripts": [
               {
                 "input": "node_modules/ace-builds/src-noconflict/ace.js",
-                "bundleName": "ace-editor"
+                "bundleName": "ace-editor",
+                "inject": true
               },
               {
-                "input": "node_modules/ace-builds/src-noconflict/mode-json.js"
+                "input": "node_modules/ace-builds/src-noconflict/mode-json.js",
+                "inject": true
               },
               {
-                "input": "node_modules/ace-builds/src-noconflict/mode-xml.js"
+                "input": "node_modules/ace-builds/src-noconflict/mode-xml.js",
+                "inject": true
               },
               {
-                "input": "node_modules/jspython-interpreter/dist/assets/mode-jspython.js"
+                "input": "node_modules/jspython-interpreter/dist/assets/mode-jspython.js",
+                "inject": true
               },
               {
-                "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js"
+                "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js",
+                "inject": true
               },
               "node_modules/marked/lib/marked.js"
             ]
@@ -65,7 +74,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -121,14 +129,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
@@ -152,11 +157,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "e2e//**/*.ts",
+              "e2e//**/*.html"
             ]
           }
         }
@@ -169,7 +174,7 @@
       "prefix": "dc",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/core/tsconfig.lib.json",
             "project": "projects/core/ng-package.json"
@@ -189,14 +194,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/core/tsconfig.lib.json",
-              "projects/core/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/core/**/*.ts",
+              "projects/core/**/*.html"
             ]
           }
         }
@@ -209,7 +211,7 @@
       "prefix": "dc",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/material/tsconfig.lib.json",
             "project": "projects/material/ng-package.json"
@@ -229,14 +231,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/material/tsconfig.lib.json",
-              "projects/material/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/material/**/*.ts",
+              "projects/material/**/*.html"
             ]
           }
         }
@@ -249,7 +248,7 @@
       "prefix": "dc",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/tools/tsconfig.lib.json",
             "project": "projects/tools/ng-package.json"
@@ -270,14 +269,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/tools/tsconfig.lib.json",
-              "projects/tools/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/tools/**/*.ts",
+              "projects/tools/**/*.html"
             ]
           }
         }
@@ -290,7 +286,7 @@
       "prefix": "dc",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/bootstrap/tsconfig.lib.json",
             "project": "projects/bootstrap/ng-package.json"
@@ -310,14 +306,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/bootstrap/tsconfig.lib.json",
-              "projects/bootstrap/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/bootstrap/**/*.ts",
+              "projects/bootstrap/**/*.html"
             ]
           }
         }

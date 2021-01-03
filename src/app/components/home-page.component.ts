@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+const packageJson = require('../../../package.json');
 
 @Component({
   selector: 'dc-home-page',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
     <header>
       <h1 class="mat-h1">NGX Dynamic Components</h1>
       <h3 class="mat-h3">Configuration based dynamic components library for Angular.</h3>
+      <span class="version">Current version {{version}}.</span>
     </header>
     <main class="container pt-5">
       <markdown src="README.md" lineNumbers [start]="5"></markdown>
@@ -24,4 +26,6 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class HomePageComponent { }
+export class HomePageComponent {
+  version = packageJson.version;
+}

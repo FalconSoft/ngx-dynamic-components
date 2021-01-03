@@ -1,6 +1,8 @@
-import { Component, Input, HostListener, ViewChild, ElementRef, EventEmitter, Output, OnInit } from '@angular/core';
-import { UIModelProperty, UIModel, CoreService } from '@ngx-dynamic-components/core';
-import { MatButton } from '@angular/material/button';
+import { Component, Input, HostListener, ViewChild, EventEmitter, Output, OnInit } from '@angular/core';
+import { UIModelProperty, CoreService } from '@ngx-dynamic-components/core';
+import type { ElementRef } from '@angular/core';
+import type { MatButton } from '@angular/material/button';
+import type { UIModel } from '@ngx-dynamic-components/core';
 
 @Component({
   selector: 'dc-properties-editor',
@@ -51,6 +53,7 @@ export class PropertiesEditorComponent implements OnInit {
   showEditor = false;
 
   get positionClass(): string {
+    // eslint-disable-next-line no-underscore-dangle
     const btnPos = this.editBtn._elementRef.nativeElement.getBoundingClientRect().right;
     const docWidth = document.body.offsetWidth;
     return docWidth - btnPos < 200 ? 'left' : '';
@@ -60,6 +63,7 @@ export class PropertiesEditorComponent implements OnInit {
   onClick(targetElement): void {
     if (this.editorContainer) {
       const clickedInside = this.editorContainer.nativeElement.contains(targetElement);
+      // eslint-disable-next-line no-underscore-dangle
       if (!clickedInside && this.editBtn._elementRef.nativeElement.contains(targetElement)) {
         // Clicked on button.
         const itemProps = this.uiModel.itemProperties || {};

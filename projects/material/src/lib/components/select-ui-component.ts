@@ -81,9 +81,7 @@ export const selectDescriptor: ComponentDescriptor<SelectUIComponentConstrutor, 
   parseUIModel(xmlRes: XMLResult): UIModel {
     const itemProperties: AttributesMap = {};
     if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
-      itemProperties.itemsSource = xmlRes.childNodes.map(r => {
-        return { label: r._, value: r.$.value };
-      });
+      itemProperties.itemsSource = xmlRes.childNodes.map(r => ({ label: r._, value: r.$.value }));
       xmlRes.childNodes = null;
     }
 
