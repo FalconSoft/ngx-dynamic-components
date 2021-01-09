@@ -56,12 +56,12 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> implement
       list = queryValue(this.dataModel, src);
     }
 
-    if (list && (this.properties.labelProp || this.properties.valueProp)) {
+    if (list) {
       const labelProp = this.properties.labelProp || 'label';
       const valueProp = this.properties.valueProp || 'value';
       list = list.map(o => ({
-        label: o[labelProp],
-        value: o[valueProp],
+        label: typeof o === 'string' ? o : o[labelProp],
+        value: typeof o === 'string' ? o : o[valueProp],
         data: o
       }));
     } else {
