@@ -26,6 +26,7 @@
       ],
       "@ngx-dynamic-components/core/*": [
         "dist/@ngx-dynamic-components/core/*"
+        // "projects/core/src/*"
       ],
       "@ngx-dynamic-components/material": [
         "dist/@ngx-dynamic-components/material",

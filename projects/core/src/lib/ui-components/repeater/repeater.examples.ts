@@ -12,7 +12,10 @@ const example: ComponentExample<UIModel<RepeaterProperties>> = {
       <button class="btn btn-danger col-auto" onClick="removeLast()" type="button">Remove Last</button>
     </div>
     <repeater class="row" itemsSource="$.dataList">
-      <text class="col-12" text-style="h4">$.item</text>
+      <div class="col-12 mb-2">
+        <text class="col-9" text-style="h4">$._item.item</text>
+        <button class="btn btn-danger col-auto" onClick="remove($._index)" type="button">x</button>
+      </div>
     </repeater>
   </div>
   `,
@@ -30,6 +33,10 @@ const example: ComponentExample<UIModel<RepeaterProperties>> = {
 
 def removeLast():
   dataModel.dataList.pop()
+
+def remove(_item):
+  index = dataModel.dataList.indexOf(_item)
+  dataModel.dataList.splice(index, 1)
   `
 };
 

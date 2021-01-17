@@ -27,7 +27,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       this.initParsedModel();
     }
 
-    ngOnChanges({uiModel}: SimpleChanges): void {
+    ngOnChanges({uiModel, dataModel}: SimpleChanges): void {
       if (uiModel && !uiModel.firstChange && uiModel.currentValue !== uiModel.previousValue) {
         this.initParsedModel();
       }

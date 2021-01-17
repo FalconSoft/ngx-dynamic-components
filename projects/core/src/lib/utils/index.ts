@@ -71,8 +71,12 @@ export function setValue(objectValue: Record<string, unknown>, path: string, val
  * a helper methods that query JS Object for a value based on path. obj.subObject.value
  */
 export function queryValue(obj: any, path: string, defaultValue: any = null): any {
-  if (path === '$' || path === '') {
+  if (!path) {
     return defaultValue;
+  }
+
+  if (path === '$') {
+    return obj;
   }
 
   if (path.startsWith('$.')) {

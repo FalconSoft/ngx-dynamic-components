@@ -33,8 +33,8 @@ export class RepeaterComponent extends BaseUIComponent<RepeaterProperties> imple
     return [];
   }
 
-  getDataModel(item: Record<string, unknown>): Record<string, unknown> {
-    return { ...this.dataModel, _item: item, };
+  getDataModel(item: Record<string, unknown>, index: number): Record<string, unknown> {
+    return { ...this.dataModel, _item: item, _index: index};
   }
 
   onDataModelChanged(evt: Record<string, unknown>, item: Record<string, unknown>): void {
