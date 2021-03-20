@@ -78,7 +78,7 @@ export const enum Categories {
 
 // eslint-disable-next-line no-shadow
 export enum DesignerVisibility {
-  // eslint-disable-next-line no-shadow
+  // eslint-disable-next-line
   UIModel = 1,
   Scripts = 2,
   All = 3
