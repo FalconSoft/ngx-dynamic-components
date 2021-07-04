@@ -46,7 +46,7 @@ export interface PeriodicElement {
       display: block;
     }
     mwlResizable {
-      box-sizing: border-box; // required for the enableGhostResize option to work
+      box-sizing: border-box; /* required for the enableGhostResize option to work */
     }
     .as-split-gutter {
       height: 11px;

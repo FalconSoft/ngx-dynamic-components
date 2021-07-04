@@ -37,6 +37,6 @@ export class PageHeaderComponent {
 
   // eslint-disable-next-line @angular-eslint/no-output-native
   @Output()
-  open = new EventEmitter<boolean>();
+  openPage = new EventEmitter<boolean>();
 
 }
