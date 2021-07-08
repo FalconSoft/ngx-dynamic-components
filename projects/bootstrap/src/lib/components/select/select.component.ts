@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
-import { BindingProperties, propDescription, PropertyCategories,  OptionValue,
+import {
+  BindingProperties, propDescription, PropertyCategories, OptionValue,
   UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent,
-  PropTypes, queryValue } from '@ngx-dynamic-components/core';
+  PropTypes, queryValue
+} from '@ngx-dynamic-components/core';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { packageName } from '../../constants';
 import example from './select.examples';
 
 @Component({
-  selector: 'dc-select',
+  selector: 'dc-select', // eslint-disable-line
   template: `
   <ng-select [items]="options" [ngStyle]="selectStyles"
       [(ngModel)]="componentDataModel" [bindLabel]="properties.bindLabel"
+      [typeahead]="searchText$"
       [bindValue]="properties.bindValue || 'value'" [placeholder]="properties.placeholder"
       (add)="emitEvent(properties.add, $event)"
       (blur)="emitEvent(properties.blur, $event)"
@@ -22,6 +27,7 @@ import example from './select.examples';
       (remove)="emitEvent(properties.remove, $event)"
       (scroll)="emitEvent(properties.scroll, $event)"
       (scrollToEnd)="emitEvent(properties.scrollToEnd, $event)"></ng-select>
+
     `,
   styles: [`
     :host ::ng-deep .ng-select.ng-select-single .ng-select-container {
@@ -30,13 +36,31 @@ import example from './select.examples';
     }
   `]
 })
-
+// eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
 export class SelectComponent extends BaseUIComponent<SelectProperties> {
+  searchText$ = new Subject<string | null>();
+  loading = false;
+
   onSelect(): void {
     this.changedDataModel.emit(this.dataModel);
-    // onSelect - deprecated.
-    this.emitEvent(this.properties.onSelect);
     this.emitEvent(this.properties.change);
+  }
+
+
+  private get debounceTime(): number {
+    return this.properties.debounceTime ? parseInt(this.properties.debounceTime, 10) : 500;
+  }
+
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  async ngOnInit(): Promise<void> {
+    await super.ngOnInit();
+
+    this.searchText$
+      .pipe(
+        debounceTime(this.debounceTime),
+        distinctUntilChanged(),
+      )
+      .subscribe(data => this.emitEvent(this.properties.typeahead, data));
   }
 
   emitEvent(prop: string, param?: any): void {
@@ -69,16 +93,13 @@ export class SelectProperties extends BindingProperties {
     description: 'Select options or binding to dataModel.',
     example: '[{label: "One", value: 1}]',
   })
-  itemsSource: string|OptionValue[];
+  itemsSource: string | OptionValue[];
 
   @propDescription({
     description: 'Select height.',
     example: '30px',
   })
   selectHeight?: string;
-
-  /** @deprecated */
-  onSelect?: string;
 
   @propDescription({
     description: 'Placeholder',
@@ -124,6 +145,21 @@ export class SelectProperties extends BindingProperties {
     type: PropTypes.EVENT
   })
   change?: string;
+
+  @propDescription({
+    description: 'debounceTime in miliseconds. Used only with `typeahead` event handler. Default is 500 (miliseconds)',
+    example: '500',
+    type: PropTypes.PROPERTY
+  })
+  debounceTime?: string;
+
+
+  @propDescription({
+    description: 'Typeahead event handler.',
+    example: 'onTypeahead()',
+    type: PropTypes.EVENT
+  })
+  typeahead?: string;
 
   @propDescription({
     description: 'Output close event handler.',
@@ -213,7 +249,7 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
   },
   defaultModel: `<ng-select width="100px" itemsSource="$.list" binding="$.value"></ng-select>`,
   propertiesDescriptor: [
-    ['selectHeight', {name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout}],
+    ['selectHeight', { name: 'selectHeight', label: 'Select Height', category: PropertyCategories.Layout }],
   ],
   children: [{
     tag: 'option',

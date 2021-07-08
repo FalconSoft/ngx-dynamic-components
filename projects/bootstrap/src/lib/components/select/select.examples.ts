@@ -27,7 +27,7 @@ export const example2: ComponentExample<UIModel<SelectProperties>> = {
     </div>
   `,
   dataModel: {
-    list: [{label: 'Data 1', value: 'd1'}, {label: 'Data 2', value: 'd2'}]
+    list: [{ label: 'Data 1', value: 'd1' }, { label: 'Data 2', value: 'd2' }]
   },
   title: 'Dropdown options binded to dataModel',
 };
@@ -65,4 +65,38 @@ export const example3: ComponentExample<UIModel<SelectProperties>> = {
   description: 'Handles change event from first dropdown and changes values in second.'
 };
 
-export default [example1, example1, example2];
+export const example4: ComponentExample<UIModel<SelectProperties>> = {
+  uiModel: `
+    <div class="flex-column">
+      <div class="form-group">
+        <label class="col-form-label" width="60px">Select</label>
+        <ng-select width="300px" 
+          itemsSource="$.list" 
+          typeahead="onTypeahead(searchTerm)" 
+          debounceTime="1000" 
+          binding="$.selected"
+          change="onChange()">
+        </ng-select>
+      </div>
+      
+      <text binding="$.selected"></text>
+    </div>
+  `,
+  dataModel: {},
+  scripts: `
+  async def onTypeahead():
+    if searchTerm != null:
+      # can be server-side call
+      dataModel.list = [
+        {label: searchTerm + ' 2', value: searchTerm + ' 2'},
+        {label: searchTerm + ' 2', value: searchTerm + ' 2'}
+      ]
+  
+  async def onChange():
+    print('Selected value: ', dataModel.selected)
+  `,
+  title: 'drop-down with typeahead and debounceTime',
+};
+
+
+export default [example1, example1, example2, example4];

@@ -3,6 +3,8 @@ import { propDescription, PropertyCategories, PropTypes } from '../../properties
 import { UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
 import example from './input.examples';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'input', // eslint-disable-line
@@ -17,6 +19,8 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
 
   private modelValue: any;
   private dataList: HTMLDataListElement;
+  searchText$ = new Subject<string | null>();
+
 
   constructor(private inputElement?: ElementRef<HTMLInputElement>) {
     super();
@@ -26,6 +30,7 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
   onInput(input: HTMLInputElement): void {
     if (!['radio', 'checkbox'].includes(this.type)) {
       this.setValue(input, this.properties.onInput);
+      this.searchText$.next(input.value);
     }
   }
 
@@ -50,6 +55,13 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
       input.parentNode.insertBefore(this.dataList, input);
       this.setList(this.properties.list);
     }
+
+    this.searchText$
+      .pipe(
+        debounceTime(this.debounceTime),
+        distinctUntilChanged(),
+      )
+      .subscribe(data => this.emitEvent(this.properties.debouncedInput, data));
   }
 
   // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
@@ -79,6 +91,9 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
     if (changes.dataModel) {
       this.updateValue();
     }
+  }
+  private get debounceTime(): number {
+    return this.properties.debounceTime ? parseInt(this.properties.debounceTime, 10) : 500;
   }
 
   private updateValue(): void {
@@ -149,11 +164,26 @@ export class InputProperties extends FormElementProperties {
     example: '["option1" ,"option2"]'
   })
   list?: string[];
+
+  @propDescription({
+    description: 'debounceTime in miliseconds. Used only with `typeahead` event handler. Default is 500 (miliseconds)',
+    example: '500',
+    type: PropTypes.PROPERTY
+  })
+  debounceTime?: string;
+
+
+  @propDescription({
+    description: 'debouncedInput event handler.',
+    example: 'onDebouncedInput()',
+    type: PropTypes.EVENT
+  })
+  debouncedInput?: string;
 }
 
-type InputComponentConstrutor = new() => InputComponent;
+type InputComponentConstrutor = new () => InputComponent;
 
-type InputPropertiesConstrutor = new() => InputProperties;
+type InputPropertiesConstrutor = new () => InputProperties;
 
 export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, InputPropertiesConstrutor> = {
   name: 'input',

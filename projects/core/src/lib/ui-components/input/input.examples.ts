@@ -5,14 +5,28 @@ export const example1: ComponentExample<UIModel<InputProperties>> = {
   title: 'Text input example',
   uiModel: `
   <div class="d-flex flex-column">
+    
     <div class="form-group">
       <label class="col-form-label" width="80px">Name</label>
       <input onInput="onNameInput(name)" placeholder="Enter your name" binding="$.name"/>
     </div>
+
     <div class="form-group">
       <label class="col-form-label" width="80px">Last name</label>
       <input disabled="true" id="lastName" placeholder="Enter your last name" binding="$.lastName"/>
     </div>
+
+    <div class="form-group">
+      <label class="col-form-label" width="80px">Debounced Input</label>
+      <input 
+        placeholder="Enter text here" 
+        binding="$.text"
+        debouncedInput="onDebouncedInput(searchText)" 
+        debounceTime="2000"
+        />      
+      <text binding="$.debouncedText" class="ml-2"></text>
+    </div>
+
   </div>
   `,
   scripts: `
@@ -20,6 +34,9 @@ export const example1: ComponentExample<UIModel<InputProperties>> = {
     disabled = name == ""
     comp = getComponentById(rootUIModel, "lastName")
     comp.disabled = disabled or null # should set null not false
+
+  async def onDebouncedInput():
+    dataModel.debouncedText = searchText
   `,
   dataModel: {},
   description: 'Input "Last name" is disabled while input "Name" is empty.'
