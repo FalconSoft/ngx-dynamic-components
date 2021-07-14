@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver,
-  SimpleChanges, OnChanges, EventEmitter, Output, Injector, ApplicationRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges, EventEmitter, Output, OnDestroy, ViewContainerRef,
+  ComponentFactoryResolver, Injector, ApplicationRef } from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
 import { CoreService } from '../services/core.service';
 import { ComponentEvent, Categories } from '../models';

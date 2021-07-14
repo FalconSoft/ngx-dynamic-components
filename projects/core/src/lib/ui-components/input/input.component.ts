@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, ElementRef, DoCheck } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, DoCheck, ElementRef } from '@angular/core';
 import { propDescription, PropertyCategories, PropTypes } from '../../properties';
 import { UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';

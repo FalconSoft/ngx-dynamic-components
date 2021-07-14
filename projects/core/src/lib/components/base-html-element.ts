@@ -1,5 +1,5 @@
-import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, ComponentFactoryResolver, Injector, ApplicationRef,
-  EmbeddedViewRef, Directive } from '@angular/core';
+import type { ComponentFactoryResolver, Injector, ApplicationRef } from '@angular/core';
+import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, EmbeddedViewRef, Directive } from '@angular/core';
 import { UIModel, ComponentEvent, XMLResult } from '../models';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
 import { UISelectorComponent } from './ui-selector-component';

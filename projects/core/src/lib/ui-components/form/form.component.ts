@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef, HostBinding } from '@angular/core';
+import type { ElementRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription, PropertyCategories, PropTypes } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../../models';

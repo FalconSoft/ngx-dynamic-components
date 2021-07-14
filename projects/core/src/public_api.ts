@@ -12,3 +12,4 @@ export * from './lib/models';
 export * from './lib/properties';
 export * from './lib/utils';
 export * from './lib/ui-components/register';
+export * from './lib/ui-components/text/text.component';
