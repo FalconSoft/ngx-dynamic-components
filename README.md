@@ -1,6 +1,6 @@
 # ngx-dynamic-components
 
-ngx-dynamic-components is a configuration based dynamic components library for Angular. Which allows you to rapidly create (or load) dynamic forms or any other mobile-friendly web layouts at run-time.
+NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms or any other mobile-friendly web layouts.
 
 Any web content can be dynamically rendered from JSON or XML based configuration with a full support of lifecycle hook methods.
 
