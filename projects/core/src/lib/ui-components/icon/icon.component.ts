@@ -5,8 +5,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 
 @Component({
   selector: 'dc-icon-ui',
-  template: '',
-  styles: ['./icon.component.sass']
+  template: ''
 })
 export class IconComponent extends BaseUIComponent<IconProperties> implements OnInit {
   @HostBinding('style.display') display = 'inline-block';

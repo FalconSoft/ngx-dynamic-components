@@ -2,19 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/@ngx-dynamic-components/tools",
   "lib": {
-    "entryFile": "src/public_api.ts",
-    "umdModuleIds": {
-      "@ngx-dynamic-components/core": "NgxDynamicComponentsCore",
-      "@ngx-dynamic-components/material": "NgxDynamicComponentsMaterial",
-      "@ngx-dynamic-components/bootstrap": "NgxDynamicComponentsBootstrap",
-      "ngx-bootstrap/tabs": "NgxBootstrapTabs",
-      "ngx-bootstrap/accordion": "NgxBootstrapAccordion",
-      "ngx-bootstrap/collapse": "NgxBootstrapCollapse",
-      "ngx-bootstrap/popover": "NgxBootstrapPopover",
-      "angular-split": "angularSplit",
-      "@ng-select/ng-select": "ngSelect",
-      "jspython-interpreter": "jspythonInterpreter",
-      "ace-builds": "aceBuilds"
-    }
+    "entryFile": "src/public_api.ts"
   }
 }

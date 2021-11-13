@@ -41,6 +41,7 @@
       ],
       "@ngx-dynamic-components/bootstrap/*": [
         "dist/@ngx-dynamic-components/bootstrap/*"
+        // "projects/bootstrap/src/*"
       ],
       "@ngx-dynamic-components/tools": [
         "dist/@ngx-dynamic-components/tools",
