@@ -20,7 +20,6 @@ import { MarkdownModule } from 'ngx-markdown';
 
 import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { ToolsModule } from '@ngx-dynamic-components/tools';
-import { MaterialModule } from '@ngx-dynamic-components/material';
 import { DynamicComponentsBootstrapModule } from '@ngx-dynamic-components/bootstrap';
 
 
@@ -67,7 +66,6 @@ import { SidenavLayoutComponent } from './components/sidenav-layout.component';
     BrowserModule,
     DynamicComponentsCoreModule,
     ToolsModule,
-    MaterialModule,
     DynamicComponentsBootstrapModule,
     BrowserAnimationsModule,
     AppRoutingModule,

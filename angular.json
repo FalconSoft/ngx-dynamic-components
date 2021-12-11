@@ -95,6 +95,9 @@
                   "maximumWarning": "6kb"
                 }
               ]
+            },
+            "development": {
+              "tsConfig": "./tsconfig.dev.json"
             }
           },
           "defaultConfiguration": ""
@@ -107,6 +110,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ngx-dynamic-components:build:production"
+            },
+            "development": {
+              "browserTarget": "ngx-dynamic-components:build:development"
             }
           }
         },

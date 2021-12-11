@@ -1,5 +1,5 @@
-import type { ComponentFactoryResolver, Injector, ApplicationRef } from '@angular/core';
-import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, EmbeddedViewRef, Directive } from '@angular/core';
+import type { Injector, ViewContainerRef } from '@angular/core';
+import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { UIModel, ComponentEvent, XMLResult } from '../models';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
 import { UISelectorComponent } from './ui-selector-component';
@@ -14,12 +14,9 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
     element: HTMLElement;
     private parentNode: Node;
 
-    constructor(
-      private appRef?: ApplicationRef,
-      private componentFactoryResolver?: ComponentFactoryResolver,
-      protected injector?: Injector) {
-        super();
-      }
+    constructor(private containreRef?: ViewContainerRef, protected injector?: Injector) {
+      super();
+    }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
@@ -50,14 +47,10 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
       }
       if (this.uiModel.children) {
         this.uiModel.children.forEach(uiModel => {
-          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UISelectorComponent);
-          const componentRef = componentFactory.create(this.injector);
-          const component = componentRef.instance;
+          const componentRef = this.containreRef.createComponent(UISelectorComponent);;
+          const component =  componentRef.instance;
           component.dataModel = this.dataModel;
           component.uiModel = uiModel;
-          this.appRef.attachView(componentRef.hostView);
-          const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-          this.element.appendChild(domElem);
         });
       }
       if (this.parentNode && !created) {

@@ -7,7 +7,6 @@ Any web content can be dynamically rendered from JSON or XML based configuration
 We have three libraries to offer
   - [**@ngx-dynamic-components/core**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/core) - a core dynamic rendering engine with no dependencies to any external library. And contains all basic HTML components.
   - [**@ngx-dynamic-components/bootstrap**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/bootstrap) - a set of bootstrap based components. This project has dependencies to the [ngx-bootstrap](https://valor-software.com/ngx-bootstrap)
-  - [**@ngx-dynamic-components/material**](https://github.com/FalconSoft/ngx-dynamic-components/tree/master/projects/material) - a set of [Angular Material Components](https://material.angular.io/)
 
 ## Getting started
 

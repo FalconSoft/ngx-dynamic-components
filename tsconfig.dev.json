@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@ngx-dynamic-components/core": [
+        "projects/core/src/public_api.ts"
+      ],
+      "@ngx-dynamic-components/core/*": [
+        "projects/core/src/*"
+      ],
+      "@ngx-dynamic-components/bootstrap": [
+        "projects/bootstrap/src/public_api.ts"
+      ],
+      "@ngx-dynamic-components/bootstrap/*": [
+        "projects/bootstrap/src/*"
+      ],
+      "@ngx-dynamic-components/tools": [
+        "projects/tools/src/public_api.ts"
+      ],
+      "@ngx-dynamic-components/tools/*": [
+        "projects/tools/src/*"
+      ]
+    }
+  },
+  "exclude": ["**/*.spec.ts"]
+}

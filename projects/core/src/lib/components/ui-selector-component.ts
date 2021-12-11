@@ -1,5 +1,4 @@
-import { Component, OnInit, SimpleChanges, OnChanges, EventEmitter, Output, OnDestroy, ViewContainerRef,
-  ComponentFactoryResolver, Injector, ApplicationRef } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges, EventEmitter, Output, OnDestroy, ViewContainerRef, Injector } from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
 import { CoreService } from '../services/core.service';
 import { ComponentEvent, Categories } from '../models';
@@ -11,11 +10,7 @@ import { BaseDynamicComponent } from './base-dynamic-component';
     template: ''
 })
 export class UISelectorComponent extends BaseUIComponent implements OnInit, OnChanges, OnDestroy {
-  constructor(
-    private containerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private injector: Injector,
-    private appRef: ApplicationRef) {
+  constructor(private containerRef: ViewContainerRef, private injector: Injector) {
     super();
   }
 
@@ -65,13 +60,12 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       this.containerRef.clear();
       if (descriptor.category === Categories.HTML) {
         const baseHtml = componentClass as any;
-        this.component = new baseHtml(this.appRef, this.componentFactoryResolver, this.injector);
+        this.component = new baseHtml(this.containerRef, this.injector);
         this.component.dataModel = this.dataModel;
         this.component.uiModel = this.uiModel;
         this.component.create(this.containerRef.element.nativeElement);
       } else if (componentClass.prototype instanceof BaseUIComponent) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass as BaseUIComponentConstructor);
-        const componentRef = this.containerRef.createComponent(componentFactory);
+        const componentRef = this.containerRef.createComponent(componentClass as BaseUIComponentConstructor);
         this.component = componentRef.instance as BaseUIComponent;
         this.component.dataModel = this.dataModel;
         this.component.uiModel = this.uiModel;

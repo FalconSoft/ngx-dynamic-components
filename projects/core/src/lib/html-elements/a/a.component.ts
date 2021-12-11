@@ -4,7 +4,6 @@ import { StyleProperties, propDescription, PropTypes } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
 import { BaseHTMLElement, parseHTMLUIModel } from '../../components/base-html-element';
 import { queryValue } from '../../utils';
-import { getTokenLoc } from 'jspython-interpreter/dist/common';
 
 @Directive()
 export class AComponent extends BaseHTMLElement<LinkProperties> { // eslint-disable-line

@@ -57,6 +57,9 @@ export class CoreService {
   }
 
   public static async parseXMLModel(uiModelXml: string): Promise<UIModel> {
+    if (!uiModelXml) {
+      return null;
+    }
     try {
       const res = await parseXmlStringPromise(uiModelXml);
 

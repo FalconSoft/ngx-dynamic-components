@@ -75,7 +75,7 @@ export class ComponentPageComponent implements OnInit, OnDestroy {
   component: ComponentDescriptor;
   loading = false;
   examples: ComponentExample[] = [];
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
 
   constructor(private route: ActivatedRoute) { }
 
