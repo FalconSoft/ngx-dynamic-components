@@ -36,33 +36,20 @@ export class UISelectorComponent
 
   async ngOnInit(): Promise<void> {
     await this.createComponent();
+
+    // if(this.properties.onInit) {
+    //   this.emitEvent(this.properties.onInit);
+    // }
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    if (!changes.uiModel || changes.uiModel.firstChange) { return; }
-    if (!this.component || this.component.uiModel.type !== this.uiModel.type) {
-        const shouldInit = !this.component || this.component.uiModel.id !== this.uiModel.id;
-        // Recreate component with new type.
-        await this.createComponent();
-        if (shouldInit && Object.values(changes).some(c => c.firstChange === false)) {
-          this.emitEvent(this.properties.onInit);
-        }
-      } else {
-        // Update component properties.
-        let changed = false;
-        for (const prop in changes) {
-          if (changes.hasOwnProperty(prop)) {
-            const change = changes[prop];
-            if (!change.firstChange && change.currentValue !== change.previousValue) {
-              this.component[prop] = change.currentValue;
-              changed = true;
-            }
-          }
-        }
-        if (changed) {
-          await this.component.ngOnChanges(changes);
-        }
+    if (changes.uiModel && !changes.uiModel.firstChange) {
+      await this.createComponent();
+
+      if (this.properties.onInit) {
+        this.emitEvent(this.properties.onInit);
       }
+    }
   }
 
   async ngOnDestroy(): Promise<void> {
