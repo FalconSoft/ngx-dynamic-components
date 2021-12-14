@@ -14,33 +14,26 @@ import { CoreService } from '../services/core.service';
       >
     </dc-ui-selector>`
 })
-export class NGXDynamicComponent implements OnInit, OnChanges {
+export class NGXDynamicComponent {
+
     @Input() dataModel: any;
-    @Input() uiModel: UIModel<any>|string;
+    @Input() set uiModel(value: UIModel<any> | string){
+      this.initParsedModel(value);
+    }
     @Output() render = new EventEmitter();
     @Output() changedDataModel = new EventEmitter();
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
 
     parsedUIModel: UIModel;
 
-    async ngOnInit(): Promise<void> {
-      this.initParsedModel();
-    }
-
-    ngOnChanges({uiModel, dataModel}: SimpleChanges): void {
-      if (uiModel && !uiModel.firstChange && uiModel.currentValue !== uiModel.previousValue) {
-        this.initParsedModel();
-      }
-    }
-
     onEventHandler(evt: ComponentEvent): void {
       this.eventHandlers.emit({...evt, rootUIModel: this.parsedUIModel});
     }
 
-    private async initParsedModel(): Promise<void> {
-      if (typeof this.uiModel === 'string') {
+    private initParsedModel(uiModel: UIModel<any> | string): void {
+      if (typeof uiModel === 'string') {
         try {
-          this.parsedUIModel = await CoreService.parseXMLModel(this.uiModel);
+          this.parsedUIModel = CoreService.parseXMLModel(uiModel);
         } catch (e) {
           this.parsedUIModel = null;
           this.eventHandlers.emit({eventName: 'parseError', parameters: {
@@ -48,7 +41,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
           }});
         }
       } else {
-        this.parsedUIModel = this.uiModel;
+        this.parsedUIModel = uiModel;
       }
     }
 }

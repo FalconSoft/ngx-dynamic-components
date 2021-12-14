@@ -36,6 +36,7 @@
           <ngx-dynamic-component class="d-block" *ngIf="uiModel" #dynamicComponent
             [uiModel]='uiModel'
             [dataModel]='dataModel'
+            (render)='onRendered($event)'
             (changedDataModel)="onDataModelChange($event)"
             (eventHandlers)="eventHandlers($event)"></ngx-dynamic-component>
         </div>

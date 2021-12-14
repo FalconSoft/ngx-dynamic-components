@@ -1,7 +1,23 @@
-import { Component, OnInit, Input, HostBinding, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  HostBinding,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import type { ElementRef } from '@angular/core';
-import { formatObjToJsonStr, ComponentEvent, getComponentById, BaseDynamicComponent, CoreService } from '@ngx-dynamic-components/core';
-import type { NGXDynamicComponent, UIModel } from '@ngx-dynamic-components/core';
+import {
+  formatObjToJsonStr,
+  ComponentEvent,
+  getComponentById,
+  BaseDynamicComponent,
+  CoreService,
+} from '@ngx-dynamic-components/core';
+import type {
+  NGXDynamicComponent,
+  UIModel,
+} from '@ngx-dynamic-components/core';
 import { map } from 'rxjs/operators';
 import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
@@ -10,16 +26,15 @@ import { jsPython, Interpreter } from 'jspython-interpreter';
 // eslint-disable-next-line no-shadow
 enum Layout {
   horizontal = 'horizontal',
-  vertical = 'vertical'
+  vertical = 'vertical',
 }
 
 @Component({
   selector: 'dc-preview-editor',
   templateUrl: './preview-editor.component.html',
-  styleUrls: ['./preview-editor.component.scss']
+  styleUrls: ['./preview-editor.component.scss'],
 })
 export class PreviewEditorComponent implements OnInit, AfterViewInit {
-
   @Input() scripts: string;
   @Input() initUiModel: UIModel | string;
   @Input() initDataModel: any;
@@ -42,24 +57,34 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   interpreter: Interpreter;
   editorOptions = {
     language: 'json',
-    automaticLayout: true
+    automaticLayout: true,
   };
   direction: Layout = Layout.horizontal;
   codeSize = 50;
 
-  constructor() { }
+  constructor() {}
 
-  async eventHandlers({ eventName, rootUIModel, parameters = null }: ComponentEvent): Promise<void> {
-    if (!this.interpreter) { return; }
+  async eventHandlers({
+    eventName,
+    rootUIModel,
+    parameters = null,
+  }: ComponentEvent): Promise<void> {
+    if (!this.interpreter) {
+      return;
+    }
 
     if (this.interpreter.hasFunction(this.scripts, eventName)) {
       const inDataModel = this.dataModel;
       try {
-        await this.interpreter.evaluate(this.scripts, {
-          rootUIModel,
-          dataModel: this.dataModel,
-          ...parameters
-        }, eventName);
+        await this.interpreter.evaluate(
+          this.scripts,
+          {
+            rootUIModel,
+            dataModel: this.dataModel,
+            ...parameters,
+          },
+          eventName
+        );
       } catch (e) {
         alert(`${e.message}`);
       }
@@ -68,8 +93,10 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.interpreter = jsPython();
-    this.interpreter.addFunction('getComponentById',
-      (uiModel: UIModel, id: string): BaseDynamicComponent => getComponentById(uiModel, id)
+    this.interpreter.addFunction(
+      'getComponentById',
+      (uiModel: UIModel, id: string): BaseDynamicComponent =>
+        getComponentById(uiModel, id)
     );
 
     this.interpreter.addFunction('alert', (msg: string): void => alert(msg));
@@ -89,12 +116,17 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   }
 
   toggleLayout(): void {
-    this.direction = this.direction === Layout.horizontal ? Layout.vertical : Layout.horizontal;
+    this.direction =
+      this.direction === Layout.horizontal
+        ? Layout.vertical
+        : Layout.horizontal;
   }
 
   get isHorizontal(): boolean {
     return this.direction === Layout.horizontal;
   }
+
+  onRendered(data: any): void {}
 
   onDataModelChange(data: any): void {
     if (data && this.dataModelEditor) {
@@ -118,30 +150,46 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
         autoScrollEditorIntoView: true,
         tabSize: 2,
         useSoftTabs: true,
-        readOnly: true
+        readOnly: true,
       });
 
       this.setJSONEditor(this.initUiModel as string);
 
-      this.initEditor('uiModel', this.uiModelEl, this.initUiModel, 'ace/mode/xml')
-        .subscribe(uiModel => {
-          this.setJSONEditor(uiModel);
-          this.refreshPreview(uiModel, this.dataModel);
-        });
+      this.initEditor(
+        'uiModel',
+        this.uiModelEl,
+        this.initUiModel,
+        'ace/mode/xml'
+      ).subscribe((uiModel) => {
+        this.setJSONEditor(uiModel);
+        this.refreshPreview(uiModel, this.dataModel);
+      });
 
-      this.initEditor('dataModel', this.dataModelEl, this.initDataModel)
-        .subscribe(dataModel => this.refreshPreview(this.uiModel, dataModel ? JSON.parse(dataModel) : dataModel));
+      this.initEditor(
+        'dataModel',
+        this.dataModelEl,
+        this.initDataModel
+      ).subscribe((dataModel) =>
+        this.refreshPreview(
+          this.uiModel,
+          dataModel ? JSON.parse(dataModel) : dataModel
+        )
+      );
 
-      this.initEditor('scripts', this.scriptsEl, this.scripts, 'ace/mode/python')
-        .subscribe(sc => this.scripts = sc);
+      this.initEditor(
+        'scripts',
+        this.scriptsEl,
+        this.scripts,
+        'ace/mode/python'
+      ).subscribe((sc) => (this.scripts = sc));
     }
   }
 
   private setJSONEditor(uiModel: string): void {
-    CoreService.parseXMLModel(uiModel).then(res => {
-      this.uiModelJSONEditor.setValue(formatObjToJsonStr(res), -1);
-      this.uiModelJSONEditor.resize();
-    });
+    const res = CoreService.parseXMLModel(uiModel);
+
+    this.uiModelJSONEditor.setValue(formatObjToJsonStr(res), -1);
+    this.uiModelJSONEditor.resize();
   }
 
   private refreshPreview(uiModel: UIModel | string, dataModel: any): void {
@@ -149,20 +197,25 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     this.dataModelCopy = JSON.parse(JSON.stringify(dataModel));
   }
   // eslint-disable-next-line max-len
-  private initEditor(name: string, element: ElementRef, value: UIModel<Record<string, unknown>> | string, mode = 'ace/mode/json'): Observable<any> {
+  private initEditor(
+    name: string,
+    element: ElementRef,
+    value: UIModel<Record<string, unknown>> | string,
+    mode = 'ace/mode/json'
+  ): Observable<any> {
     const editor = edit(element.nativeElement, {
       mode,
       autoScrollEditorIntoView: true,
       value: formatObjToJsonStr(value),
       tabSize: 2,
       useSoftTabs: true,
-      indentedSoftWrap: true
+      indentedSoftWrap: true,
     });
 
     editor.setOptions({
       enableBasicAutocompletion: true,
       enableSnippets: false,
-      enableLiveAutocompletion: true
+      enableLiveAutocompletion: true,
     });
 
     this[`${name}Editor`] = editor;

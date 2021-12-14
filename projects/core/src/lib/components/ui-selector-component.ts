@@ -1,4 +1,14 @@
-import { Component, OnInit, SimpleChanges, OnChanges, EventEmitter, Output, OnDestroy, ViewContainerRef, Injector } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  SimpleChanges,
+  OnChanges,
+  EventEmitter,
+  Output,
+  OnDestroy,
+  ViewContainerRef,
+  Injector,
+} from '@angular/core';
 import { BaseUIComponent } from './base-ui-component';
 import { CoreService } from '../services/core.service';
 import { ComponentEvent, Categories } from '../models';
@@ -6,11 +16,17 @@ import { BaseUIComponentConstructor } from '../utils';
 import { BaseDynamicComponent } from './base-dynamic-component';
 
 @Component({
-    selector: 'dc-ui-selector',
-    template: ''
+  selector: 'dc-ui-selector',
+  template: '',
 })
-export class UISelectorComponent extends BaseUIComponent implements OnInit, OnChanges, OnDestroy {
-  constructor(private containerRef: ViewContainerRef, private injector: Injector) {
+export class UISelectorComponent
+  extends BaseUIComponent
+  implements OnInit, OnChanges, OnDestroy
+{
+  constructor(
+    private containerRef: ViewContainerRef,
+    private injector: Injector
+  ) {
     super();
   }
 
@@ -65,7 +81,9 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
         this.component.uiModel = this.uiModel;
         this.component.create(this.containerRef.element.nativeElement);
       } else if (componentClass.prototype instanceof BaseUIComponent) {
-        const componentRef = this.containerRef.createComponent(componentClass as BaseUIComponentConstructor);
+        const componentRef = this.containerRef.createComponent(
+          componentClass as BaseUIComponentConstructor
+        );
         this.component = componentRef.instance as BaseUIComponent;
         this.component.dataModel = this.dataModel;
         this.component.uiModel = this.uiModel;
@@ -80,9 +98,9 @@ export class UISelectorComponent extends BaseUIComponent implements OnInit, OnCh
       this.component.eventHandlers.subscribe((evt: ComponentEvent) => {
         this.eventHandlers.emit(evt);
       });
-      this.render.emit({success: true});
+      this.render.emit({ success: true });
     } catch (error) {
-      this.render.emit({error});
+      this.render.emit({ error });
       console.error(error);
     }
   }

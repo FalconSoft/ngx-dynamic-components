@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ComponentDescriptor, UIModel, AttributesMap, XMLResult } from '../models';
-import { BaseUIComponentConstructor, toXMLResult, BaseHTMLElementConstructor, parseXmlStringPromise } from '../utils';
+import { ComponentDescriptor, UIModel, XMLResult } from '../models';
+import { BaseUIComponentConstructor, toXMLResult, BaseHTMLElementConstructor, parseXmlString } from '../utils';
 import { controlProperties, UIModelProperty } from '../properties';
 
 /**
@@ -56,12 +56,12 @@ export class CoreService {
     return Array.from(CoreService.COMPONENTS_REGISTER.values());
   }
 
-  public static async parseXMLModel(uiModelXml: string): Promise<UIModel> {
+  public static parseXMLModel(uiModelXml: string): UIModel {
     if (!uiModelXml) {
       return null;
     }
     try {
-      const res = await parseXmlStringPromise(uiModelXml);
+      const res = parseXmlString(uiModelXml);
 
       if (res) {
         const type = Object.keys(res)[0];

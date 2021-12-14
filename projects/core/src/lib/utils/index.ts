@@ -13,9 +13,14 @@ export type BaseHTMLElementConstructor = new () => BaseHTMLElement;
  * @param uiModel UIModel.
  * @param id Component identifier.
  */
-export function getComponentById(uiModel: UIModel, id: string): BaseDynamicComponent {
-
-  function traverseUiModel(uModel: UIModel, predicate: (u) => boolean): UIModel {
+export function getComponentById(
+  uiModel: UIModel,
+  id: string
+): BaseDynamicComponent {
+  function traverseUiModel(
+    uModel: UIModel,
+    predicate: (u) => boolean
+  ): UIModel {
     if (predicate(uModel)) {
       return uModel;
     }
@@ -32,7 +37,7 @@ export function getComponentById(uiModel: UIModel, id: string): BaseDynamicCompo
     return null;
   }
 
-  const componentUIModel = traverseUiModel(uiModel, uim => uim.id === id);
+  const componentUIModel = traverseUiModel(uiModel, (uim) => uim.id === id);
   return componentUIModel?.getComponent();
 }
 
@@ -40,7 +45,11 @@ export function getComponentById(uiModel: UIModel, id: string): BaseDynamicCompo
  * A helper method that sets value based on path.
  * e.g. setValue({}, 'obj.prop1.value', 22) will create a corresponding object and assign value = 22
  */
-export function setValue(objectValue: Record<string, unknown>, path: string, value: any): void {
+export function setValue(
+  objectValue: Record<string, unknown>,
+  path: string,
+  value: any
+): void {
   if (!objectValue) {
     objectValue = {};
   }
@@ -70,7 +79,11 @@ export function setValue(objectValue: Record<string, unknown>, path: string, val
 /**
  * a helper methods that query JS Object for a value based on path. obj.subObject.value
  */
-export function queryValue(obj: any, path: string, defaultValue: any = null): any {
+export function queryValue(
+  obj: any,
+  path: string,
+  defaultValue: any = null
+): any {
   if (!path) {
     return defaultValue;
   }
@@ -98,17 +111,44 @@ export function queryValue(obj: any, path: string, defaultValue: any = null): an
   return res;
 }
 
+export function parseXmlString(xmlString: string): any {
+  let result = null;
+
+  const ops = {
+    explicitChildren: true,
+    preserveChildrenOrder: true,
+  };
+
+  iXml.parseString(xmlString, ops, (err, res) => {
+    if (res) {
+      // need to clone result as it would mutate instance
+      result = JSON.parse(JSON.stringify(res));
+    }
+    if (err) {
+      // quite dirty way to get meaningful error message
+      let msg = err.message.substring(err.message.indexOf('12px">') + 6);
+      msg = msg.substring(0, msg.indexOf('</div>'));
+      throw new Error(msg);
+    }
+  });
+
+  return result;
+}
+
+
 export function parseXmlStringPromise(xmlString: string): Promise<any> {
+
   return new Promise((s, e) => {
     const ops = {
       explicitChildren: true,
-      preserveChildrenOrder: true
+      preserveChildrenOrder: true,
     };
 
     iXml.parseString(xmlString, ops, (err, res) => {
       if (res) {
         // need to clone result as it would mutate instance
-        return s(JSON.parse(JSON.stringify(res)));
+        const xmlObject = JSON.parse(JSON.stringify(res));
+        return s(xmlObject);
       }
       if (err) {
         // quite dirty way to get meaningful error message
