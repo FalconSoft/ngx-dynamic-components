@@ -36,19 +36,11 @@ export class UISelectorComponent
 
   async ngOnInit(): Promise<void> {
     await this.createComponent();
-
-    // if(this.properties.onInit) {
-    //   this.emitEvent(this.properties.onInit);
-    // }
   }
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (changes.uiModel && !changes.uiModel.firstChange) {
       await this.createComponent();
-
-      if (this.properties.onInit) {
-        this.emitEvent(this.properties.onInit);
-      }
     }
   }
 
