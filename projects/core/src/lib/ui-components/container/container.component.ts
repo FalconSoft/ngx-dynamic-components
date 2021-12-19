@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, ViewChild, ViewContainerRef } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';

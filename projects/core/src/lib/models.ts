@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { BaseUIComponentConstructor, BaseHTMLElementConstructor } from './utils';
+// import { BaseUIComponentConstructor, BaseHTMLElementConstructor } from './utils';
 import { ComponentProperty } from './properties';
 import { BaseDynamicComponent } from './components/base-dynamic-component';
+import { BaseHTMLElement } from './components/base-html-element';
+import { BaseUIComponent } from './components/base-ui-component';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
+
+export type BaseUIComponentConstructor = new () => BaseUIComponent;
+export type BaseHTMLElementConstructor = new () => BaseHTMLElement;
 
 export interface AttributesMap {
     width?: string;

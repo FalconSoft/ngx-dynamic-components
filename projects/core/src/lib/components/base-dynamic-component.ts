@@ -1,4 +1,4 @@
-import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy, Directive } from '@angular/core';
+import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy, Directive, Injector, Output } from '@angular/core';
 import { UIModel, ComponentEvent } from '../models';
 import { parseArgFunction, queryValue } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties } from '../properties';
@@ -8,8 +8,11 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
     dataModel: any;
     uiModel: UIModel<T>;
     abstract eventHandlers: EventEmitter<ComponentEvent>;
+    @Output() render = new EventEmitter();
     changedDataModel = new EventEmitter();
     element: HTMLElement;
+
+    constructor(public injector?: Injector) { }
 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();

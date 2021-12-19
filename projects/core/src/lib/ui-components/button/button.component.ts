@@ -6,10 +6,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
 @Component({
   selector: 'button', // eslint-disable-line
   template: `
-  <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)" *ngFor="let item of uiModel.children"
-      [uiModel]='item'
-      [dataModel]='dataModel'
-      (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
+  <ng-container #vc></ng-container>
   {{properties.label}}
   `
 })

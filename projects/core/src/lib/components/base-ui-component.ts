@@ -1,13 +1,15 @@
-import { OnDestroy, HostBinding, SimpleChanges, OnChanges, Directive, Input, Output, EventEmitter } from '@angular/core';
+import { OnDestroy, HostBinding, SimpleChanges, OnChanges, Directive, Input, Output, EventEmitter,
+  ViewContainerRef, OnInit, ViewChild } from '@angular/core';
 import { AttributesMap, UIModel, ComponentEvent } from '../models';
 import { kebabStrToCamel, queryValue, setValue } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 import { InputProperties } from '../ui-components/input/input.component';
 import { BaseDynamicComponent } from './base-dynamic-component';
+import { renderChildren } from '../utils/renderer';
 
 @Directive()
 // eslint-disable-next-line
-export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges {
+export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges, OnInit {
     @HostBinding('style.width') width: string;
     @HostBinding('style.min-width') minWidth: string;
     @HostBinding('style.max-width') maxWidth: string;
@@ -28,10 +30,16 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     @Input() uiModel: UIModel<T>;
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @Output() changedDataModel = new EventEmitter();
+    @ViewChild('vc', {read: ViewContainerRef, static: true}) containerRef: ViewContainerRef;
 
     protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeight', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
+
+    async ngOnInit(): Promise<void> {
+      renderChildren(this);
+      await super.ngOnInit();
+    }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);

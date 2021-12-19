@@ -1,6 +1,1 @@
-<ng-container *ngIf="childUIModel">
-  <dc-ui-selector (changedDataModel)="onDataModelChanged($event, item)" *ngFor="let item of dataList; let index = index"
-      [uiModel]='childUIModel'
-      [dataModel]='getDataModel(item, index)'
-      (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
-</ng-container>
+<ng-container #vc *ngFor="let item of dataList;"></ng-container>

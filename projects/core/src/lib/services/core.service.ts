@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ComponentDescriptor, UIModel, XMLResult } from '../models';
-import { BaseUIComponentConstructor, toXMLResult, BaseHTMLElementConstructor, parseXmlString } from '../utils';
+import { ComponentDescriptor, UIModel, XMLResult, BaseUIComponentConstructor, BaseHTMLElementConstructor } from '../models';
+import { toXMLResult, parseXmlString } from '../utils';
 import { controlProperties, UIModelProperty } from '../properties';
 
 /**

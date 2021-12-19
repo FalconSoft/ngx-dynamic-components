@@ -1,6 +1,5 @@
-import { ComponentDescriptor, Categories } from '../models';
+import { ComponentDescriptor, Categories, BaseHTMLElementConstructor } from '../models';
 import { BaseHTMLElement, HTMLProperties, HTMLPropertiesConstrutor, parseHTMLUIModel } from '../components/base-html-element';
-import { BaseHTMLElementConstructor } from '../utils';
 
 const tags = ['span', 'p', 'i', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'nav', 'small'];
 
