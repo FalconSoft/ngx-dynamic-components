@@ -1,4 +1,4 @@
-import type { ElementRef } from '@angular/core';
+import type { ElementRef, ViewContainerRef } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription, PropertyCategories, PropTypes } from '../../properties';

@@ -74,7 +74,6 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     }
 
     if (this.interpreter.hasFunction(this.scripts, eventName)) {
-      const inDataModel = this.dataModel;
       try {
         await this.interpreter.evaluate(
           this.scripts,
@@ -103,6 +102,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
     this.interpreter.assignGlobalContext({});
     this.uiModel = this.initUiModel;
+    console.log('this.initDataModel', this.initDataModel);
     this.dataModel = this.initDataModel;
   }
 

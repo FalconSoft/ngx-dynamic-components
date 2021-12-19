@@ -1,9 +1,9 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { CoreService } from '../../services/core.service';
 import { StyleProperties, propDescription } from '../../properties';
 import { UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
-import { queryValue, toXMLResult } from '../../utils';
+import { createComponent, queryValue, toXMLResult } from '../../utils';
 import example from './repeater.examples';
 
 @Component({
@@ -17,12 +17,19 @@ import example from './repeater.examples';
 })
 export class RepeaterComponent extends BaseUIComponent<RepeaterProperties> implements OnInit {
   @HostBinding('style.display') display = undefined;
+  @ViewChildren('vc', { read: ViewContainerRef }) vContainers: QueryList<ViewContainerRef>;
 
   childUIModel: UIModel;
 
   async ngOnInit(): Promise<void> {
     await super.ngOnInit();
     this.childUIModel = CoreService.getUIModel(toXMLResult(this.properties.childUIModel));
+    const dataList = this.dataList;
+    if (this.childUIModel) {
+      this.vContainers.forEach((vc, i) => {
+        createComponent(this, this.childUIModel, vc, dataList[i]);
+      });
+    }
   }
 
   get dataList(): any[] {

@@ -55,8 +55,15 @@ type TextPropertiesConstrutor = new() => TextProperties;
 
 const example: ComponentExample<UIModel<TextProperties>> = {
   title: 'Text compoent example',
-  uiModel: `<text text-style="h1">Hello world</text>`,
-  dataModel: {}
+  uiModel: `<div>
+  <text text-style="h1">Hello world</text>
+  <text text-style="h1">$.title</text>
+  <text text-style="h1" binding="$.title2"></text>
+</div>`,
+  dataModel: {
+    title: 'Binded title',
+    title2: 'Binded title2'
+  }
 };
 
 export const textDescriptor: ComponentDescriptor<TextComponentConstrutor, TextPropertiesConstrutor> = {

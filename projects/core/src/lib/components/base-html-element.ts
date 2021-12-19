@@ -2,8 +2,8 @@ import type { Injector, ViewContainerRef } from '@angular/core';
 import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { UIModel, ComponentEvent, XMLResult } from '../models';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
-import { UISelectorComponent } from './ui-selector-component';
 import { BaseDynamicComponent } from './base-dynamic-component';
+import { createComponent } from '../utils';
 
 @Directive()
 export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line
@@ -14,8 +14,8 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
     element: HTMLElement;
     private parentNode: Node;
 
-    constructor(private containreRef?: ViewContainerRef, protected injector?: Injector) {
-      super();
+    constructor(public containerRef?: ViewContainerRef, public injector?: Injector) {
+      super(injector);
     }
 
     async ngOnDestroy(): Promise<void> {
@@ -45,17 +45,7 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
       if (!created && this.parentNode) {
         this.parentNode.insertBefore(this.element, selectorElement);
       }
-      if (this.uiModel.children) {
-        this.uiModel.children.forEach(uiModel => {
-          const componentRef = this.containreRef.createComponent(UISelectorComponent);;
-          const component =  componentRef.instance;
-          component.dataModel = this.dataModel;
-          component.uiModel = uiModel;
-        });
-      }
-      if (this.parentNode && !created) {
-        this.parentNode.removeChild(selectorElement);
-      }
+      this.uiModel.children?.forEach(uiModel => createComponent(this, uiModel));
     }
 
     private setProperties(): void {

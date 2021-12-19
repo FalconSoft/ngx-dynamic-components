@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/core",
-  "version": "13.1.3",
+  "version": "13.1.4",
   "private": false,
   "description": "@ngx-dynamic-components/core is Angular 7+ library what contains a core interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",

@@ -1,6 +1,6 @@
 {
   "name": "ngx-dynamic-components",
-  "version": "13.1.3",
+  "version": "13.1.4",
   "description": "NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms or any other mobile-friendly web layouts.",
   "author": "FalconSoft Ltd",
   "repository": {
@@ -15,8 +15,7 @@
     "ng": "ng",
     "start": "ng serve --configuration=development",
     "build": "ng build",
-    "build:core": "ng build core --configuration production && ng build bootstrap --configuration production",
-    "build:libs": "ng build core --configuration production && ng build material --configuration production && ng build bootstrap --configuration production && ng build tools --configuration production",
+    "build:libs": "ng build core --configuration production && ng build bootstrap --configuration production && ng build tools --configuration production",
     "public:publish": "cd dist/@ngx-dynamic-components/core && npm publish && cd ../bootstrap && npm publish && cd ../tools && npm publish && cd ../../../",
     "build:publish": "npm run build:libs && npm run public:publish",
     "build:gh": "ng build --configuration production --base-href=/ngx-dynamic-components/",
