@@ -95,3 +95,12 @@ export function parseArgFunction(funcSignature: string = ''): string[] {
 
   return [match[1], ...match[2].split(',')];
 }
+
+export function getStringEventArgs(eventName: string): string | number | undefined {
+  const [fName, fParam] = parseArgFunction(eventName);
+  if (fParam && fParam.startsWith('\'') && fParam.endsWith('\'')) {
+    return fParam.replace(/'/g, '');
+  } else if (/^\d+(\.{0,1}\d+)?$/.test(fParam)) {
+    return Number(fParam);
+  }
+}

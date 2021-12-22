@@ -23,8 +23,8 @@ export class AComponent extends BaseHTMLElement<LinkProperties> { // eslint-disa
       this.element.setAttribute('href', 'javascript:void(0);');
     }
 
-    this.element.onclick = (evt) => {
-      this.emitEvent(this.properties.onClick);
+    this.element.onclick = (evt: MouseEvent) => {
+      this.emitEvent(this.properties.onClick, evt);
 
       if (this.properties.routerLink) {
         const router = this.injector.get(Router);

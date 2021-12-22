@@ -1,12 +1,13 @@
-import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy, Directive, Injector, Output } from '@angular/core';
+import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy, Directive, Injector, Output, ViewContainerRef } from '@angular/core';
 import { UIModel, ComponentEvent } from '../models';
-import { parseArgFunction, queryValue } from '../utils';
+import { getStringEventArgs, parseArgFunction, queryValue } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties } from '../properties';
 
 @Directive()
 export abstract class BaseDynamicComponent<T = StyleProperties> implements OnInit, OnChanges, OnDestroy { // eslint-disable-line
     dataModel: any;
     uiModel: UIModel<T>;
+    containerRef?: ViewContainerRef;
     abstract eventHandlers: EventEmitter<ComponentEvent>;
     @Output() render = new EventEmitter();
     changedDataModel = new EventEmitter();
@@ -57,7 +58,8 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
           eventName,
           parameters: {
             uiModel: this.uiModel,
-            [parameter]: parameters
+            argsKey: parameter,
+            argsValue: getStringEventArgs(funcSign) ?? parameters
           }
         });
       }

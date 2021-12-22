@@ -1,12 +1,11 @@
-import { BaseUIComponent } from '../components/base-ui-component';
 import { BaseUIComponentConstructor, Categories, ComponentEvent, UIModel } from '../models';
 import { CoreService } from '../services/core.service';
-import { BaseHTMLElement } from '../components/base-html-element';
 import { NGXDynamicComponent } from '../components/ngx-dynamic-component';
+import { BaseDynamicComponent } from '../components/base-dynamic-component';
 
-type UIComponent = BaseUIComponent | BaseHTMLElement | NGXDynamicComponent;
+type UIComponent = BaseDynamicComponent | NGXDynamicComponent;
 
-export function renderChildren(parentComponent: BaseUIComponent): void {
+export function renderChildren(parentComponent: BaseDynamicComponent): void {
   if (!parentComponent.containerRef || !parentComponent.uiModel) {
     return;
   }
@@ -24,18 +23,18 @@ export function createComponent(
   try {
     const descriptor = CoreService.getComponentDescriptor(uiModel.type);
     const componentClass = descriptor.component;
-    let component: BaseUIComponent | BaseHTMLElement;
+    let component: BaseDynamicComponent;
     if (descriptor.category === Categories.HTML) {
       const baseHtml = componentClass as any;
       component = new baseHtml(containerRef, parentComponent.injector);
       component.dataModel = dataModel;
       component.uiModel = uiModel;
       component.create(containerRef.element.nativeElement);
-    } else if (componentClass.prototype instanceof BaseUIComponent) {
+    } else if (componentClass.prototype instanceof BaseDynamicComponent) {
       const componentRef = containerRef.createComponent(
         componentClass as BaseUIComponentConstructor
       );
-      component = componentRef.instance as BaseUIComponent;
+      component = componentRef.instance as BaseDynamicComponent;
       component.dataModel = dataModel;
       component.uiModel = uiModel;
       component.create(componentRef.location.nativeElement);

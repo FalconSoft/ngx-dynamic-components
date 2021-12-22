@@ -45,6 +45,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
         } catch (e) {
           this.parsedUIModel = null;
           this.eventHandlers.emit({eventName: 'parseError', parameters: {
+            uiModel: this.parsedUIModel,
             error: e
           }});
         }

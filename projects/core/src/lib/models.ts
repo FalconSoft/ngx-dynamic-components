@@ -98,6 +98,11 @@ export interface XMLResult {
 
 export interface ComponentEvent {
   eventName: string;
-  parameters?: any;
   rootUIModel?: UIModel;
+  parameters?: {
+    uiModel?: UIModel;
+    argsKey?: string;
+    argsValue?: any;
+    [key: string]: any;
+  };
 }

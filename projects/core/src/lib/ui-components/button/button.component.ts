@@ -14,9 +14,9 @@ export class ButtonComponent extends BaseUIComponent<ButtonProperties> implement
 
   @HostBinding('attr.type') type = 'button';
   @HostBinding('attr.disabled') disabled = null;
-  @HostListener('click')
-  onClick(): void {
-    this.emitEvent(this.properties.onClick);
+  @HostListener('click', ['$event'])
+  onClick(evt: Event): void {
+    this.emitEvent(this.properties.onClick, evt);
     this.changedDataModel.emit(this.dataModel);
   }
 

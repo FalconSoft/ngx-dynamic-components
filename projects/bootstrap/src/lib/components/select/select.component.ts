@@ -18,7 +18,7 @@ import example from './select.examples';
       [bindValue]="properties.bindValue || 'value'" [placeholder]="properties.placeholder"
       (add)="emitEvent(properties.add, $event)"
       (blur)="emitEvent(properties.blur, $event)"
-      (change)="onSelect()"
+      (change)="onSelect($event)"
       (close)="emitEvent(properties.close, $event)"
       (clear)="emitEvent(properties.clear, $event)"
       (focus)="emitEvent(properties.focus, $event)"
@@ -41,9 +41,9 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> {
   searchText$ = new Subject<string | null>();
   loading = false;
 
-  onSelect(): void {
+  onSelect(evt): void {
     this.changedDataModel.emit(this.dataModel);
-    this.emitEvent(this.properties.change);
+    this.emitEvent(this.properties.change, evt);
   }
 
 

@@ -3,7 +3,8 @@ import { BaseUIComponent } from '../../components/base-ui-component';
 import { CoreService } from '../../services/core.service';
 import { StyleProperties, propDescription } from '../../properties';
 import { UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
-import { createComponent, queryValue, toXMLResult } from '../../utils';
+import { queryValue, toXMLResult } from '../../utils';
+import { createComponent } from '../../utils/renderer';
 import example from './repeater.examples';
 
 @Component({

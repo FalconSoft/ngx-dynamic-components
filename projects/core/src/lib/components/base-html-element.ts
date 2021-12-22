@@ -3,7 +3,7 @@ import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, Directive } 
 import { UIModel, ComponentEvent, XMLResult } from '../models';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
 import { BaseDynamicComponent } from './base-dynamic-component';
-import { createComponent } from '../utils';
+import { createComponent } from '../utils/renderer';
 
 @Directive()
 export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line

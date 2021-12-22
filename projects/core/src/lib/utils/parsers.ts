@@ -1,10 +1,6 @@
-// import { BaseUIComponent } from '../components/base-ui-component';
-// import { BaseHTMLElement } from '../components/base-html-element';
+import * as iXml from 'isomorphic-xml2js';
 import { BaseDynamicComponent } from '../components/base-dynamic-component';
 import { UIModel } from '../models';
-import * as iXml from 'isomorphic-xml2js';
-
-export * from './helpers';
 
 /**
  * Gets component from uiModel by id
