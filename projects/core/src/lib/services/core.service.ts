@@ -60,22 +60,17 @@ export class CoreService {
     if (!uiModelXml) {
       return null;
     }
-    try {
-      const res = parseXmlString(uiModelXml);
+    const res = parseXmlString(uiModelXml);
 
-      if (res) {
-        const type = Object.keys(res)[0];
-        const xmlObj = res[type];
-        if(typeof xmlObj === 'string')
-        {
-          throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
-        }
-        xmlObj['#name'] = type;
-        return CoreService.getUIModel(toXMLResult(xmlObj));
+    if (res) {
+      const type = Object.keys(res)[0];
+      const xmlObj = res[type];
+      if(typeof xmlObj === 'string')
+      {
+        throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
       }
-    } catch (e) {
-      console.error(e);
-      throw e;
+      xmlObj['#name'] = type;
+      return CoreService.getUIModel(toXMLResult(xmlObj));
     }
   }
 
@@ -83,39 +78,43 @@ export class CoreService {
     const itemProperties = xmlRes.attrs;
     const type = xmlRes.type;
 
-    if (itemProperties.disabled === 'true') {
-      itemProperties.disabled = true;
-    } else if (itemProperties.hasOwnProperty('disabled')) {
-      itemProperties.disabled = null;
-    }
-
-    if (CoreService.COMPONENTS_REGISTER.has(type)) {
-      const uiModel: UIModel = {
-        type,
-        itemProperties
-      };
-
-      if (itemProperties.id) {
-        uiModel.id = itemProperties.id;
+      if (itemProperties.disabled === 'true') {
+        itemProperties.disabled = true;
+      } else if (itemProperties.hasOwnProperty('disabled')) {
+        itemProperties.disabled = null;
       }
 
-      const descr = CoreService.COMPONENTS_REGISTER.get(type);
-      if (typeof descr.parseUIModel === 'function') {
-        const typeUIModel = descr.parseUIModel(xmlRes);
-        uiModel.itemProperties = { ...itemProperties, ...typeUIModel.itemProperties };
-        if (typeUIModel.children) {
-          uiModel.children = typeUIModel.children;
+      if (CoreService.COMPONENTS_REGISTER.has(type)) {
+        const uiModel: UIModel = {
+          type,
+          itemProperties
+        };
+
+        if (itemProperties.id) {
+          uiModel.id = itemProperties.id;
         }
+        try {
+          const descr = CoreService.COMPONENTS_REGISTER.get(type);
+          if (typeof descr.parseUIModel === 'function') {
+            const typeUIModel = descr.parseUIModel(xmlRes);
+            uiModel.itemProperties = { ...itemProperties, ...typeUIModel.itemProperties };
+            if (typeUIModel.children) {
+              uiModel.children = typeUIModel.children;
+            }
+          }
+        } catch(e) {
+          console.error(e);
+          throw new Error(`Error parsing <${type} ..> : ${e}`);
+        }
+        if (xmlRes.childNodes && !uiModel.children) {
+          uiModel.children = xmlRes.childNodes
+            .filter(n => n['#name'] !== '#comment')
+            .map((r: any) => CoreService.getUIModel(toXMLResult(r)));
+        }
+        return uiModel;
+      } else {
+        throw Error(`No component for tag ${type}`);
       }
 
-      if (xmlRes.childNodes && !uiModel.children) {
-        uiModel.children = xmlRes.childNodes
-          .filter(n => n['#name'] !== '#comment')
-          .map((r: any) => CoreService.getUIModel(toXMLResult(r)));
-      }
-      return uiModel;
-    } else {
-      throw Error(`No component for tag ${type}`);
-    }
   }
 }
