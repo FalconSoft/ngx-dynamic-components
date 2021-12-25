@@ -11,46 +11,43 @@ import { createComponent } from '../utils/renderer';
 export class NGXDynamicComponent implements OnInit, OnChanges {
 
     @Input() dataModel: any;
-    @Input() uiModel: UIModel<any>|string;
-    @Output() render = new EventEmitter();
+    @Input() xmlUIModel: string;
+    @Output() render = new EventEmitter<UIModel>();
     @Output() changedDataModel = new EventEmitter();
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @ViewChild('vc', {read: ViewContainerRef, static: true}) containerRef: ViewContainerRef;
 
-    parsedUIModel: UIModel;
+    uiModel: UIModel;
 
     constructor(public injector?: Injector) { }
 
     onEventHandler(evt: ComponentEvent): void {
-      this.eventHandlers.emit({...evt, rootUIModel: this.parsedUIModel});
+      this.eventHandlers.emit({...evt, rootUIModel: this.uiModel});
     }
 
     ngOnInit() {
-      this.initParsedModel(this.uiModel);
+      this.initParsedModel(this.xmlUIModel);
     }
 
-    ngOnChanges({uiModel, dataModel}: SimpleChanges): void {
-      if (uiModel && !uiModel.firstChange && uiModel.currentValue !== uiModel.previousValue) {
-        this.initParsedModel(this.uiModel);
+    ngOnChanges({xmlUIModel, dataModel}: SimpleChanges): void {
+      if (xmlUIModel && !xmlUIModel.firstChange && xmlUIModel.currentValue !== xmlUIModel.previousValue) {
+        this.initParsedModel(this.xmlUIModel);
       }
     }
 
-    private initParsedModel(uiModel: UIModel<any> | string): void {
-      if (typeof uiModel === 'string') {
-        try {
-          this.parsedUIModel = CoreService.parseXMLModel(uiModel);
-          if (this.parsedUIModel) {
-            createComponent(this, this.parsedUIModel);
-          }
-        } catch (e) {
-          this.parsedUIModel = null;
-          this.eventHandlers.emit({eventName: 'parseError', parameters: {
-            uiModel: this.parsedUIModel,
-            error: e
-          }});
+    private initParsedModel(uiModel: string): void {
+      try {
+        this.uiModel = CoreService.parseXMLModel(uiModel);
+        if (this.uiModel) {
+          createComponent(this, this.uiModel);
+          this.render.emit(this.uiModel);
         }
-      } else {
-        this.parsedUIModel = uiModel;
+      } catch (e) {
+        this.uiModel = null;
+        this.eventHandlers.emit({eventName: 'parseError', parameters: {
+          uiModel: this.uiModel,
+          error: e
+        }});
       }
     }
 }

@@ -34,7 +34,7 @@
       <as-split-area [size]="100 - codeSize" #area1="asSplitArea">
         <div class="preview" fxFlex="1 1 auto">
           <ngx-dynamic-component class="d-block" *ngIf="uiModel" #dynamicComponent
-            [uiModel]='uiModel'
+            [xmlUIModel]='uiModel'
             [dataModel]='dataModel'
             (render)='onRendered($event)'
             (changedDataModel)="onDataModelChange($event)"

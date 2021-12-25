@@ -48,9 +48,8 @@ export function createComponent(
     component.eventHandlers.subscribe((evt: ComponentEvent) => {
       parentComponent.eventHandlers.emit(evt);
     });
-    parentComponent.render.emit({ success: true });
   } catch (error) {
-    parentComponent.render.emit({ error });
     console.error(error);
+    throw new Error(`Failed to create component ${uiModel.type}`);
   }
 }

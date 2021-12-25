@@ -42,14 +42,14 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
   selector: 'app-root',
   template: `
   <ngx-dynamic-component
-    [uiModel]='uiModel'
+    [xmlUIModel]='xmlUIModel'
     (eventHandlers)="eventHandlers($event)"
     [dataModel]="data">
   </ngx-dynamic-component>
   `
 })
 export class AppComponent {
-  uiModel = `
+  xmlUIModel = `
   <form onSubmit="contactUs(data)">
     <h3>Contact us</h3>
     <div class="row">
