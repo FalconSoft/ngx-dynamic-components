@@ -46,6 +46,9 @@ export function createComponent(
       parentComponent.changedDataModel.emit(evt);
     });
     component.eventHandlers.subscribe((evt: ComponentEvent) => {
+      if (parentComponent instanceof NGXDynamicComponent) {
+        evt.rootUIModel = parentComponent.uiModel;
+      }
       parentComponent.eventHandlers.emit(evt);
     });
   } catch (error) {

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewContainerRef,
   ViewChild, Injector, OnChanges, SimpleChanges } from '@angular/core';
+import { animationFrameScheduler } from 'rxjs';
 import { UIModel, ComponentEvent } from '../models';
 import { CoreService } from '../services/core.service';
 import { createComponent } from '../utils/renderer';
@@ -21,10 +22,6 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
 
     constructor(public injector?: Injector) { }
 
-    onEventHandler(evt: ComponentEvent): void {
-      this.eventHandlers.emit({...evt, rootUIModel: this.uiModel});
-    }
-
     ngOnInit() {
       this.initParsedModel(this.xmlUIModel);
     }
@@ -40,7 +37,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
         this.uiModel = CoreService.parseXMLModel(uiModel);
         if (this.uiModel) {
           createComponent(this, this.uiModel);
-          this.render.emit(this.uiModel);
+          animationFrameScheduler.schedule(() => this.render.emit(this.uiModel));
         }
       } catch (e) {
         this.uiModel = null;
