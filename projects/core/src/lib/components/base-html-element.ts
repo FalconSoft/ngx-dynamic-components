@@ -66,20 +66,6 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
     get attrs(): T {
       return this.uiModel.itemProperties;
     }
-
-    protected setHostStyles(): void {
-      const props = this.properties as StyleProperties;
-      if (props.class) {
-        this.element.className = props.class;
-      }
-      if (props) {
-        StylePropertiesList.forEach(b => {
-          if (props && props.hasOwnProperty(b)) {
-            this.element.style[b] = props[b];
-          }
-        });
-      }
-    }
 }
 
 export class HTMLProperties extends StyleProperties {

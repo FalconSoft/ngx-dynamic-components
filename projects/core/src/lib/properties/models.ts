@@ -148,6 +148,12 @@ export abstract class StyleProperties extends BaseProperties {
     example: 'btn-primary'
   })
   class?: string;
+
+  @propDescription({
+    description: 'Css styles',
+    example: 'overflow-x: hidden;'
+  })
+  style?: string;
 }
 
 export abstract class BindingProperties extends StyleProperties {

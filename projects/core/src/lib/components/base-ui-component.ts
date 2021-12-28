@@ -104,17 +104,9 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     }
 
     protected setHostStyles(): void {
-      const props = this.properties as StyleProperties;
-      if (props.class) {
-        this.classAttr = props.class;
-      }
-      if (props) {
-        this.hostBindings.forEach(b => {
-          if (props && props.hasOwnProperty(b)) {
-            this[b] = props[b];
-          }
-        });
-        this.setBorder(props);
+      super.setHostStyles();
+      if (this.properties) {
+        this.setBorder(this.properties);
       }
     }
 

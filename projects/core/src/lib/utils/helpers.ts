@@ -104,3 +104,7 @@ export function getStringEventArgs(eventName: string): string | number | undefin
     return Number(fParam);
   }
 }
+
+export function kebabToCamelCase(str?: string): string {
+  return str?.replace(/-([a-z])/g, (s, char) => char.toUpperCase());
+}

@@ -1,6 +1,6 @@
 import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy, Directive, Injector, Output, ViewContainerRef } from '@angular/core';
 import { UIModel, ComponentEvent } from '../models';
-import { getStringEventArgs, parseArgFunction, queryValue } from '../utils';
+import { getStringEventArgs, kebabToCamelCase, parseArgFunction, queryValue } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties } from '../properties';
 
 @Directive()
@@ -66,16 +66,20 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
     }
 
     protected setHostStyles(): void {
-      const props = this.properties as StyleProperties;
+      const props = (this.properties ?? {}) as StyleProperties;
       if (props.class) {
         this.element.className = props.class;
       }
-      if (props) {
-        StylePropertiesList.forEach(b => {
-          if (props && props.hasOwnProperty(b)) {
-            this.element.style[b] = props[b];
-          }
-        });
-      }
+
+      props.style?.split(';').forEach(s => {
+        const [key, val] = s.split(':').map(v => v.trim());
+        this.element.style[kebabToCamelCase(key)] = val;
+      });
+
+      StylePropertiesList.forEach(b => {
+        if (props && props.hasOwnProperty(b)) {
+          this.element.style[b] = props[b];
+        }
+      });
     }
 }
