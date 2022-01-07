@@ -68,7 +68,7 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
     protected setHostStyles(): void {
       const props = (this.properties ?? {}) as StyleProperties;
       if (props.class) {
-        this.element.className = props.class;
+        this.element.className += ' ' + props.class;
       }
 
       props.style?.split(';').forEach(s => {

@@ -17,7 +17,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: $staticSpace;
 }
 
-.dc-element.hidden,
-.dc-wrapper.hidden {
+.dc-element.hidden {
   display: none !important;
 }

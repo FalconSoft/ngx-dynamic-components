@@ -40,17 +40,21 @@ export function createComponent(
       component.create(componentRef.location.nativeElement);
     }
 
-    component.element.classList.add('dc-element');
-    uiModel.getComponent = () => component;
-    component.changedDataModel.subscribe((evt) => {
-      parentComponent.changedDataModel.emit(evt);
-    });
-    component.eventHandlers.subscribe((evt: ComponentEvent) => {
-      if (parentComponent instanceof NGXDynamicComponent) {
-        evt.rootUIModel = parentComponent.uiModel;
-      }
-      parentComponent.eventHandlers.emit(evt);
-    });
+    if (component) {
+      component.element.classList.add('dc-element');
+      uiModel.getComponent = () => component;
+      component.changedDataModel.subscribe((evt) => {
+        parentComponent.changedDataModel.emit(evt);
+      });
+      component.eventHandlers.subscribe((evt: ComponentEvent) => {
+        if (parentComponent instanceof NGXDynamicComponent) {
+          evt.rootUIModel = parentComponent.uiModel;
+        }
+        parentComponent.eventHandlers.emit(evt);
+      });
+    } else {
+      throw new Error('Not able to create component');
+    }
   } catch (error) {
     console.error(error);
     throw new Error(`Failed to create component ${uiModel.type}`);

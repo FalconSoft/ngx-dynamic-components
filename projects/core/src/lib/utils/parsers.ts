@@ -10,7 +10,7 @@ import { UIModel } from '../models';
 export function getComponentById(
   uiModel: UIModel,
   id: string
-): BaseDynamicComponent {
+): BaseDynamicComponent | undefined {
   function traverseUiModel(
     uModel: UIModel,
     predicate: (u) => boolean
