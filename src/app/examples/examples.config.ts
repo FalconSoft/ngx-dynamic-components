@@ -14,7 +14,7 @@ export function getGroupedExamples(): { name: string; examples: [] }[] {
     map[ex.type] = map[ex.type] || [];
     map[ex.type].push(ex);
     return map;
-  }, {});
+  }, {} as Record<string, any[]>);
 
   return Object.entries(groups).map(([key, val]: [string, []]) => ({
       name: key,

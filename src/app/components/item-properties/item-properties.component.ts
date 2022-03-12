@@ -8,12 +8,11 @@ import { ComponentDescriptor, PropTypes } from '@ngx-dynamic-components/core';
 })
 export class ItemPropertiesComponent implements OnInit, OnChanges {
 
-  @Input()
-  component: ComponentDescriptor;
+  @Input() component?: ComponentDescriptor;
   displayedColumns = ['name', 'example', 'description'];
 
-  properties: [];
-  events: [];
+  properties?: [];
+  events?: [];
 
   constructor() { }
 

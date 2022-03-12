@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class SideBarComponent {
 
-  @Input() groups: GroupItem[];
+  @Input() groups?: GroupItem[];
 
   getUrl(group: GroupItem, item: {name: string}): string[] {
     if (group.url) {

@@ -60,7 +60,7 @@
                 "input": "node_modules/ace-builds/src-noconflict/ext-language_tools.js",
                 "inject": true
               },
-              "node_modules/marked/lib/marked.js"
+              "node_modules/marked/marked.min.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -98,6 +98,9 @@
             },
             "development": {
               "tsConfig": "./tsconfig.dev.json"
+            },
+            "fix": {
+              "tsConfig": "./tsconfig.fix.json"
             }
           },
           "defaultConfiguration": ""
@@ -113,6 +116,9 @@
             },
             "development": {
               "browserTarget": "ngx-dynamic-components:build:development"
+            },
+            "fix": {
+              "browserTarget": "ngx-dynamic-components:build:fix"
             }
           }
         },

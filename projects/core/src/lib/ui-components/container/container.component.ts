@@ -13,7 +13,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult }
     `]
 })
 export class ContainerComponent extends BaseUIComponent<ContainerProperties> {
-  @HostBinding('style.display') display = undefined;
+  @HostBinding('style.display') display?: string;
 }
 
 export class ContainerProperties extends StyleProperties {

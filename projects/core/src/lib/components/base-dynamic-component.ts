@@ -6,18 +6,21 @@ import { StyleProperties, StylePropertiesList, BaseProperties } from '../propert
 @Directive()
 export abstract class BaseDynamicComponent<T = StyleProperties> implements OnInit, OnChanges, OnDestroy { // eslint-disable-line
     dataModel: any;
-    uiModel: UIModel<T>;
+    uiModel: UIModel<T> = {
+      type: undefined,
+      itemProperties: ({} as T)
+    };
     containerRef?: ViewContainerRef;
     abstract eventHandlers: EventEmitter<ComponentEvent>;
     @Output() render = new EventEmitter();
     changedDataModel = new EventEmitter();
-    element: HTMLElement;
+    element?: HTMLElement;
 
     constructor(public injector?: Injector) { }
 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
-      this.emitEvent((this.properties as BaseProperties).onInit);
+      this.emitEvent((this.properties as BaseProperties)?.onInit);
     }
 
     abstract ngOnChanges(changes: SimpleChanges): Promise<void>;
@@ -45,7 +48,7 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
       }
     }
 
-    protected emitEvent(funcSign: string, parameters: any = null): void {
+    protected emitEvent(funcSign?: string, parameters: any = null): void {
       if (funcSign) {
         const fParsed = parseArgFunction(funcSign);
         const eventName = fParsed[0];
@@ -66,20 +69,26 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
     }
 
     protected setHostStyles(): void {
-      const props = (this.properties ?? {}) as StyleProperties;
-      if (props.class) {
-        this.element.className += ' ' + props.class;
-      }
+      if (this.element && this.properties) {
 
-      props.style?.split(';').forEach(s => {
-        const [key, val] = s.split(':').map(v => v.trim());
-        this.element.style[kebabToCamelCase(key)] = val;
-      });
-
-      StylePropertiesList.forEach(b => {
-        if (props && props.hasOwnProperty(b)) {
-          this.element.style[b] = props[b];
+        const props = this.properties as StyleProperties;
+        if (props.class) {
+          this.element.className += ' ' + props.class;
         }
-      });
+
+        props.style?.split(';').forEach(s => {
+          if (this.element) {
+              const [key, val] = s.split(':').map(v => v.trim());
+              this.element.style[kebabToCamelCase(key) as any] = val;
+          }
+        });
+
+        StylePropertiesList.forEach(b => {
+          if (props && props.hasOwnProperty(b) && this.element) {
+            const val = (props as any)[b];
+            this.element.style[b as any] = val;
+          }
+        });
+      }
     }
 }

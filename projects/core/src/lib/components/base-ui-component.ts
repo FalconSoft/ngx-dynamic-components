@@ -10,27 +10,30 @@ import { renderChildren } from '../utils/renderer';
 @Directive()
 // eslint-disable-next-line
 export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges, OnInit {
-    @HostBinding('style.width') width: string;
-    @HostBinding('style.min-width') minWidth: string;
-    @HostBinding('style.max-width') maxWidth: string;
-    @HostBinding('style.height') height: string;
-    @HostBinding('style.min-height') minHeight: string;
-    @HostBinding('style.max-height') maxHeight: string;
-    @HostBinding('style.padding') padding: string;
-    @HostBinding('style.margin') margin: string;
-    @HostBinding('style.display') display = 'initial';
-    @HostBinding('style.border-left') borderLeft: string;
-    @HostBinding('style.border-top') borderTop: string;
-    @HostBinding('style.border-right') borderRight: string;
-    @HostBinding('style.border-bottom') borderBottom: string;
-    @HostBinding('style.background') background: string;
-    @HostBinding('class') classAttr: string;
+    @HostBinding('style.width') width?: string;
+    @HostBinding('style.min-width') minWidth?: string;
+    @HostBinding('style.max-width') maxWidth?: string;
+    @HostBinding('style.height') height?: string;
+    @HostBinding('style.min-height') minHeight?: string;
+    @HostBinding('style.max-height') maxHeight?: string;
+    @HostBinding('style.padding') padding?: string;
+    @HostBinding('style.margin') margin?: string;
+    @HostBinding('style.display') display? = 'initial';
+    @HostBinding('style.border-left') borderLeft?: string;
+    @HostBinding('style.border-top') borderTop?: string;
+    @HostBinding('style.border-right') borderRight?: string;
+    @HostBinding('style.border-bottom') borderBottom?: string;
+    @HostBinding('style.background') background?: string;
+    @HostBinding('class') classAttr?: string;
 
     @Input() dataModel: any;
-    @Input() uiModel: UIModel<T>;
+    @Input() uiModel: UIModel<T> = {
+      type: undefined,
+      itemProperties: {} as T
+    };
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @Output() changedDataModel = new EventEmitter();
-    @ViewChild('vc', {read: ViewContainerRef, static: true}) containerRef: ViewContainerRef;
+    @ViewChild('vc', {read: ViewContainerRef, static: true}) containerRef?: ViewContainerRef;
 
     protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeight', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];

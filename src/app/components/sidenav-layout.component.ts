@@ -42,10 +42,8 @@ import { map } from 'rxjs/operators';
 })
 export class SidenavLayoutComponent {
 
-  @Input()
-  title: string;
-
-  categories: GroupItem[];
+  @Input() title?: string;
+  categories?: GroupItem[];
   isHandSet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
 
   constructor(private breakpointObserver: BreakpointObserver) {}

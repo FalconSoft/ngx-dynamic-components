@@ -29,16 +29,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PageHeaderComponent {
 
-  @Input()
-  title: string;
+  @Input() title?: string;
 
-  @Input()
-  toggle: boolean;
+  @Input() toggle?: boolean;
 
   opened = false;
 
   // eslint-disable-next-line @angular-eslint/no-output-native
-  @Output()
-  openPage = new EventEmitter<boolean>();
+  @Output() openPage = new EventEmitter<boolean>();
 
 }
