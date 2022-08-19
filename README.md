@@ -133,7 +133,7 @@ Composing and maintaining web forms and responsive web layouts can be tedious jo
 
 There are quite a few other dynamic components library for Angular. e.g. Formly (https://formly.dev), But with our library you can build anything from a very simple contact form to much more complex workflow-driven business web page. Core advantages:
  - XML based configuration as well as JSON. When a form gets bigger maintaining JSON configuration becomes very difficult (from our experience). While XML is much more readable human readable and looks very similar to HTML5
- - Custom CSS and styling and responsive design very easy to achieve. Just the same as you would do it in HTML. For instance, if you know Bootstrap or any other CSS framework, you can easily leverage this for dynamic rendering.
+ - Custom CSS and styling and responsive design very easy to achieve. Just the same as you would do it in [HTML](https://www.scaler.com/topics/html/introduction-to-html/). For instance, if you know Bootstrap or any other CSS framework, you can easily leverage this for dynamic rendering.
  - a true dynamic nature. You can change UI dynamically with a code-behind scripting logic
  - full event life cycle
 
