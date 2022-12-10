@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -17,7 +17,7 @@ describe('ExamplesPageComponent', () => {
   let component: ExamplesPageComponent;
   let fixture: ComponentFixture<ExamplesPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, MatExpansionModule, MatListModule, MatSidenavModule, MatIconModule, MatToolbarModule,
         NoopAnimationsModule],

@@ -1,6 +1,5 @@
-import { ComponentDescriptor, Categories, XMLResult, UIModel } from '../../models';
+import { ComponentDescriptor, Categories, BaseHTMLElementConstructor } from '../../models';
 import { BaseHTMLElement, HTMLProperties, HTMLPropertiesConstrutor, parseHTMLUIModel } from '../../components/base-html-element';
-import { BaseHTMLElementConstructor } from '../../utils';
 
 export const liDescriptor: ComponentDescriptor<BaseHTMLElementConstructor, HTMLPropertiesConstrutor> = {
   name: 'li',

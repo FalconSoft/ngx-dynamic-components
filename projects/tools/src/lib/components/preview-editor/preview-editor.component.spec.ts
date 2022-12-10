@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,6 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicComponentsCoreModule, UIModel } from '@ngx-dynamic-components/core';
-import { MaterialModule } from '@ngx-dynamic-components/material';
 import { ProfileFormUIModel, ProfileDataModel, ProfileScripts } from 'src/app/examples/profile-page.config';
 import { PreviewEditorComponent } from './preview-editor.component';
 import { DebugElement } from '@angular/core';
@@ -22,11 +21,11 @@ describe('PreviewEditorComponent', () => {
 
   const TITLE = 'Unit test profile form';
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PreviewEditorComponent ],
       imports: [
-        DynamicComponentsCoreModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,
+        DynamicComponentsCoreModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,
         MatCardModule, MatTabsModule, MatIconModule, MatTooltipModule, MatDividerModule,
         MatListModule
       ]

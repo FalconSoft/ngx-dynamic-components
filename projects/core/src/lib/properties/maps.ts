@@ -4,7 +4,7 @@ import { ComponentProperty, PropertyCategories } from './models';
  * @deprecated
  * Container properties related to each component.
  */
-export const ContainerControlProperties = new Map<string, ComponentProperty>([
+export const containerControlProperties = new Map<string, ComponentProperty>([
   ['fxFlex', { name: 'fxFlex', label: 'Flex Resizing', category: PropertyCategories.Container }],
   ['fxFlexOrder', { name: 'fxFlexOrder', label: 'Flex Order', category: PropertyCategories.Container }],
   ['fxFlexOffset', { name: 'fxFlexOffset', label: 'Flex Offset', category: PropertyCategories.Container }],
@@ -20,7 +20,7 @@ export const ContainerControlProperties = new Map<string, ComponentProperty>([
 /**
  * Item properties can be used in any component.
  */
-export const ControlProperties = new Map<string, ComponentProperty>([
+export const controlProperties = new Map<string, ComponentProperty>([
   // General Component properties
   ['width', { name: 'width', label: 'Width', category: PropertyCategories.Layout }],
   ['height', { name: 'height', label: 'Height', category: PropertyCategories.Layout }],

@@ -4,9 +4,10 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult }
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
 
 @Component({
-  selector: 'textarea', // tslint:disable-line
+  selector: 'textarea', // eslint-disable-line
   template: '{{value}}'
 })
+// eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
 export class TextareaComponent extends FormElementComponent<TextareaProperties> implements OnInit, OnChanges, DoCheck {
   @HostBinding('attr.cols') cols: number;
   @HostBinding('attr.rows') rows: number;
@@ -18,6 +19,7 @@ export class TextareaComponent extends FormElementComponent<TextareaProperties> 
     this.changedDataModel.emit(this.dataModel);
   }
 
+  // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   async ngOnInit(): Promise<void> {
     await super.ngOnInit();
     this.cols = this.properties.cols || undefined;
@@ -25,6 +27,7 @@ export class TextareaComponent extends FormElementComponent<TextareaProperties> 
     this.value = this.componentDataModel;
   }
 
+  // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     await super.ngOnChanges(changes);
     if (changes.dataModel) {
@@ -32,6 +35,7 @@ export class TextareaComponent extends FormElementComponent<TextareaProperties> 
     }
   }
 
+  // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
   ngDoCheck(): void {
     this.value = this.componentDataModel;
   }

@@ -1,8 +1,14 @@
-import { BaseUIComponentConstructor, BaseHTMLElementConstructor } from './utils';
+/* eslint-disable @typescript-eslint/naming-convention */
+// import { BaseUIComponentConstructor, BaseHTMLElementConstructor } from './utils';
 import { ComponentProperty } from './properties';
 import { BaseDynamicComponent } from './components/base-dynamic-component';
+import { BaseHTMLElement } from './components/base-html-element';
+import { BaseUIComponent } from './components/base-ui-component';
 
 type UIAction = (sender: UIModel, dataModel: any, uiModel: UIModel) => void;
+
+export type BaseUIComponentConstructor = new () => BaseUIComponent;
+export type BaseHTMLElementConstructor = new () => BaseHTMLElement;
 
 export interface AttributesMap {
     width?: string;
@@ -65,6 +71,7 @@ export interface OptionValue {
   value: any;
 }
 
+// eslint-disable-next-line no-shadow
 export const enum Categories {
   Basic = 'Basic',
   HTML = 'HTML',
@@ -74,7 +81,9 @@ export const enum Categories {
   DataTable = 'Data table'
 }
 
+// eslint-disable-next-line no-shadow
 export enum DesignerVisibility {
+  // eslint-disable-next-line
   UIModel = 1,
   Scripts = 2,
   All = 3
@@ -89,6 +98,11 @@ export interface XMLResult {
 
 export interface ComponentEvent {
   eventName: string;
-  parameters?: any;
   rootUIModel?: UIModel;
+  parameters?: {
+    uiModel?: UIModel;
+    argsKey?: string;
+    argsValue?: any;
+    [key: string]: any;
+  };
 }

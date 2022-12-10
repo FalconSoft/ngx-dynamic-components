@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ComponentDescriptor, UIModel, AttributesMap, XMLResult } from '../models';
-import { BaseUIComponentConstructor, toXMLResult, BaseHTMLElementConstructor, parseXmlStringPromise } from '../utils';
-import { ControlProperties, UIModelProperty } from '../properties';
+import { ComponentDescriptor, UIModel, XMLResult, BaseUIComponentConstructor, BaseHTMLElementConstructor } from '../models';
+import { toXMLResult, parseXmlString } from '../utils';
+import { controlProperties, UIModelProperty } from '../properties';
 
 /**
  * Child Elements directives within Containers
@@ -13,14 +13,15 @@ const FX_CONTAINER_DIRECTIVES = ['fxFlex', 'fxFlexOrder', 'fxFlexOffset', 'fxFle
   providedIn: 'root'
 })
 export class CoreService {
-  private static COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  private static readonly COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
 
   public static registerComponent(desc: ComponentDescriptor): void {
     const { name, packageName, propertiesDescriptor } = desc;
     // @deprecated
     if (propertiesDescriptor) {
       propertiesDescriptor.forEach(prop => {
-        ControlProperties.set(`${name}:${prop[0]}`, prop[1]);
+        controlProperties.set(`${name}:${prop[0]}`, prop[1]);
       });
     }
     CoreService.COMPONENTS_REGISTER.set(name, desc);
@@ -55,23 +56,21 @@ export class CoreService {
     return Array.from(CoreService.COMPONENTS_REGISTER.values());
   }
 
-  public static async parseXMLModel(uiModelXml: string): Promise<UIModel> {
-    try {
-      const res = await parseXmlStringPromise(uiModelXml);
+  public static parseXMLModel(uiModelXml: string): UIModel {
+    if (!uiModelXml) {
+      return null;
+    }
+    const res = parseXmlString(uiModelXml);
 
-      if (res) {
-        const type = Object.keys(res)[0];
-        const xmlObj = res[type];
-        if(typeof xmlObj === 'string')
-        {
-          throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
-        }
-        xmlObj['#name'] = type;
-        return CoreService.getUIModel(toXMLResult(xmlObj));
+    if (res) {
+      const type = Object.keys(res)[0];
+      const xmlObj = res[type];
+      if(typeof xmlObj === 'string')
+      {
+        throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
       }
-    } catch (e) {
-      console.error(e);
-      throw e;
+      xmlObj['#name'] = type;
+      return CoreService.getUIModel(toXMLResult(xmlObj));
     }
   }
 
@@ -79,39 +78,43 @@ export class CoreService {
     const itemProperties = xmlRes.attrs;
     const type = xmlRes.type;
 
-    if (itemProperties.disabled === 'true') {
-      itemProperties.disabled = true;
-    } else if (itemProperties.hasOwnProperty('disabled')) {
-      itemProperties.disabled = null;
-    }
-
-    if (CoreService.COMPONENTS_REGISTER.has(type)) {
-      const uiModel: UIModel = {
-        type,
-        itemProperties
-      };
-
-      if (itemProperties.id) {
-        uiModel.id = itemProperties.id;
+      if (itemProperties.disabled === 'true') {
+        itemProperties.disabled = true;
+      } else if (itemProperties.hasOwnProperty('disabled')) {
+        itemProperties.disabled = null;
       }
 
-      const descr = CoreService.COMPONENTS_REGISTER.get(type);
-      if (typeof descr.parseUIModel === 'function') {
-        const typeUIModel = descr.parseUIModel(xmlRes);
-        uiModel.itemProperties = { ...itemProperties, ...typeUIModel.itemProperties };
-        if (typeUIModel.children) {
-          uiModel.children = typeUIModel.children;
+      if (CoreService.COMPONENTS_REGISTER.has(type)) {
+        const uiModel: UIModel = {
+          type,
+          itemProperties
+        };
+
+        if (itemProperties.id) {
+          uiModel.id = itemProperties.id;
         }
+        try {
+          const descr = CoreService.COMPONENTS_REGISTER.get(type);
+          if (typeof descr.parseUIModel === 'function') {
+            const typeUIModel = descr.parseUIModel(xmlRes);
+            uiModel.itemProperties = { ...itemProperties, ...typeUIModel.itemProperties };
+            if (typeUIModel.children) {
+              uiModel.children = typeUIModel.children;
+            }
+          }
+        } catch(e) {
+          console.error(e);
+          throw new Error(`Error parsing <${type} ..> : ${e}`);
+        }
+        if (xmlRes.childNodes && !uiModel.children) {
+          uiModel.children = xmlRes.childNodes
+            .filter(n => n['#name'] !== '#comment')
+            .map((r: any) => CoreService.getUIModel(toXMLResult(r)));
+        }
+        return uiModel;
+      } else {
+        throw Error(`No component for tag ${type}`);
       }
 
-      if (xmlRes.childNodes && !uiModel.children) {
-        uiModel.children = xmlRes.childNodes
-          .filter(n => n['#name'] !== '#comment')
-          .map((r: any) => CoreService.getUIModel(toXMLResult(r)));
-      }
-      return uiModel;
-    } else {
-      throw Error(`No component for tag ${type}`);
-    }
   }
 }

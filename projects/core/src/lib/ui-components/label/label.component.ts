@@ -5,7 +5,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
 import { TextProperties } from '../text/text.component';
 
 @Component({
-  // tslint:disable-next-line
+  // eslint-disable-next-line
   selector: 'label',
   template: `{{text}}`,
   styles: [`

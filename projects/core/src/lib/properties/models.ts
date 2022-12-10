@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { OptionValue, AttributesMap, UIModel } from '../models';
 import { propDescription } from './descriptor';
 
+// eslint-disable-next-line no-shadow
 export enum PropTypes {
   EVENT = 'event',
   PROPERTY = 'property'
@@ -18,6 +20,7 @@ export interface UIModelProperty extends PropDescriptor {
   name: string;
 }
 
+// eslint-disable-next-line no-shadow
 export enum PropertyCategories {
   Layout = 'Layout Properties',
   Container = 'Container Properties',
@@ -145,6 +148,12 @@ export abstract class StyleProperties extends BaseProperties {
     example: 'btn-primary'
   })
   class?: string;
+
+  @propDescription({
+    description: 'Css styles',
+    example: 'overflow-x: hidden;'
+  })
+  style?: string;
 }
 
 export abstract class BindingProperties extends StyleProperties {

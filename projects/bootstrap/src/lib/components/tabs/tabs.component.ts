@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
 import {
   BaseUIComponent, CoreService, StyleProperties, UIModel,
-  ComponentExample, ComponentDescriptor, Categories, XMLResult, toXMLResult
+  ComponentExample, ComponentDescriptor, Categories, XMLResult, toXMLResult, createComponent
 } from '@ngx-dynamic-components/core';
 import { packageName } from '../../constants';
 
 @Component({
   selector: 'dc-tabs-ui',
   template: `
-    <tabset class="tabset-fx w-100 overflow-auto nav-tabs-boxed">
+    <tabset class="tabset-fx w-100 h-100 nav-tabs-boxed">
       <tab *ngFor="let item of uiModel.children; let i = index" [heading]="item.itemProperties.header || 'Tab ' + (i + 1)">
-      <dc-ui-selector
-          (changedDataModel)="changedDataModel.emit(dataModel)"
-          (eventHandlers)="eventHandlers.emit($event)"
-          [uiModel]="item"
-          [dataModel]="dataModel"
-          ></dc-ui-selector>
+        <ng-container #vc></ng-container>
       </tab>
     </tabset>
   `
 })
-export class TabsComponent extends BaseUIComponent<TabsProperties> {
+export class TabsComponent extends BaseUIComponent<TabsProperties> implements OnInit, AfterViewInit {
+  @ViewChildren('vc', { read:ViewContainerRef }) vContainers: QueryList<ViewContainerRef>;
 
+  async ngOnInit(): Promise<void> { }
+
+  async ngAfterViewInit() {
+    this.vContainers.forEach((vc, i) => createComponent(this, this.uiModel.children[i], vc));
+    this.setHostStyles();
+    this.emitEvent(this.properties.onInit);
+  }
 }
 
 export class TabsProperties extends StyleProperties {
+  header: string;
 }
 
 export const example: ComponentExample<UIModel<TabsProperties>> = {
@@ -51,7 +55,9 @@ export const example: ComponentExample<UIModel<TabsProperties>> = {
       dataModel.clickCount = 0
     dataModel.clickCount = dataModel.clickCount + 1
   `,
-  dataModel: {}
+  dataModel: {
+    clickCount: 2
+  }
 };
 
 type TabsComponentConstrutor = new() => TabsComponent;
@@ -68,12 +74,15 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
   component: TabsComponent,
   example,
   parseUIModel(xmlData: XMLResult): UIModel {
-    const children = xmlData.childNodes.map(child => {
+    const children = xmlData.childNodes?.map(child => {
+      if (child.$$?.length === 1) {
+        return CoreService.getUIModel(toXMLResult(child.$$[0]));
+      }
       const itemProperties = child.$;
       itemProperties.height = '100%';
       itemProperties.width = '100%';
       return {
-        type: 'section',
+        type: 'div',
         children: child.$$.map((r: any) => CoreService.getUIModel(toXMLResult(r))),
         itemProperties
       };

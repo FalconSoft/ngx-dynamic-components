@@ -6,7 +6,7 @@ import { BaseHTMLElement, parseHTMLUIModel } from '../../components/base-html-el
 import { queryValue } from '../../utils';
 
 @Directive()
-export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disable-line
+export class AComponent extends BaseHTMLElement<LinkProperties> { // eslint-disable-line
   create(selectorElement: HTMLElement): void {
     super.create(selectorElement);
 
@@ -23,15 +23,51 @@ export class AComponent extends BaseHTMLElement<LinkProperties> { // tslint:disa
       this.element.setAttribute('href', 'javascript:void(0);');
     }
 
-    this.element.onclick = (evt) => {
-      this.emitEvent(this.properties.onClick);
+    this.element.onclick = (evt: MouseEvent) => {
+      this.emitEvent(this.properties.onClick, evt);
 
       if (this.properties.routerLink) {
         const router = this.injector.get(Router);
-        router.navigate([this.getPath()]);
+
+        const navigationExtras = {};
+        const queryParams = this.getQueryParams();
+
+        if (queryParams) {
+          (navigationExtras as any).queryParams = queryParams;
+        }
+        router.navigate([this.getPath()], navigationExtras);
         evt.preventDefault();
       }
+    };
+  }
+
+  private getQueryParams(): any {
+    let queryParams = this.properties.queryString;
+    if (!queryParams) {
+      return null;
     }
+
+    const matches = queryParams.match(/{\$\.[\w/]+}/g);
+    if (matches) {
+      matches.forEach(m => {
+        const path = m.replace(/[{}]+/, '');
+        const res = queryValue(this.dataModel, path);
+        queryParams = queryParams.replace(m, res);
+      });
+    }
+
+    function parseQuery(queryString) {
+      const query = {};
+      const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+      for (const pairText of pairs) {
+        const pair = pairText.split('=');
+        query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+      }
+      return query;
+    }
+
+
+    return parseQuery(queryParams);
   }
 
   private getPath(): string {
@@ -80,13 +116,21 @@ export class LinkProperties extends StyleProperties {
     example: 'path/page',
   })
   routerLink?: string;
+
+  @propDescription({
+    description: 'Query String',
+    example: 'id=12&another={$.dataModelProperty}',
+  })
+  queryString?: string;
+
 }
 
 export const example: ComponentExample<UIModel<LinkProperties>> = {
   title: 'Basic link example',
   uiModel: `
   <section class="row align-items-center m-1">
-    <a class="btn btn-primary mr-2" href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</a>
+    <a title="Link to Google" class="btn btn-primary mr-2"
+    href="https://falconsoft.github.io/ngx-dynamic-components/components/core/button">Button</a>
     <a target="_blank" href="https://www.google.com/">Google</a>
   </section>
   `,
@@ -110,6 +154,9 @@ export const aDescriptor: ComponentDescriptor<AComponentConstrutor, LinkProperti
     const uiModel = parseHTMLUIModel(xmlRes);
     if (xmlRes.attrs.routerLink) {
       uiModel.itemProperties.routerLink = xmlRes.attrs.routerLink;
+    }
+    if (xmlRes.attrs.queryParams) {
+      uiModel.itemProperties.queryParams = xmlRes.attrs.queryParams;
     }
     return uiModel;
   },

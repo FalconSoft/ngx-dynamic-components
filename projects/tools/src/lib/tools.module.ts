@@ -19,7 +19,6 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
-import { MaterialModule } from '@ngx-dynamic-components/material';
 import { DynamicComponentsBootstrapModule } from '@ngx-dynamic-components/bootstrap';
 
 import { PreviewEditorComponent } from './components/preview-editor/preview-editor.component';
@@ -27,7 +26,7 @@ import { ControlEditorComponent } from './components/control-editor/control-edit
 import { PropertiesEditorComponent } from './components/properties-editor/properties-editor.component';
 import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
 
-export const AngularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> = AngularSplitModule.forRoot()
+export const angularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> = AngularSplitModule.forRoot();
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ export const AngularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> 
   imports: [
     CommonModule,
     DynamicComponentsCoreModule,
-    MaterialModule,
     DynamicComponentsBootstrapModule,
     MatToolbarModule,
     MatButtonModule,
@@ -52,7 +50,7 @@ export const AngularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> 
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AngularSplitModuleForRoot
+    angularSplitModuleForRoot
   ],
   exports: [ PreviewEditorComponent ]
 })

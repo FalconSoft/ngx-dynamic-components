@@ -2,9 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/@ngx-dynamic-components/core",
   "lib": {
-    "entryFile": "src/public_api.ts",
-    "umdModuleIds": {
-      "isomorphic-xml2js": "isomorphic-xml2js"
-    }
+    "entryFile": "src/public_api.ts"
   }
 }

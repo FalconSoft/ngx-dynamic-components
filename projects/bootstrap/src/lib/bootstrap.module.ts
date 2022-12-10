@@ -12,7 +12,7 @@ import { SelectComponent } from './components/select/select.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { registerComponents } from './components/register';
 
-export const TabsModuleForRoot: ModuleWithProviders<TabsModule> = TabsModule.forRoot()
+export const tabsModuleForRoot: ModuleWithProviders<TabsModule> = TabsModule.forRoot();
 
 @NgModule({
   declarations: [SelectComponent, TabsComponent],
@@ -21,7 +21,7 @@ export const TabsModuleForRoot: ModuleWithProviders<TabsModule> = TabsModule.for
     CommonModule,
     FormsModule,
     NgSelectModule,
-    TabsModuleForRoot
+    tabsModuleForRoot
   ]
 })
 export class DynamicComponentsBootstrapModule {

@@ -1,12 +1,12 @@
-import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, ComponentFactoryResolver, Injector, ApplicationRef,
-  EmbeddedViewRef, Directive } from '@angular/core';
+import type { Injector, ViewContainerRef } from '@angular/core';
+import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { UIModel, ComponentEvent, XMLResult } from '../models';
 import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
-import { UISelectorComponent } from './ui-selector-component';
 import { BaseDynamicComponent } from './base-dynamic-component';
+import { createComponent } from '../utils/renderer';
 
 @Directive()
-export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // tslint:disable-line
+export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line
     dataModel: any;
     uiModel: UIModel<T>;
     eventHandlers = new EventEmitter<ComponentEvent>();
@@ -14,12 +14,9 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
     element: HTMLElement;
     private parentNode: Node;
 
-    constructor(
-      private appRef?: ApplicationRef,
-      private componentFactoryResolver?: ComponentFactoryResolver,
-      protected injector?: Injector) {
-        super();
-      }
+    constructor(public containerRef?: ViewContainerRef, public injector?: Injector) {
+      super(injector);
+    }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
@@ -48,27 +45,16 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
       if (!created && this.parentNode) {
         this.parentNode.insertBefore(this.element, selectorElement);
       }
-      if (this.uiModel.children) {
-        this.uiModel.children.forEach(uiModel => {
-          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UISelectorComponent);
-          const componentRef = componentFactory.create(this.injector);
-          const component = componentRef.instance;
-          component.dataModel = this.dataModel;
-          component.uiModel = uiModel;
-          this.appRef.attachView(componentRef.hostView);
-          const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-          this.element.appendChild(domElem);
-        });
-      }
-      if (this.parentNode && !created) {
-        this.parentNode.removeChild(selectorElement);
-      }
+      this.uiModel.children?.forEach(uiModel => createComponent(this, uiModel));
     }
 
     private setProperties(): void {
       const htmlProps = this.properties as HTMLProperties;
       if (htmlProps.content) {
         this.element.textContent = htmlProps.content;
+      }
+      if (htmlProps.title) {
+        this.element.title = htmlProps.title;
       }
       this.setHostStyles();
     }
@@ -79,20 +65,6 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
 
     get attrs(): T {
       return this.uiModel.itemProperties;
-    }
-
-    protected setHostStyles(): void {
-      const props = this.properties as StyleProperties;
-      if (props.class) {
-        this.element.className = props.class;
-      }
-      if (props) {
-        StylePropertiesList.forEach(b => {
-          if (props && props.hasOwnProperty(b)) {
-            this.element.style[b] = props[b];
-          }
-        });
-      }
     }
 }
 
@@ -108,6 +80,12 @@ export class HTMLProperties extends StyleProperties {
     example: '<span>Text</span>'
   })
   htmlContent?: string;
+
+  @propDescription({
+    description: 'HTML element title',
+    example: 'Description text'
+  })
+  title?: string;
 }
 
 export type HTMLPropertiesConstrutor = new () => HTMLProperties;

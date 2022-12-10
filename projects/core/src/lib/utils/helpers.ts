@@ -47,13 +47,9 @@ export function getCssPath(el: Node, parent: Element): string {
   }
 }
 
-export const kebabStrToCamel = (s: string) => {
-  return s.replace(/([-][a-z])/ig, ($1) => {
-    return $1.toUpperCase().replace('-', '');
-  });
-};
+export const kebabStrToCamel = (s: string) => s.replace(/([-][a-z])/ig, ($1) => $1.toUpperCase().replace('-', ''));
 
-export function setFields(fields: Array<string|string[]>, data: object[]): object[] {
+export function setFields(fields: Array<string|string[]>, data: Record<string, unknown>[]): Record<string, unknown>[] {
   if (!fields) {
     return data;
   }
@@ -98,4 +94,17 @@ export function parseArgFunction(funcSignature: string = ''): string[] {
   }
 
   return [match[1], ...match[2].split(',')];
+}
+
+export function getStringEventArgs(eventName: string): string | number | undefined {
+  const [fName, fParam] = parseArgFunction(eventName);
+  if (fParam && fParam.startsWith('\'') && fParam.endsWith('\'')) {
+    return fParam.replace(/'/g, '');
+  } else if (/^\d+(\.{0,1}\d+)?$/.test(fParam)) {
+    return Number(fParam);
+  }
+}
+
+export function kebabToCamelCase(str?: string): string {
+  return str?.replace(/-([a-z])/g, (s, char) => char.toUpperCase());
 }

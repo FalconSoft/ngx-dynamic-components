@@ -1,37 +1,48 @@
-import { OnDestroy, HostBinding, SimpleChanges, OnChanges, Directive, Input, Output, EventEmitter } from '@angular/core';
+import { OnDestroy, HostBinding, SimpleChanges, OnChanges, Directive, Input, Output, EventEmitter,
+  ViewContainerRef, OnInit, ViewChild } from '@angular/core';
 import { AttributesMap, UIModel, ComponentEvent } from '../models';
 import { kebabStrToCamel, queryValue, setValue } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 import { InputProperties } from '../ui-components/input/input.component';
 import { BaseDynamicComponent } from './base-dynamic-component';
+import { renderChildren } from '../utils/renderer';
 
 @Directive()
-// tslint:disable-next-line
-export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges {
-    @HostBinding('style.width') width: string;
-    @HostBinding('style.min-width') minWidth: string;
-    @HostBinding('style.max-width') maxWidth: string;
-    @HostBinding('style.height') height: string;
-    @HostBinding('style.min-height') minHeight: string;
-    @HostBinding('style.max-height') maxHeight: string;
-    @HostBinding('style.padding') padding: string;
-    @HostBinding('style.margin') margin: string;
-    @HostBinding('style.display') display = 'initial';
-    @HostBinding('style.border-left') borderLeft: string;
-    @HostBinding('style.border-top') borderTop: string;
-    @HostBinding('style.border-right') borderRight: string;
-    @HostBinding('style.border-bottom') borderBottom: string;
-    @HostBinding('style.background') background: string;
-    @HostBinding('class') classAttr: string;
+// eslint-disable-next-line
+export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges, OnInit {
+    @HostBinding('style.width') width?: string;
+    @HostBinding('style.min-width') minWidth?: string;
+    @HostBinding('style.max-width') maxWidth?: string;
+    @HostBinding('style.height') height?: string;
+    @HostBinding('style.min-height') minHeight?: string;
+    @HostBinding('style.max-height') maxHeight?: string;
+    @HostBinding('style.padding') padding?: string;
+    @HostBinding('style.margin') margin?: string;
+    @HostBinding('style.display') display? = 'initial';
+    @HostBinding('style.border-left') borderLeft?: string;
+    @HostBinding('style.border-top') borderTop?: string;
+    @HostBinding('style.border-right') borderRight?: string;
+    @HostBinding('style.border-bottom') borderBottom?: string;
+    @HostBinding('style.background') background?: string;
+    @HostBinding('class') classAttr?: string;
 
     @Input() dataModel: any;
-    @Input() uiModel: UIModel<T>;
+    @Input() uiModel: UIModel<T> = {
+      type: undefined,
+      itemProperties: {} as T
+    };
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @Output() changedDataModel = new EventEmitter();
+    @ViewChild('vc', {read: ViewContainerRef, static: true}) containerRef?: ViewContainerRef;
 
     protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeight', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
+
+    async ngOnInit(): Promise<void> {
+      renderChildren(this);
+      await super.ngOnInit();
+    }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
@@ -96,17 +107,9 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     }
 
     protected setHostStyles(): void {
-      const props = this.properties as StyleProperties;
-      if (props.class) {
-        this.classAttr = props.class;
-      }
-      if (props) {
-        this.hostBindings.forEach(b => {
-          if (props && props.hasOwnProperty(b)) {
-            this[b] = props[b];
-          }
-        });
-        this.setBorder(props);
+      super.setHostStyles();
+      if (this.properties) {
+        this.setBorder(this.properties);
       }
     }
 

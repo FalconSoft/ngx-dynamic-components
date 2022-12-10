@@ -4,12 +4,9 @@ import { StyleProperties, propDescription, PropertyCategories, PropTypes } from 
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 
 @Component({
-  selector: 'button', // tslint:disable-line
+  selector: 'button', // eslint-disable-line
   template: `
-  <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)" *ngFor="let item of uiModel.children"
-      [uiModel]='item'
-      [dataModel]='dataModel'
-      (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
+  <ng-container #vc></ng-container>
   {{properties.label}}
   `
 })
@@ -17,9 +14,9 @@ export class ButtonComponent extends BaseUIComponent<ButtonProperties> implement
 
   @HostBinding('attr.type') type = 'button';
   @HostBinding('attr.disabled') disabled = null;
-  @HostListener('click')
-  onClick(): void {
-    this.emitEvent(this.properties.onClick);
+  @HostListener('click', ['$event'])
+  onClick(evt: Event): void {
+    this.emitEvent(this.properties.onClick, evt);
     this.changedDataModel.emit(this.dataModel);
   }
 
@@ -70,8 +67,8 @@ export const example: ComponentExample<UIModel<ButtonProperties>> = {
   uiModel: `
   <section>
     <button class="btn btn-primary" type="button"><icon class="fa fa-search"></icon>Search</button>
-    <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog">Click</button>
-    <button class="btn btn-secondary" disabled="true" onClick="consoleLog" type="submit">Submit</button>
+    <button class="btn btn-primary" width="50%" margin="15px" padding="10px 5px 10px 0px" onClick="consoleLog()">Click</button>
+    <button class="btn btn-secondary" disabled="true" onClick="consoleLog()" type="submit">Submit</button>
     <button class="btn btn-danger" display="none">Hidden</button>
   </section>
   `,

@@ -22,28 +22,18 @@
     "paths": {
       "@ngx-dynamic-components/core": [
         "dist/@ngx-dynamic-components/core",
-        // "projects/core/src/public_api.ts"
       ],
       "@ngx-dynamic-components/core/*": [
         "dist/@ngx-dynamic-components/core/*"
       ],
-      "@ngx-dynamic-components/material": [
-        "dist/@ngx-dynamic-components/material",
-        // "projects/material/src/public_api.ts"
-      ],
-      "@ngx-dynamic-components/material/*": [
-        "dist/@ngx-dynamic-components/material/*"
-      ],
       "@ngx-dynamic-components/bootstrap": [
         "dist/@ngx-dynamic-components/bootstrap",
-        // "projects/bootstrap/src/public_api.ts"
       ],
       "@ngx-dynamic-components/bootstrap/*": [
         "dist/@ngx-dynamic-components/bootstrap/*"
       ],
       "@ngx-dynamic-components/tools": [
         "dist/@ngx-dynamic-components/tools",
-        // "projects/tools/src/public_api.ts"
       ],
       "@ngx-dynamic-components/tools/*": [
         "dist/@ngx-dynamic-components/tools/*"
@@ -53,12 +43,6 @@
       ],
       "core/*": [
         "dist/core/*"
-      ],
-      "material": [
-        "dist/@ngx-dynamic-components/material"
-      ],
-      "material/*": [
-        "dist/material/*"
       ],
       "tools": [
         "dist/@ngx-dynamic-components/tools"

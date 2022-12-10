@@ -1,18 +1,18 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
 
-$app-primary: mat-palette($mat-grey);
-$app-accent:  mat-palette($mat-light-blue);
-$app-warn:    mat-palette($mat-pink);
+$app-primary: mat.define-palette(mat.$grey-palette);
+$app-accent:  mat.define-palette(mat.$light-blue-palette);
+$app-warn:    mat.define-palette(mat.$pink-palette);
 
-$primary: mat-color($app-primary);
-$accent: mat-color($app-accent);
-$warn: mat-color($app-warn);
+$primary: mat.get-color-from-palette($app-primary);
+$accent: mat.get-color-from-palette($app-accent);
+$warn: mat.get-color-from-palette($app-warn);
 
-$active: mat-color(mat-palette($mat-indigo));
+$active: mat.get-color-from-palette(mat.define-palette(mat.$indigo-palette));
 
-$gray: mat-color(mat-palette($mat-grey, 200));
-$lightGray: mat-color(mat-palette($mat-grey, 50));
-$darkGray: mat-color(mat-palette($mat-grey, A400));
+$gray: mat.get-color-from-palette(mat.define-palette(mat.$grey-palette, 200));
+$lightGray: mat.get-color-from-palette(mat.define-palette(mat.$grey-palette, 50));
+$darkGray: mat.get-color-from-palette(mat.define-palette(mat.$grey-palette, A400));
 
 $text: rgba(0, 0, 0, .5);
 

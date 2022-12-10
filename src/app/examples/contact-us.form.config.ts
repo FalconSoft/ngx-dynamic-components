@@ -29,7 +29,7 @@ export const uIModel = `
   </form>
 `;
 
-export const dataModel = {}
+export const dataModel = {};
 
 export const scripts = `
 # Evaluated with JSPython https://jspython.dev/

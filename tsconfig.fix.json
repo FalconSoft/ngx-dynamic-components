@@ -1,0 +1,54 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "emitDecoratorMetadata": true,
+
+
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+
+
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@ngx-dynamic-components/core": [
+        "projects/core/src/public_api.ts"
+      ],
+      "@ngx-dynamic-components/core/*": [
+        "projects/core/src/*"
+      ],
+      "@ngx-dynamic-components/bootstrap": [
+        "projects/bootstrap/src/public_api.ts"
+      ],
+      "@ngx-dynamic-components/bootstrap/*": [
+        "projects/bootstrap/src/*"
+      ],
+      "@ngx-dynamic-components/tools": [
+        "projects/tools/src/public_api.ts"
+      ],
+      "@ngx-dynamic-components/tools/*": [
+        "projects/tools/src/*"
+      ]
+    }
+  }
+}

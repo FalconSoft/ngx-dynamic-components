@@ -1,12 +1,2 @@
-<ng-container>
-  <ng-container *ngTemplateOutlet="content"></ng-container>
-</ng-container>
-
+<ng-container #vc></ng-container>
 {{properties.text}}
-
-<ng-template #content>
-  <dc-ui-selector (changedDataModel)="changedDataModel.emit($event)" *ngFor="let item of uiModel.children"
-      [uiModel]='item'
-      [dataModel]='dataModel'
-      (eventHandlers)="eventHandlers.emit($event)"></dc-ui-selector>
-</ng-template>

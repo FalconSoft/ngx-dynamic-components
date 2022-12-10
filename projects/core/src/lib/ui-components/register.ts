@@ -16,11 +16,13 @@ import { ulDescriptor } from '../html-elements/ul/ul.element';
 import { liDescriptor } from '../html-elements/li/li.element';
 import { olDescriptor } from '../html-elements/ol/ol.element';
 import { htmlDescriptors } from '../html-elements';
+import { repeaterDescriptor } from './repeater/repeater.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   containerDescriptor,
   divDescriptor,
   formDescriptor,
+  repeaterDescriptor,
   textDescriptor,
   labelDescriptor,
   iconDescriptor,
@@ -42,18 +44,16 @@ export function registerComponents(): void {
   COMPONENTS_LIST.forEach(component => CoreService.registerComponent(component));
 }
 
-export function getCategories(): {name: string, packageName: string, components: ComponentDescriptor[]}[] {
+export function getCategories(): { name: string; packageName: string; components: ComponentDescriptor[] }[] {
   const categories = COMPONENTS_LIST.reduce((map, desc) => {
     map[desc.category] = map[desc.category] || [];
     map[desc.category].push(desc);
     return map;
   }, {});
 
-  return Object.entries(categories).map(([key, val]: [string, ComponentDescriptor[]]) => {
-    return {
+  return Object.entries(categories).map(([key, val]: [string, ComponentDescriptor[]]) => ({
       name: key,
       components: val,
       packageName: 'core'
-    };
-  });
+    }));
 }

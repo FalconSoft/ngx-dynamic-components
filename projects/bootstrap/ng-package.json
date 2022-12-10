@@ -2,12 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/@ngx-dynamic-components/bootstrap",
   "lib": {
-    "entryFile": "src/public_api.ts",
-    "umdModuleIds": {
-      "@ngx-dynamic-components/core": "NgxDynamicComponentsCore",
-      "ngx-bootstrap/utils": "NgxBootstrapUtils",
-      "ngx-bootstrap/tabs": "NgxBootstrapTabs",
-      "@ng-select/ng-select": "NgSelect"
-    }
+    "entryFile": "src/public_api.ts"
   }
 }

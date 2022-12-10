@@ -7,26 +7,31 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
   selector: 'dc-text',
   template: `
     <ng-container [ngSwitch]="txtStyle">
-      <h1 *ngSwitchCase="'h1'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h1>
-      <h2 *ngSwitchCase="'h2'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h2>
-      <h3 *ngSwitchCase="'h3'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h3>
-      <h4 *ngSwitchCase="'h4'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h4>
-      <h5 *ngSwitchCase="'h5'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h5>
-      <h6 *ngSwitchCase="'h6'" [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</h6>
+      <h1 *ngSwitchCase="'h1'" [class]="txtClass" [ngStyle]="itemStyles">{{text}}</h1>
+      <h2 *ngSwitchCase="'h2'" [class]="txtClass" [ngStyle]="itemStyles">{{text}}</h2>
+      <h3 *ngSwitchCase="'h3'" [class]="txtClass" [ngStyle]="itemStyles">{{text}}</h3>
+      <h4 *ngSwitchCase="'h4'" [class]="txtClass" [ngStyle]="itemStyles">{{text}}</h4>
+      <h5 *ngSwitchCase="'h5'" [class]="txtClass" [ngStyle]="itemStyles">{{text}}</h5>
+      <h6 *ngSwitchCase="'h6'" [class]="txtClass" [ngStyle]="itemStyles">{{text}}</h6>
       <p *ngSwitchCase="''" [ngStyle]="itemStyles">{{text}}</p>
-      <ng-container *ngSwitchCase="undefined" [ngStyle]="itemStyles">{{text}}</ng-container>
-      <span *ngSwitchDefault [class]="txtStyle" [ngStyle]="itemStyles">{{text}}</span>
+      <ng-container *ngSwitchCase="'text'" [ngStyle]="itemStyles">{{text}}</ng-container>
+      <span *ngSwitchDefault [class]="txtClass" [ngStyle]="itemStyles">{{text}}</span>
     </ng-container>
     `
 })
 export class TextComponent extends BaseUIComponent<TextProperties> {
   @HostBinding('style.display') display = 'inline-block';
   get txtStyle(): string {
+    return this.properties['text-style'];
+  }
+
+  get txtClass(): string {
     return this.properties['text-style'] + ' ' + (this.properties.class || '');
   }
 
   get text(): string {
-    return this.componentDataModel || this.properties.text;
+    const val = this.componentDataModel;
+    return typeof val === 'undefined' ? this.properties.text : val;
   }
 }
 
@@ -50,8 +55,15 @@ type TextPropertiesConstrutor = new() => TextProperties;
 
 const example: ComponentExample<UIModel<TextProperties>> = {
   title: 'Text compoent example',
-  uiModel: `<text text-style="h1">Hello world</text>`,
-  dataModel: {}
+  uiModel: `<div>
+  <text text-style="h1">Hello world</text>
+  <text text-style="h1">$.title</text>
+  <text text-style="h1" binding="$.title2"></text>
+</div>`,
+  dataModel: {
+    title: 'Binded title',
+    title2: 'Binded title2'
+  }
 };
 
 export const textDescriptor: ComponentDescriptor<TextComponentConstrutor, TextPropertiesConstrutor> = {

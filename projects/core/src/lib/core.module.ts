@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { UISelectorComponent } from './components/ui-selector-component';
 import { NGXDynamicComponent } from './components/ngx-dynamic-component';
 
 import { ContainerComponent } from './ui-components/container/container.component';
@@ -18,11 +17,13 @@ import { LinkComponent } from './ui-components/link/link.component';
 import { LabelComponent } from './ui-components/label/label.component';
 import { FormComponent } from './ui-components/form/form.component';
 import { SelectComponent } from './ui-components/select/select.component';
+import { RepeaterComponent } from './ui-components/repeater/repeater.component';
 
 @NgModule({
   declarations: [
     ContainerComponent,
     FormComponent,
+    RepeaterComponent,
     TextComponent,
     LabelComponent,
     ButtonComponent,
@@ -32,14 +33,13 @@ import { SelectComponent } from './ui-components/select/select.component';
     TextareaComponent,
     LinkComponent,
     SelectComponent,
-    UISelectorComponent,
     NGXDynamicComponent],
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule
   ],
-  exports: [UISelectorComponent, NGXDynamicComponent, TextComponent]
+  exports: [NGXDynamicComponent, TextComponent]
 })
 export class DynamicComponentsCoreModule {
   constructor() {

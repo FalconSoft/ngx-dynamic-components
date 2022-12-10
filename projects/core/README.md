@@ -38,7 +38,7 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
   selector: 'app-root',
   template: `
   <ngx-dynamic-component
-    [uiModel]='uiModel'
+    [xmlUIModel]='xmlUIModel'
     [dataModel]='dataModel'
     (eventHandlers)="eventHandlers($event)">
   </ngx-dynamic-component>
@@ -76,7 +76,7 @@ import { ComponentEvent } from '@ngx-dynamic-components/core';
   encapsulation: ViewEncapsulation.None
   })
 export class AppComponent {
-  uiModel = `
+  xmlUIModel = `
   <div class="container">
     <form onSubmit="save(data)">
       <label>First Name</label>

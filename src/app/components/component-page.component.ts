@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -45,7 +46,7 @@ export interface PeriodicElement {
       display: block;
     }
     mwlResizable {
-      box-sizing: border-box; // required for the enableGhostResize option to work
+      box-sizing: border-box; /* required for the enableGhostResize option to work */
     }
     .as-split-gutter {
       height: 11px;
@@ -74,7 +75,7 @@ export class ComponentPageComponent implements OnInit, OnDestroy {
   component: ComponentDescriptor;
   loading = false;
   examples: ComponentExample[] = [];
-  private destroy$ = new Subject();
+  private destroy$ = new Subject<void>();
 
   constructor(private route: ActivatedRoute) { }
 
@@ -95,7 +96,7 @@ export class ComponentPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
+    this.destroy$.next(null);
     this.destroy$.complete();
   }
 

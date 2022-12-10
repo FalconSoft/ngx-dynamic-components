@@ -21,7 +21,7 @@ import { map } from 'rxjs/operators';
       <ng-container [ngTemplateOutlet]="sidenav"></ng-container>
     </mat-sidenav>
     <mat-sidenav-content>
-      <dc-page-header [title]="title" (open)="drawer.open()" toggle="true"></dc-page-header>
+      <dc-page-header [title]="title" (openPage)="drawer.open()" toggle="true"></dc-page-header>
       <ng-container [ngTemplateOutlet]="content"></ng-container>
     </mat-sidenav-content>
   </mat-sidenav-container>
@@ -42,10 +42,8 @@ import { map } from 'rxjs/operators';
 })
 export class SidenavLayoutComponent {
 
-  @Input()
-  title: string;
-
-  categories: GroupItem[];
+  @Input() title?: string;
+  categories?: GroupItem[];
   isHandSet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
 
   constructor(private breakpointObserver: BreakpointObserver) {}
