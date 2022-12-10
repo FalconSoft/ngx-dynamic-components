@@ -14,10 +14,6 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
     element: HTMLElement;
     private parentNode: Node;
 
-    constructor(public containerRef?: ViewContainerRef, public injector?: Injector) {
-      super(injector);
-    }
-
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
       if (this.element) {

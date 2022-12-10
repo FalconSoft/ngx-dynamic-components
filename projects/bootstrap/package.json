@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/bootstrap",
-  "version": "13.1.10",
+  "version": "15.0.1",
   "private": false,
   "description": "@ngx-dynamic-components/bootstrap is Angular 7+ library what contains a bootstrap interfaces to build a configuration driven web pages and workflows.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -19,11 +19,11 @@
     "form library"
   ],
   "peerDependencies": {
-    "@angular/animations": "^13.0.3",
-    "@angular/common": "^13.0.3",
-    "@angular/core": "^13.0.3",
-    "@ngx-dynamic-components/core": ">=13.1.10",
+    "@angular/animations": "^15.0.3",
+    "@angular/common": "^15.0.3",
+    "@angular/core": "^15.0.3",
+    "@ngx-dynamic-components/core": ">=15.0.1",
     "bootstrap-scss": "^4.6.0",
-    "ngx-bootstrap": "^8.0.0"
+    "ngx-bootstrap": "^10.0.0"
   }
 }
