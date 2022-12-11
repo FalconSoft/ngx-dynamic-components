@@ -13,6 +13,7 @@ import {
   getComponentById,
   BaseDynamicComponent,
   CoreService,
+  AttributesMap,
 } from '@ngx-dynamic-components/core';
 import type {
   NGXDynamicComponent,
@@ -48,7 +49,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
   dataModel: any;
   dataModelCopy: any;
-  uiModel: UIModel | string;
+  uiModel: string;
 
   uiModelEditor: Ace.Editor;
   uiModelJSONEditor: Ace.Editor;
@@ -101,7 +102,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     this.interpreter.addFunction('alert', (msg: string): void => alert(msg));
 
     this.interpreter.assignGlobalContext({});
-    this.uiModel = this.initUiModel;
+    this.uiModel = this.initUiModel as string;
     console.log('this.initDataModel', this.initDataModel);
     this.dataModel = this.initDataModel;
   }
@@ -192,7 +193,7 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     this.uiModelJSONEditor.resize();
   }
 
-  private refreshPreview(uiModel: UIModel | string, dataModel: any): void {
+  private refreshPreview(uiModel: string, dataModel: any): void {
     this.uiModel = uiModel;
     this.dataModelCopy = JSON.parse(JSON.stringify(dataModel));
   }
