@@ -298,5 +298,8 @@
       }
     }
   },
-  "defaultProject": "ngx-dynamic-components"
+  "defaultProject": "ngx-dynamic-components",
+  "cli": {
+    "analytics": false
+  }
 }

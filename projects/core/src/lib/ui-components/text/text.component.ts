@@ -46,6 +46,7 @@ export class TextProperties extends BindingProperties {
     description: 'Text style text data.',
     example: 'h2',
   })
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   'text-style'?: string;
 }
 
