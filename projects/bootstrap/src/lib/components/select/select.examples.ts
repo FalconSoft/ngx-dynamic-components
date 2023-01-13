@@ -70,15 +70,15 @@ export const example4: ComponentExample<UIModel<SelectProperties>> = {
     <div class="flex-column">
       <div class="form-group">
         <label class="col-form-label" width="60px">Select</label>
-        <ng-select width="300px" 
-          itemsSource="$.list" 
-          typeahead="onTypeahead(searchTerm)" 
-          debounceTime="1000" 
+        <ng-select width="300px"
+          itemsSource="$.list"
+          typeahead="onTypeahead(searchTerm)"
+          debounceTime="1000"
           binding="$.selected"
           change="onChange()">
         </ng-select>
       </div>
-      
+
       <text binding="$.selected"></text>
     </div>
   `,
@@ -88,10 +88,10 @@ export const example4: ComponentExample<UIModel<SelectProperties>> = {
     if searchTerm != null:
       # can be server-side call
       dataModel.list = [
-        {label: searchTerm + ' 2', value: searchTerm + ' 2'},
+        {label: searchTerm + ' 1', value: searchTerm + ' 1'},
         {label: searchTerm + ' 2', value: searchTerm + ' 2'}
       ]
-  
+
   async def onChange():
     print('Selected value: ', dataModel.selected)
   `,

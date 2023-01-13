@@ -57,13 +57,20 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
           parameters = queryValue(this.dataModel, parameter);
           parameter = parameter.replace('\$.', '').replace(/\.\w/g, (matched) => matched.replace('.', '').toUpperCase());
         }
+
+        const eventParameters = {
+          uiModel: this.uiModel,
+          argsKey: parameter,
+          argsValue: getStringEventArgs(funcSign) ?? parameters
+        };
+
+        if (parameter) {
+          eventParameters[parameter] = eventParameters.argsValue;
+        }
+
         this.eventHandlers.emit({
           eventName,
-          parameters: {
-            uiModel: this.uiModel,
-            argsKey: parameter,
-            argsValue: getStringEventArgs(funcSign) ?? parameters
-          }
+          parameters: eventParameters
         });
       }
     }
