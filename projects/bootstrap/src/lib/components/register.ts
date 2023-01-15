@@ -3,10 +3,12 @@ import { CoreService, ComponentDescriptor } from '@ngx-dynamic-components/core';
 import { selectDescriptor } from './select/select.component';
 import { tabsDescriptor } from './tabs/tabs.component';
 import { packageName } from '../constants';
+import { inputTypeaheadDescriptor } from './input-typeahead/input-typeahead.component';
 
 export const COMPONENTS_LIST: ComponentDescriptor[] = [
   tabsDescriptor,
-  selectDescriptor
+  selectDescriptor,
+  inputTypeaheadDescriptor
 ];
 
 // Register components.

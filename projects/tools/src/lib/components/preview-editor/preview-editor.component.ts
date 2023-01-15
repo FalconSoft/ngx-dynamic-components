@@ -13,14 +13,13 @@ import {
   getComponentById,
   BaseDynamicComponent,
   CoreService,
-  AttributesMap,
 } from '@ngx-dynamic-components/core';
 import type {
   NGXDynamicComponent,
   UIModel,
 } from '@ngx-dynamic-components/core';
 import { map } from 'rxjs/operators';
-import { Observable, fromEvent } from 'rxjs';
+import { Observable, fromEvent, asyncScheduler } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
 
@@ -69,22 +68,25 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     eventName,
     rootUIModel,
     parameters = null,
+    sender,
+    eventHandler
   }: ComponentEvent): Promise<void> {
     if (!this.interpreter) {
       return;
     }
 
-    if (this.interpreter.hasFunction(this.scripts, eventName)) {
+    if (this.interpreter.hasFunction(this.scripts, eventHandler)) {
       try {
-        await this.interpreter.evaluate(
+        const res = await this.interpreter.evaluate(
           this.scripts,
           {
             rootUIModel,
             dataModel: this.dataModel,
             ...parameters,
           },
-          eventName
+          eventHandler
         );
+        sender?.setEventHandlerResult(eventName, res);
       } catch (e) {
         alert(`${e.message}`);
       }
@@ -103,7 +105,6 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
     this.interpreter.assignGlobalContext({});
     this.uiModel = this.initUiModel as string;
-    console.log('this.initDataModel', this.initDataModel);
     this.dataModel = this.initDataModel;
   }
 
@@ -194,8 +195,8 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   }
 
   private refreshPreview(uiModel: string, dataModel: any): void {
-    this.uiModel = uiModel;
-    this.dataModelCopy = JSON.parse(JSON.stringify(dataModel));
+        this.uiModel = uiModel;
+        this.dataModelCopy = JSON.parse(JSON.stringify(dataModel));
   }
   // eslint-disable-next-line max-len
   private initEditor(

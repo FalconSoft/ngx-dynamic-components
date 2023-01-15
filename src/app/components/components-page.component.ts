@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'dc-components-page',
   template: `
-    <dc-sidenav-layout title="Components" fxLayout="column" fxFlex="1 1 auto">
+    <dc-sidenav-layout title="Components" class="d-flex flex-column h-100">
       <ng-container sidenav *ngFor="let section of sections">
         <h3 class="mat-h3">{{section.packageName}}</h3>
         <dc-side-bar [groups]="section.categories"></dc-side-bar>

@@ -3,12 +3,6 @@ import { ComponentDescriptor, UIModel, XMLResult, BaseUIComponentConstructor, Ba
 import { toXMLResult, parseXmlString } from '../utils';
 import { controlProperties, UIModelProperty } from '../properties';
 
-/**
- * Child Elements directives within Containers
- * @link https://github.com/angular/flex-layout/wiki/API-Documentation
- */
-const FX_CONTAINER_DIRECTIVES = ['fxFlex', 'fxFlexOrder', 'fxFlexOffset', 'fxFlexAlign', 'fxFlexFill'];
-
 @Injectable({
   providedIn: 'root'
 })

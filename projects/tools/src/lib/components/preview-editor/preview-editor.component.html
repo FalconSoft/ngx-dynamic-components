@@ -1,6 +1,6 @@
-<mat-card *ngIf="initUiModel" fxLayout="column" class="h-100 preview-card">
-  <mat-card-header fxLayoutAlign="start center">
-    <span fxFlex="1 1 auto">{{title}}</span>
+<mat-card *ngIf="initUiModel" class="h-100 preview-card d-flex flex-column">
+  <mat-card-header>
+    <span class="flex-fill align-self-center">{{title}}</span>
     <button mat-icon-button *ngIf="codeSize" (click)="toggleLayout()"
       [matTooltip]="(isHorizontal ? 'Vertical' : 'Horizontal') + ' layout'">
       <mat-icon>{{isHorizontal ? 'vertical_split' : 'horizontal_split'}}</mat-icon>
@@ -16,10 +16,10 @@
           <mat-tab label="UI Model">
             <mat-tab-group class="w-100 h-100" headerPosition="below">
               <mat-tab label="XML">
-                <div #uiModelEl style="min-height: 200px;" class="h-100"></div>
+                <div #uiModelEl class="h-100"></div>
               </mat-tab>
               <mat-tab label="JSON">
-                <div #uiModelJSONEl style="min-height: 200px;" class="h-100"></div>
+                <div #uiModelJSONEl class="h-100"></div>
               </mat-tab>
             </mat-tab-group>
           </mat-tab>
@@ -32,7 +32,7 @@
         </mat-tab-group>
       </as-split-area>
       <as-split-area [size]="100 - codeSize" #area1="asSplitArea">
-        <div class="preview" fxFlex="1 1 auto">
+        <div class="preview">
           <ngx-dynamic-component class="d-block" *ngIf="uiModel" #dynamicComponent
             [xmlUIModel]='uiModel'
             [dataModel]='dataModel'

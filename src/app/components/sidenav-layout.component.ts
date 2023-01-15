@@ -29,11 +29,11 @@ import { map } from 'rxjs/operators';
   <!-- Desktop layout -->
   <ng-template #desktopLayout>
     <dc-page-header title="Components"></dc-page-header>
-    <mat-drawer-container fxFlex="1 1 auto" class="page-drawer">
+    <mat-drawer-container class="page-drawer d-flex flex-fill">
       <mat-drawer mode="side" opened="true">
         <ng-container [ngTemplateOutlet]="sidenav"></ng-container>
       </mat-drawer>
-      <mat-drawer-content fxLayout fxFlex>
+      <mat-drawer-content class="flex-fill">
         <ng-container [ngTemplateOutlet]="content"></ng-container>
       </mat-drawer-content>
     </mat-drawer-container>

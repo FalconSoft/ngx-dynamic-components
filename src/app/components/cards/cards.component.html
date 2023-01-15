@@ -1,5 +1,5 @@
-<div class="cards-wrapper" fxLayout fxLayoutGap="50px">
-  <a *ngFor="let card of cards" fxLayout [routerLink]="card.link">
+<div class="cards-wrapper d-flex">
+  <a *ngFor="let card of cards" class="d-flex" [routerLink]="card.link">
     <mat-card>
       <mat-card-header>
         <h3 class="mat-h2">{{card.header}}</h3>

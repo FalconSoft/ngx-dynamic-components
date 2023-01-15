@@ -5,7 +5,7 @@ import {
   PropTypes, queryValue
 } from '@ngx-dynamic-components/core';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { packageName } from '../../constants';
 import example from './select.examples';
 
@@ -60,11 +60,7 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> {
         debounceTime(this.debounceTime),
         distinctUntilChanged(),
       )
-      .subscribe(data => this.emitEvent(this.properties.typeahead, data));
-  }
-
-  emitEvent(prop: string, param?: any): void {
-    super.emitEvent(prop, param);
+      .subscribe(data => this.emitEvent(this.properties.typeahead, data, 'typeahead'));
   }
 
   get selectStyles(): AttributesMap {
@@ -77,7 +73,7 @@ export class SelectComponent extends BaseUIComponent<SelectProperties> {
   }
 
   get options(): OptionValue[] {
-    const src = this.properties.itemsSource;
+    const src = this.eventResults.get('typeahead') ?? this.properties.itemsSource;
     if (Array.isArray(src)) {
       return src;
     }

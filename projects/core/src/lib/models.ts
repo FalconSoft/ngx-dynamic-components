@@ -98,6 +98,7 @@ export interface XMLResult {
 
 export interface ComponentEvent {
   eventName: string;
+  eventHandler: string;
   rootUIModel?: UIModel;
   parameters?: {
     uiModel?: UIModel;
@@ -105,4 +106,5 @@ export interface ComponentEvent {
     argsValue?: any;
     [key: string]: any;
   };
+  sender?: BaseDynamicComponent;
 }

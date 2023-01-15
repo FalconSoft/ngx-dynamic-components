@@ -13,8 +13,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 
-
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ResizableModule } from 'angular-resizable-element';
 import { MarkdownModule } from 'ngx-markdown';
 
@@ -78,7 +76,6 @@ import { SidenavLayoutComponent } from './components/sidenav-layout.component';
     MatTableModule,
     MatExpansionModule,
     MatIconModule,
-    FlexLayoutModule,
     ResizableModule,
     MarkdownModule.forRoot()
   ],

@@ -1,15 +1,15 @@
 import { UIModel, ComponentExample } from '@ngx-dynamic-components/core';
-import { SelectProperties } from './select.component';
+import { InputTypeaheadProperties } from './input-typeahead.component';
 
-export const example1: ComponentExample<UIModel<SelectProperties>> = {
+export const example1: ComponentExample<UIModel<InputTypeaheadProperties>> = {
   uiModel: `
     <div class="flex-column">
       <div class="form-group">
-        <label class="col-form-label" width="60px">Select Option</label>
-        <ng-select width="300px" binding="$.selectedOption">
+        <label class="col-form-label" width="60px">Type text</label>
+        <input-typeahead width="300px" binding="$.selectedOption">
           <option value="o1">Option 1</option>
           <option value="o2">Option 2</option>
-        </ng-select>
+        </input-typeahead>
       </div>
     </div>
   `,
@@ -17,12 +17,12 @@ export const example1: ComponentExample<UIModel<SelectProperties>> = {
   title: 'Static dropdown declaration',
 };
 
-export const example2: ComponentExample<UIModel<SelectProperties>> = {
+export const example2: ComponentExample<UIModel<InputTypeaheadProperties>> = {
   uiModel: `
     <div class="flex-column">
       <div class="form-group">
-        <label class="col-form-label" width="60px">Select</label>
-        <ng-select width="300px" itemsSource="$.list" binding="$.selected"></ng-select>
+        <label class="col-form-label" width="60px">Type text</label>
+        <input-typeahead width="300px" itemsSource="$.list" binding="$.selected"></input-typeahead>
       </div>
     </div>
   `,
@@ -32,19 +32,19 @@ export const example2: ComponentExample<UIModel<SelectProperties>> = {
   title: 'Dropdown options binded to dataModel',
 };
 
-export const example3: ComponentExample<UIModel<SelectProperties>> = {
+export const example3: ComponentExample<UIModel<InputTypeaheadProperties>> = {
   uiModel: `
     <div class="flex-column">
       <div class="form-group">
         <label class="col-form-label" width="60px">Country</label>
-        <ng-select onSelect="countryChanged" width="300px" binding="$.country">
+        <input-typeahead onSelect="countryChanged" width="300px" binding="$.country">
           <option value="uk">United Kingdom</option>
           <option value="ua">Ukraine</option>
-        </ng-select>
+        </input-typeahead>
       </div>
       <div class="form-group">
         <label class="col-form-label" width="60px">City</label>
-        <ng-select width="300px" itemsSource="$.cities" binding="$.city"></ng-select>
+        <input-typeahead width="300px" itemsSource="$.cities" binding="$.city"></input-typeahead>
       </div>
     </div>
   `,
@@ -65,17 +65,17 @@ export const example3: ComponentExample<UIModel<SelectProperties>> = {
   description: 'Handles change event from first dropdown and changes values in second.'
 };
 
-export const example4: ComponentExample<UIModel<SelectProperties>> = {
+export const example4: ComponentExample<UIModel<InputTypeaheadProperties>> = {
   uiModel: `
     <div class="flex-column">
       <div class="form-group">
-        <label class="col-form-label" width="60px">Select</label>
-        <ng-select width="300px"
+        <label class="col-form-label" width="60px">Type text</label>
+        <input-typeahead width="300px"
           typeahead="onTypeahead(searchTerm)"
           debounceTime="1000"
           binding="$.selected"
           change="onChange()">
-        </ng-select>
+        </input-typeahead>
       </div>
 
       <text binding="$.selected"></text>
@@ -96,6 +96,5 @@ export const example4: ComponentExample<UIModel<SelectProperties>> = {
   `,
   title: 'drop-down with typeahead and debounceTime',
 };
-
 
 export default [example1, example2, example4];

@@ -16,8 +16,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatListModule } from '@angular/material/list';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { DynamicComponentsBootstrapModule } from '@ngx-dynamic-components/bootstrap';
 
@@ -49,7 +47,6 @@ export const angularSplitModuleForRoot: ModuleWithProviders<AngularSplitModule> 
     MatListModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
     angularSplitModuleForRoot
   ],
   exports: [ PreviewEditorComponent ]

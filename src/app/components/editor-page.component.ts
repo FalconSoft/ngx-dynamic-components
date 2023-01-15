@@ -5,7 +5,7 @@ import * as contactUs from '../examples/contact-us.form.config';
   selector: 'dc-editor-page',
   template: `
     <dc-page-header title="Editor"></dc-page-header>
-    <dc-preview-editor fxLayout fxFlex="auto"
+    <dc-preview-editor class="d-flex"
       title="Profile form example"
       [initUiModel]="defaultModel"
       [initDataModel]="defaultDataModel"
