@@ -5,7 +5,7 @@ MIT
 MIT
 The MIT License
 
-Copyright (c) 2022 Google LLC.
+Copyright (c) 2023 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,6 @@ MIT
 @angular/core
 MIT
 
-@angular/flex-layout
-MIT
-
 @angular/forms
 MIT
 
@@ -42,7 +39,7 @@ MIT
 MIT
 The MIT License
 
-Copyright (c) 2022 Google LLC.
+Copyright (c) 2023 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -471,7 +468,16 @@ Redistribution and use in source and binary forms, with or without modification,
 This software is provided by the copyright holders and contributors “as is” and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
 
 
+ngx-bootstrap/component-loader
+MIT
+
+ngx-bootstrap/positioning
+MIT
+
 ngx-bootstrap/tabs
+MIT
+
+ngx-bootstrap/typeahead
 MIT
 
 ngx-bootstrap/utils
@@ -481,7 +487,7 @@ ngx-markdown
 MIT
 MIT License
 
-Copyright (c) 2017-2021 Jean-Francois Cere
+Copyright (c) 2017-2022 Jean-Francois Cere
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
