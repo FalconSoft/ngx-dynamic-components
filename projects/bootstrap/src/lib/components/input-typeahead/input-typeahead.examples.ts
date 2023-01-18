@@ -1,22 +1,6 @@
 import { UIModel, ComponentExample } from '@ngx-dynamic-components/core';
 import { InputTypeaheadProperties } from './input-typeahead.component';
 
-export const example1: ComponentExample<UIModel<InputTypeaheadProperties>> = {
-  uiModel: `
-    <div class="flex-column">
-      <div class="form-group">
-        <label class="col-form-label" width="60px">Type text</label>
-        <input-typeahead width="300px" binding="$.selectedOption">
-          <option value="o1">Option 1</option>
-          <option value="o2">Option 2</option>
-        </input-typeahead>
-      </div>
-    </div>
-  `,
-  dataModel: {},
-  title: 'Static dropdown declaration',
-};
-
 export const example2: ComponentExample<UIModel<InputTypeaheadProperties>> = {
   uiModel: `
     <div class="flex-column">
@@ -33,6 +17,22 @@ export const example2: ComponentExample<UIModel<InputTypeaheadProperties>> = {
 };
 
 export const example3: ComponentExample<UIModel<InputTypeaheadProperties>> = {
+  uiModel: `
+    <div class="flex-column">
+      <div class="form-group">
+        <label class="col-form-label" width="60px">Type text</label>
+        <input-typeahead width="300px" binding="$.selectedOption">
+          <option value="o1">Option 1</option>
+          <option value="o2">Option 2</option>
+        </input-typeahead>
+      </div>
+    </div>
+  `,
+  dataModel: {},
+  title: 'Static dropdown declaration',
+};
+
+export const example1: ComponentExample<UIModel<InputTypeaheadProperties>> = {
   uiModel: `
     <div class="flex-column">
       <div class="form-group">
@@ -97,4 +97,4 @@ export const example4: ComponentExample<UIModel<InputTypeaheadProperties>> = {
   title: 'drop-down with typeahead and debounceTime',
 };
 
-export default [example1, example2, example4];
+export default [example4, example1, example2];
