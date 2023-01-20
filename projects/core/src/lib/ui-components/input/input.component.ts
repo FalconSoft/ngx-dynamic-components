@@ -123,7 +123,7 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
     } else if (this.properties.type === 'radio') {
       if (input.checked) {
         this.componentDataModel = input.value;
-        this.emitEvent(prop, input.value);
+        this.emitEvent(prop, this.properties.value);
       }
     } else {
       this.componentDataModel = input.value;
@@ -179,6 +179,13 @@ export class InputProperties extends FormElementProperties {
     type: PropTypes.EVENT
   })
   debouncedInput?: string;
+
+  @propDescription({
+    description: 'Input initial value.',
+    example: 'option-1',
+    type: PropTypes.PROPERTY
+  })
+  value?: string;
 }
 
 type InputComponentConstrutor = new () => InputComponent;
@@ -197,7 +204,8 @@ export const inputDescriptor: ComponentDescriptor<InputComponentConstrutor, Inpu
   parseUIModel(xmlRes: XMLResult): UIModel {
     const itemProperties: AttributesMap = {
       readonly: xmlRes.attrs.readonly === 'true',
-      list: xmlRes.attrs.list?.split(',').map(o => o.trim())
+      list: xmlRes.attrs.list?.split(',').map(o => o.trim()),
+      ...xmlRes.attrs
     };
 
     return {

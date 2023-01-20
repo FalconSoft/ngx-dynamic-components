@@ -18,7 +18,7 @@ import type {
   NGXDynamicComponent,
   UIModel,
 } from '@ngx-dynamic-components/core';
-import { map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { Observable, fromEvent, asyncScheduler } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
@@ -77,6 +77,9 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
 
     if (this.interpreter.hasFunction(this.scripts, eventHandler)) {
       try {
+        if (parameters) {
+          parameters[parameters.argsKey] = parameters.argsValue;
+        }
         const res = await this.interpreter.evaluate(
           this.scripts,
           {
@@ -162,7 +165,10 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
         this.uiModelEl,
         this.initUiModel,
         'ace/mode/xml'
+      ).pipe(
+        debounceTime(500)
       ).subscribe((uiModel) => {
+        this.dynamicComponent.containerRef.clear();
         this.setJSONEditor(uiModel);
         this.refreshPreview(uiModel, this.dataModel);
       });

@@ -18,7 +18,7 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     @HostBinding('style.max-height') maxHeight?: string;
     @HostBinding('style.padding') padding?: string;
     @HostBinding('style.margin') margin?: string;
-    @HostBinding('style.display') display? = 'initial';
+    @HostBinding('style.display') display?: string;
     @HostBinding('style.border-left') borderLeft?: string;
     @HostBinding('style.border-top') borderTop?: string;
     @HostBinding('style.border-right') borderRight?: string;

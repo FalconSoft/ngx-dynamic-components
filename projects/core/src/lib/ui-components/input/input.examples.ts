@@ -5,7 +5,7 @@ export const example1: ComponentExample<UIModel<InputProperties>> = {
   title: 'Text input example',
   uiModel: `
   <div class="d-flex flex-column">
-    
+
     <div class="form-group">
       <label class="col-form-label" width="80px">Name</label>
       <input onInput="onNameInput(name)" placeholder="Enter your name" binding="$.name"/>
@@ -18,12 +18,12 @@ export const example1: ComponentExample<UIModel<InputProperties>> = {
 
     <div class="form-group">
       <label class="col-form-label" width="80px">Debounced Input</label>
-      <input 
-        placeholder="Enter text here" 
+      <input
+        placeholder="Enter text here"
         binding="$.text"
-        debouncedInput="onDebouncedInput(searchText)" 
+        debouncedInput="onDebouncedInput(searchText)"
         debounceTime="2000"
-        />      
+        />
       <text binding="$.debouncedText" class="ml-2"></text>
     </div>
 
@@ -59,22 +59,27 @@ export const example2: ComponentExample<UIModel<InputProperties>> = {
 export const example3: ComponentExample<UIModel<InputProperties>> = {
   title: 'Radio group example',
   uiModel: `
-  <div>
+  <div class="d-flex flex-column">
     <div class="form-group form-check mt-5">
-      <input id="opt1" type="radio" class="form-check-input" name="option" value="option-1" binding="$.option"/>
+      <input id="opt1" type="radio" class="form-check-input" name="option" onChange="onSelect(val)" value="option-1"/>
       <label for="opt1" class="form-check-label" width="80px">Option 1</label>
     </div>
     <div class="form-group form-check">
-      <input id="opt2" type="radio" class="form-check-input" name="option" value="option-2" binding="$.option"/>
+      <input id="opt2" type="radio" class="form-check-input" name="option" onChange="onSelect(val)" value="option-2"/>
       <label for="opt2" class="form-check-label" width="80px">Option 2</label>
     </div>
     <div class="form-group form-check">
-      <input id="opt3" type="radio" class="form-check-input" name="option" value="option-3" binding="$.option"/>
+      <input id="opt3" type="radio" class="form-check-input" name="option" onChange="onSelect(val)" value="option-3"/>
       <label for="opt3" class="form-check-label" width="80px">Option 3</label>
     </div>
   </div>
   `,
   dataModel: {},
+  scripts: `
+  def onSelect():
+    print(val)
+    dataModel.selected = val
+  `,
   description: 'You can choose one of 3 options.'
 };
 
