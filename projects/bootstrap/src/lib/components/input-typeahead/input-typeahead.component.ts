@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import {
   BindingProperties, propDescription, PropertyCategories, OptionValue,
   UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult, BaseUIComponent,
@@ -20,6 +20,7 @@ import example from './input-typeahead.examples';
       [placeholder]="properties.placeholder ?? ''"
       [typeaheadOptionField]="properties.typeaheadOptionField ?? 'label'"
       [typeaheadMultipleSearch]="properties.multiple"
+      [class]="properties.class"
       (input)="onInput($event)"
       (change)="onSelect($event)"/>
     `,
@@ -32,6 +33,7 @@ import example from './input-typeahead.examples';
 })
 // eslint-disable-next-line @angular-eslint/no-conflicting-lifecycle
 export class InputTypeaheadComponent extends BaseUIComponent<InputTypeaheadProperties> {
+  @HostBinding('attr.class') wrapperClass = null;
   searchText$ = new Subject<string | null>();
   loading = false;
   suggestions$ = new Subject<OptionValue[]>();

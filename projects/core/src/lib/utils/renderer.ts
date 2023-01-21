@@ -26,7 +26,7 @@ export function createComponent(
     let component: BaseDynamicComponent;
     if (descriptor.category === Categories.HTML) {
       const baseHtml = componentClass as any;
-      component = new baseHtml(containerRef, parentComponent.injector);
+      component = new baseHtml(parentComponent.injector);
       component.dataModel = dataModel;
       component.uiModel = uiModel;
       component.create(containerRef.element.nativeElement);

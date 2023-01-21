@@ -137,6 +137,17 @@ export const example: ComponentExample<UIModel<LinkProperties>> = {
   dataModel: {}
 };
 
+export const example2: ComponentExample<UIModel<LinkProperties>> = {
+  title: 'Basic router link',
+  uiModel: `
+  <section class="row align-items-center m-1">
+    <a title="Examples link" class="btn btn-link mr-2"
+    routerLink="/examples/contact-us">Examples: Contact us</a>
+  </section>
+  `,
+  dataModel: {}
+};
+
 type AComponentConstrutor = new () => AComponent;
 
 type LinkPropertiesConstrutor = new () => LinkProperties;
@@ -149,7 +160,7 @@ export const aDescriptor: ComponentDescriptor<AComponentConstrutor, LinkProperti
   description: 'A component',
   itemProperties: LinkProperties,
   component: AComponent,
-  example,
+  example: [example, example2],
   parseUIModel: (xmlRes: XMLResult) => {
     const uiModel = parseHTMLUIModel(xmlRes);
     if (xmlRes.attrs.routerLink) {

@@ -6,7 +6,7 @@ export const example2: ComponentExample<UIModel<InputTypeaheadProperties>> = {
     <div class="flex-column">
       <div class="form-group">
         <label class="col-form-label" width="60px">Type text</label>
-        <input-typeahead width="300px" itemsSource="$.list" binding="$.selected"></input-typeahead>
+        <input-typeahead class="form-control" width="300px" itemsSource="$.list" binding="$.selected"></input-typeahead>
       </div>
     </div>
   `,
