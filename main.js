@@ -1797,12 +1797,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "DesignerComponent": () => (/* binding */ DesignerComponent)
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 9337);
 /* harmony import */ var _services_core_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/core.service */ 551);
 /* harmony import */ var _ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ngx-dynamic-designer-component */ 9177);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 4666);
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
+
 
 
 
@@ -1856,7 +1858,7 @@ function DesignerComponent_div_8_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate1"]("Selected container: ", container_r7.uiModel.type, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate1"](" children: ", container_r7.uiModel.children.length, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate1"](" children: ", container_r7.uiModel.children == null ? null : container_r7.uiModel.children.length, " ");
   }
 }
 function DesignerComponent_div_10_Template(rf, ctx) {
@@ -1909,7 +1911,9 @@ class DesignerComponent {
     return (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__awaiter)(this, void 0, void 0, function* () {
       this.components = _services_core_service__WEBPACK_IMPORTED_MODULE_0__.CoreService.getListOfComponents();
       this.groups = this.getCategories();
-      this.connected$ = (_a = this.dc) === null || _a === void 0 ? void 0 : _a.dropList$.asObservable();
+      this.connected$ = (_a = this.dc) === null || _a === void 0 ? void 0 : _a.dropList$.pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_4__.tap)(list => {
+        console.log('connected', list);
+      }));
       this.selectedContainer$ = ((_b = this.dc) === null || _b === void 0 ? void 0 : _b.rendererService).selectedContainer$;
       this.selectedComponent$ = ((_c = this.dc) === null || _c === void 0 ? void 0 : _c.rendererService).selectedComponent$;
     });
@@ -1994,8 +1998,8 @@ DesignerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2_
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("xmlUIModel", ctx.template)("dataModel", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction0"](12, _c0));
     }
   },
-  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_4__.NgIf, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_6__.AccordionComponent, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_6__.AccordionPanelComponent, _ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _angular_common__WEBPACK_IMPORTED_MODULE_4__.AsyncPipe],
-  styles: ["accordion-group[_ngcontent-%COMP%]     .panel-body.card-block.card-body {\n  padding: 0.5rem;\n}\n\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag {\n  margin: 0.25rem;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list:hover {\n  border: 1px solid darkgrey;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container {\n  background-color: lightblue;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > * > .cdk-drag, ngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > .cdk-drag {\n  border: 1px dashed darkblue;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-component {\n  border: 1px solid darkblue !important;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list-receiving {\n  background-color: red;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi9kZXNpZ25lci9jb21wb25lbnRzL2Rlc2lnbmVyL2Rlc2lnbmVyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtBQUNGOztBQUlFO0VBQ0UsZUFBQTtBQURKO0FBSUU7RUFDRSwwQkFBQTtBQUZKO0FBS0U7RUFDRSwyQkFBQTtBQUhKO0FBS0k7O0VBRUUsMkJBQUE7QUFITjtBQU9FO0VBQ0UscUNBQUE7QUFMSjtBQVFFO0VBQ0UscUJBQUE7QUFOSiIsInNvdXJjZXNDb250ZW50IjpbImFjY29yZGlvbi1ncm91cCA6Om5nLWRlZXAgLnBhbmVsLWJvZHkuY2FyZC1ibG9jay5jYXJkLWJvZHkge1xyXG4gIHBhZGRpbmc6IC41cmVtO1xyXG59XHJcblxyXG5uZ3gtZHluYW1pYy1kZXNpZ25lci1jb21wb25lbnQgOjpuZy1kZWVwIHtcclxuXHJcbiAgLmNkay1kcmFnIHtcclxuICAgIG1hcmdpbjogMC4yNXJlbTtcclxuICB9XHJcblxyXG4gIC5jZGstZHJvcC1saXN0OmhvdmVyIHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGRhcmtncmV5O1xyXG4gIH1cclxuXHJcbiAgLnNlbGVjdGVkLWNvbnRhaW5lciB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBsaWdodGJsdWU7XHJcblxyXG4gICAgPiAqID4uY2RrLWRyYWcsXHJcbiAgICA+IC5jZGstZHJhZyB7XHJcbiAgICAgIGJvcmRlcjogMXB4IGRhc2hlZCBkYXJrYmx1ZTtcclxuICAgIH1cclxuICB9XHJcblxyXG4gIC5zZWxlY3RlZC1jb21wb25lbnQge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgZGFya2JsdWUgIWltcG9ydGFudDtcclxuICB9XHJcblxyXG4gIC5jZGstZHJvcC1saXN0LXJlY2VpdmluZyB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7XHJcbiAgfVxyXG5cclxufVxyXG4iXSwic291cmNlUm9vdCI6IiJ9 */"]
+  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDrag, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_7__.AccordionComponent, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_7__.AccordionPanelComponent, _ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _angular_common__WEBPACK_IMPORTED_MODULE_5__.AsyncPipe],
+  styles: ["accordion-group[_ngcontent-%COMP%]     .panel-body.card-block.card-body {\n  padding: 0.5rem;\n}\n\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag {\n  margin: 0.25rem;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag, ngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list {\n  border: 1px dashed transparent;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list:hover {\n  border: 1px solid darkgrey;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list {\n  min-height: 50px;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container {\n  background-color: lightblue;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > form > .cdk-drag, ngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > .cdk-drag {\n  border: 1px dashed darkblue;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-component {\n  border: 1px solid darkblue !important;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi9kZXNpZ25lci9jb21wb25lbnRzL2Rlc2lnbmVyL2Rlc2lnbmVyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtBQUNGOztBQUlFO0VBQ0UsZUFBQTtBQURKO0FBSUU7O0VBRUUsOEJBQUE7QUFGSjtBQUtFO0VBQ0UsMEJBQUE7QUFISjtBQU1FO0VBQ0UsZ0JBQUE7QUFKSjtBQU9FO0VBQ0UsMkJBQUE7QUFMSjtBQU9JOztFQUVFLDJCQUFBO0FBTE47QUFTRTtFQUNFLHFDQUFBO0FBUEoiLCJzb3VyY2VzQ29udGVudCI6WyJhY2NvcmRpb24tZ3JvdXAgOjpuZy1kZWVwIC5wYW5lbC1ib2R5LmNhcmQtYmxvY2suY2FyZC1ib2R5IHtcclxuICBwYWRkaW5nOiAuNXJlbTtcclxufVxyXG5cclxubmd4LWR5bmFtaWMtZGVzaWduZXItY29tcG9uZW50IDo6bmctZGVlcCB7XHJcblxyXG4gIC5jZGstZHJhZyB7XHJcbiAgICBtYXJnaW46IDAuMjVyZW07XHJcbiAgfVxyXG5cclxuICAuY2RrLWRyYWcsXHJcbiAgLmNkay1kcm9wLWxpc3Qge1xyXG4gICAgYm9yZGVyOiAxcHggZGFzaGVkIHRyYW5zcGFyZW50O1xyXG4gIH1cclxuXHJcbiAgLmNkay1kcm9wLWxpc3Q6aG92ZXIge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgZGFya2dyZXk7XHJcbiAgfVxyXG5cclxuICAuY2RrLWRyb3AtbGlzdCB7XHJcbiAgICBtaW4taGVpZ2h0OiA1MHB4O1xyXG4gIH1cclxuXHJcbiAgLnNlbGVjdGVkLWNvbnRhaW5lciB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBsaWdodGJsdWU7XHJcblxyXG4gICAgPiBmb3JtID4gLmNkay1kcmFnLFxyXG4gICAgPiAuY2RrLWRyYWcge1xyXG4gICAgICBib3JkZXI6IDFweCBkYXNoZWQgZGFya2JsdWU7XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAuc2VsZWN0ZWQtY29tcG9uZW50IHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGRhcmtibHVlICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG5cclxuICAvLyAuY2RrLWRyb3AtbGlzdC1yZWNlaXZpbmcge1xyXG4gIC8vICAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xyXG4gIC8vIH1cclxuXHJcbn1cclxuIl0sInNvdXJjZVJvb3QiOiIifQ== */"]
 });
 
 /***/ }),
@@ -2061,7 +2065,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "NGXDynamicDesignerComponent": () => (/* binding */ NGXDynamicDesignerComponent)
 /* harmony export */ });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 228);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 635);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 8184);
 /* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
 /* harmony import */ var _services_renderer_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/renderer.service */ 3477);
@@ -2094,8 +2098,7 @@ class NGXDynamicDesignerComponent extends _components_ngx_dynamic_component__WEB
     this.render = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
     this.changedDataModel = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
     this.eventHandlers = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
-    this.dropList$ = new rxjs__WEBPACK_IMPORTED_MODULE_5__.Subject();
-    this.dropIdList$ = new rxjs__WEBPACK_IMPORTED_MODULE_5__.Subject();
+    this.dropList$ = this.rendererService.selectedContainer$.pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_5__.map)(c => [c === null || c === void 0 ? void 0 : c.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList)]));
   }
   initParsedModel(uiModel) {
     try {
@@ -2108,19 +2111,16 @@ class NGXDynamicDesignerComponent extends _components_ngx_dynamic_component__WEB
         }
         rxjs__WEBPACK_IMPORTED_MODULE_7__.animationFrameScheduler.schedule(() => {
           this.render.emit(this.uiModel);
-          const dropList = this.getDropLists(component);
-          this.dropIdList$.next(this.getIdsRecursive(component));
-          this.dropList$.next(dropList);
+          // const dropList = this.getDropLists(component);
+          // this.dropIdList$.next(this.getIdsRecursive(component));
+          // this.dropList$.next(dropList);
           const components = this.getComponentsList(component);
-          const ids = Array.from(new Set(dropList.map(c => c === null || c === void 0 ? void 0 : c.id)));
-          components.filter(c => {
-            var _a;
-            return !!((_a = c.children) === null || _a === void 0 ? void 0 : _a.length) && c.injector;
-          }).forEach(c => {
-            c.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList).connectedTo = ids.filter(id => id !== c.element.id);
-            c.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList).data = c;
-            console.log('ccc:', c.element.id, c.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList).connectedTo);
-          });
+          // const ids = Array.from(new Set(dropList.map(c => c?.id)));
+          // components.filter(c => !!c.children?.length && c.injector).forEach(c => {
+          //   c.injector.get(CdkDropList).connectedTo = ids.filter(id => id !== c.element.id);
+          //   c.injector.get(CdkDropList).data = c;
+          //   console.log('ccc:', c.element.id, c.injector.get(CdkDropList).connectedTo);
+          // });
         });
       }
     } catch (e) {
@@ -2225,6 +2225,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 class DesignerRendererService {
   constructor() {
     this.selectedContainer$ = new rxjs__WEBPACK_IMPORTED_MODULE_4__.BehaviorSubject(null);
@@ -2245,26 +2246,7 @@ class DesignerRendererService {
       const componentClass = descriptor.component;
       let component;
       if (descriptor.category === "HTML" /* Categories.HTML */) {
-        const baseHtml = componentClass;
-        component = new baseHtml(parentComponent.injector);
-        component.dataModel = dataModel;
-        component.uiModel = uiModel;
-        const draggableWrapper = containerRef.createComponent(_components_draggable_component__WEBPACK_IMPORTED_MODULE_1__.DraggableComponent, {
-          index
-        });
-        component.create(draggableWrapper.instance.container.element.nativeElement);
-        try {
-          draggableWrapper.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).data = component.uiModel;
-          console.log('rrr', component.element);
-          component.element.onclick = () => {
-            var _a;
-            (_a = this.selectedElement$.value) === null || _a === void 0 ? void 0 : _a.element.classList.remove('selected-component');
-            this.selectedElement$.next(component);
-            component.element.classList.add('selected-component');
-          };
-        } catch (e) {
-          console.error(e);
-        }
+        component = this.creatHTMLComponent(descriptor, parentComponent, uiModel, containerRef, dataModel, index);
       } else if (componentClass.prototype instanceof _components_base_dynamic_component__WEBPACK_IMPORTED_MODULE_0__.BaseDynamicComponent) {
         const componentRef = containerRef.createComponent(componentClass, {
           index
@@ -2279,6 +2261,7 @@ class DesignerRendererService {
         }
       }
       if (component) {
+        component.parent = parentComponent;
         component.element.classList.add('dc-element');
         uiModel.getComponent = () => component;
         component.changedDataModel.subscribe(evt => {
@@ -2302,13 +2285,16 @@ class DesignerRendererService {
   setDragData(component) {
     try {
       const drag = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag);
+      console.log('setDragData', component.uiModel.type, drag.element.nativeElement);
       if (drag) {
         drag.data = component.uiModel;
-        console.log('setDragData', drag.element.nativeElement);
         drag.element.nativeElement.onclick = evt => {
-          var _a;
-          (_a = this.selectedComponent$.value) === null || _a === void 0 ? void 0 : _a.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).element.nativeElement.classList.remove('selected-component');
+          evt.stopPropagation();
+          this.deselectComponent(this.selectedComponent$.value);
           this.selectedComponent$.next(component);
+          if (this.selectedContainer$.value !== component.parent && component.parent) {
+            this.selectContainer(component.parent);
+          }
           drag.element.nativeElement.classList.add('selected-component');
         };
       } else {
@@ -2318,30 +2304,41 @@ class DesignerRendererService {
       console.log(component.uiModel, e.message);
     }
   }
+  deselectComponent(component) {
+    if (!component) {
+      return;
+    }
+    const descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_3__.CoreService.getComponentDescriptor(component.uiModel.type);
+    if (descriptor.category === "HTML" /* Categories.HTML */) {
+      component.element.classList.remove('selected-component');
+    } else {
+      component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).element.nativeElement.classList.remove('selected-component');
+    }
+  }
   subscribeOnContainers(component) {
     try {
       const dropList = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList);
       console.log('subscribeOnContainers', dropList.element.nativeElement);
       dropList.element.nativeElement.onclick = evt => {
-        var _a;
         evt.stopPropagation();
-        (_a = this.selectedContainer$.value) === null || _a === void 0 ? void 0 : _a.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList).element.nativeElement.classList.remove('selected-container');
-        this.selectedContainer$.next(component);
-        dropList.element.nativeElement.classList.add('selected-container');
+        this.selectContainer(component);
       };
       dropList.dropped.subscribe(event => {
+        var _a;
         console.log('dropped-evt000', event.container.element.nativeElement, event.item.element.nativeElement);
         if (event.previousContainer === event.container && event.previousIndex === event.currentIndex) {
           return;
         }
-        const container = event.container.data;
+        const container = this.selectedContainer$.value; // event.container.data as unknown as UIComponent;
         const item = event.item.data;
+        // console.log('www', container, component.parent, event.container);
         try {
           const previousContainer = event.previousContainer.data;
           // console.log('previousContainer', event.previousIndex, item.type, event);
           // console.log('el', (previousContainer.containerRef.get(event.previousIndex) as any).rootNodes);
           if (event.previousContainer.id !== 'ngx-components-list') {
-            previousContainer.containerRef.remove(event.previousIndex);
+            // previousContainer.containerRef.remove(event.previousIndex);
+            (_a = this.selectedContainer$.value) === null || _a === void 0 ? void 0 : _a.containerRef.remove(event.previousIndex);
           }
           this.createComponent(container, item, container.containerRef, container.dataModel, event.currentIndex);
           // event.previousContainer.removeItem(event.item);
@@ -2354,6 +2351,35 @@ class DesignerRendererService {
     } catch (e) {
       console.log(component.uiModel.type, e.message);
     }
+  }
+  selectContainer(component) {
+    var _a;
+    const dropList = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList);
+    (_a = this.selectedContainer$.value) === null || _a === void 0 ? void 0 : _a.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList).element.nativeElement.classList.remove('selected-container');
+    this.selectedContainer$.next(component);
+    dropList.element.nativeElement.classList.add('selected-container');
+  }
+  creatHTMLComponent(descriptor, parentComponent, uiModel, containerRef, dataModel, index) {
+    const baseHtml = descriptor.component;
+    const component = new baseHtml(parentComponent.injector);
+    component.dataModel = dataModel;
+    component.uiModel = uiModel;
+    const draggableWrapper = containerRef.createComponent(_components_draggable_component__WEBPACK_IMPORTED_MODULE_1__.DraggableComponent, {
+      index
+    });
+    component.create(draggableWrapper.instance.container.element.nativeElement);
+    try {
+      draggableWrapper.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).data = component.uiModel;
+      // console.log('rrr', component.element);
+      component.element.onclick = () => {
+        this.deselectComponent(this.selectedElement$.value);
+        this.selectedComponent$.next(component);
+        component.element.classList.add('selected-component');
+      };
+    } catch (e) {
+      console.error(e);
+    }
+    return component;
   }
 }
 DesignerRendererService.ɵfac = function DesignerRendererService_Factory(t) {
@@ -3174,6 +3200,7 @@ class CoreService {
       const type = Object.keys(res)[0];
       const xmlObj = res[type];
       if (typeof xmlObj === 'string' && xmlObj) {
+        // return CoreService.getUIModel(toXMLResult(res));
         throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
       }
       if (typeof xmlObj === 'object') {
@@ -3495,7 +3522,7 @@ ContainerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵstyleProp"]("display", ctx.display);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDrag, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDropListGroup])],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDrag])],
   decls: 3,
   vars: 1,
   consts: [["vc", ""]],
@@ -3805,6 +3832,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 8977);
 /* harmony import */ var _services_renderer_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/renderer.service */ 3477);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+
 
 
 
@@ -3955,7 +3984,7 @@ InputComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵattribute"]("type", ctx.type)("step", ctx.step)("checked", ctx.checked)("multiple", ctx.multiple);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵNgOnChangesFeature"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵNgOnChangesFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__.CdkDrag])],
   decls: 0,
   vars: 0,
   template: function InputComponent_Template(rf, ctx) {},
@@ -4147,6 +4176,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _properties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../properties */ 6319);
 /* harmony import */ var _text_text_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../text/text.component */ 4556);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+
 
 
 
@@ -4188,7 +4219,7 @@ LabelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_4__["
       _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵstyleProp"]("display", ctx.display);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵInheritDefinitionFeature"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag])],
   decls: 1,
   vars: 1,
   template: function LabelComponent_Template(rf, ctx) {
@@ -4235,7 +4266,7 @@ const labelDescriptor = {
       itemProperties
     };
   },
-  defaultModel: '<label></label>',
+  defaultModel: '<label class="label">Label</label>',
   children: false
 };
 
@@ -5395,6 +5426,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _properties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../properties */ 6319);
 /* harmony import */ var _components_form_element_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form-element-component */ 2897);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+
 
 
 
@@ -5460,7 +5493,7 @@ TextareaComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵattribute"]("cols", ctx.cols)("rows", ctx.rows);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵNgOnChangesFeature"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵNgOnChangesFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_4__.CdkDrag])],
   decls: 1,
   vars: 1,
   template: function TextareaComponent_Template(rf, ctx) {
