@@ -2099,7 +2099,6 @@ class DesignerComponent {
     properties
   }) {
     var _a;
-    debugger;
     ((_a = this.dc) === null || _a === void 0 ? void 0 : _a.rendererService).updateComponent(component, properties);
   }
 }
