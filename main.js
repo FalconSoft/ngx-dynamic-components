@@ -2220,7 +2220,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 635);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 8184);
 /* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
 /* harmony import */ var _services_renderer_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/renderer.service */ 3477);
 /* harmony import */ var _designer_renderer_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../designer-renderer.service */ 1821);
@@ -2228,8 +2227,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_core_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/core.service */ 551);
 
 
-// import { UIModel, ComponentEvent } from '../models';
-// import { CoreService } from '../services/core.service';
 
 
 
@@ -2238,11 +2235,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _c0 = ["vc"];
-// import { BaseDynamicComponent } from './base-dynamic-component';
-// import { NGXDynamicComponent } from './ngx-dynamic-component';
-// import { RendererService } from '../services/renderer.service';
-// import { DesignerRendererService } from '../services/designer-renderer.service';
-// import { DesignerRendererService } from '../services/designer-renderer.service';
 class NGXDynamicDesignerComponent extends _components_ngx_dynamic_component__WEBPACK_IMPORTED_MODULE_2__.NGXDynamicComponent {
   constructor(rendererService, injector) {
     super(rendererService, injector);
@@ -2263,19 +2255,6 @@ class NGXDynamicDesignerComponent extends _components_ngx_dynamic_component__WEB
         if (drag) {
           drag.data = component;
         }
-        rxjs__WEBPACK_IMPORTED_MODULE_7__.animationFrameScheduler.schedule(() => {
-          this.render.emit(this.uiModel);
-          // const dropList = this.getDropLists(component);
-          // this.dropIdList$.next(this.getIdsRecursive(component));
-          // this.dropList$.next(dropList);
-          const components = this.getComponentsList(component);
-          // const ids = Array.from(new Set(dropList.map(c => c?.id)));
-          // components.filter(c => !!c.children?.length && c.injector).forEach(c => {
-          //   c.injector.get(CdkDropList).connectedTo = ids.filter(id => id !== c.element.id);
-          //   c.injector.get(CdkDropList).data = c;
-          //   console.log('ccc:', c.element.id, c.injector.get(CdkDropList).connectedTo);
-          // });
-        });
       }
     } catch (e) {
       this.uiModel = null;
@@ -2288,30 +2267,6 @@ class NGXDynamicDesignerComponent extends _components_ngx_dynamic_component__WEB
         }
       });
     }
-  }
-  getDropLists(component) {
-    var _a, _b;
-    let dropList = [(_a = component.injector) === null || _a === void 0 ? void 0 : _a.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList)];
-    (_b = component.children) === null || _b === void 0 ? void 0 : _b.forEach(childItem => {
-      dropList = dropList.concat(this.getDropLists(childItem));
-    });
-    return dropList.sort((a, b) => b.id.localeCompare(a.id));
-  }
-  getIdsRecursive(component) {
-    var _a, _b;
-    let ids = [(_a = component.injector) === null || _a === void 0 ? void 0 : _a.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList).id];
-    (_b = component.children) === null || _b === void 0 ? void 0 : _b.forEach(childItem => {
-      ids = ids.concat(this.getIdsRecursive(childItem));
-    });
-    return ids.filter(id => !!id);
-  }
-  getComponentsList(component) {
-    var _a;
-    let components = [component];
-    (_a = component.children) === null || _a === void 0 ? void 0 : _a.forEach(childItem => {
-      components = components.concat(this.getComponentsList(childItem));
-    });
-    return components;
   }
 }
 NGXDynamicDesignerComponent.ɵfac = function NGXDynamicDesignerComponent_Factory(t) {
@@ -2437,11 +2392,13 @@ class DesignerRendererService {
     }
   }
   updateComponent(component, properties) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
+    const index = (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.indexOf(component);
     this.deleteComponent(component);
-    this.createComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
+    const newComponent = this.createComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
       itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
-    }), (_a = component.parent) === null || _a === void 0 ? void 0 : _a.containerRef, (_b = component.parent) === null || _b === void 0 ? void 0 : _b.dataModel, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.children.indexOf(component));
+    }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index);
+    (_d = component.parent) === null || _d === void 0 ? void 0 : _d.children.splice(index, 0, newComponent);
   }
   setDragData(component) {
     try {
