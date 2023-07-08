@@ -1166,8 +1166,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { createComponent } from '../utils/renderer';
-// import { createComponent } from '../utils/designer-renderer';
 class BaseHTMLElement extends _base_dynamic_component__WEBPACK_IMPORTED_MODULE_1__.BaseDynamicComponent {
   constructor() {
     super(...arguments);
@@ -1284,8 +1282,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _c0 = ["vc"];
-// import { renderChildren } from '../utils/renderer';
-// import { renderChildren } from '../utils/designer-renderer';
 // eslint-disable-next-line
 class BaseUIComponent extends _base_dynamic_component__WEBPACK_IMPORTED_MODULE_3__.BaseDynamicComponent {
   constructor() {
@@ -1628,7 +1624,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _c0 = ["vc"];
-// import { createComponent } from '../utils/renderer';
 class NGXDynamicComponent {
   constructor(rendererService, injector) {
     this.rendererService = rendererService;
@@ -1720,8 +1715,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common */ 4666);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/common/http */ 8987);
-/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
 /* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
 /* harmony import */ var _components_ngx_dynamic_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ngx-dynamic-component */ 9154);
 /* harmony import */ var _ui_components_container_container_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui-components/container/container.component */ 7055);
 /* harmony import */ var _ui_components_text_text_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui-components/text/text.component */ 4556);
@@ -1757,13 +1752,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { DesignerComponent } from './designer/components/designer/designer.component';
-// import { DraggableComponent } from './components/draggable-component';
-// import { NGXDynamicDesignerComponent } from './components/ngx-dynamic-designer-component';
 
 
-// import { DesignerRendererService } from './services/designer-renderer.service';
-// import { CoreService } from './services/core.service';
 class DynamicComponentsCoreModule {
   constructor() {
     (0,_ui_components_register__WEBPACK_IMPORTED_MODULE_8__.registerComponents)();
@@ -1783,7 +1773,7 @@ DynamicComponentsCoreModule.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED
   (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_15__["ɵɵsetNgModuleScope"](DynamicComponentsCoreModule, {
     declarations: [_ui_components_container_container_component__WEBPACK_IMPORTED_MODULE_1__.ContainerComponent, _ui_components_form_form_component__WEBPACK_IMPORTED_MODULE_11__.FormComponent, _ui_components_repeater_repeater_component__WEBPACK_IMPORTED_MODULE_13__.RepeaterComponent, _ui_components_text_text_component__WEBPACK_IMPORTED_MODULE_2__.TextComponent, _ui_components_label_label_component__WEBPACK_IMPORTED_MODULE_10__.LabelComponent, _ui_components_button_button_component__WEBPACK_IMPORTED_MODULE_3__.ButtonComponent, _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_4__.InputComponent, _ui_components_icon_icon_component__WEBPACK_IMPORTED_MODULE_5__.IconComponent, _ui_components_radio_group_radio_group_component__WEBPACK_IMPORTED_MODULE_6__.RadioGroupComponent, _ui_components_textarea_textarea_component__WEBPACK_IMPORTED_MODULE_7__.TextareaComponent, _ui_components_link_link_component__WEBPACK_IMPORTED_MODULE_9__.LinkComponent, _ui_components_select_select_component__WEBPACK_IMPORTED_MODULE_12__.SelectComponent, _components_ngx_dynamic_component__WEBPACK_IMPORTED_MODULE_0__.NGXDynamicComponent],
     imports: [_angular_common__WEBPACK_IMPORTED_MODULE_16__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_17__.FormsModule, _angular_common_http__WEBPACK_IMPORTED_MODULE_18__.HttpClientModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_19__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_20__.AccordionModule],
-    exports: [_components_ngx_dynamic_component__WEBPACK_IMPORTED_MODULE_0__.NGXDynamicComponent, _ui_components_text_text_component__WEBPACK_IMPORTED_MODULE_2__.TextComponent]
+    exports: [_components_ngx_dynamic_component__WEBPACK_IMPORTED_MODULE_0__.NGXDynamicComponent]
   });
 })();
 
@@ -1950,70 +1940,54 @@ __webpack_require__.r(__webpack_exports__);
 
 function DesignerComponent_accordion_group_6_li_4_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "li", 15);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "li", 14);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const component_r6 = ctx.$implicit;
-    const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("cdkDragData", ctx_r5.getUIModel(component_r6));
+    const component_r5 = ctx.$implicit;
+    const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("cdkDragData", ctx_r4.getUIModel(component_r5));
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", component_r6.name, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", component_r5.name, " ");
   }
 }
 function DesignerComponent_accordion_group_6_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "accordion-group", 11)(1, "div", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "accordion-group", 10)(1, "div", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "ul", 13);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](4, DesignerComponent_accordion_group_6_li_4_Template, 2, 2, "li", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "ul", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](4, DesignerComponent_accordion_group_6_li_4_Template, 2, 2, "li", 13);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
-    const g_r4 = ctx.$implicit;
+    const g_r3 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("isOpen", true);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", g_r4.name, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", g_r3.name, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngForOf", g_r4.components);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngForOf", g_r3.components);
   }
 }
-function DesignerComponent_div_10_Template(rf, ctx) {
+function DesignerComponent_dc_component_properties_10_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 16)(1, "h5");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-  }
-  if (rf & 2) {
-    const container_r7 = ctx.ngIf;
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"]("Selected container: ", container_r7.uiModel.type, "");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" children: ", container_r7.uiModel.children == null ? null : container_r7.uiModel.children.length, " ");
-  }
-}
-function DesignerComponent_dc_component_properties_12_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r10 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "dc-component-properties", 17);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("delete", function DesignerComponent_dc_component_properties_12_Template_dc_component_properties_delete_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r10);
+    const _r8 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "dc-component-properties", 15);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("delete", function DesignerComponent_dc_component_properties_10_Template_dc_component_properties_delete_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r8);
+      const ctx_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r7.deleteComponent($event));
+    })("save", function DesignerComponent_dc_component_properties_10_Template_dc_component_properties_save_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r8);
       const ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r9.deleteComponent($event));
-    })("save", function DesignerComponent_dc_component_properties_12_Template_dc_component_properties_save_0_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r10);
-      const ctx_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r11.saveComponent($event));
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r9.saveComponent($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const component_r8 = ctx.ngIf;
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("component", component_r8);
+    const component_r6 = ctx.ngIf;
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("component", component_r6);
   }
 }
 const _c0 = function () {
@@ -2120,9 +2094,9 @@ DesignerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3_
   inputs: {
     template: "template"
   },
-  decls: 14,
-  vars: 13,
-  consts: [[1, "h-100"], [1, "row", "h-100"], [1, "col-4", "col-lg-2", "h-100", "overflow-y-auto"], ["cdkDropList", "", "id", "ngx-components-list", "cdkDropListSortingDisabled", "", 1, "d-flex", "flex-fill", "flex-column", "p-0", "m-0", "w-100", 3, "cdkDropListConnectedTo"], ["todoList", "cdkDropList"], ["class", "p-0", 3, "isOpen", 4, "ngFor", "ngForOf"], [1, "col-8", "col-lg-8"], ["id", "ngx-dynamic-designer", 1, "d-flex", "flex-column", "h-100", "overflow-hidden", 3, "xmlUIModel", "dataModel"], [1, "col-4", "col-lg-2"], ["class", "selected-container-info border", 4, "ngIf"], [3, "component", "delete", "save", 4, "ngIf"], [1, "p-0", 3, "isOpen"], ["accordion-heading", "", 1, "header", "d-flex", "align-items-center", "p-2"], [1, "d-flex", "flex-fill", "flex-column", "p-0", "m-0"], ["class", "d-flex align-items-baseline cursor-pointer border my-1 p-2", "cdkDrag", "", "cdkDragPreview", "", 3, "cdkDragData", 4, "ngFor", "ngForOf"], ["cdkDrag", "", "cdkDragPreview", "", 1, "d-flex", "align-items-baseline", "cursor-pointer", "border", "my-1", "p-2", 3, "cdkDragData"], [1, "selected-container-info", "border"], [3, "component", "delete", "save"]],
+  decls: 12,
+  vars: 10,
+  consts: [[1, "h-100"], [1, "row", "h-100"], [1, "col-4", "col-lg-2", "h-100", "overflow-y-auto"], ["cdkDropList", "", "id", "ngx-components-list", "cdkDropListSortingDisabled", "", 1, "d-flex", "flex-fill", "flex-column", "p-0", "m-0", "w-100", 3, "cdkDropListConnectedTo"], ["todoList", "cdkDropList"], ["class", "p-0", 3, "isOpen", 4, "ngFor", "ngForOf"], [1, "col-8", "col-lg-8"], ["id", "ngx-dynamic-designer", 1, "d-flex", "flex-column", "h-100", "overflow-hidden", 3, "xmlUIModel", "dataModel"], [1, "col-4", "col-lg-2"], [3, "component", "delete", "save", 4, "ngIf"], [1, "p-0", 3, "isOpen"], ["accordion-heading", "", 1, "header", "d-flex", "align-items-center", "p-2"], [1, "d-flex", "flex-fill", "flex-column", "p-0", "m-0"], ["class", "d-flex align-items-baseline cursor-pointer border my-1 p-2", "cdkDrag", "", "cdkDragPreview", "", 3, "cdkDragData", 4, "ngFor", "ngForOf"], ["cdkDrag", "", "cdkDragPreview", "", 1, "d-flex", "align-items-baseline", "cursor-pointer", "border", "my-1", "p-2", 3, "cdkDragData"], [3, "component", "delete", "save"]],
   template: function DesignerComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "accordion", 3, 4);
@@ -2133,27 +2107,23 @@ DesignerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](8, "ngx-dynamic-designer-component", 7);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](9, "div", 8);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](10, DesignerComponent_div_10_Template, 4, 2, "div", 9);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](10, DesignerComponent_dc_component_properties_10_Template, 1, 1, "dc-component-properties", 9);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](11, "async");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](12, DesignerComponent_dc_component_properties_12_Template, 1, 1, "dc-component-properties", 10);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](13, "async");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
     }
     if (rf & 2) {
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](3);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("cdkDropListConnectedTo", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind1"](5, 6, ctx.connected$));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("cdkDropListConnectedTo", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind1"](5, 5, ctx.connected$));
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](3);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngForOf", ctx.groups);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("xmlUIModel", ctx.template)("dataModel", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpureFunction0"](12, _c0));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("xmlUIModel", ctx.template)("dataModel", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpureFunction0"](9, _c0));
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind1"](11, 8, ctx.selectedContainer$));
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind1"](13, 10, ctx.selectedComponent$));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind1"](11, 7, ctx.selectedComponent$));
     }
   },
   dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_5__.NgIf, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDrag, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_7__.AccordionComponent, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_7__.AccordionPanelComponent, _ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _component_properties_component_properties_component__WEBPACK_IMPORTED_MODULE_2__.ComponentPropertiesComponent, _angular_common__WEBPACK_IMPORTED_MODULE_5__.AsyncPipe],
-  styles: ["accordion-group[_ngcontent-%COMP%]     .panel-body.card-block.card-body {\n  padding: 0.5rem;\n}\n\n#ngx-components-list[_ngcontent-%COMP%]     .cdk-drag {\n  cursor: grab;\n}\n\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag {\n  margin: 0.25rem;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag:not(.cdk-drag-disabled) {\n  cursor: grab;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag, ngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list {\n  border: 1px dashed transparent;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list:hover {\n  border: 1px solid darkgrey;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list {\n  min-height: 50px;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container {\n  background-color: lightblue;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > form > .cdk-drag, ngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > .cdk-drag {\n  border: 1px dashed darkblue;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-component {\n  border: 1px solid darkblue !important;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi9kZXNpZ25lci9jb21wb25lbnRzL2Rlc2lnbmVyL2Rlc2lnbmVyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtBQUNGOztBQUdFO0VBQ0UsWUFBQTtBQUFKOztBQU1FO0VBQ0UsZUFBQTtBQUhKO0FBTUU7RUFDRSxZQUFBO0FBSko7QUFPRTs7RUFFRSw4QkFBQTtBQUxKO0FBUUU7RUFDRSwwQkFBQTtBQU5KO0FBU0U7RUFDRSxnQkFBQTtBQVBKO0FBVUU7RUFDRSwyQkFBQTtBQVJKO0FBVUk7O0VBRUUsMkJBQUE7QUFSTjtBQVlFO0VBQ0UscUNBQUE7QUFWSiIsInNvdXJjZXNDb250ZW50IjpbImFjY29yZGlvbi1ncm91cCA6Om5nLWRlZXAgLnBhbmVsLWJvZHkuY2FyZC1ibG9jay5jYXJkLWJvZHkge1xyXG4gIHBhZGRpbmc6IC41cmVtO1xyXG59XHJcblxyXG4jbmd4LWNvbXBvbmVudHMtbGlzdCA6Om5nLWRlZXAge1xyXG4gIC5jZGstZHJhZyB7XHJcbiAgICBjdXJzb3I6IGdyYWI7XHJcbiAgfVxyXG59XHJcblxyXG5uZ3gtZHluYW1pYy1kZXNpZ25lci1jb21wb25lbnQgOjpuZy1kZWVwIHtcclxuXHJcbiAgLmNkay1kcmFnIHtcclxuICAgIG1hcmdpbjogMC4yNXJlbTtcclxuICB9XHJcblxyXG4gIC5jZGstZHJhZzpub3QoLmNkay1kcmFnLWRpc2FibGVkKSB7XHJcbiAgICBjdXJzb3I6IGdyYWI7XHJcbiAgfVxyXG5cclxuICAuY2RrLWRyYWcsXHJcbiAgLmNkay1kcm9wLWxpc3Qge1xyXG4gICAgYm9yZGVyOiAxcHggZGFzaGVkIHRyYW5zcGFyZW50O1xyXG4gIH1cclxuXHJcbiAgLmNkay1kcm9wLWxpc3Q6aG92ZXIge1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgZGFya2dyZXk7XHJcbiAgfVxyXG5cclxuICAuY2RrLWRyb3AtbGlzdCB7XHJcbiAgICBtaW4taGVpZ2h0OiA1MHB4O1xyXG4gIH1cclxuXHJcbiAgLnNlbGVjdGVkLWNvbnRhaW5lciB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiBsaWdodGJsdWU7XHJcblxyXG4gICAgPiBmb3JtID4gLmNkay1kcmFnLFxyXG4gICAgPiAuY2RrLWRyYWcge1xyXG4gICAgICBib3JkZXI6IDFweCBkYXNoZWQgZGFya2JsdWU7XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAuc2VsZWN0ZWQtY29tcG9uZW50IHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGRhcmtibHVlICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG5cclxuICAvLyAuY2RrLWRyb3AtbGlzdC1yZWNlaXZpbmcge1xyXG4gIC8vICAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xyXG4gIC8vIH1cclxuXHJcbn1cclxuIl0sInNvdXJjZVJvb3QiOiIifQ== */"]
+  styles: ["accordion-group[_ngcontent-%COMP%]     .panel-body.card-block.card-body {\n  padding: 0.5rem;\n}\n\n#ngx-components-list[_ngcontent-%COMP%]     .cdk-drag {\n  cursor: grab;\n}\n\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag {\n  margin: 0.25rem;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag:not(.cdk-drag-disabled) {\n  cursor: grab;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drag, ngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list {\n  border: 1px dashed transparent;\n  box-sizing: border-box;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list:hover {\n  border: 1px solid darkgrey;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .cdk-drop-list {\n  min-height: 50px;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container {\n  background-color: lightblue;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > form > .cdk-drag, ngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-container > .cdk-drag {\n  border: 1px dashed darkblue;\n  box-sizing: border-box;\n}\nngx-dynamic-designer-component[_ngcontent-%COMP%]     .selected-component {\n  border: 1px solid darkblue !important;\n  box-sizing: border-box;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi9kZXNpZ25lci9jb21wb25lbnRzL2Rlc2lnbmVyL2Rlc2lnbmVyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtBQUNGOztBQUdFO0VBQ0UsWUFBQTtBQUFKOztBQU1FO0VBQ0UsZUFBQTtBQUhKO0FBTUU7RUFDRSxZQUFBO0FBSko7QUFPRTs7RUFFRSw4QkFBQTtFQUNBLHNCQUFBO0FBTEo7QUFZRTtFQUNFLDBCQUFBO0FBVko7QUFhRTtFQUNFLGdCQUFBO0FBWEo7QUFjRTtFQUNFLDJCQUFBO0FBWko7QUFjSTs7RUFFRSwyQkFBQTtFQUNBLHNCQUFBO0FBWk47QUFnQkU7RUFDRSxxQ0FBQTtFQUNBLHNCQUFBO0FBZEoiLCJzb3VyY2VzQ29udGVudCI6WyJhY2NvcmRpb24tZ3JvdXAgOjpuZy1kZWVwIC5wYW5lbC1ib2R5LmNhcmQtYmxvY2suY2FyZC1ib2R5IHtcclxuICBwYWRkaW5nOiAuNXJlbTtcclxufVxyXG5cclxuI25neC1jb21wb25lbnRzLWxpc3QgOjpuZy1kZWVwIHtcclxuICAuY2RrLWRyYWcge1xyXG4gICAgY3Vyc29yOiBncmFiO1xyXG4gIH1cclxufVxyXG5cclxubmd4LWR5bmFtaWMtZGVzaWduZXItY29tcG9uZW50IDo6bmctZGVlcCB7XHJcblxyXG4gIC5jZGstZHJhZyB7XHJcbiAgICBtYXJnaW46IDAuMjVyZW07XHJcbiAgfVxyXG5cclxuICAuY2RrLWRyYWc6bm90KC5jZGstZHJhZy1kaXNhYmxlZCkge1xyXG4gICAgY3Vyc29yOiBncmFiO1xyXG4gIH1cclxuXHJcbiAgLmNkay1kcmFnLFxyXG4gIC5jZGstZHJvcC1saXN0IHtcclxuICAgIGJvcmRlcjogMXB4IGRhc2hlZCB0cmFuc3BhcmVudDtcclxuICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcbiAgfVxyXG5cclxuICAvLyAuY2RrLWRyb3AtbGlzdDpub3QoLmNkay1kcm9wLWxpc3QtZGlzYWJsZWQpIHtcclxuICAvLyAgIGJhY2tncm91bmQtY29sb3I6IGxpZ2h0Z3JleTtcclxuICAvLyB9XHJcblxyXG4gIC5jZGstZHJvcC1saXN0OmhvdmVyIHtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIGRhcmtncmV5O1xyXG4gIH1cclxuXHJcbiAgLmNkay1kcm9wLWxpc3Qge1xyXG4gICAgbWluLWhlaWdodDogNTBweDtcclxuICB9XHJcblxyXG4gIC5zZWxlY3RlZC1jb250YWluZXIge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRibHVlO1xyXG5cclxuICAgID4gZm9ybSA+IC5jZGstZHJhZyxcclxuICAgID4gLmNkay1kcmFnIHtcclxuICAgICAgYm9yZGVyOiAxcHggZGFzaGVkIGRhcmtibHVlO1xyXG4gICAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgLnNlbGVjdGVkLWNvbXBvbmVudCB7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCBkYXJrYmx1ZSAhaW1wb3J0YW50O1xyXG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcclxuICB9XHJcbn1cclxuIl0sInNvdXJjZVJvb3QiOiIifQ== */"]
 });
 
 /***/ }),
@@ -2399,21 +2369,33 @@ class DesignerRendererService {
       itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
     }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index);
     (_d = component.parent) === null || _d === void 0 ? void 0 : _d.children.splice(index, 0, newComponent);
+    this.selectComponent(newComponent);
   }
+  get selectedContainer() {
+    return this.selectedContainer$.value;
+  }
+  selectComponent(component) {
+    if (this.isContainer(component)) {
+      this.selectContainer(component);
+    } else {
+      this.selectedComponent$.next(component);
+    }
+  }
+  isContainer(component) {
+    return _services_core_service__WEBPACK_IMPORTED_MODULE_3__.CoreService.getComponentDescriptor(component.componentType).category === "Containers" /* Categories.Containers */;
+  }
+
   setDragData(component) {
     try {
       const drag = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag);
       drag.disabled = true;
-      console.log('setDragData', component.uiModel.type, drag);
       if (drag) {
         drag.data = component.uiModel;
         drag.element.nativeElement.onclick = evt => {
           evt.stopPropagation();
           this.deselectComponent(this.selectedComponent$.value);
           this.selectedComponent$.next(component);
-          if (this.selectedContainer$.value !== component.parent && component.parent) {
-            this.selectContainer(component.parent);
-          }
+          this.deselectContainer();
           drag.element.nativeElement.classList.add('selected-component');
         };
       } else {
@@ -2421,6 +2403,15 @@ class DesignerRendererService {
       }
     } catch (e) {
       console.log(component.uiModel, e.message);
+    }
+  }
+  deselectContainer() {
+    if (this.selectedContainer) {
+      this.selectedContainer.element.classList.remove('selected-container');
+      this.selectedContainer.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList, null, {
+        self: true
+      }).disabled = true;
+      this.selectedContainer$.next(null);
     }
   }
   deselectComponent(component) {
@@ -2443,29 +2434,26 @@ class DesignerRendererService {
         this.selectContainer(component);
       };
       dropList.dropped.subscribe(event => {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e;
         console.log('dropped-evt000', event.container.element.nativeElement, event.item.element.nativeElement);
         if (event.previousContainer === event.container && event.previousIndex === event.currentIndex) {
           return;
         }
-        const container = this.selectedContainer$.value; // event.container.data as unknown as UIComponent;
+        const container = this.selectedContainer;
         const item = event.item.data;
-        // console.log('www', container, component.parent, event.container);
         try {
-          const previousContainer = event.previousContainer.data;
-          // console.log('previousContainer', event.previousIndex, item.type, event);
-          // console.log('el', (previousContainer.containerRef.get(event.previousIndex) as any).rootNodes);
           if (event.previousContainer.id !== 'ngx-components-list') {
-            // previousContainer.containerRef.remove(event.previousIndex);
-            (_a = this.selectedContainer$.value) === null || _a === void 0 ? void 0 : _a.containerRef.remove(event.previousIndex);
-            (_b = this.selectedContainer$.value) === null || _b === void 0 ? void 0 : _b.children.splice(event.previousIndex, 1);
+            (_a = this.selectedContainer) === null || _a === void 0 ? void 0 : _a.containerRef.remove(event.previousIndex);
+            (_b = this.selectedContainer) === null || _b === void 0 ? void 0 : _b.children.splice(event.previousIndex, 1);
           }
           const newComponent = this.createComponent(container, item, container.containerRef, container.dataModel, event.currentIndex);
           newComponent.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).disabled = false;
-          (_c = this.selectedContainer$.value) === null || _c === void 0 ? void 0 : _c.children.splice(event.currentIndex, 0, newComponent);
-          // event.previousContainer.removeItem(event.item);
-          // event.previousContainer.element.nativeElement.removeChild();
-          // event.item.ngOnDestroy();
+          if (!((_c = this.selectedContainer) === null || _c === void 0 ? void 0 : _c.children)) {
+            this.selectedContainer.children = [newComponent];
+          } else {
+            (_d = this.selectedContainer) === null || _d === void 0 ? void 0 : _d.children.splice(event.currentIndex, 0, newComponent);
+          }
+          console.log('dropped-evt', (_e = this.selectedContainer) === null || _e === void 0 ? void 0 : _e.children);
         } catch (e) {
           console.log('failed to remove child', e);
         }
@@ -2482,20 +2470,17 @@ class DesignerRendererService {
     }
   }
   selectContainer(component) {
+    var _a;
     const dropList = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList);
-    const previousContainer = this.selectedContainer$.value;
-    if (previousContainer === component) {
+    if (this.selectedContainer === component) {
       return;
     }
-    if (previousContainer) {
-      previousContainer.children.filter(child => child.injector).forEach(child => {
-        child.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).disabled = true;
-      });
-      previousContainer.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList).element.nativeElement.classList.remove('selected-container');
-    }
+    this.deselectContainer();
     this.selectedContainer$.next(component);
+    this.selectedComponent$.next(component);
+    component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList).disabled = false;
     dropList.element.nativeElement.classList.add('selected-container');
-    component.children.filter(child => child.injector).forEach(child => {
+    (_a = component.children) === null || _a === void 0 ? void 0 : _a.filter(child => child.injector).forEach(child => {
       child.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).disabled = false;
     });
   }
@@ -2542,17 +2527,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DesignerModule": () => (/* binding */ DesignerModule)
 /* harmony export */ });
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
 /* harmony import */ var _components_designer_designer_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/designer/designer.component */ 284);
 /* harmony import */ var _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ngx-dynamic-designer-component */ 9177);
 /* harmony import */ var _designer_renderer_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./designer-renderer.service */ 1821);
 /* harmony import */ var _core_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core.module */ 1332);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 4666);
 /* harmony import */ var _components_draggable_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/draggable-component */ 6475);
 /* harmony import */ var _components_designer_component_properties_component_properties_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/designer/component-properties/component-properties.component */ 8196);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 2508);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _services_core_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/core.service */ 551);
+/* harmony import */ var _ui_components_designer_form_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui-components/designer-form.component */ 4173);
+/* harmony import */ var _ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui-components/designer-container.component */ 1863);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 2560);
 
 
 
@@ -2564,24 +2552,166 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class DesignerModule {}
+
+
+
+class DesignerModule {
+  constructor() {
+    _services_core_service__WEBPACK_IMPORTED_MODULE_6__.CoreService.registerComponent(_ui_components_designer_form_component__WEBPACK_IMPORTED_MODULE_7__.designerFormDescriptor);
+    _services_core_service__WEBPACK_IMPORTED_MODULE_6__.CoreService.registerComponent(_ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.designerContainerDescriptor);
+    _services_core_service__WEBPACK_IMPORTED_MODULE_6__.CoreService.registerComponent(_ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.designerDivDescriptor);
+  }
+}
 DesignerModule.ɵfac = function DesignerModule_Factory(t) {
   return new (t || DesignerModule)();
 };
-DesignerModule.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineNgModule"]({
+DesignerModule.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineNgModule"]({
   type: DesignerModule
 });
-DesignerModule.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineInjector"]({
+DesignerModule.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineInjector"]({
   providers: [_designer_renderer_service__WEBPACK_IMPORTED_MODULE_2__.DesignerRendererService],
-  imports: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_10__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule]
+  imports: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_12__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_13__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule]
 });
 (function () {
-  (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsetNgModuleScope"](DesignerModule, {
-    declarations: [_components_designer_designer_component__WEBPACK_IMPORTED_MODULE_0__.DesignerComponent, _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _components_draggable_component__WEBPACK_IMPORTED_MODULE_4__.DraggableComponent, _components_designer_component_properties_component_properties_component__WEBPACK_IMPORTED_MODULE_5__.ComponentPropertiesComponent],
-    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_10__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule],
+  (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵsetNgModuleScope"](DesignerModule, {
+    declarations: [_components_designer_designer_component__WEBPACK_IMPORTED_MODULE_0__.DesignerComponent, _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _components_draggable_component__WEBPACK_IMPORTED_MODULE_4__.DraggableComponent, _components_designer_component_properties_component_properties_component__WEBPACK_IMPORTED_MODULE_5__.ComponentPropertiesComponent, _ui_components_designer_form_component__WEBPACK_IMPORTED_MODULE_7__.DesignerFormComponent, _ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.DesignerContainerComponent],
+    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_12__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_13__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule],
     exports: [_components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _components_designer_designer_component__WEBPACK_IMPORTED_MODULE_0__.DesignerComponent]
   });
 })();
+
+/***/ }),
+
+/***/ 1863:
+/*!**************************************************************************************!*\
+  !*** ./projects/core/src/lib/designer/ui-components/designer-container.component.ts ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DesignerContainerComponent": () => (/* binding */ DesignerContainerComponent),
+/* harmony export */   "designerContainerDescriptor": () => (/* binding */ designerContainerDescriptor),
+/* harmony export */   "designerDivDescriptor": () => (/* binding */ designerDivDescriptor)
+/* harmony export */ });
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var _services_renderer_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/renderer.service */ 3477);
+/* harmony import */ var _ui_components_container_container_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ui-components/container/container.component */ 7055);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+
+
+
+
+
+
+
+class DesignerContainerComponent extends _ui_components_container_container_component__WEBPACK_IMPORTED_MODULE_1__.ContainerComponent {
+  constructor(rendererService, injector) {
+    super(rendererService, injector);
+    this.rendererService = rendererService;
+    this.injector = injector;
+    if (injector) {
+      injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDropList, null, {
+        self: true
+      }).disabled = true;
+    }
+  }
+}
+DesignerContainerComponent.ɵfac = function DesignerContainerComponent_Factory(t) {
+  return new (t || DesignerContainerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_services_renderer_service__WEBPACK_IMPORTED_MODULE_0__.RendererService), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injector));
+};
+DesignerContainerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
+  type: DesignerContainerComponent,
+  selectors: [["dc-container"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDrag])],
+  decls: 3,
+  vars: 1,
+  consts: [["vc", ""]],
+  template: function DesignerContainerComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementContainer"](0, null, 0);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2);
+    }
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](2);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", ctx.properties.text, " ");
+    }
+  },
+  styles: ["[_nghost-%COMP%]:not(.row):not(.input-group) {\n        display: block;\n      }\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi9kZXNpZ25lci91aS1jb21wb25lbnRzL2Rlc2lnbmVyLWNvbnRhaW5lci5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtNQUNNO1FBQ0UsY0FBYztNQUNoQiIsInNvdXJjZXNDb250ZW50IjpbIlxuICAgICAgOmhvc3Q6bm90KC5yb3cpOm5vdCguaW5wdXQtZ3JvdXApIHtcbiAgICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICB9XG4gICAgIl0sInNvdXJjZVJvb3QiOiIifQ== */"]
+});
+const designerContainerDescriptor = Object.assign(Object.assign({}, _ui_components_container_container_component__WEBPACK_IMPORTED_MODULE_1__.containerDescriptor), {
+  component: DesignerContainerComponent
+});
+const designerDivDescriptor = Object.assign(Object.assign({}, _ui_components_container_container_component__WEBPACK_IMPORTED_MODULE_1__.divDescriptor), {
+  component: DesignerContainerComponent
+});
+
+/***/ }),
+
+/***/ 4173:
+/*!*********************************************************************************!*\
+  !*** ./projects/core/src/lib/designer/ui-components/designer-form.component.ts ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DesignerFormComponent": () => (/* binding */ DesignerFormComponent),
+/* harmony export */   "designerFormDescriptor": () => (/* binding */ designerFormDescriptor)
+/* harmony export */ });
+/* harmony import */ var _services_renderer_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/renderer.service */ 3477);
+/* harmony import */ var _ui_components_form_form_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ui-components/form/form.component */ 3833);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 2508);
+
+
+
+
+
+
+
+
+
+class DesignerFormComponent extends _ui_components_form_form_component__WEBPACK_IMPORTED_MODULE_1__.FormComponent {
+  constructor(rendererService, injector) {
+    super(rendererService, injector);
+    this.rendererService = rendererService;
+    this.injector = injector;
+    if (injector) {
+      injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDropList, null, {
+        self: true
+      }).disabled = true;
+    }
+  }
+}
+DesignerFormComponent.ɵfac = function DesignerFormComponent_Factory(t) {
+  return new (t || DesignerFormComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_services_renderer_service__WEBPACK_IMPORTED_MODULE_0__.RendererService), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injector));
+};
+DesignerFormComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
+  type: DesignerFormComponent,
+  selectors: [["dc-form"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDrag])],
+  decls: 3,
+  vars: 1,
+  consts: [[3, "ngStyle"], ["vc", ""]],
+  template: function DesignerFormComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "form", 0);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementContainer"](1, null, 1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+    }
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngStyle", ctx.itemStyles);
+    }
+  },
+  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.NgStyle, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NgForm],
+  encapsulation: 2
+});
+const designerFormDescriptor = Object.assign(Object.assign({}, _ui_components_form_form_component__WEBPACK_IMPORTED_MODULE_1__.formDescriptor), {
+  component: DesignerFormComponent
+});
 
 /***/ }),
 
@@ -3344,7 +3474,6 @@ class CoreService {
       const type = Object.keys(res)[0];
       const xmlObj = res[type];
       if (typeof xmlObj === 'string' && xmlObj) {
-        // return CoreService.getUIModel(toXMLResult(res));
         throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
       }
       if (typeof xmlObj === 'object') {
@@ -3640,12 +3769,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "containerDescriptor": () => (/* binding */ containerDescriptor),
 /* harmony export */   "divDescriptor": () => (/* binding */ divDescriptor)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _components_base_ui_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/base-ui-component */ 8501);
 /* harmony import */ var _properties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../properties */ 6319);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-
 
 
 
@@ -3666,7 +3793,7 @@ ContainerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵstyleProp"]("display", ctx.display);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDrag])],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"]],
   decls: 3,
   vars: 1,
   consts: [["vc", ""]],
@@ -3683,10 +3810,10 @@ ContainerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2
   styles: ["[_nghost-%COMP%]:not(.row):not(.input-group) {\n        display: block;\n      }\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi91aS1jb21wb25lbnRzL2NvbnRhaW5lci9jb250YWluZXIuY29tcG9uZW50LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7TUFDTTtRQUNFLGNBQWM7TUFDaEIiLCJzb3VyY2VzQ29udGVudCI6WyJcbiAgICAgIDpob3N0Om5vdCgucm93KTpub3QoLmlucHV0LWdyb3VwKSB7XG4gICAgICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgICAgfVxuICAgICJdLCJzb3VyY2VSb290IjoiIn0= */"]
 });
 class ContainerProperties extends _properties__WEBPACK_IMPORTED_MODULE_1__.StyleProperties {}
-(0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
   description: 'Text value',
   example: 'Information'
-}), (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__metadata)("design:type", String)], ContainerProperties.prototype, "text", void 0);
+}), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:type", String)], ContainerProperties.prototype, "text", void 0);
 const example = {
   title: 'Section example',
   uiModel: `
@@ -3753,14 +3880,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "FormProperties": () => (/* binding */ FormProperties),
 /* harmony export */   "formDescriptor": () => (/* binding */ formDescriptor)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _components_base_ui_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/base-ui-component */ 8501);
 /* harmony import */ var _properties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../properties */ 6319);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 4666);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 2508);
-
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ 2508);
 
 
 
@@ -3801,7 +3926,7 @@ FormComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["�
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵloadQuery"]()) && (ctx.form = _t.first);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDrag, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDropListGroup])],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"]],
   decls: 4,
   vars: 1,
   consts: [[3, "ngStyle", "ngSubmit"], ["form", ""], ["vc", ""]],
@@ -3818,15 +3943,15 @@ FormComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["�
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngStyle", ctx.itemStyles);
     }
   },
-  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_4__.NgStyle, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NgForm],
+  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_3__.NgStyle, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.NgForm],
   encapsulation: 2
 });
 class FormProperties extends _properties__WEBPACK_IMPORTED_MODULE_1__.StyleProperties {}
-(0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
   description: 'Submit handler',
   example: 'onFormSubmit(form)',
   type: _properties__WEBPACK_IMPORTED_MODULE_1__.PropTypes.EVENT
-}), (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__metadata)("design:type", String)], FormProperties.prototype, "onSubmit", void 0);
+}), (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__metadata)("design:type", String)], FormProperties.prototype, "onSubmit", void 0);
 const example = {
   title: 'Form example',
   uiModel: `
