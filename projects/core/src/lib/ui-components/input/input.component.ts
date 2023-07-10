@@ -1,10 +1,12 @@
-import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, DoCheck, ElementRef } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit, OnDestroy, SimpleChanges, OnChanges, DoCheck, ElementRef,
+  Injector } from '@angular/core';
 import { propDescription, PropertyCategories, PropTypes } from '../../properties';
 import { UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { FormElementComponent, FormElementProperties } from '../../components/form-element-component';
 import example from './input.examples';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { RendererService } from '../../services/renderer.service';
 
 @Component({
   selector: 'input', // eslint-disable-line
@@ -22,8 +24,11 @@ export class InputComponent extends FormElementComponent<InputProperties> implem
   searchText$ = new Subject<string | null>();
 
 
-  constructor(private inputElement?: ElementRef<HTMLInputElement>) {
-    super();
+  constructor(
+    protected rendererService?: RendererService,
+    public injector?: Injector,
+    private inputElement?: ElementRef<HTMLInputElement>) {
+    super(rendererService, injector);
   }
 
   @HostListener('input', ['$event.target'])

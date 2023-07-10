@@ -2,7 +2,8 @@ import { OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy, Directive, I
 import { UIModel, ComponentEvent } from '../models';
 import { getStringEventArgs, kebabToCamelCase, parseArgFunction, queryValue } from '../utils';
 import { StyleProperties, StylePropertiesList, BaseProperties } from '../properties';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { RendererService } from '../services/renderer.service';
 
 @Directive()
 export abstract class BaseDynamicComponent<T = StyleProperties> implements OnInit, OnChanges, OnDestroy { // eslint-disable-line
@@ -12,14 +13,16 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
       itemProperties: ({} as T)
     };
     containerRef?: ViewContainerRef;
+    children?: BaseDynamicComponent[];
     abstract eventHandlers: EventEmitter<ComponentEvent>;
     @Output() render = new EventEmitter();
     changedDataModel = new EventEmitter();
     element?: HTMLElement;
+    parent?: BaseDynamicComponent;
     protected eventResults = new Map<string, any>();
     protected eventResults$ = new Subject<string>();
 
-    constructor(public injector?: Injector) { }
+    constructor(protected rendererService?: RendererService, public injector?: Injector) { }
 
     async ngOnInit(): Promise<void> {
       this.setHostStyles();
@@ -32,12 +35,24 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
 
     abstract create(element: HTMLElement): void;
 
+    generateUIModel(): UIModel<T> {
+      return {
+        ...this.uiModel,
+        itemProperties: this.properties,
+        children: this.children?.map(c => c.generateUIModel())
+      };
+    }
+
     setEventHandlerResult(event: string, result: any): void {
       if (event) {
         this.eventResults.set(event, result);
         this.eventResults$.next(event);
       }
     };
+
+    get componentType(): string {
+      return this.uiModel.type;
+    }
 
     get properties(): T {
       return this.uiModel.itemProperties;

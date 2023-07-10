@@ -1,9 +1,7 @@
-import type { Injector, ViewContainerRef } from '@angular/core';
 import { OnInit, OnDestroy, EventEmitter, SimpleChanges, OnChanges, Directive } from '@angular/core';
 import { UIModel, ComponentEvent, XMLResult } from '../models';
-import { StyleProperties, StylePropertiesList, BaseProperties, propDescription } from '../properties';
+import { StyleProperties, BaseProperties, propDescription } from '../properties';
 import { BaseDynamicComponent } from './base-dynamic-component';
-import { createComponent } from '../utils/renderer';
 
 @Directive()
 export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line
@@ -41,7 +39,7 @@ export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T>
       if (!created && this.parentNode) {
         this.parentNode.insertBefore(this.element, selectorElement);
       }
-      this.uiModel.children?.forEach(uiModel => createComponent(this, uiModel));
+      this.uiModel.children?.forEach(uiModel => this.rendererService.createComponent(this, uiModel));
     }
 
     private setProperties(): void {

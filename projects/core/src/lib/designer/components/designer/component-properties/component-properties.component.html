@@ -1,0 +1,16 @@
+<form [formGroup]="form" *ngIf="form" class="selected-component-info border p-2">
+  <div class="d-flex mb-2 align-items-center">
+    <h5 class="mb-0">Edit selected <b>{{component.uiModel.type}}</b>:</h5>
+    <button *ngIf="hasParent" class="btn btn-sm btn-primary ms-auto" type="button" (click)="selectParent()">Select parent</button>
+  </div>
+  <ul class="props-list list-unstyled">
+    <li class="row property mb-1 me-0" *ngFor="let prop of properties">
+      <label class="col">{{prop.name}}</label> <input (blur)="saveComponent()" class="col form-control form-control-sm" [formControlName]="prop.name" />
+    </li>
+  </ul>
+  <div class="actions d-flex">
+    <button class="btn btn-sm btn-primary" type="button" (click)="saveComponent()">Apply</button>
+    <button class="btn btn-sm btn-primary-outline ms-1 me-auto" type="button" (click)="cancel.emit()">Cancel</button>
+    <button class="btn btn-sm btn-danger" type="button" (click)="deleteComponent(component)">Delete</button>
+  </div>
+</form>

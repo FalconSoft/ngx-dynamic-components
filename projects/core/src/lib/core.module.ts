@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { NGXDynamicComponent } from './components/ngx-dynamic-component';
 
 import { ContainerComponent } from './ui-components/container/container.component';
@@ -18,6 +19,7 @@ import { LabelComponent } from './ui-components/label/label.component';
 import { FormComponent } from './ui-components/form/form.component';
 import { SelectComponent } from './ui-components/select/select.component';
 import { RepeaterComponent } from './ui-components/repeater/repeater.component';
+import { RendererService } from './services/renderer.service';
 
 @NgModule({
   declarations: [
@@ -33,13 +35,17 @@ import { RepeaterComponent } from './ui-components/repeater/repeater.component';
     TextareaComponent,
     LinkComponent,
     SelectComponent,
-    NGXDynamicComponent],
+    NGXDynamicComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule,
+    AccordionModule
   ],
-  exports: [NGXDynamicComponent, TextComponent]
+  exports: [NGXDynamicComponent],
+  providers: [RendererService],
 })
 export class DynamicComponentsCoreModule {
   constructor() {

@@ -13,3 +13,6 @@ export * from './lib/utils';
 export * from './lib/utils/renderer';
 export * from './lib/ui-components/register';
 export * from './lib/ui-components/text/text.component';
+export * from './lib/designer/designer.module';
+export * from './lib/designer/components/designer/designer.component';
+export * from './lib/designer/components/ngx-dynamic-designer-component';

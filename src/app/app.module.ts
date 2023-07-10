@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ResizableModule } from 'angular-resizable-element';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
+import { DesignerModule, DynamicComponentsCoreModule } from '@ngx-dynamic-components/core';
 import { ToolsModule } from '@ngx-dynamic-components/tools';
 import { DynamicComponentsBootstrapModule } from '@ngx-dynamic-components/bootstrap';
 
@@ -39,6 +39,7 @@ import { JsonFormatterDirective } from './directives/json-formatter.directive';
 import { ExamplesPageComponent } from './components/examples-page/examples-page.component';
 import { ExampleViewComponent } from './components/example-view.component';
 import { SidenavLayoutComponent } from './components/sidenav-layout.component';
+import { DesignerPageComponent } from './components/designer-page/designer-page.component';
 
 @NgModule({
   declarations: [
@@ -58,11 +59,13 @@ import { SidenavLayoutComponent } from './components/sidenav-layout.component';
     JsonFormatterDirective,
     ExamplesPageComponent,
     ExampleViewComponent,
-    SidenavLayoutComponent
+    SidenavLayoutComponent,
+    DesignerPageComponent
   ],
   imports: [
     BrowserModule,
     DynamicComponentsCoreModule,
+    DesignerModule,
     ToolsModule,
     DynamicComponentsBootstrapModule,
     BrowserAnimationsModule,

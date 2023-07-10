@@ -5,21 +5,19 @@ import { BaseDynamicComponent } from '../components/base-dynamic-component';
 
 type UIComponent = BaseDynamicComponent | NGXDynamicComponent;
 
-export function renderChildren(parentComponent: BaseDynamicComponent): void {
+export function renderChildren(parentComponent: BaseDynamicComponent): BaseDynamicComponent[] {
   if (!parentComponent.containerRef || !parentComponent.uiModel) {
     return;
   }
   parentComponent.containerRef.clear();
-  parentComponent.uiModel?.children?.forEach(m => {
-    createComponent(parentComponent, m);
-  });
+  return parentComponent.uiModel?.children?.map(m => createComponent(parentComponent, m));
 }
 
 export function createComponent(
   parentComponent: UIComponent,
   uiModel: UIModel,
   containerRef = parentComponent.containerRef,
-  dataModel = parentComponent.dataModel): void {
+  dataModel = parentComponent.dataModel): BaseDynamicComponent  {
   try {
     const descriptor = CoreService.getComponentDescriptor(uiModel.type);
     const componentClass = descriptor.component;
@@ -38,6 +36,7 @@ export function createComponent(
       component.dataModel = dataModel;
       component.uiModel = uiModel;
       component.create(componentRef.location.nativeElement);
+      return component;
     }
 
     if (component) {
@@ -52,6 +51,7 @@ export function createComponent(
         }
         parentComponent.eventHandlers.emit(evt);
       });
+      return component;
     } else {
       throw new Error('Not able to create component');
     }

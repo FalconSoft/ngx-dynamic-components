@@ -1,16 +1,24 @@
 import { Component, HostBinding } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription } from '../../properties';
-import { ComponentExample, UIModel, ComponentDescriptor, Categories, XMLResult } from '../../models';
+import {
+  ComponentExample,
+  UIModel,
+  ComponentDescriptor,
+  Categories,
+  XMLResult,
+} from '../../models';
 
 @Component({
   selector: 'dc-container',
   templateUrl: './container.component.html',
-  styles: [`
+  styles: [
+    `
       :host:not(.row):not(.input-group) {
         display: block;
       }
-    `]
+    `,
+  ]
 })
 export class ContainerComponent extends BaseUIComponent<ContainerProperties> {
   @HostBinding('style.display') display?: string;
@@ -19,7 +27,7 @@ export class ContainerComponent extends BaseUIComponent<ContainerProperties> {
 export class ContainerProperties extends StyleProperties {
   @propDescription({
     description: 'Text value',
-    example: 'Information'
+    example: 'Information',
   })
   text?: string;
 }
@@ -37,23 +45,26 @@ const example: ComponentExample<UIModel<ContainerProperties>> = {
     <section>Text</section>
   </section>
   `,
-  dataModel: {}
+  dataModel: {},
 };
 
-type ContainerComponentConstrutor = new() => ContainerComponent;
+type ContainerComponentConstrutor = new () => ContainerComponent;
 
-type ContainerPropertiesConstrutor = new() => ContainerProperties;
+type ContainerPropertiesConstrutor = new () => ContainerProperties;
 
 function getParseFunction(tag: string): (xmlRes: XMLResult) => UIModel {
   return (xmlRes: XMLResult) => ({
     type: tag,
     itemProperties: {
-      text: xmlRes.content
-    }
+      text: xmlRes.content,
+    },
   });
 }
 
-export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrutor, ContainerPropertiesConstrutor> = {
+export const containerDescriptor: ComponentDescriptor<
+  ContainerComponentConstrutor,
+  ContainerPropertiesConstrutor
+> = {
   name: 'section',
   packageName: 'core',
   label: 'Container',
@@ -66,7 +77,10 @@ export const containerDescriptor: ComponentDescriptor<ContainerComponentConstrut
   defaultModel: `<section class="d-flex"></section>`,
 };
 
-export const divDescriptor: ComponentDescriptor<ContainerComponentConstrutor, ContainerPropertiesConstrutor> = {
+export const divDescriptor: ComponentDescriptor<
+  ContainerComponentConstrutor,
+  ContainerPropertiesConstrutor
+> = {
   name: 'div',
   packageName: 'core',
   label: 'Container',
@@ -77,8 +91,10 @@ export const divDescriptor: ComponentDescriptor<ContainerComponentConstrutor, Co
   parseUIModel: getParseFunction('div'),
   example: {
     title: 'Div container',
-    uiModel: (example.uiModel as string).replace(/<section/g, '<div').replace(/<\/section>/g, '</div>'),
-    dataModel: {}
+    uiModel: (example.uiModel as string)
+      .replace(/<section/g, '<div')
+      .replace(/<\/section>/g, '</div>'),
+    dataModel: {},
   },
   defaultModel: `<div class="col"></div>`,
 };

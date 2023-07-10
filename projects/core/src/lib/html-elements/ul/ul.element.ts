@@ -21,5 +21,5 @@ export const ulDescriptor: ComponentDescriptor<BaseHTMLElementConstructor, HTMLP
     dataModel: {}
   },
   parseUIModel: parseHTMLUIModel,
-  defaultModel: '<ul></ul>'
+  defaultModel: '<ul><li>item-1</li><li>item-2</li></ul>'
 };

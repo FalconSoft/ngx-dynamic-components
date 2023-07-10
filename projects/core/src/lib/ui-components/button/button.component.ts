@@ -104,7 +104,7 @@ export const buttonDescriptor: ComponentDescriptor<ButtonComponentConstrutor, Bu
       itemProperties
     };
   },
-  defaultModel: `<button class="btn btn-primary" onClick="onClickHandler()">Click</button>`,
+  defaultModel: `<button class="btn btn-primary">Click</button>`,
   propertiesDescriptor: [
     ['type', {name: 'type', label: 'Type', category: PropertyCategories.Main,
       values: ['button', 'submit', 'reset']

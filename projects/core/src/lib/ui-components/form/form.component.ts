@@ -1,4 +1,4 @@
-import type { ElementRef, ViewContainerRef } from '@angular/core';
+import type { ElementRef } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription, PropertyCategories, PropTypes } from '../../properties';
@@ -62,7 +62,7 @@ export const formDescriptor: ComponentDescriptor<FormComponentConstrutor, FormPr
   itemProperties: FormProperties,
   component: FormComponent,
   example,
-  defaultModel: `<form class="d-flex"></form>`,
+  defaultModel: `<form class="d-flex row"></form>`,
   propertiesDescriptor: [['method', {
     name: 'method', label: 'Method', category: PropertyCategories.Main,
     values: ['GET', 'POST', 'PUT', 'DELETE']

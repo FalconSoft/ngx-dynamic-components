@@ -2,6 +2,7 @@ import { Component, HostBinding } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { BindingProperties, propDescription, PropertyCategories } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'dc-text',
@@ -17,7 +18,8 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesM
       <ng-container *ngSwitchCase="'text'" [ngStyle]="itemStyles">{{text}}</ng-container>
       <span *ngSwitchDefault [class]="txtClass" [ngStyle]="itemStyles">{{text}}</span>
     </ng-container>
-    `
+    `,
+    hostDirectives: [CdkDrag]
 })
 export class TextComponent extends BaseUIComponent<TextProperties> {
   @HostBinding('style.display') display = 'inline-block';
@@ -94,5 +96,6 @@ export const textDescriptor: ComponentDescriptor<TextComponentConstrutor, TextPr
       name: 'text-style', label: 'Text style', category: PropertyCategories.Main,
       values: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'display-1', 'display-2', 'display-3', 'display-4']
     }]
-  ]
+  ],
+  defaultModel: '<text text-style="h2">Hello world</text>'
 };

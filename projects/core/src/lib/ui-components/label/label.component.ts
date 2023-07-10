@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
-import { BindingProperties, propDescription } from '../../properties';
+import { propDescription } from '../../properties';
 import { ComponentExample, UIModel, ComponentDescriptor, Categories, AttributesMap, XMLResult } from '../../models';
 import { TextProperties } from '../text/text.component';
 
@@ -67,5 +67,6 @@ export const labelDescriptor: ComponentDescriptor<LabelComponentConstrutor, Labe
     }
     return {type: 'label', itemProperties};
   },
+  defaultModel: '<label class="label">Label</label>',
   children: false
 };

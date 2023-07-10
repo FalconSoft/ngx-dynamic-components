@@ -10,7 +10,7 @@ export class CoreService {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   private static readonly COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
 
-  public static registerComponent(desc: ComponentDescriptor): void {
+  public static registerComponent(desc: ComponentDescriptor, version?: string): void {
     const { name, packageName, propertiesDescriptor } = desc;
     // @deprecated
     if (propertiesDescriptor) {
@@ -18,7 +18,8 @@ export class CoreService {
         controlProperties.set(`${name}:${prop[0]}`, prop[1]);
       });
     }
-    CoreService.COMPONENTS_REGISTER.set(name, desc);
+    const key = version ? `${name}:${version}` : name;
+    CoreService.COMPONENTS_REGISTER.set(key, desc);
   }
 
   public static getComponent(type: string): BaseUIComponentConstructor | BaseHTMLElementConstructor {
@@ -29,7 +30,11 @@ export class CoreService {
     throw new Error(`Component ${type} is not registered`);
   }
 
-  public static getComponentDescriptor(type: string): ComponentDescriptor {
+  public static getComponentDescriptor(type: string, version?: string): ComponentDescriptor {
+    if (version && CoreService.COMPONENTS_REGISTER.has(`${type}:${version}`)) {
+      return CoreService.COMPONENTS_REGISTER.get(`${type}:${version}`);
+    }
+
     if (CoreService.COMPONENTS_REGISTER.has(type)) {
       return CoreService.COMPONENTS_REGISTER.get(type);
     }
@@ -46,11 +51,22 @@ export class CoreService {
     }
   }
 
-  public static getListOfComponents(): Array<ComponentDescriptor> {
+  public static getListOfComponents2(): Array<ComponentDescriptor> {
     return Array.from(CoreService.COMPONENTS_REGISTER.values());
   }
 
-  public static parseXMLModel(uiModelXml: string): UIModel {
+  public static getComponentsRegistryList(): [string, ComponentDescriptor][] {
+    return Array.from(CoreService.COMPONENTS_REGISTER.entries());
+  }
+
+  // skips versions
+  public static getListOfComponents(): Array<ComponentDescriptor> {
+    return Array.from(CoreService.COMPONENTS_REGISTER.entries())
+      .filter((entry) => !entry[0].includes(':'))
+      .map(entry => entry[1]);
+  }
+
+  public static parseXMLModel(uiModelXml: string, version?: string): UIModel {
     if (!uiModelXml) {
       return null;
     }
@@ -58,17 +74,21 @@ export class CoreService {
 
     if (res) {
       const type = Object.keys(res)[0];
-      const xmlObj = res[type];
-      if(typeof xmlObj === 'string')
-      {
+      let xmlObj = res[type];
+      if(typeof xmlObj === 'string' && xmlObj) {
         throw Error(`Invalid XML, please make sure file can't start with comment <!-- -->`);
       }
-      xmlObj['#name'] = type;
-      return CoreService.getUIModel(toXMLResult(xmlObj));
+      if (!xmlObj) {
+        xmlObj = { type };
+      }
+      if (typeof xmlObj === 'object') {
+        xmlObj['#name'] = type;
+        return CoreService.getUIModel(toXMLResult(xmlObj), version);
+      }
     }
   }
 
-  public static getUIModel(xmlRes: XMLResult): UIModel {
+  public static getUIModel(xmlRes: XMLResult, version?: string): UIModel {
     const itemProperties = xmlRes.attrs;
     const type = xmlRes.type;
 
@@ -88,7 +108,7 @@ export class CoreService {
           uiModel.id = itemProperties.id;
         }
         try {
-          const descr = CoreService.COMPONENTS_REGISTER.get(type);
+          const descr = CoreService.getComponentDescriptor(type, version); // CoreService.COMPONENTS_REGISTER.get(type);
           if (typeof descr.parseUIModel === 'function') {
             const typeUIModel = descr.parseUIModel(xmlRes);
             uiModel.itemProperties = { ...itemProperties, ...typeUIModel.itemProperties };
@@ -103,7 +123,7 @@ export class CoreService {
         if (xmlRes.childNodes && !uiModel.children) {
           uiModel.children = xmlRes.childNodes
             .filter(n => n['#name'] !== '#comment')
-            .map((r: any) => CoreService.getUIModel(toXMLResult(r)));
+            .map((r: any) => CoreService.getUIModel(toXMLResult(r), 'designer'));
         }
         return uiModel;
       } else {

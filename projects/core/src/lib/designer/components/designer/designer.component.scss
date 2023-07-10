@@ -1,0 +1,102 @@
+accordion-group ::ng-deep .panel-body.card-block.card-body {
+  padding: .5rem;
+}
+
+#ngx-components-list ::ng-deep {
+  .cdk-drag {
+    cursor: move;
+  }
+}
+
+#ngx-components-list.disabled ::ng-deep {
+  .cdk-drag {
+    cursor: not-allowed;
+  }
+}
+
+.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+::ng-deep .cdk-drag-preview {
+  background-color: white;
+  box-sizing: border-box;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+accordion-group .header i.fa {
+  width: 1rem;
+}
+
+ngx-dynamic-designer-component ::ng-deep {
+
+  .cdk-drag-horizontal {
+    cursor: move;
+    display: inline-block;
+  }
+
+  .cdk-drag-placeholder {
+    background: blue;
+    border: dotted 3px #999;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .cdk-drag-preview {
+    background: lightgray;
+  }
+
+  // .selected-container > .cdk-drag {
+  //   margin: 0.25rem;
+  // }
+
+  // .cdk-drop-list:hover > .cdk-drag {
+  //   margin: 0.25rem;
+  // }
+
+  // .cdk-drag {
+  //   margin: 0.25rem;
+  // }
+
+  // .cdk-drop-list {
+  //   margin: 0.25rem;
+  // }
+
+  .cdk-drag:not(.cdk-drag-disabled) {
+    cursor: move;
+  }
+
+  .cdk-drag,
+  .cdk-drop-list {
+    border: 1px dashed transparent;
+    box-sizing: border-box;
+  }
+
+  // .cdk-drop-list:not(.cdk-drop-list-disabled) {
+  //   background-color: lightgrey;
+  // }
+
+  .cdk-drop-list:hover {
+    border: 1px solid darkgrey;
+  }
+
+  .cdk-drop-list {
+    min-height: 50px;
+  }
+
+  .selected-container {
+    background-color: lightblue;
+
+    > form > .cdk-drag,
+    > .cdk-drag {
+      border: 1px dashed darkblue;
+      box-sizing: border-box;
+    }
+  }
+
+  .selected-component {
+    border: 1px solid darkblue !important;
+    box-sizing: border-box;
+  }
+}

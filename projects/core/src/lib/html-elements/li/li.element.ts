@@ -20,5 +20,5 @@ export const liDescriptor: ComponentDescriptor<BaseHTMLElementConstructor, HTMLP
     dataModel: {}
   },
   parseUIModel: parseHTMLUIModel,
-  defaultModel: '<li></li>'
+  defaultModel: '<li><i class="fa fa-play"/></li>'
 };

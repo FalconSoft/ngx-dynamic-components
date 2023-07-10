@@ -5,7 +5,6 @@ import { kebabStrToCamel, queryValue, setValue } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 import { InputProperties } from '../ui-components/input/input.component';
 import { BaseDynamicComponent } from './base-dynamic-component';
-import { renderChildren } from '../utils/renderer';
 
 @Directive()
 // eslint-disable-next-line
@@ -39,8 +38,10 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     'minHeight', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
+    public children?: BaseDynamicComponent[];
+
     async ngOnInit(): Promise<void> {
-      renderChildren(this);
+      this.children = this.rendererService.renderChildren(this);
       await super.ngOnInit();
     }
 
@@ -135,5 +136,11 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
           this[kebabStrToCamel(prop)] = value;
         }
       }
+
+      this.hostBindings.forEach(prop => {
+        if (properties.hasOwnProperty(prop) && properties[prop]) {
+          this[prop] = properties[prop];
+        }
+      });
     }
 }

@@ -22,7 +22,7 @@ const htmlElementDescriptor: ComponentDescriptor<BaseHTMLElementConstructor, HTM
     dataModel: {}
   },
   parseUIModel: parseHTMLUIModel,
-  defaultModel: '<HTML_ELEMENT_TAG></HTML_ELEMENT_TAG>'
+  defaultModel: '<HTML_ELEMENT_TAG dc="element">Text</HTML_ELEMENT_TAG>'
 };
 
 export const htmlDescriptors: ComponentDescriptor<BaseHTMLElementConstructor, HTMLPropertiesConstrutor>[] =

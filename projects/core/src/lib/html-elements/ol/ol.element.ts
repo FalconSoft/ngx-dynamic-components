@@ -30,5 +30,5 @@ export const olDescriptor: ComponentDescriptor<BaseHTMLElementConstructor, HTMLP
     }
   },
   parseUIModel: parseHTMLUIModel,
-  defaultModel: '<ol></ol>'
+  defaultModel: '<ol><li>First</li><li>Second</li></ol>'
 };

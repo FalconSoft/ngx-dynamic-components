@@ -10,10 +10,12 @@ import { ComponentsComponent } from './components/components.component';
 import { CategoriesComponent } from './components/categories.component';
 import { ExamplesPageComponent } from './components/examples-page/examples-page.component';
 import { ExampleViewComponent } from './components/example-view.component';
+import { DesignerPageComponent } from './components/designer-page/designer-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'editor', component: EditorPageComponent },
+  { path: 'designer', component: DesignerPageComponent },
   { path: 'guides', component: GuidesPageComponent },
   {
     path: 'components', component: ComponentsPageComponent,

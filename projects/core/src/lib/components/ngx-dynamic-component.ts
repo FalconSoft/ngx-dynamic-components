@@ -3,14 +3,16 @@ import { Component, OnInit, Input, EventEmitter, Output, ViewContainerRef,
 import { animationFrameScheduler } from 'rxjs';
 import { UIModel, ComponentEvent } from '../models';
 import { CoreService } from '../services/core.service';
-import { createComponent } from '../utils/renderer';
+import { RendererService } from '../services/renderer.service';
 
 @Component({
     selector: 'ngx-dynamic-component', // eslint-disable-line
-    template: '<ng-container #vc></ng-container>'
+    template: '<ng-container #vc></ng-container>',
+    providers: [RendererService],
 })
 export class NGXDynamicComponent implements OnInit, OnChanges {
 
+    root = true;
     @Input() dataModel: any;
     @Input() xmlUIModel: string;
     @Output() render = new EventEmitter<UIModel>();
@@ -20,7 +22,7 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
 
     uiModel: UIModel;
 
-    constructor(public injector?: Injector) { }
+    constructor(protected rendererService: RendererService, public injector?: Injector) { }
 
     ngOnInit() {
       this.initParsedModel(this.xmlUIModel);
@@ -32,11 +34,11 @@ export class NGXDynamicComponent implements OnInit, OnChanges {
       }
     }
 
-    private initParsedModel(uiModel: string): void {
+    protected initParsedModel(uiModel: string): void {
       try {
         this.uiModel = CoreService.parseXMLModel(uiModel);
         if (this.uiModel) {
-          createComponent(this, this.uiModel);
+          this.rendererService.createComponent(this, this.uiModel);
           animationFrameScheduler.schedule(() => this.render.emit(this.uiModel));
         }
       } catch (e) {
