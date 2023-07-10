@@ -1392,6 +1392,11 @@ class BaseUIComponent extends _base_dynamic_component__WEBPACK_IMPORTED_MODULE_3
         this[(0,_utils__WEBPACK_IMPORTED_MODULE_1__.kebabStrToCamel)(prop)] = value;
       }
     }
+    this.hostBindings.forEach(prop => {
+      if (properties.hasOwnProperty(prop) && properties[prop]) {
+        this[prop] = properties[prop];
+      }
+    });
   }
 }
 BaseUIComponent.ɵfac = /*@__PURE__*/function () {
@@ -2305,7 +2310,7 @@ class ComponentCreator {
     this.parentComponent = parentComponent;
     this.uiModel = uiModel;
     this.selected$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__.Subject();
-    this.descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_1__.CoreService.getComponentDescriptor(this.uiModel.type);
+    this.descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_1__.CoreService.getComponentDescriptor(this.uiModel.type, 'designer');
   }
   initComponentProps() {
     const component = this.component;
@@ -2528,7 +2533,7 @@ class DesignerRendererService {
   }
   createComponent(parentComponent, uiModel, containerRef = parentComponent.containerRef, dataModel = parentComponent.dataModel, index, select = false) {
     try {
-      const descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_1__.CoreService.getComponentDescriptor(uiModel.type);
+      const descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_1__.CoreService.getComponentDescriptor(uiModel.type, 'designer');
       const componentClass = descriptor.component;
       let componentCreator;
       if (descriptor.category === "HTML" /* Categories.HTML */) {
@@ -2631,20 +2636,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DesignerModule": () => (/* binding */ DesignerModule)
 /* harmony export */ });
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ngx-bootstrap/accordion */ 7422);
 /* harmony import */ var _components_designer_designer_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/designer/designer.component */ 284);
 /* harmony import */ var _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ngx-dynamic-designer-component */ 9177);
 /* harmony import */ var _designer_renderer_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./designer-renderer.service */ 1821);
 /* harmony import */ var _core_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core.module */ 1332);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 4666);
 /* harmony import */ var _components_draggable_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/draggable-component */ 6475);
 /* harmony import */ var _components_designer_component_properties_component_properties_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/designer/component-properties/component-properties.component */ 8196);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var _services_core_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/core.service */ 551);
 /* harmony import */ var _ui_components_designer_form_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui-components/designer-form.component */ 4173);
 /* harmony import */ var _ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui-components/designer-container.component */ 1863);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _ui_components__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ui-components */ 8108);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
+
 
 
 
@@ -2661,25 +2668,23 @@ __webpack_require__.r(__webpack_exports__);
 
 class DesignerModule {
   constructor() {
-    _services_core_service__WEBPACK_IMPORTED_MODULE_6__.CoreService.registerComponent(_ui_components_designer_form_component__WEBPACK_IMPORTED_MODULE_7__.designerFormDescriptor);
-    _services_core_service__WEBPACK_IMPORTED_MODULE_6__.CoreService.registerComponent(_ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.designerContainerDescriptor);
-    _services_core_service__WEBPACK_IMPORTED_MODULE_6__.CoreService.registerComponent(_ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.designerDivDescriptor);
+    [_ui_components_designer_form_component__WEBPACK_IMPORTED_MODULE_7__.designerFormDescriptor, _ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.designerContainerDescriptor, _ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.designerDivDescriptor, _ui_components__WEBPACK_IMPORTED_MODULE_9__.designerButtonDescriptor, _ui_components__WEBPACK_IMPORTED_MODULE_9__.designerInputDescriptor, _ui_components__WEBPACK_IMPORTED_MODULE_9__.designerLabelDescriptor, _ui_components__WEBPACK_IMPORTED_MODULE_9__.designerTextAreaDescriptor].forEach(descriptor => _services_core_service__WEBPACK_IMPORTED_MODULE_6__.CoreService.registerComponent(descriptor, 'designer'));
   }
 }
 DesignerModule.ɵfac = function DesignerModule_Factory(t) {
   return new (t || DesignerModule)();
 };
-DesignerModule.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineNgModule"]({
+DesignerModule.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineNgModule"]({
   type: DesignerModule
 });
-DesignerModule.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineInjector"]({
+DesignerModule.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineInjector"]({
   providers: [_designer_renderer_service__WEBPACK_IMPORTED_MODULE_2__.DesignerRendererService],
-  imports: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_12__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_13__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule]
+  imports: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_13__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_14__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule]
 });
 (function () {
-  (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵsetNgModuleScope"](DesignerModule, {
+  (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵsetNgModuleScope"](DesignerModule, {
     declarations: [_components_designer_designer_component__WEBPACK_IMPORTED_MODULE_0__.DesignerComponent, _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _components_draggable_component__WEBPACK_IMPORTED_MODULE_4__.DraggableComponent, _components_designer_component_properties_component_properties_component__WEBPACK_IMPORTED_MODULE_5__.ComponentPropertiesComponent, _ui_components_designer_form_component__WEBPACK_IMPORTED_MODULE_7__.DesignerFormComponent, _ui_components_designer_container_component__WEBPACK_IMPORTED_MODULE_8__.DesignerContainerComponent],
-    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_12__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_13__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule],
+    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.CommonModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.ReactiveFormsModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_13__.DragDropModule, ngx_bootstrap_accordion__WEBPACK_IMPORTED_MODULE_14__.AccordionModule, _core_module__WEBPACK_IMPORTED_MODULE_3__.DynamicComponentsCoreModule],
     exports: [_components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_1__.NGXDynamicDesignerComponent, _components_designer_designer_component__WEBPACK_IMPORTED_MODULE_0__.DesignerComponent]
   });
 })();
@@ -2815,6 +2820,147 @@ DesignerFormComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
 });
 const designerFormDescriptor = Object.assign(Object.assign({}, _ui_components_form_form_component__WEBPACK_IMPORTED_MODULE_1__.formDescriptor), {
   component: DesignerFormComponent
+});
+
+/***/ }),
+
+/***/ 8108:
+/*!***************************************************************!*\
+  !*** ./projects/core/src/lib/designer/ui-components/index.ts ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DesignerButtonComponent": () => (/* binding */ DesignerButtonComponent),
+/* harmony export */   "DesignerContainerComponent": () => (/* reexport safe */ _designer_container_component__WEBPACK_IMPORTED_MODULE_4__.DesignerContainerComponent),
+/* harmony export */   "DesignerFormComponent": () => (/* reexport safe */ _designer_form_component__WEBPACK_IMPORTED_MODULE_5__.DesignerFormComponent),
+/* harmony export */   "DesignerInputComponent": () => (/* binding */ DesignerInputComponent),
+/* harmony export */   "DesignerLabelComponent": () => (/* binding */ DesignerLabelComponent),
+/* harmony export */   "DesignerTextareaComponent": () => (/* binding */ DesignerTextareaComponent),
+/* harmony export */   "designerButtonDescriptor": () => (/* binding */ designerButtonDescriptor),
+/* harmony export */   "designerContainerDescriptor": () => (/* reexport safe */ _designer_container_component__WEBPACK_IMPORTED_MODULE_4__.designerContainerDescriptor),
+/* harmony export */   "designerDivDescriptor": () => (/* reexport safe */ _designer_container_component__WEBPACK_IMPORTED_MODULE_4__.designerDivDescriptor),
+/* harmony export */   "designerFormDescriptor": () => (/* reexport safe */ _designer_form_component__WEBPACK_IMPORTED_MODULE_5__.designerFormDescriptor),
+/* harmony export */   "designerInputDescriptor": () => (/* binding */ designerInputDescriptor),
+/* harmony export */   "designerLabelDescriptor": () => (/* binding */ designerLabelDescriptor),
+/* harmony export */   "designerTextAreaDescriptor": () => (/* binding */ designerTextAreaDescriptor)
+/* harmony export */ });
+/* harmony import */ var _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../ui-components/input/input.component */ 3460);
+/* harmony import */ var _ui_components_label_label_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ui-components/label/label.component */ 805);
+/* harmony import */ var _ui_components_textarea_textarea_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../ui-components/textarea/textarea.component */ 6201);
+/* harmony import */ var _ui_components_button_button_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../ui-components/button/button.component */ 2042);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var _designer_container_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./designer-container.component */ 1863);
+/* harmony import */ var _designer_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./designer-form.component */ 4173);
+
+
+
+
+
+
+
+
+class DesignerInputComponent extends _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_0__.InputComponent {}
+DesignerInputComponent.ɵfac = /*@__PURE__*/function () {
+  let ɵDesignerInputComponent_BaseFactory;
+  return function DesignerInputComponent_Factory(t) {
+    return (ɵDesignerInputComponent_BaseFactory || (ɵDesignerInputComponent_BaseFactory = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetInheritedFactory"](DesignerInputComponent)))(t || DesignerInputComponent);
+  };
+}();
+DesignerInputComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+  type: DesignerInputComponent,
+  selectors: [["input"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__.CdkDrag])],
+  decls: 0,
+  vars: 0,
+  template: function DesignerInputComponent_Template(rf, ctx) {},
+  encapsulation: 2
+});
+const designerInputDescriptor = Object.assign(Object.assign({}, _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_0__.inputDescriptor), {
+  component: DesignerInputComponent
+});
+class DesignerLabelComponent extends _ui_components_label_label_component__WEBPACK_IMPORTED_MODULE_1__.LabelComponent {}
+DesignerLabelComponent.ɵfac = /*@__PURE__*/function () {
+  let ɵDesignerLabelComponent_BaseFactory;
+  return function DesignerLabelComponent_Factory(t) {
+    return (ɵDesignerLabelComponent_BaseFactory || (ɵDesignerLabelComponent_BaseFactory = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetInheritedFactory"](DesignerLabelComponent)))(t || DesignerLabelComponent);
+  };
+}();
+DesignerLabelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+  type: DesignerLabelComponent,
+  selectors: [["label"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__.CdkDrag])],
+  decls: 1,
+  vars: 1,
+  template: function DesignerLabelComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](0);
+    }
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate"](ctx.text);
+    }
+  },
+  styles: [".form-check-label[_nghost-%COMP%]    > label[_ngcontent-%COMP%] {\n      margin-bottom: 0;\n    }\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi9kZXNpZ25lci91aS1jb21wb25lbnRzL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7SUFDSTtNQUNFLGdCQUFnQjtJQUNsQiIsInNvdXJjZXNDb250ZW50IjpbIlxuICAgIDpob3N0LmZvcm0tY2hlY2stbGFiZWwgPiBsYWJlbCB7XG4gICAgICBtYXJnaW4tYm90dG9tOiAwO1xuICAgIH1cbiAgIl0sInNvdXJjZVJvb3QiOiIifQ== */"]
+});
+const designerLabelDescriptor = Object.assign(Object.assign({}, _ui_components_label_label_component__WEBPACK_IMPORTED_MODULE_1__.labelDescriptor), {
+  component: DesignerLabelComponent
+});
+class DesignerTextareaComponent extends _ui_components_textarea_textarea_component__WEBPACK_IMPORTED_MODULE_2__.TextareaComponent {}
+DesignerTextareaComponent.ɵfac = /*@__PURE__*/function () {
+  let ɵDesignerTextareaComponent_BaseFactory;
+  return function DesignerTextareaComponent_Factory(t) {
+    return (ɵDesignerTextareaComponent_BaseFactory || (ɵDesignerTextareaComponent_BaseFactory = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetInheritedFactory"](DesignerTextareaComponent)))(t || DesignerTextareaComponent);
+  };
+}();
+DesignerTextareaComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+  type: DesignerTextareaComponent,
+  selectors: [["textarea"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__.CdkDrag])],
+  decls: 1,
+  vars: 1,
+  template: function DesignerTextareaComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](0);
+    }
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate"](ctx.value);
+    }
+  },
+  encapsulation: 2
+});
+const designerTextAreaDescriptor = Object.assign(Object.assign({}, _ui_components_textarea_textarea_component__WEBPACK_IMPORTED_MODULE_2__.textareaDescriptor), {
+  component: DesignerTextareaComponent
+});
+class DesignerButtonComponent extends _ui_components_button_button_component__WEBPACK_IMPORTED_MODULE_3__.ButtonComponent {}
+DesignerButtonComponent.ɵfac = /*@__PURE__*/function () {
+  let ɵDesignerButtonComponent_BaseFactory;
+  return function DesignerButtonComponent_Factory(t) {
+    return (ɵDesignerButtonComponent_BaseFactory || (ɵDesignerButtonComponent_BaseFactory = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetInheritedFactory"](DesignerButtonComponent)))(t || DesignerButtonComponent);
+  };
+}();
+DesignerButtonComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+  type: DesignerButtonComponent,
+  selectors: [["button"]],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__.CdkDrag])],
+  decls: 3,
+  vars: 1,
+  consts: [["vc", ""]],
+  template: function DesignerButtonComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainer"](0, null, 0);
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](2);
+    }
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](2);
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate1"](" ", ctx.properties.label, " ");
+    }
+  },
+  encapsulation: 2
+});
+const designerButtonDescriptor = Object.assign(Object.assign({}, _ui_components_button_button_component__WEBPACK_IMPORTED_MODULE_3__.buttonDescriptor), {
+  component: DesignerButtonComponent
 });
 
 /***/ }),
@@ -3532,7 +3678,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class CoreService {
-  static registerComponent(desc) {
+  static registerComponent(desc, version) {
     const {
       name,
       packageName,
@@ -3544,7 +3690,8 @@ class CoreService {
         _properties__WEBPACK_IMPORTED_MODULE_1__.controlProperties.set(`${name}:${prop[0]}`, prop[1]);
       });
     }
-    CoreService.COMPONENTS_REGISTER.set(name, desc);
+    const key = version ? `${name}:${version}` : name;
+    CoreService.COMPONENTS_REGISTER.set(key, desc);
   }
   static getComponent(type) {
     if (CoreService.COMPONENTS_REGISTER.has(type)) {
@@ -3552,7 +3699,10 @@ class CoreService {
     }
     throw new Error(`Component ${type} is not registered`);
   }
-  static getComponentDescriptor(type) {
+  static getComponentDescriptor(type, version) {
+    if (version && CoreService.COMPONENTS_REGISTER.has(`${type}:${version}`)) {
+      return CoreService.COMPONENTS_REGISTER.get(`${type}:${version}`);
+    }
     if (CoreService.COMPONENTS_REGISTER.has(type)) {
       return CoreService.COMPONENTS_REGISTER.get(type);
     }
@@ -3727,12 +3877,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "buttonDescriptor": () => (/* binding */ buttonDescriptor),
 /* harmony export */   "example": () => (/* binding */ example)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _components_base_ui_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/base-ui-component */ 8501);
 /* harmony import */ var _properties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../properties */ 6319);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-
 
 
 
@@ -3777,7 +3925,7 @@ ButtonComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__[
       _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵattribute"]("type", ctx.type)("disabled", ctx.disabled);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__.CdkDrag])],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵInheritDefinitionFeature"]],
   decls: 3,
   vars: 1,
   consts: [["vc", ""]],
@@ -3794,25 +3942,25 @@ ButtonComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__[
   encapsulation: 2
 });
 class ButtonProperties extends _properties__WEBPACK_IMPORTED_MODULE_1__.StyleProperties {}
-(0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
   description: 'Button label',
   example: 'Click me!'
-}), (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__metadata)("design:type", String)], ButtonProperties.prototype, "label", void 0);
-(0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
+}), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:type", String)], ButtonProperties.prototype, "label", void 0);
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
   description: 'Key for action that fires onclick',
   example: 'onBtnClick()',
   type: _properties__WEBPACK_IMPORTED_MODULE_1__.PropTypes.EVENT
-}), (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__metadata)("design:type", String)], ButtonProperties.prototype, "onClick", void 0);
-(0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
+}), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:type", String)], ButtonProperties.prototype, "onClick", void 0);
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
   description: 'Button type: button|submit|reset|link. Default: button',
   example: 'submit',
   defaultValue: 'button'
-}), (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__metadata)("design:type", String)], ButtonProperties.prototype, "type", void 0);
-(0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
+}), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:type", String)], ButtonProperties.prototype, "type", void 0);
+(0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_properties__WEBPACK_IMPORTED_MODULE_1__.propDescription)({
   description: 'It specifies that the button should be disabled.',
   example: 'true',
   defaultValue: 'false'
-}), (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__metadata)("design:type", Boolean)], ButtonProperties.prototype, "disabled", void 0);
+}), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__metadata)("design:type", Boolean)], ButtonProperties.prototype, "disabled", void 0);
 const example = {
   title: 'Basic button example',
   uiModel: `
@@ -4205,8 +4353,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 8977);
 /* harmony import */ var _services_renderer_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/renderer.service */ 3477);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-
 
 
 
@@ -4357,7 +4503,7 @@ InputComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵattribute"]("type", ctx.type)("step", ctx.step)("checked", ctx.checked)("multiple", ctx.multiple);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵNgOnChangesFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__.CdkDrag])],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵNgOnChangesFeature"]],
   decls: 0,
   vars: 0,
   template: function InputComponent_Template(rf, ctx) {},
@@ -4549,8 +4695,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _properties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../properties */ 6319);
 /* harmony import */ var _text_text_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../text/text.component */ 4556);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-
 
 
 
@@ -4592,7 +4736,7 @@ LabelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_4__["
       _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵstyleProp"]("display", ctx.display);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag])],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵInheritDefinitionFeature"]],
   decls: 1,
   vars: 1,
   template: function LabelComponent_Template(rf, ctx) {
@@ -5797,8 +5941,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _properties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../properties */ 6319);
 /* harmony import */ var _components_form_element_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form-element-component */ 2897);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-
 
 
 
@@ -5864,7 +6006,7 @@ TextareaComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵattribute"]("cols", ctx.cols)("rows", ctx.rows);
     }
   },
-  features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵNgOnChangesFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_4__.CdkDrag])],
+  features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵNgOnChangesFeature"]],
   decls: 1,
   vars: 1,
   template: function TextareaComponent_Template(rf, ctx) {
