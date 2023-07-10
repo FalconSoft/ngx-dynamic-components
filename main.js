@@ -2210,11 +2210,15 @@ class NGXDynamicDesignerComponent extends _components_ngx_dynamic_component__WEB
     super(rendererService, injector);
     this.rendererService = rendererService;
     this.injector = injector;
-    this.root = true;
     this.render = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
     this.changedDataModel = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
     this.eventHandlers = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
     this.dropList$ = this.rendererService.selectedContainer$.pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_5__.map)(c => [c === null || c === void 0 ? void 0 : c.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_6__.CdkDropList)]));
+  }
+  clear() {
+    this.containerRef.clear();
+    this.xmlUIModel = '<div class="container"></div>';
+    this.initParsedModel(this.xmlUIModel);
   }
   initParsedModel(uiModel) {
     try {
@@ -2280,6 +2284,203 @@ NGXDynamicDesignerComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED
 
 /***/ }),
 
+/***/ 5537:
+/*!**********************************************************************!*\
+  !*** ./projects/core/src/lib/designer/creators/component-creator.ts ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ComponentCreator": () => (/* binding */ ComponentCreator)
+/* harmony export */ });
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ 228);
+/* harmony import */ var _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ngx-dynamic-designer-component */ 9177);
+/* harmony import */ var _services_core_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/core.service */ 551);
+
+
+
+class ComponentCreator {
+  constructor(parentComponent, uiModel) {
+    this.parentComponent = parentComponent;
+    this.uiModel = uiModel;
+    this.selected$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__.Subject();
+    this.descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_1__.CoreService.getComponentDescriptor(this.uiModel.type);
+  }
+  initComponentProps() {
+    const component = this.component;
+    component.parent = this.parentComponent;
+    component.element.classList.add('dc-element');
+    component.uiModel.getComponent = () => component;
+    component.changedDataModel.subscribe(evt => {
+      this.parentComponent.changedDataModel.emit(evt);
+    });
+    component.eventHandlers.subscribe(evt => {
+      if (this.parentComponent instanceof _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_0__.NGXDynamicDesignerComponent) {
+        evt.rootUIModel = this.parentComponent.uiModel;
+      }
+      this.parentComponent.eventHandlers.emit(evt);
+    });
+  }
+}
+
+/***/ }),
+
+/***/ 6971:
+/*!*************************************************************************!*\
+  !*** ./projects/core/src/lib/designer/creators/dc-container-creator.ts ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DcContainerCreator": () => (/* binding */ DcContainerCreator)
+/* harmony export */ });
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ 228);
+/* harmony import */ var _dc_creator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dc-creator */ 7878);
+
+
+
+class DcContainerCreator extends _dc_creator__WEBPACK_IMPORTED_MODULE_0__.DcCreator {
+  constructor(parentComponent, uiModel, containerRef, dataModel, index) {
+    super(parentComponent, uiModel, containerRef, dataModel, index);
+    this.dropped$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
+    this.initDrop(this.component);
+  }
+  deselectComponent() {
+    super.deselectComponent();
+    this.drop.element.nativeElement.classList.remove('selected-container');
+    // this.component.element.classList.remove('selected-container');
+    this.drop.disabled = true;
+  }
+  get drop() {
+    return this.component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDropList, null, {
+      self: true
+    });
+  }
+  initDrop(component) {
+    try {
+      this.drop.element.nativeElement.onclick = evt => {
+        var _a;
+        evt.stopPropagation();
+        this.selected$.next(component);
+        this.drop.disabled = false;
+        this.drop.element.nativeElement.classList.add('selected-container');
+        (_a = component.children) === null || _a === void 0 ? void 0 : _a.filter(child => child.injector).forEach(child => {
+          child.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDrag).disabled = false;
+        });
+      };
+      this.drop.dropped.subscribe(event => {
+        if (event.previousContainer === event.container && event.previousIndex === event.currentIndex) {
+          return;
+        }
+        this.dropped$.next(event);
+      });
+    } catch (e) {
+      console.log(component.uiModel.type, e.message);
+    }
+  }
+}
+
+/***/ }),
+
+/***/ 7878:
+/*!***************************************************************!*\
+  !*** ./projects/core/src/lib/designer/creators/dc-creator.ts ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DcCreator": () => (/* binding */ DcCreator)
+/* harmony export */ });
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var _component_creator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./component-creator */ 5537);
+
+
+class DcCreator extends _component_creator__WEBPACK_IMPORTED_MODULE_0__.ComponentCreator {
+  constructor(parentComponent, uiModel, containerRef, dataModel, index) {
+    super(parentComponent, uiModel);
+    const componentRef = containerRef.createComponent(this.descriptor.component, {
+      index
+    });
+    const component = componentRef.instance;
+    component.dataModel = dataModel;
+    component.uiModel = uiModel;
+    component.create(componentRef.location.nativeElement);
+    this.component = component;
+    this.initComponentProps();
+    this.initDrag(component);
+  }
+  deselectComponent() {
+    this.drag.element.nativeElement.classList.remove('selected-component');
+  }
+  get drag() {
+    return this.component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_1__.CdkDrag);
+  }
+  initDrag(component) {
+    if (!this.drag) {
+      console.warn(`${component.uiModel.type} is not draggable`);
+      return;
+    }
+    this.drag.disabled = true;
+    this.drag.data = component.uiModel;
+    this.drag.element.nativeElement.onclick = evt => {
+      evt.stopPropagation();
+      this.selected$.next(component);
+      this.drag.element.nativeElement.classList.add('selected-component');
+    };
+  }
+}
+
+/***/ }),
+
+/***/ 2003:
+/*!*****************************************************************!*\
+  !*** ./projects/core/src/lib/designer/creators/html-creator.ts ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "HTMLCreator": () => (/* binding */ HTMLCreator)
+/* harmony export */ });
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var _components_draggable_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/draggable-component */ 6475);
+/* harmony import */ var _component_creator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./component-creator */ 5537);
+
+
+
+class HTMLCreator extends _component_creator__WEBPACK_IMPORTED_MODULE_1__.ComponentCreator {
+  constructor(parentComponent, uiModel, containerRef, dataModel, index) {
+    super(parentComponent, uiModel);
+    const baseHtml = this.descriptor.component;
+    const component = new baseHtml(parentComponent.injector);
+    component.dataModel = dataModel;
+    component.uiModel = uiModel;
+    this.draggableWrapper = containerRef.createComponent(_components_draggable_component__WEBPACK_IMPORTED_MODULE_0__.DraggableComponent, {
+      index
+    });
+    component.create(this.draggableWrapper.instance.container.element.nativeElement);
+    this.drag.data = component.uiModel;
+    component.element.onclick = () => {
+      component.element.classList.add('selected-component');
+      this.selected$.next(component);
+    };
+    this.component = component;
+    this.initComponentProps();
+  }
+  deselectComponent() {
+    this.component.element.classList.remove('selected-component');
+  }
+  get drag() {
+    return this.draggableWrapper.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDrag);
+  }
+}
+
+/***/ }),
+
 /***/ 1821:
 /*!*********************************************************************!*\
   !*** ./projects/core/src/lib/designer/designer-renderer.service.ts ***!
@@ -2290,13 +2491,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DesignerRendererService": () => (/* binding */ DesignerRendererService)
 /* harmony export */ });
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 6317);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 7727);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 6317);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 116);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 635);
 /* harmony import */ var _components_base_dynamic_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/base-dynamic-component */ 2583);
-/* harmony import */ var _components_draggable_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/draggable-component */ 6475);
-/* harmony import */ var _components_ngx_dynamic_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ngx-dynamic-component */ 9154);
-/* harmony import */ var _services_core_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/core.service */ 551);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _services_core_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/core.service */ 551);
+/* harmony import */ var _creators_html_creator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./creators/html-creator */ 2003);
+/* harmony import */ var _creators_dc_creator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./creators/dc-creator */ 7878);
+/* harmony import */ var _creators_dc_container_creator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./creators/dc-container-creator */ 6971);
+/* harmony import */ var _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ngx-dynamic-designer-component */ 9177);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
+
 
 
 
@@ -2307,9 +2513,10 @@ __webpack_require__.r(__webpack_exports__);
 
 class DesignerRendererService {
   constructor() {
-    this.selectedContainer$ = new rxjs__WEBPACK_IMPORTED_MODULE_4__.BehaviorSubject(null);
-    this.selectedComponent$ = new rxjs__WEBPACK_IMPORTED_MODULE_4__.BehaviorSubject(null);
-    this.selectedElement$ = new rxjs__WEBPACK_IMPORTED_MODULE_4__.BehaviorSubject(null);
+    this.selectedCreator$ = new rxjs__WEBPACK_IMPORTED_MODULE_6__.BehaviorSubject(null);
+    this.selectedContainer$ = this.selectedCreator$.pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_7__.filter)(creator => !creator || creator instanceof _creators_dc_container_creator__WEBPACK_IMPORTED_MODULE_4__.DcContainerCreator), (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.map)(creator => creator === null || creator === void 0 ? void 0 : creator.component));
+    this.selectedComponent$ = this.selectedCreator$.pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_7__.filter)(creator => !creator || creator instanceof _creators_dc_creator__WEBPACK_IMPORTED_MODULE_3__.DcCreator), (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.map)(creator => creator === null || creator === void 0 ? void 0 : creator.component));
+    this.selectedElement$ = this.selectedCreator$.pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_7__.filter)(creator => !creator || creator instanceof _creators_html_creator__WEBPACK_IMPORTED_MODULE_2__.HTMLCreator), (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.map)(creator => creator === null || creator === void 0 ? void 0 : creator.component));
   }
   renderChildren(parentComponent) {
     var _a, _b;
@@ -2319,39 +2526,33 @@ class DesignerRendererService {
     parentComponent.containerRef.clear();
     return (_b = (_a = parentComponent.uiModel) === null || _a === void 0 ? void 0 : _a.children) === null || _b === void 0 ? void 0 : _b.map(m => this.createComponent(parentComponent, m));
   }
-  createComponent(parentComponent, uiModel, containerRef = parentComponent.containerRef, dataModel = parentComponent.dataModel, index) {
+  createComponent(parentComponent, uiModel, containerRef = parentComponent.containerRef, dataModel = parentComponent.dataModel, index, select = false) {
     try {
-      const descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_3__.CoreService.getComponentDescriptor(uiModel.type);
+      const descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_1__.CoreService.getComponentDescriptor(uiModel.type);
       const componentClass = descriptor.component;
-      let component;
+      let componentCreator;
       if (descriptor.category === "HTML" /* Categories.HTML */) {
-        component = this.creatHTMLComponent(descriptor, parentComponent, uiModel, containerRef, dataModel, index);
+        componentCreator = new _creators_html_creator__WEBPACK_IMPORTED_MODULE_2__.HTMLCreator(parentComponent, uiModel, containerRef, dataModel, index);
+      } else if (descriptor.category === "Containers" /* Categories.Containers */) {
+        componentCreator = new _creators_dc_container_creator__WEBPACK_IMPORTED_MODULE_4__.DcContainerCreator(parentComponent, uiModel, containerRef, dataModel, index);
+        componentCreator.dropped$.subscribe(evt => {
+          this.onDrop(evt);
+        });
+        ;
       } else if (componentClass.prototype instanceof _components_base_dynamic_component__WEBPACK_IMPORTED_MODULE_0__.BaseDynamicComponent) {
-        const componentRef = containerRef.createComponent(componentClass, {
-          index
-        });
-        component = componentRef.instance;
-        component.dataModel = dataModel;
-        component.uiModel = uiModel;
-        component.create(componentRef.location.nativeElement);
-        this.setDragData(component);
-        if (descriptor.category === "Containers" /* Categories.Containers */) {
-          this.subscribeOnContainers(component);
-        }
+        componentCreator = new _creators_dc_creator__WEBPACK_IMPORTED_MODULE_3__.DcCreator(parentComponent, uiModel, containerRef, dataModel, index);
       }
+      const component = componentCreator.component;
       if (component) {
-        component.parent = parentComponent;
-        component.element.classList.add('dc-element');
-        uiModel.getComponent = () => component;
-        component.changedDataModel.subscribe(evt => {
-          parentComponent.changedDataModel.emit(evt);
+        componentCreator.selected$.subscribe(() => {
+          var _a;
+          ;
+          (_a = this.selectedCreator) === null || _a === void 0 ? void 0 : _a.deselectComponent();
+          this.selectedCreator$.next(componentCreator);
         });
-        component.eventHandlers.subscribe(evt => {
-          if (parentComponent instanceof _components_ngx_dynamic_component__WEBPACK_IMPORTED_MODULE_2__.NGXDynamicComponent) {
-            evt.rootUIModel = parentComponent.uiModel;
-          }
-          parentComponent.eventHandlers.emit(evt);
-        });
+        if (select) {
+          this.selectedCreator$.next(componentCreator);
+        }
         return component;
       } else {
         throw new Error('Not able to create component');
@@ -2367,150 +2568,53 @@ class DesignerRendererService {
     this.deleteComponent(component);
     const newComponent = this.createComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
       itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
-    }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index);
+    }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index, true);
     (_d = component.parent) === null || _d === void 0 ? void 0 : _d.children.splice(index, 0, newComponent);
-    this.selectComponent(newComponent);
   }
   get selectedContainer() {
-    return this.selectedContainer$.value;
-  }
-  selectComponent(component) {
-    if (this.isContainer(component)) {
-      this.selectContainer(component);
-    } else {
-      this.selectedComponent$.next(component);
+    if (this.selectedCreator instanceof _creators_dc_container_creator__WEBPACK_IMPORTED_MODULE_4__.DcContainerCreator) {
+      return this.selectedCreator.component;
     }
   }
-  isContainer(component) {
-    return _services_core_service__WEBPACK_IMPORTED_MODULE_3__.CoreService.getComponentDescriptor(component.componentType).category === "Containers" /* Categories.Containers */;
+  get selectedCreator() {
+    return this.selectedCreator$.value;
   }
-
-  setDragData(component) {
+  onDrop(event) {
+    var _a, _b, _c, _d;
+    const container = this.selectedContainer;
+    const item = event.item.data;
     try {
-      const drag = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag);
-      drag.disabled = true;
-      if (drag) {
-        drag.data = component.uiModel;
-        drag.element.nativeElement.onclick = evt => {
-          evt.stopPropagation();
-          this.deselectComponent(this.selectedComponent$.value);
-          this.selectedComponent$.next(component);
-          this.deselectContainer();
-          drag.element.nativeElement.classList.add('selected-component');
-        };
+      if (event.previousContainer.id !== 'ngx-components-list') {
+        (_a = this.selectedContainer) === null || _a === void 0 ? void 0 : _a.containerRef.remove(event.previousIndex);
+        (_b = this.selectedContainer) === null || _b === void 0 ? void 0 : _b.children.splice(event.previousIndex, 1);
+      }
+      const newComponent = this.createComponent(container, item, container.containerRef, container.dataModel, event.currentIndex);
+      newComponent.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__.CdkDrag).disabled = false;
+      if (!((_c = this.selectedContainer) === null || _c === void 0 ? void 0 : _c.children)) {
+        this.selectedContainer.children = [newComponent];
       } else {
-        console.log('no drag!!!', component);
+        (_d = this.selectedContainer) === null || _d === void 0 ? void 0 : _d.children.splice(event.currentIndex, 0, newComponent);
       }
     } catch (e) {
-      console.log(component.uiModel, e.message);
-    }
-  }
-  deselectContainer() {
-    if (this.selectedContainer) {
-      this.selectedContainer.element.classList.remove('selected-container');
-      this.selectedContainer.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList, null, {
-        self: true
-      }).disabled = true;
-      this.selectedContainer$.next(null);
-    }
-  }
-  deselectComponent(component) {
-    if (!component) {
-      return;
-    }
-    const descriptor = _services_core_service__WEBPACK_IMPORTED_MODULE_3__.CoreService.getComponentDescriptor(component.uiModel.type);
-    if (descriptor.category === "HTML" /* Categories.HTML */) {
-      component.element.classList.remove('selected-component');
-    } else {
-      component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).element.nativeElement.classList.remove('selected-component');
-    }
-  }
-  subscribeOnContainers(component) {
-    try {
-      const dropList = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList);
-      console.log('subscribeOnContainers', dropList.element.nativeElement);
-      dropList.element.nativeElement.onclick = evt => {
-        evt.stopPropagation();
-        this.selectContainer(component);
-      };
-      dropList.dropped.subscribe(event => {
-        var _a, _b, _c, _d, _e;
-        console.log('dropped-evt000', event.container.element.nativeElement, event.item.element.nativeElement);
-        if (event.previousContainer === event.container && event.previousIndex === event.currentIndex) {
-          return;
-        }
-        const container = this.selectedContainer;
-        const item = event.item.data;
-        try {
-          if (event.previousContainer.id !== 'ngx-components-list') {
-            (_a = this.selectedContainer) === null || _a === void 0 ? void 0 : _a.containerRef.remove(event.previousIndex);
-            (_b = this.selectedContainer) === null || _b === void 0 ? void 0 : _b.children.splice(event.previousIndex, 1);
-          }
-          const newComponent = this.createComponent(container, item, container.containerRef, container.dataModel, event.currentIndex);
-          newComponent.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).disabled = false;
-          if (!((_c = this.selectedContainer) === null || _c === void 0 ? void 0 : _c.children)) {
-            this.selectedContainer.children = [newComponent];
-          } else {
-            (_d = this.selectedContainer) === null || _d === void 0 ? void 0 : _d.children.splice(event.currentIndex, 0, newComponent);
-          }
-          console.log('dropped-evt', (_e = this.selectedContainer) === null || _e === void 0 ? void 0 : _e.children);
-        } catch (e) {
-          console.log('failed to remove child', e);
-        }
-      });
-    } catch (e) {
-      console.log(component.uiModel.type, e.message);
+      console.log('failed to remove child', e);
     }
   }
   deleteComponent(component) {
-    const index = component.parent.children.indexOf(component);
-    if (index > -1) {
-      component.parent.containerRef.remove(index);
-      this.selectedComponent$.next(null);
+    if (component.parent instanceof _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_5__.NGXDynamicDesignerComponent) {
+      component.parent.clear();
+    } else {
+      const index = component.parent.children.indexOf(component);
+      if (index > -1) {
+        component.parent.containerRef.remove(index);
+        this.selectedCreator$.next(null);
+      }
     }
-  }
-  selectContainer(component) {
-    var _a;
-    const dropList = component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList);
-    if (this.selectedContainer === component) {
-      return;
-    }
-    this.deselectContainer();
-    this.selectedContainer$.next(component);
-    this.selectedComponent$.next(component);
-    component.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDropList).disabled = false;
-    dropList.element.nativeElement.classList.add('selected-container');
-    (_a = component.children) === null || _a === void 0 ? void 0 : _a.filter(child => child.injector).forEach(child => {
-      child.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).disabled = false;
-    });
-  }
-  creatHTMLComponent(descriptor, parentComponent, uiModel, containerRef, dataModel, index) {
-    const baseHtml = descriptor.component;
-    const component = new baseHtml(parentComponent.injector);
-    component.dataModel = dataModel;
-    component.uiModel = uiModel;
-    const draggableWrapper = containerRef.createComponent(_components_draggable_component__WEBPACK_IMPORTED_MODULE_1__.DraggableComponent, {
-      index
-    });
-    component.create(draggableWrapper.instance.container.element.nativeElement);
-    try {
-      draggableWrapper.injector.get(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_5__.CdkDrag).data = component.uiModel;
-      // console.log('rrr', component.element);
-      component.element.onclick = () => {
-        this.deselectComponent(this.selectedElement$.value);
-        this.selectedComponent$.next(component);
-        component.element.classList.add('selected-component');
-      };
-    } catch (e) {
-      console.error(e);
-    }
-    return component;
   }
 }
 DesignerRendererService.ɵfac = function DesignerRendererService_Factory(t) {
   return new (t || DesignerRendererService)();
 };
-DesignerRendererService.ɵprov = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineInjectable"]({
+DesignerRendererService.ɵprov = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineInjectable"]({
   token: DesignerRendererService,
   factory: DesignerRendererService.ɵfac
 });
@@ -4917,8 +5021,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { createComponent } from '../../utils/renderer';
-// import { createComponent } from '../../utils/designer-renderer';
 
 
 
