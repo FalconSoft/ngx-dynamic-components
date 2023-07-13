@@ -2664,14 +2664,16 @@ class DesignerRendererService {
     }
   }
   updateComponent(component, properties) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f, _g;
     const index = (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.indexOf(component);
     this.deleteComponent(component);
     const newComponent = this.createComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
       itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
     }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index);
-    (_d = component.parent) === null || _d === void 0 ? void 0 : _d.children.splice(index, 0, newComponent);
-    (_e = this.componentCreatorMap.get(newComponent)) === null || _e === void 0 ? void 0 : _e.selectComponent();
+    console.log('newComponent1', index, (_d = component.parent) === null || _d === void 0 ? void 0 : _d.children, newComponent);
+    (_e = component.parent) === null || _e === void 0 ? void 0 : _e.children.splice(index, 0, newComponent);
+    console.log('newComponent2', index, (_f = component.parent) === null || _f === void 0 ? void 0 : _f.children);
+    (_g = this.componentCreatorMap.get(newComponent)) === null || _g === void 0 ? void 0 : _g.selectComponent();
   }
   deselectComponent() {
     if (this.selectedCreator) {
@@ -2711,12 +2713,14 @@ class DesignerRendererService {
     }
   }
   deleteComponent(component) {
+    var _a;
     if (component.parent instanceof _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_5__.NGXDynamicDesignerComponent) {
       component.parent.clear();
     } else {
       const index = component.parent.children.indexOf(component);
       if (index > -1) {
         component.parent.containerRef.remove(index);
+        (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.splice(index, 1);
         this.selectedCreator$.next(null);
       }
     }
