@@ -1059,6 +1059,13 @@ class BaseDynamicComponent {
       this.emitEvent((_a = this.properties) === null || _a === void 0 ? void 0 : _a.onInit);
     });
   }
+  generateUIModel() {
+    var _a;
+    return Object.assign(Object.assign({}, this.uiModel), {
+      itemProperties: this.properties,
+      children: (_a = this.children) === null || _a === void 0 ? void 0 : _a.map(c => c.generateUIModel())
+    });
+  }
   setEventHandlerResult(event, result) {
     if (event) {
       this.eventResults.set(event, result);
@@ -2425,7 +2432,6 @@ class DcContainerCreator extends _dc_creator__WEBPACK_IMPORTED_MODULE_0__.DcCrea
   deselectComponent() {
     super.deselectComponent();
     this.drop.element.nativeElement.classList.remove('selected-container');
-    // this.component.element.classList.remove('selected-container');
     this.drop.disabled = true;
   }
   selectComponent() {
@@ -2507,6 +2513,12 @@ class DcCreator extends _component_creator__WEBPACK_IMPORTED_MODULE_0__.Componen
     }
     this.drag.disabled = true;
     this.drag.data = component.uiModel;
+    this.drag.started.subscribe(() => {
+      this.drag.data = component.generateUIModel();
+    });
+    component.element.onclick = evt => {
+      evt.stopImmediatePropagation();
+    };
     this.drag.element.nativeElement.onclick = evt => {
       evt.stopPropagation();
       this.selectComponent();
@@ -2652,15 +2664,14 @@ class DesignerRendererService {
     }
   }
   updateComponent(component, properties) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     const index = (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.indexOf(component);
     this.deleteComponent(component);
     const newComponent = this.createComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
       itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
     }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index);
     (_d = component.parent) === null || _d === void 0 ? void 0 : _d.children.splice(index, 0, newComponent);
-    const creator = this.componentCreatorMap.get(newComponent);
-    creator === null || creator === void 0 ? void 0 : creator.selectComponent();
+    (_e = this.componentCreatorMap.get(newComponent)) === null || _e === void 0 ? void 0 : _e.selectComponent();
   }
   deselectComponent() {
     if (this.selectedCreator) {
