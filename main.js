@@ -2427,6 +2427,10 @@ class DcContainerCreator extends _dc_creator__WEBPACK_IMPORTED_MODULE_0__.DcCrea
   constructor(parentComponent, uiModel, containerRef, dataModel, index) {
     super(parentComponent, uiModel, containerRef, dataModel, index);
     this.dropped$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
+    parentComponent.render.subscribe(() => {
+      console.log('dddd', parentComponent.children);
+    });
+    console.log('parentComponent', parentComponent, parentComponent.children);
     this.initDrop(this.component);
   }
   deselectComponent() {
@@ -2587,6 +2591,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DesignerRendererService": () => (/* binding */ DesignerRendererService)
 /* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 6317);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 116);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 635);
@@ -2596,7 +2601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _creators_dc_creator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./creators/dc-creator */ 7878);
 /* harmony import */ var _creators_dc_container_creator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./creators/dc-container-creator */ 6971);
 /* harmony import */ var _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ngx-dynamic-designer-component */ 9177);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
 
 
 
@@ -2663,18 +2668,13 @@ class DesignerRendererService {
     }
   }
   updateComponent(component, properties) {
-    var _a, _b, _c;
-    const index = (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.indexOf(component);
-    this.deleteComponent(component);
-    const newComponent = this.createComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
-      itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
-    }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index);
-    console.log('newComponent1', index, component === null || component === void 0 ? void 0 : component.children, newComponent.children);
-    setTimeout(() => {
-      var _a, _b;
-      console.log('newComponent2', index, component === null || component === void 0 ? void 0 : component.children, newComponent.children);
-      (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.splice(index, 0, newComponent);
-      // console.log('newComponent2', index, component.parent?.children);
+    var _a, _b;
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
+      const index = (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.indexOf(component);
+      this.deleteComponent(component);
+      const newComponent = yield this.insertComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
+        itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
+      }), index);
       (_b = this.componentCreatorMap.get(newComponent)) === null || _b === void 0 ? void 0 : _b.selectComponent();
     });
   }
@@ -2697,24 +2697,36 @@ class DesignerRendererService {
     return this.selectedCreator$.value;
   }
   onDrop(event) {
-    var _a, _b, _c, _d;
-    const container = this.selectedContainer;
-    const item = event.item.data;
-    try {
-      if (event.previousContainer.id !== 'ngx-components-list') {
-        (_a = this.selectedContainer) === null || _a === void 0 ? void 0 : _a.containerRef.remove(event.previousIndex);
-        (_b = this.selectedContainer) === null || _b === void 0 ? void 0 : _b.children.splice(event.previousIndex, 1);
+    var _a, _b;
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
+      const container = this.selectedContainer;
+      const item = event.item.data;
+      try {
+        if (event.previousContainer.id !== 'ngx-components-list') {
+          (_a = this.selectedContainer) === null || _a === void 0 ? void 0 : _a.containerRef.remove(event.previousIndex);
+          (_b = this.selectedContainer) === null || _b === void 0 ? void 0 : _b.children.splice(event.previousIndex, 1);
+        }
+        yield this.insertComponent(container, item, event.currentIndex);
+      } catch (e) {
+        console.log('failed to remove child', e);
       }
-      const newComponent = this.createComponent(container, item, container.containerRef, container.dataModel, event.currentIndex);
-      if (!((_c = this.selectedContainer) === null || _c === void 0 ? void 0 : _c.children)) {
-        this.selectedContainer.children = [newComponent];
-      } else {
-        (_d = this.selectedContainer) === null || _d === void 0 ? void 0 : _d.children.splice(event.currentIndex, 0, newComponent);
-      }
-      this.selectedContainer.uiModel = this.selectedContainer.generateUIModel();
-    } catch (e) {
-      console.log('failed to remove child', e);
+    });
+  }
+  insertComponent(container, uiModel, index) {
+    const newComponent = this.createComponent(container, uiModel, container.containerRef, container.dataModel, index);
+    if (container instanceof _components_base_dynamic_component__WEBPACK_IMPORTED_MODULE_0__.BaseDynamicComponent) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          if (!container.children) {
+            container.children = [];
+          }
+          container.children.splice(index, 0, newComponent);
+          container.uiModel = container.generateUIModel();
+          resolve(newComponent);
+        });
+      });
     }
+    return Promise.resolve(newComponent);
   }
   deleteComponent(component) {
     var _a;
@@ -2733,7 +2745,7 @@ class DesignerRendererService {
 DesignerRendererService.ɵfac = function DesignerRendererService_Factory(t) {
   return new (t || DesignerRendererService)();
 };
-DesignerRendererService.ɵprov = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineInjectable"]({
+DesignerRendererService.ɵprov = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineInjectable"]({
   token: DesignerRendererService,
   factory: DesignerRendererService.ɵfac
 });
@@ -3830,8 +3842,12 @@ class CoreService {
       throw e;
     }
   }
-  static getListOfComponents() {
+  static getListOfComponents2() {
     return Array.from(CoreService.COMPONENTS_REGISTER.values());
+  }
+  // skips versions
+  static getListOfComponents() {
+    return Array.from(CoreService.COMPONENTS_REGISTER.entries()).filter(entry => !entry[0].includes(':')).map(entry => entry[1]);
   }
   static parseXMLModel(uiModelXml) {
     if (!uiModelXml) {
