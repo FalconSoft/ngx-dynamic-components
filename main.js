@@ -2640,7 +2640,6 @@ class DesignerRendererService {
         componentCreator.dropped$.subscribe(evt => {
           this.onDrop(evt);
         });
-        ;
       } else if (componentClass.prototype instanceof _components_base_dynamic_component__WEBPACK_IMPORTED_MODULE_0__.BaseDynamicComponent) {
         componentCreator = new _creators_dc_creator__WEBPACK_IMPORTED_MODULE_3__.DcCreator(parentComponent, uiModel, containerRef, dataModel, index);
       }
@@ -2664,16 +2663,20 @@ class DesignerRendererService {
     }
   }
   updateComponent(component, properties) {
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c;
     const index = (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.indexOf(component);
     this.deleteComponent(component);
     const newComponent = this.createComponent(component.parent, Object.assign(Object.assign({}, component.uiModel), {
       itemProperties: Object.assign(Object.assign({}, component.uiModel.itemProperties), properties)
     }), (_b = component.parent) === null || _b === void 0 ? void 0 : _b.containerRef, (_c = component.parent) === null || _c === void 0 ? void 0 : _c.dataModel, index);
-    console.log('newComponent1', index, (_d = component.parent) === null || _d === void 0 ? void 0 : _d.children, newComponent);
-    (_e = component.parent) === null || _e === void 0 ? void 0 : _e.children.splice(index, 0, newComponent);
-    console.log('newComponent2', index, (_f = component.parent) === null || _f === void 0 ? void 0 : _f.children);
-    (_g = this.componentCreatorMap.get(newComponent)) === null || _g === void 0 ? void 0 : _g.selectComponent();
+    console.log('newComponent1', index, component === null || component === void 0 ? void 0 : component.children, newComponent.children);
+    setTimeout(() => {
+      var _a, _b;
+      console.log('newComponent2', index, component === null || component === void 0 ? void 0 : component.children, newComponent.children);
+      (_a = component.parent) === null || _a === void 0 ? void 0 : _a.children.splice(index, 0, newComponent);
+      // console.log('newComponent2', index, component.parent?.children);
+      (_b = this.componentCreatorMap.get(newComponent)) === null || _b === void 0 ? void 0 : _b.selectComponent();
+    });
   }
   deselectComponent() {
     if (this.selectedCreator) {
@@ -2708,6 +2711,7 @@ class DesignerRendererService {
       } else {
         (_d = this.selectedContainer) === null || _d === void 0 ? void 0 : _d.children.splice(event.currentIndex, 0, newComponent);
       }
+      this.selectedContainer.uiModel = this.selectedContainer.generateUIModel();
     } catch (e) {
       console.log('failed to remove child', e);
     }
