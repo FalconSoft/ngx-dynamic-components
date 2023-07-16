@@ -1830,11 +1830,17 @@ function ComponentPropertiesComponent_form_0_button_7_Template(rf, ctx) {
 }
 function ComponentPropertiesComponent_form_0_li_9_Template(rf, ctx) {
   if (rf & 1) {
+    const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "li", 12)(1, "label", 13);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](3, "input", 14);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "input", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("blur", function ComponentPropertiesComponent_form_0_li_9_Template_input_blur_3_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r7);
+      const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r6.saveComponent());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
     const prop_r5 = ctx.$implicit;
@@ -1846,7 +1852,7 @@ function ComponentPropertiesComponent_form_0_li_9_Template(rf, ctx) {
 }
 function ComponentPropertiesComponent_form_0_Template(rf, ctx) {
   if (rf & 1) {
-    const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r9 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "form", 1)(1, "div", 2)(2, "h5", 3);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Edit selected ");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "b");
@@ -1861,25 +1867,25 @@ function ComponentPropertiesComponent_form_0_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](10, "div", 7)(11, "button", 8);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function ComponentPropertiesComponent_form_0_Template_button_click_11_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r7);
-      const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r6.saveComponent());
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r9);
+      const ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r8.saveComponent());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](12, "Apply");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](13, "button", 9);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function ComponentPropertiesComponent_form_0_Template_button_click_13_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r7);
-      const ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r8.cancel.emit());
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r9);
+      const ctx_r10 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r10.cancel.emit());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](14, "Cancel");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](15, "button", 10);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function ComponentPropertiesComponent_form_0_Template_button_click_15_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r7);
-      const ctx_r9 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r9.deleteComponent(ctx_r9.component));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r9);
+      const ctx_r11 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r11.deleteComponent(ctx_r11.component));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](16, "Delete");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
@@ -1902,6 +1908,9 @@ class ComponentPropertiesComponent {
     this.cancel = new _angular_core__WEBPACK_IMPORTED_MODULE_3__.EventEmitter();
     this.selectComponent = new _angular_core__WEBPACK_IMPORTED_MODULE_3__.EventEmitter();
     this.properties = [];
+  }
+  onEnterKeyPress() {
+    this.saveComponent();
   }
   get hasParent() {
     var _a;
@@ -1937,6 +1946,13 @@ ComponentPropertiesComponent.ɵfac = function ComponentPropertiesComponent_Facto
 ComponentPropertiesComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
   type: ComponentPropertiesComponent,
   selectors: [["dc-component-properties"]],
+  hostBindings: function ComponentPropertiesComponent_HostBindings(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keyup.enter", function ComponentPropertiesComponent_keyup_enter_HostBindingHandler($event) {
+        return ctx.onEnterKeyPress($event);
+      }, false, _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresolveWindow"]);
+    }
+  },
   inputs: {
     component: "component"
   },
@@ -1949,7 +1965,7 @@ ComponentPropertiesComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTE
   features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵNgOnChangesFeature"]],
   decls: 1,
   vars: 1,
-  consts: [["class", "selected-component-info border p-2", 3, "formGroup", 4, "ngIf"], [1, "selected-component-info", "border", "p-2", 3, "formGroup"], [1, "d-flex", "mb-2", "align-items-center"], [1, "mb-0"], ["class", "btn btn-sm btn-primary ms-auto", "type", "button", 3, "click", 4, "ngIf"], [1, "props-list", "list-unstyled"], ["class", "row property mb-1 me-0", 4, "ngFor", "ngForOf"], [1, "actions", "d-flex"], ["type", "button", 1, "btn", "btn-sm", "btn-primary", 3, "click"], ["type", "button", 1, "btn", "btn-sm", "btn-primary-outline", "ms-1", "me-auto", 3, "click"], ["type", "button", 1, "btn", "btn-sm", "btn-danger", 3, "click"], ["type", "button", 1, "btn", "btn-sm", "btn-primary", "ms-auto", 3, "click"], [1, "row", "property", "mb-1", "me-0"], [1, "col"], [1, "col", "form-control", "form-control-sm", 3, "formControlName"]],
+  consts: [["class", "selected-component-info border p-2", 3, "formGroup", 4, "ngIf"], [1, "selected-component-info", "border", "p-2", 3, "formGroup"], [1, "d-flex", "mb-2", "align-items-center"], [1, "mb-0"], ["class", "btn btn-sm btn-primary ms-auto", "type", "button", 3, "click", 4, "ngIf"], [1, "props-list", "list-unstyled"], ["class", "row property mb-1 me-0", 4, "ngFor", "ngForOf"], [1, "actions", "d-flex"], ["type", "button", 1, "btn", "btn-sm", "btn-primary", 3, "click"], ["type", "button", 1, "btn", "btn-sm", "btn-primary-outline", "ms-1", "me-auto", 3, "click"], ["type", "button", 1, "btn", "btn-sm", "btn-danger", 3, "click"], ["type", "button", 1, "btn", "btn-sm", "btn-primary", "ms-auto", 3, "click"], [1, "row", "property", "mb-1", "me-0"], [1, "col"], [1, "col", "form-control", "form-control-sm", 3, "formControlName", "blur"]],
   template: function ComponentPropertiesComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](0, ComponentPropertiesComponent_form_0_Template, 17, 4, "form", 0);
