@@ -2175,6 +2175,15 @@ class DesignerComponent {
     return {
       name: 'Form',
       samples: [{
+        name: 'Container',
+        xmlModel: `<div class="container"></div>`
+      }, {
+        name: 'Row',
+        xmlModel: `<div class="row"></div>`
+      }, {
+        name: 'Column',
+        xmlModel: `<div class="row flex-column"></div>`
+      }, {
         name: 'Email',
         xmlModel: `
         <div class="form-group">
@@ -2416,7 +2425,7 @@ class NGXDynamicDesignerComponent extends _components_ngx_dynamic_component__WEB
   }
   initParsedModel(uiModel) {
     try {
-      this.uiModel = _services_core_service__WEBPACK_IMPORTED_MODULE_3__.CoreService.parseXMLModel(uiModel);
+      this.uiModel = _services_core_service__WEBPACK_IMPORTED_MODULE_3__.CoreService.parseXMLModel(uiModel, 'designer');
       if (this.uiModel) {
         this.rendererService.createComponent(this, this.uiModel);
       }
@@ -2558,13 +2567,12 @@ class DcContainerCreator extends _dc_creator__WEBPACK_IMPORTED_MODULE_0__.DcCrea
     });
   }
   initDrop(component) {
-    var _a;
     try {
       this.drop.element.nativeElement.onclick = evt => {
         evt.stopPropagation();
         this.selectComponent();
       };
-      this.drop.orientation = ((_a = component.properties.class) === null || _a === void 0 ? void 0 : _a.includes('row')) ? 'horizontal' : 'vertical';
+      this.drop.orientation = this.isHorizontal(component) ? 'horizontal' : 'vertical';
       this.drop.dropped.subscribe(event => {
         if (event.previousContainer === event.container && event.previousIndex === event.currentIndex) {
           return;
@@ -2574,6 +2582,10 @@ class DcContainerCreator extends _dc_creator__WEBPACK_IMPORTED_MODULE_0__.DcCrea
     } catch (e) {
       console.log(component.uiModel.type, e.message);
     }
+  }
+  isHorizontal(component) {
+    const cssClass = component.properties.class;
+    return (cssClass === null || cssClass === void 0 ? void 0 : cssClass.includes('row')) && !(cssClass === null || cssClass === void 0 ? void 0 : cssClass.includes('flex-column'));
   }
 }
 
@@ -2852,14 +2864,6 @@ class DesignerRendererService {
     var _a;
     if (component.parent instanceof _components_ngx_dynamic_designer_component__WEBPACK_IMPORTED_MODULE_5__.NGXDynamicDesignerComponent) {
       this.clearDesigner(component.parent);
-      // dcDesigner.containerRef.clear();
-      // const newComponent = this.createComponent(dcDesigner, {
-      //   type: 'div',
-      //   itemProperties: {
-      //     class: 'container h-100'
-      //   }
-      // }, dcDesigner.containerRef, dcDesigner.dataModel);
-      // this.componentCreatorMap.get(newComponent)?.selectComponent();
     } else {
       const index = component.parent.children.indexOf(component);
       if (index > -1) {
@@ -3069,7 +3073,7 @@ DesignerFormComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODUL
   features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDropList, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_2__.CdkDrag])],
   decls: 3,
   vars: 1,
-  consts: [[3, "ngStyle"], ["vc", ""]],
+  consts: [["novalidate", "", 3, "ngStyle"], ["vc", ""]],
   template: function DesignerFormComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "form", 0);
@@ -3151,7 +3155,12 @@ function DesignerSelectComponent_option_1_Template(rf, ctx) {
 }
 
 
-class DesignerInputComponent extends _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_0__.InputComponent {}
+class DesignerInputComponent extends _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_0__.InputComponent {
+  constructor() {
+    super(...arguments);
+    this.novalidate = true;
+  }
+}
 DesignerInputComponent.ɵfac = /*@__PURE__*/function () {
   let ɵDesignerInputComponent_BaseFactory;
   return function DesignerInputComponent_Factory(t) {
@@ -3161,6 +3170,12 @@ DesignerInputComponent.ɵfac = /*@__PURE__*/function () {
 DesignerInputComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
   type: DesignerInputComponent,
   selectors: [["input"]],
+  hostVars: 1,
+  hostBindings: function DesignerInputComponent_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵattribute"]("novalidate", ctx.novalidate);
+    }
+  },
   features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"], _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵHostDirectivesFeature"]([_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_9__.CdkDrag])],
   decls: 0,
   vars: 0,
@@ -3168,6 +3183,11 @@ DesignerInputComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODU
   encapsulation: 2
 });
 const designerInputDescriptor = Object.assign(Object.assign({}, _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_0__.inputDescriptor), {
+  parseUIModel(xmlRes) {
+    const res = _ui_components_input_input_component__WEBPACK_IMPORTED_MODULE_0__.inputDescriptor.parseUIModel(xmlRes);
+    res.itemProperties.required = false;
+    return res;
+  },
   component: DesignerInputComponent
 });
 class DesignerLabelComponent extends _ui_components_label_label_component__WEBPACK_IMPORTED_MODULE_1__.LabelComponent {}
@@ -3220,6 +3240,11 @@ DesignerTextareaComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_M
   encapsulation: 2
 });
 const designerTextAreaDescriptor = Object.assign(Object.assign({}, _ui_components_textarea_textarea_component__WEBPACK_IMPORTED_MODULE_2__.textareaDescriptor), {
+  parseUIModel(xmlRes) {
+    const res = _ui_components_textarea_textarea_component__WEBPACK_IMPORTED_MODULE_2__.textareaDescriptor.parseUIModel(xmlRes);
+    res.itemProperties.required = false;
+    return res;
+  },
   component: DesignerTextareaComponent
 });
 class DesignerButtonComponent extends _ui_components_button_button_component__WEBPACK_IMPORTED_MODULE_3__.ButtonComponent {}
@@ -4085,7 +4110,7 @@ class CoreService {
   static getListOfComponents() {
     return Array.from(CoreService.COMPONENTS_REGISTER.entries()).filter(entry => !entry[0].includes(':')).map(entry => entry[1]);
   }
-  static parseXMLModel(uiModelXml) {
+  static parseXMLModel(uiModelXml, version) {
     if (!uiModelXml) {
       return null;
     }
@@ -4103,11 +4128,11 @@ class CoreService {
       }
       if (typeof xmlObj === 'object') {
         xmlObj['#name'] = type;
-        return CoreService.getUIModel((0,_utils__WEBPACK_IMPORTED_MODULE_0__.toXMLResult)(xmlObj));
+        return CoreService.getUIModel((0,_utils__WEBPACK_IMPORTED_MODULE_0__.toXMLResult)(xmlObj), version);
       }
     }
   }
-  static getUIModel(xmlRes) {
+  static getUIModel(xmlRes, version) {
     const itemProperties = xmlRes.attrs;
     const type = xmlRes.type;
     if (itemProperties.disabled === 'true') {
@@ -4124,7 +4149,7 @@ class CoreService {
         uiModel.id = itemProperties.id;
       }
       try {
-        const descr = CoreService.COMPONENTS_REGISTER.get(type);
+        const descr = CoreService.getComponentDescriptor(type, version); // CoreService.COMPONENTS_REGISTER.get(type);
         if (typeof descr.parseUIModel === 'function') {
           const typeUIModel = descr.parseUIModel(xmlRes);
           uiModel.itemProperties = Object.assign(Object.assign({}, itemProperties), typeUIModel.itemProperties);
@@ -4137,7 +4162,7 @@ class CoreService {
         throw new Error(`Error parsing <${type} ..> : ${e}`);
       }
       if (xmlRes.childNodes && !uiModel.children) {
-        uiModel.children = xmlRes.childNodes.filter(n => n['#name'] !== '#comment').map(r => CoreService.getUIModel((0,_utils__WEBPACK_IMPORTED_MODULE_0__.toXMLResult)(r)));
+        uiModel.children = xmlRes.childNodes.filter(n => n['#name'] !== '#comment').map(r => CoreService.getUIModel((0,_utils__WEBPACK_IMPORTED_MODULE_0__.toXMLResult)(r), 'designer'));
       }
       return uiModel;
     } else {
