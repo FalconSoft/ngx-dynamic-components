@@ -2184,6 +2184,9 @@ class DesignerComponent {
         name: 'Column',
         xmlModel: `<div class="row flex-column"></div>`
       }, {
+        name: 'Cell',
+        xmlModel: `<div class="col"></div>`
+      }, {
         name: 'Email',
         xmlModel: `
         <div class="form-group">
@@ -3214,6 +3217,11 @@ DesignerLabelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODU
   styles: [".form-check-label[_nghost-%COMP%]    > label[_ngcontent-%COMP%] {\n      margin-bottom: 0;\n    }\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3Byb2plY3RzL2NvcmUvc3JjL2xpYi9kZXNpZ25lci91aS1jb21wb25lbnRzL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7SUFDSTtNQUNFLGdCQUFnQjtJQUNsQiIsInNvdXJjZXNDb250ZW50IjpbIlxuICAgIDpob3N0LmZvcm0tY2hlY2stbGFiZWwgPiBsYWJlbCB7XG4gICAgICBtYXJnaW4tYm90dG9tOiAwO1xuICAgIH1cbiAgIl0sInNvdXJjZVJvb3QiOiIifQ== */"]
 });
 const designerLabelDescriptor = Object.assign(Object.assign({}, _ui_components_label_label_component__WEBPACK_IMPORTED_MODULE_1__.labelDescriptor), {
+  parseUIModel(xmlRes) {
+    const res = _ui_components_label_label_component__WEBPACK_IMPORTED_MODULE_1__.labelDescriptor.parseUIModel(xmlRes);
+    res.itemProperties.for = null;
+    return res;
+  },
   component: DesignerLabelComponent
 });
 class DesignerTextareaComponent extends _ui_components_textarea_textarea_component__WEBPACK_IMPORTED_MODULE_2__.TextareaComponent {}
