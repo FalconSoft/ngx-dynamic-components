@@ -1,7 +1,7 @@
 import { Component, Input, EventEmitter, Output, ViewContainerRef,
   ViewChild, Injector } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDropList } from '@angular/cdk/drag-drop';
 import { RendererService } from '../../services/renderer.service';
 import { DesignerRendererService } from '../designer-renderer.service';
 import { NGXDynamicComponent } from '../../components/ngx-dynamic-component';
@@ -19,15 +19,15 @@ import { DcContainerCreator } from '../creators/dc-container-creator';
 })
 export class NGXDynamicDesignerComponent extends NGXDynamicComponent {
 
-    @Input() dataModel: any;
-    @Input() xmlUIModel: string;
+    @Input() declare dataModel: any;
+    @Input() declare xmlUIModel: string;
     @Output() render = new EventEmitter<UIModel>();
     @Output() changedDataModel = new EventEmitter();
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
-    @ViewChild('vc', {read: ViewContainerRef, static: true}) containerRef: ViewContainerRef;
+    @ViewChild('vc', {read: ViewContainerRef, static: true}) declare containerRef: ViewContainerRef;
 
     dropList$: Observable<CdkDropList[]>;
-    uiModel: UIModel;
+    declare uiModel: UIModel;
 
     constructor(public rendererService: RendererService, public injector?: Injector) {
       super(rendererService, injector);

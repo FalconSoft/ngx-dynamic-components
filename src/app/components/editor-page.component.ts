@@ -29,8 +29,6 @@ export class EditorPageComponent implements OnInit {
   defaultDataModel = contactUs.dataModel;
   scripts: string;
 
-  constructor() { }
-
   ngOnInit(): void {
     this.scripts = contactUs.scripts;
   }

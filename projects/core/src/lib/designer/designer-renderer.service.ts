@@ -89,7 +89,7 @@ export class DesignerRendererService {
       const component = componentCreator.component;
       if (component) {
         this.componentCreatorMap.set(component, componentCreator);
-        componentCreator.selected$.subscribe(() => {;
+        componentCreator.selected$.subscribe(() => {
           this.selectedCreator?.deselectComponent();
           this.selectedCreator$.next(componentCreator);
         });

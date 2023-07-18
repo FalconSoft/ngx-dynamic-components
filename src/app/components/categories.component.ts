@@ -22,8 +22,6 @@ export class CategoriesComponent implements OnInit {
 
   categories = [];
 
-  constructor() { }
-
   ngOnInit(): void {
     this.categories = getCategories()
       .map(c => ({

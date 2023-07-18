@@ -21,8 +21,8 @@ import example from './input-typeahead.examples';
       [typeaheadOptionField]="properties.typeaheadOptionField ?? 'label'"
       [typeaheadMultipleSearch]="properties.multiple"
       [class]="properties.class"
-      (input)="onInput($event)"
-      (change)="onSelect($event)"/>
+      (input)="onInput()"
+      (change)="onSelect()"/>
     `,
   styles: [`
     :host ::ng-deep .input-typeahead.input-typeahead-single .input-typeahead-container {
@@ -74,12 +74,12 @@ export class InputTypeaheadComponent extends BaseUIComponent<InputTypeaheadPrope
     }
   }
 
-  onSelect(evt: Event): void {
+  onSelect(): void {
     this.changedDataModel.emit(this.dataModel);
     this.emitEvent(this.properties.change, this.componentDataModel);
   }
 
-  onInput(evt: InputEvent): void {
+  onInput(): void {
     this.searchText$.next(this.componentDataModel);
   }
 }
@@ -150,7 +150,7 @@ export const inputTypeaheadDescriptor: ComponentDescriptor<InputTypeaheadCompone
     const itemProperties: AttributesMap = {};
     if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
       itemProperties.itemsSource = xmlRes.childNodes.map(r => (
-        { label: r._, value: r.$ && r.$.hasOwnProperty('value') ? r.$.value : r._ }
+        { label: r._, value: r.$ && Object.hasOwn(r.$, 'value') ? r.$.value : r._ }
       ));
       xmlRes.childNodes = null;
     }

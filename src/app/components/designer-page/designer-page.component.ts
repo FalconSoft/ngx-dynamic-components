@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { uIModel } from 'src/app/examples/contact-us.form.config';
 
 @Component({
@@ -6,13 +6,7 @@ import { uIModel } from 'src/app/examples/contact-us.form.config';
   templateUrl: './designer-page.component.html',
   styleUrls: ['./designer-page.component.scss']
 })
-export class DesignerPageComponent implements OnInit {
+export class DesignerPageComponent {
 
   xmlUIModel = uIModel;
-
-  constructor() { }
-
-  ngOnInit(): void {
-
-  }
 }

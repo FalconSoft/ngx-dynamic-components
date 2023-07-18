@@ -5,11 +5,9 @@ import { BaseDynamicComponent } from './base-dynamic-component';
 
 @Directive()
 export class BaseHTMLElement<T = HTMLProperties> extends BaseDynamicComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line
-    dataModel: any;
-    uiModel: UIModel<T>;
     eventHandlers = new EventEmitter<ComponentEvent>();
     changedDataModel = new EventEmitter();
-    element: HTMLElement;
+    declare element: HTMLElement;
     private parentNode: Node;
 
     async ngOnDestroy(): Promise<void> {

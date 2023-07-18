@@ -41,7 +41,6 @@ export class RendererService {
         component.dataModel = dataModel;
         component.uiModel = uiModel;
         component.create(componentRef.location.nativeElement);
-        return component;
       }
 
       if (component) {

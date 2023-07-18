@@ -231,7 +231,7 @@ export const selectDescriptor: ComponentDescriptor<SelectComponentConstrutor, Se
     const itemProperties: AttributesMap = {};
     if (!xmlRes.attrs.itemsSource && xmlRes.childNodes) {
       itemProperties.itemsSource = xmlRes.childNodes.map(r => (
-        { label: r._, value: r.$ && r.$.hasOwnProperty('value') ? r.$.value : r._ }
+        { label: r._, value: r.$ && Object.hasOwn(r.$, 'value') ? r.$.value : r._ }
       ));
       xmlRes.childNodes = null;
     }

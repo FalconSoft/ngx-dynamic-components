@@ -11,7 +11,7 @@ export class CoreService {
   private static readonly COMPONENTS_REGISTER = new Map<string, ComponentDescriptor>();
 
   public static registerComponent(desc: ComponentDescriptor, version?: string): void {
-    const { name, packageName, propertiesDescriptor } = desc;
+    const { name, propertiesDescriptor } = desc;
     // @deprecated
     if (propertiesDescriptor) {
       propertiesDescriptor.forEach(prop => {
@@ -47,6 +47,7 @@ export class CoreService {
       const desc = CoreService.getComponentDescriptor(type);
       return desc.itemProperties.prototype.properties;
     } catch (e) {
+      console.warn(`Not able to get properties for ${type}`)
       throw e;
     }
   }
@@ -94,7 +95,8 @@ export class CoreService {
 
       if (itemProperties.disabled === 'true') {
         itemProperties.disabled = true;
-      } else if (itemProperties.hasOwnProperty('disabled')) {
+        // eslint-disable-next-line no-prototype-builtins
+      } else if (Object.hasOwn(itemProperties, 'disabled')) {
         itemProperties.disabled = null;
       }
 

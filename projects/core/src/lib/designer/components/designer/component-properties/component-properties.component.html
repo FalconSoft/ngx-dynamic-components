@@ -5,7 +5,7 @@
   </div>
   <ul class="props-list list-unstyled">
     <li class="row property mb-1 me-0" *ngFor="let prop of properties">
-      <label class="col">{{prop.name}}</label> <input (blur)="saveComponent()" class="col form-control form-control-sm" [formControlName]="prop.name" />
+      <label for="prop-{{prop}}" class="col">{{prop.name}}</label> <input id="prop-{{prop}}" (blur)="saveComponent()" class="col form-control form-control-sm" [formControlName]="prop.name" />
     </li>
   </ul>
   <div class="actions d-flex">

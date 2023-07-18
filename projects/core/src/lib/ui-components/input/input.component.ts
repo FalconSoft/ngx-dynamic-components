@@ -190,7 +190,7 @@ export class InputProperties extends FormElementProperties {
     example: 'option-1',
     type: PropTypes.PROPERTY
   })
-  value?: string;
+  declare value?: string;
 }
 
 type InputComponentConstrutor = new () => InputComponent;

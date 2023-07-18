@@ -44,7 +44,9 @@ export class SidenavLayoutComponent {
 
   @Input() title?: string;
   categories?: GroupItem[];
-  isHandSet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
+  isHandSet$!: Observable<boolean>;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.isHandSet$ = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
+  }
 }

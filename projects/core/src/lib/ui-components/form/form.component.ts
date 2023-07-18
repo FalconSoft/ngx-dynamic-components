@@ -11,7 +11,7 @@ import { ComponentExample, UIModel, ComponentDescriptor, Categories } from '../.
 export class FormComponent extends BaseUIComponent<FormProperties> {
   @ViewChild('form', { static: true }) form: ElementRef<HTMLFormElement>;
 
-  onFormSubmit(evt): void {
+  onFormSubmit(): void {
     const formData = new FormData(this.form.nativeElement);
     this.emitEvent(this.properties.onSubmit, { formData });
     // Trigger ui validation messages.

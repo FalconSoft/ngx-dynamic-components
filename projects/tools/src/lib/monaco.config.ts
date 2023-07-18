@@ -6,7 +6,7 @@ export const defaultOptions = {
 };
 
 export function registerMonacoCompletion(): any {
-  if (!window.hasOwnProperty('monaco')) {
+  if (!window['monaco']) {
     return setTimeout(registerMonacoCompletion, 1e2);
   }
   monaco.languages.registerCompletionItemProvider('json', {

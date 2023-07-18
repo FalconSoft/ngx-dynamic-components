@@ -8,22 +8,7 @@
       "files": [
         "*.ts"
       ],
-      "parserOptions": {
-        "project": [
-          "projects/bootstrap/tsconfig.lib.json",
-          "projects/bootstrap/tsconfig.spec.json"
-        ],
-        "createDefaultProgram": true
-      },
       "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "dc",
-            "style": "kebab-case"
-          }
-        ],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -32,17 +17,14 @@
             "style": "camelCase"
           }
         ],
-        "@typescript-eslint/explicit-member-accessibility": [
-          "off",
+        "@angular-eslint/component-selector": [
+          "error",
           {
-            "accessibility": "explicit"
+            "type": "element",
+            "prefix": "dc",
+            "style": "kebab-case"
           }
-        ],
-        "arrow-parens": [
-          "off",
-          "always"
-        ],
-        "import/order": "off"
+        ]
       }
     },
     {

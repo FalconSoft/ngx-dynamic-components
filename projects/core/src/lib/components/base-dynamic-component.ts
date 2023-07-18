@@ -48,7 +48,7 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
         this.eventResults.set(event, result);
         this.eventResults$.next(event);
       }
-    };
+    }
 
     get componentType(): string {
       return this.uiModel.type;
@@ -80,6 +80,7 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
         let parameter = fParsed[1];
         if (parameter?.startsWith('$') && parameters === null) {
           parameters = queryValue(this.dataModel, parameter);
+          // eslint-disable-next-line
           parameter = parameter.replace('\$.', '').replace(/\.\w/g, (matched) => matched.replace('.', '').toUpperCase());
         }
 
@@ -118,7 +119,7 @@ export abstract class BaseDynamicComponent<T = StyleProperties> implements OnIni
         });
 
         StylePropertiesList.forEach(b => {
-          if (props && props.hasOwnProperty(b) && this.element) {
+          if (props && Object.hasOwn(props, b) && this.element) {
             const val = (props as any)[b];
             this.element.style[b as any] = val;
           }

@@ -14,8 +14,6 @@ export class ItemPropertiesComponent implements OnInit, OnChanges {
   properties?: [];
   events?: [];
 
-  constructor() { }
-
   ngOnInit(): void {
     this.setProperties();
   }

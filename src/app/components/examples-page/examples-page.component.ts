@@ -11,8 +11,6 @@ export class ExamplesPageComponent implements OnInit {
 
   examples: GroupItem[];
 
-  constructor() { }
-
   ngOnInit(): void {
     this.examples = getGroupedExamples().map(({name, examples}) => ({name, list: examples}));
   }

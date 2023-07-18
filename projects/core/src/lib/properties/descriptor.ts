@@ -2,7 +2,7 @@ import { PropDescriptor } from './models';
 
 export function propDescription(description: PropDescriptor): (target: any, key: string) => void {
   function decorate(target: any, key: string): void {
-    let properties = target.hasOwnProperty('properties') ? target.properties : [];
+    let properties = Object.hasOwn(target, 'properties') ? target.properties : [];
 
     const newProp = {name: key, ...description};
     const existIndex = properties.findIndex(p => p.name === key);
@@ -15,7 +15,7 @@ export function propDescription(description: PropDescriptor): (target: any, key:
 
     let proto = Object.getPrototypeOf(target);
 
-    while (proto.hasOwnProperty('properties')) {
+    while (Object.hasOwn(proto, 'properties')) {
       // Filter overridden properties.
       const protoProps = proto.properties.filter(protoP => !properties.map(p => p.name).includes(protoP.name));
       properties = properties.concat(protoProps);

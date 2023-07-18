@@ -19,7 +19,7 @@ import type {
   UIModel,
 } from '@ngx-dynamic-components/core';
 import { debounceTime, map } from 'rxjs/operators';
-import { Observable, fromEvent, asyncScheduler } from 'rxjs';
+import { Observable, fromEvent } from 'rxjs';
 import { Ace, edit } from 'ace-builds';
 import { jsPython, Interpreter } from 'jspython-interpreter';
 
@@ -61,8 +61,6 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
   };
   direction: Layout = Layout.horizontal;
   codeSize = 50;
-
-  constructor() {}
 
   async eventHandlers({
     eventName,
@@ -131,7 +129,9 @@ export class PreviewEditorComponent implements OnInit, AfterViewInit {
     return this.direction === Layout.horizontal;
   }
 
-  onRendered(data: any): void {}
+  onRendered(data: any): void {
+    console.log('rendered', data);
+  }
 
   onDataModelChange(data: any): void {
     if (data && this.dataModelEditor) {

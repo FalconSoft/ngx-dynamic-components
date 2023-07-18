@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
 import {
   BaseUIComponent, CoreService, StyleProperties, UIModel,
   ComponentExample, ComponentDescriptor, Categories, XMLResult, toXMLResult, createComponent
@@ -15,10 +15,8 @@ import { packageName } from '../../constants';
     </tabset>
   `
 })
-export class TabsComponent extends BaseUIComponent<TabsProperties> implements OnInit, AfterViewInit {
+export class TabsComponent extends BaseUIComponent<TabsProperties> implements AfterViewInit {
   @ViewChildren('vc', { read:ViewContainerRef }) vContainers: QueryList<ViewContainerRef>;
-
-  async ngOnInit(): Promise<void> { }
 
   async ngAfterViewInit() {
     this.vContainers.forEach((vc, i) => createComponent(this, this.uiModel.children[i], vc));

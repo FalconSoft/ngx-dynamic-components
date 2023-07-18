@@ -8,7 +8,7 @@ import { BaseDynamicComponent } from './base-dynamic-component';
 
 @Directive()
 // eslint-disable-next-line
-export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges, OnInit {
+export class BaseUIComponent<T extends object = StyleProperties> extends BaseDynamicComponent<T> implements OnDestroy, OnChanges, OnInit {
     @HostBinding('style.width') width?: string;
     @HostBinding('style.min-width') minWidth?: string;
     @HostBinding('style.max-width') maxWidth?: string;
@@ -25,20 +25,20 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     @HostBinding('style.background') background?: string;
     @HostBinding('class') classAttr?: string;
 
-    @Input() dataModel: any;
+    @Input() declare dataModel: any;
     @Input() uiModel: UIModel<T> = {
       type: undefined,
       itemProperties: {} as T
     };
     @Output() eventHandlers = new EventEmitter<ComponentEvent>();
     @Output() changedDataModel = new EventEmitter();
-    @ViewChild('vc', {read: ViewContainerRef, static: true}) containerRef?: ViewContainerRef;
+    @ViewChild('vc', {read: ViewContainerRef, static: true}) declare containerRef?: ViewContainerRef;
 
     protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeight', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
 
-    public children?: BaseDynamicComponent[];
+    public declare children?: BaseDynamicComponent[];
 
     async ngOnInit(): Promise<void> {
       this.children = this.rendererService.renderChildren(this);
@@ -65,16 +65,16 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
     }
 
     get componentDataModel(): any {
-      if (this.properties.hasOwnProperty('dataSource')) {
+      if (Object.hasOwn(this.properties, 'dataSource')) {
         const value = (this.properties as DataModelProperties).dataSource;
         if (typeof value === 'object') {
           return value;
-        } else if (typeof value === 'string' &&  this.dataModel.hasOwnProperty(value)) {
+        } else if (typeof value === 'string' && Object.hasOwn(this.dataModel, value)) {
           return this.dataModel[value];
         }
       }
 
-      if (this.properties.hasOwnProperty('binding')) {
+      if (Object.hasOwn(this.properties, 'binding')) {
         const path = (this.properties as DataModelProperties).binding;
         // TODO: Handle case for Array type.
         if (!Array.isArray(this.dataModel)) {
@@ -82,13 +82,13 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
         }
       }
 
-      if (this.properties.hasOwnProperty('value')) {
+      if (Object.hasOwn(this.properties, 'value')) {
         return (this.properties as InputProperties).value;
       }
     }
 
     set componentDataModel(val) {
-      if (this.properties.hasOwnProperty('binding')) {
+      if (Object.hasOwn(this.properties, 'binding')) {
         const path = (this.properties as DataModelProperties).binding;
         setValue(this.dataModel, path, val);
       }
@@ -100,7 +100,7 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
 
     getStyles(properties: StyleProperties = {}, stylesList = StylePropertiesList): {[key: string]: string} {
       return stylesList.reduce((styles, prop) => {
-        if (properties.hasOwnProperty(prop)) {
+        if (Object.hasOwn(properties, prop)) {
           styles[prop] = this.getPropValue(properties, prop);
         }
         return styles;
@@ -138,7 +138,7 @@ export class BaseUIComponent<T = StyleProperties> extends BaseDynamicComponent<T
       }
 
       this.hostBindings.forEach(prop => {
-        if (properties.hasOwnProperty(prop) && properties[prop]) {
+        if (Object.hasOwn(properties, prop) && properties[prop]) {
           this[prop] = properties[prop];
         }
       });

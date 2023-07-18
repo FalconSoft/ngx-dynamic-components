@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseUIComponent } from '../../components/base-ui-component';
 import { StyleProperties, propDescription } from '../../properties';
 import {
@@ -20,9 +20,7 @@ import {
     `,
   ]
 })
-export class ContainerComponent extends BaseUIComponent<ContainerProperties> {
-  @HostBinding('style.display') display?: string;
-}
+export class ContainerComponent extends BaseUIComponent<ContainerProperties> { }
 
 export class ContainerProperties extends StyleProperties {
   @propDescription({

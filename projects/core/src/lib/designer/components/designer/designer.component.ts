@@ -30,8 +30,6 @@ export class DesignerComponent implements OnInit {
     return this.dc?.rendererService as DesignerRendererService;
   }
 
-  constructor() {}
-
   async ngOnInit() {
     this.components = this.getComponents(); // CoreService.getListOfComponents();
     this.groups = this.getCategories();
@@ -46,7 +44,7 @@ export class DesignerComponent implements OnInit {
       if (component.category === Categories.HTML || key.includes('designer')) {
         return true;
       }
-    }).map(([key, component]) => component);
+    }).map(([, component]) => component);
   }
 
   getUIModel(component: ComponentDescriptor): UIModel {

@@ -25,11 +25,14 @@ import { map } from 'rxjs/operators';
 export class ComponentsPageComponent implements OnInit {
 
   sections = [];
-  isHandSet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
-  mode: Observable<string> = this.isHandSet$.pipe(map(r => r ? 'over' : 'side'));
+  isHandSet$!: Observable<boolean>;
+  mode!: Observable<string>;
   opened = false;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.isHandSet$ = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(r => r.matches));
+    this.mode = this.isHandSet$.pipe(map(r => r ? 'over' : 'side'));
+  }
 
   ngOnInit(): void {
     const mapToGroup = ({name, components, packageName}) => ({name, list: components, url: [packageName]});

@@ -3,7 +3,7 @@ import { propDescription, BindingProperties } from '../properties';
 import { BaseUIComponent } from '../components/base-ui-component';
 
 @Directive()
-export class FormElementComponent<T = FormElementProperties> extends BaseUIComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line
+export class FormElementComponent<T extends object = FormElementProperties> extends BaseUIComponent<T> implements OnInit, OnDestroy, OnChanges { // eslint-disable-line
   @HostBinding('attr.value') value = null;
   @HostBinding('attr.name') attrName: string;
   @HostBinding('attr.readonly') readonly: boolean;
@@ -100,11 +100,6 @@ export class FormElementProperties extends BindingProperties {
     example: 'true',
   })
   readonly?: boolean;
-  @propDescription({
-    description: 'Is visible',
-    example: 'true',
-  })
-  visible?: boolean;
 
   @propDescription({
     description: 'Is field required',

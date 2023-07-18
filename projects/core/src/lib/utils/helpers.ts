@@ -87,7 +87,7 @@ export function toXMLResult(xmlObj: any): XMLResult {
  * Parses function signature to function name and parameter.
  * @param funcSignature Function signature.
  */
-export function parseArgFunction(funcSignature: string = ''): string[] {
+export function parseArgFunction(funcSignature = ''): string[] {
   const match = funcSignature.match(/(.{1,})\((.{0,})\)/);
   if (!match) {
     return [funcSignature];
@@ -97,7 +97,7 @@ export function parseArgFunction(funcSignature: string = ''): string[] {
 }
 
 export function getStringEventArgs(eventName: string): string | number | undefined {
-  const [fName, fParam] = parseArgFunction(eventName);
+  const [, fParam] = parseArgFunction(eventName);
   if (fParam && fParam.startsWith('\'') && fParam.endsWith('\'')) {
     return fParam.replace(/'/g, '');
   } else if (/^\d+(\.{0,1}\d+)?$/.test(fParam)) {

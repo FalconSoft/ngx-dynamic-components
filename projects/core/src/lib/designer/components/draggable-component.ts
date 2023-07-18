@@ -10,5 +10,4 @@ import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 })
 export class DraggableComponent {
   @ViewChild('container', { read: ViewContainerRef, static: true }) container: ViewContainerRef;
-  constructor() { }
 }
