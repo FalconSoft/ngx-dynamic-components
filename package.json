@@ -1,6 +1,6 @@
 {
   "name": "ngx-dynamic-components",
-  "version": "16.0.1",
+  "version": "16.0.2",
   "description": "NGX Dynamic Components is a configuration based dynamic components library for Angular. That allows you to rapidly create dynamic forms or any other mobile-friendly web layouts.",
   "author": "FalconSoft Ltd",
   "repository": {
@@ -47,7 +47,7 @@
     "font-awesome": "^4.7.0",
     "isomorphic-xml2js": "0.1.3",
     "json-formatter-js": "^2.3.4",
-    "jspython-interpreter": "^2.1.13",
+    "jspython-interpreter": "^2.1.14",
     "ngx-bootstrap": "^11.0.2",
     "ngx-markdown": "^16.0.0",
     "rxjs": "^7.6.0",
