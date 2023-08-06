@@ -1,6 +1,6 @@
 {
   "name": "@ngx-dynamic-components/tools",
-  "version": "16.0.0",
+  "version": "16.0.1",
   "private": false,
   "description": "@ngx-dynamic-components/tools is Angular 7+ library what contains a core interfaces to build a configuration driven web pages.",
   "author": "FalconSoft Ltd <info@falconsoft-ltd.com>",
@@ -22,8 +22,8 @@
     "@angular/common": "^16.1.0",
     "@angular/core": "^16.1.0",
     "@angular/material": "^16.1.0",
-    "@ngx-dynamic-components/bootstrap": ">=16.1.0",
-    "@ngx-dynamic-components/core": ">=16.1.0",
+    "@ngx-dynamic-components/bootstrap": ">=16.0.0",
+    "@ngx-dynamic-components/core": ">=16.0.0",
     "ace-builds": "^1.23.4",
     "angular-split": "^15.0.0"
   }
