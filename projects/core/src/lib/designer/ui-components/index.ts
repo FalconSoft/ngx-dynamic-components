@@ -8,7 +8,6 @@ import { LabelComponent, LabelProperties, labelDescriptor } from '../../ui-compo
 import { TextareaComponent, textareaDescriptor } from '../../ui-components/textarea/textarea.component';
 import { ButtonComponent, buttonDescriptor } from '../../ui-components/button/button.component';
 import { SelectComponent, selectDescriptor } from '../../ui-components/select/select.component';
-import { LinkComponent, linkDescriptor } from '../../ui-components/link/link.component';
 
 export * from './designer-container.component';
 export * from './designer-form.component';
@@ -108,28 +107,4 @@ export class DesignerSelectComponent extends SelectComponent { }
 export const designerSelectDescriptor: ComponentDescriptor = {
   ...selectDescriptor,
   component: DesignerSelectComponent
-};
-
-@Component({
-  selector: 'dc-link',
-  template: `
-    <a (click)="prevent($event)" [ngStyle]="itemStyles" [attr.target]="properties.target || null"
-      [href]="properties.href">{{properties.label}}</a>
-  `,
-  styles: [`
-    a {
-      color: inherit;
-    }
-  `],
-  hostDirectives: [CdkDrag],
-})
-export class DesignerLinkComponent extends LinkComponent {
-  prevent(event: Event): void {
-    event.preventDefault();
-  }
-}
-
-export const designerLinkDescriptor: ComponentDescriptor = {
-  ...linkDescriptor,
-  component: DesignerLinkComponent
 };

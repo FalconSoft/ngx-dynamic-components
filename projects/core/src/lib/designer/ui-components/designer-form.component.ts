@@ -5,7 +5,7 @@ import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { ComponentDescriptor } from '../../models';
 
 @Component({
-  selector: 'dc-form',
+  selector: 'dc-designer-form',
   template: `
     <form novalidate [ngStyle]="itemStyles">
       <ng-container #vc></ng-container>

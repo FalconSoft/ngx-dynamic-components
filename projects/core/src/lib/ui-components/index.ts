@@ -3,7 +3,6 @@ export { LabelComponent, LabelProperties, labelDescriptor } from './label/label.
 export { TextareaComponent, TextareaProperties, textareaDescriptor } from './textarea/textarea.component';
 export { ButtonComponent, ButtonProperties, buttonDescriptor } from './button/button.component';
 export { SelectComponent, SelectProperties, selectDescriptor } from './select/select.component';
-export { LinkComponent, LinkProperties, linkDescriptor } from './link/link.component';
 export { FormComponent, FormProperties, formDescriptor } from './form/form.component';
 export { ContainerComponent, containerDescriptor, divDescriptor } from './container/container.component';
 export { IconComponent, IconProperties, iconDescriptor } from './icon/icon.component';

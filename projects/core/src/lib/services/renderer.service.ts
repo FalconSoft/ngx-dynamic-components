@@ -29,7 +29,7 @@ export class RendererService {
       let component: BaseDynamicComponent;
       if (descriptor.category === Categories.HTML) {
         const baseHtml = componentClass as any;
-        component = new baseHtml(parentComponent.injector);
+        component = new baseHtml(this, parentComponent.injector);
         component.dataModel = dataModel;
         component.uiModel = uiModel;
         component.create(containerRef.element.nativeElement);
@@ -55,6 +55,7 @@ export class RendererService {
           }
           parentComponent.eventHandlers.emit(evt);
         });
+        component.parent = parentComponent as BaseDynamicComponent;
         return component;
       } else {
         throw new Error('Not able to create component');

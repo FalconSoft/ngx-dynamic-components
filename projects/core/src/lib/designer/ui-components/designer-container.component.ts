@@ -6,7 +6,7 @@ import { ContainerComponent, containerDescriptor, divDescriptor } from '../../ui
 import { ContainerProperties } from '../../properties';
 
 @Component({
-  selector: 'dc-container',
+  selector: 'dc-designer-container',
   template: `
     <ng-container #vc></ng-container>
     {{properties.text}}

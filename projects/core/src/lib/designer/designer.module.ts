@@ -17,11 +17,9 @@ import {
   designerDivDescriptor
 } from './ui-components/designer-container.component';
 import {
-  DesignerLinkComponent,
   designerButtonDescriptor,
   designerInputDescriptor,
   designerLabelDescriptor,
-  designerLinkDescriptor,
   designerSelectDescriptor,
   designerTextAreaDescriptor
 } from './ui-components';
@@ -33,8 +31,7 @@ import {
     DraggableComponent,
     ComponentPropertiesComponent,
     DesignerFormComponent,
-    DesignerContainerComponent,
-    DesignerLinkComponent
+    DesignerContainerComponent
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, DragDropModule, AccordionModule, DynamicComponentsCoreModule],
   exports: [NGXDynamicDesignerComponent, DesignerComponent],
@@ -50,8 +47,7 @@ export class DesignerModule {
       designerInputDescriptor,
       designerLabelDescriptor,
       designerTextAreaDescriptor,
-      designerSelectDescriptor,
-      designerLinkDescriptor
+      designerSelectDescriptor
     ].forEach(descriptor => CoreService.registerComponent(descriptor, 'designer'));
   }
 }

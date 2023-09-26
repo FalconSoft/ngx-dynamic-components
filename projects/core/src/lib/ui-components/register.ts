@@ -6,7 +6,6 @@ import { inputDescriptor } from './input/input.component';
 import { iconDescriptor } from './icon/icon.component';
 import { textareaDescriptor } from './textarea/textarea.component';
 import { containerDescriptor, divDescriptor } from './container/container.component';
-import { linkDescriptor } from './link/link.component';
 import { labelDescriptor } from './label/label.component';
 import { formDescriptor } from './form/form.component';
 import { selectDescriptor } from './select/select.component';
@@ -28,7 +27,6 @@ export const COMPONENTS_LIST: ComponentDescriptor[] = [
   inputDescriptor,
   textareaDescriptor,
   buttonDescriptor,
-  linkDescriptor,
   selectDescriptor,
   aDescriptor,
   ulDescriptor,

@@ -14,7 +14,6 @@ import { IconComponent } from './ui-components/icon/icon.component';
 import { RadioGroupComponent } from './ui-components/radio-group/radio-group.component';
 import { TextareaComponent } from './ui-components/textarea/textarea.component';
 import { registerComponents } from './ui-components/register';
-import { LinkComponent } from './ui-components/link/link.component';
 import { LabelComponent } from './ui-components/label/label.component';
 import { FormComponent } from './ui-components/form/form.component';
 import { SelectComponent } from './ui-components/select/select.component';
@@ -33,7 +32,6 @@ import { RendererService } from './services/renderer.service';
     IconComponent,
     RadioGroupComponent,
     TextareaComponent,
-    LinkComponent,
     SelectComponent,
     NGXDynamicComponent
   ],
