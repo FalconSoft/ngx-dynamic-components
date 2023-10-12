@@ -9,7 +9,7 @@ import { packageName } from '../../constants';
   selector: 'dc-tabs-ui',
   template: `
     <tabset class="tabset-fx w-100 h-100 nav-tabs-boxed">
-      <tab *ngFor="let item of uiModel.children; let i = index" [heading]="item.itemProperties.header || 'Tab ' + (i + 1)">
+      <tab *ngFor="let item of uiModel.children; let i = index" [heading]="item.tabProperties.header || 'Tab ' + (i + 1)">
         <ng-container #vc></ng-container>
       </tab>
     </tabset>
@@ -74,14 +74,14 @@ export const tabsDescriptor: ComponentDescriptor<TabsComponentConstrutor, TabsPr
   parseUIModel(xmlData: XMLResult): UIModel {
     const children = xmlData.childNodes?.map(child => {
       if (child.$$?.length === 1) {
-        return CoreService.getUIModel(toXMLResult(child.$$[0]));
+        return { tabProperties: child.$, ...CoreService.getUIModel(toXMLResult(child.$$[0])) };
       }
       const itemProperties = child.$;
       itemProperties.height = '100%';
       itemProperties.width = '100%';
       return {
         type: 'div',
-        children: child.$$.map((r: any) => CoreService.getUIModel(toXMLResult(r))),
+        children: child.$$.map(r => ({ tabProperties: child.$, ...CoreService.getUIModel(toXMLResult(r)) })),
         itemProperties
       };
     });

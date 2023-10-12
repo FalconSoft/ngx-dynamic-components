@@ -1,7 +1,8 @@
 import { OnDestroy, HostBinding, SimpleChanges, OnChanges, Directive, Input, Output, EventEmitter,
   ViewContainerRef, OnInit, ViewChild } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { AttributesMap, UIModel, ComponentEvent } from '../models';
-import { kebabStrToCamel, queryValue, setValue } from '../utils';
+import { kebabStrToCamel, queryValue, setValue, ComponentDataContext, DataChanges } from '../utils';
 import { StyleProperties, DataModelProperties, StylePropertiesList, BaseProperties } from '../properties';
 import { InputProperties } from '../ui-components/input/input.component';
 import { BaseDynamicComponent } from './base-dynamic-component';
@@ -34,19 +35,25 @@ export class BaseUIComponent<T extends object = StyleProperties> extends BaseDyn
     @Output() changedDataModel = new EventEmitter();
     @ViewChild('vc', {read: ViewContainerRef, static: true}) declare containerRef?: ViewContainerRef;
 
+    private dataModelHandlers = new Map<string, (val: unknown) => void>();
+
     protected readonly hostBindings = ['width', 'height', 'padding', 'margin', 'background', 'display',
     'minHeight', 'maxHeight', 'minWidth', 'maxWidth', 'visible'];
     private readonly borders = ['border-left', 'border-top', 'border-right', 'border-bottom'];
+    protected destroy$ = new Subject();
 
     public declare children?: BaseDynamicComponent[];
 
     async ngOnInit(): Promise<void> {
       this.children = this.rendererService.renderChildren(this);
       await super.ngOnInit();
+      this.subscribeOnDataModel();
     }
 
     async ngOnDestroy(): Promise<void> {
       this.emitEvent((this.properties as BaseProperties).onDestroy);
+      this.destroy$.next(null);
+      this.destroy$.complete();
     }
 
     async ngOnChanges({dataModel, uiModel}: SimpleChanges): Promise<void> {
@@ -107,6 +114,19 @@ export class BaseUIComponent<T extends object = StyleProperties> extends BaseDyn
       }, {});
     }
 
+    public addDataPropertyHandler(property: string | undefined, handler: (val: unknown) => void): void {
+      if (!property || !handler) {
+        return;
+      }
+      this.dataModelHandlers.set(property, handler);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    protected onDataChanged(properties: DataChanges): void {}
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    protected afterComponentDataModelChanged(): void {}
+
     protected setHostStyles(): void {
       super.setHostStyles();
       if (this.properties) {
@@ -140,6 +160,26 @@ export class BaseUIComponent<T extends object = StyleProperties> extends BaseDyn
       this.hostBindings.forEach(prop => {
         if (Object.hasOwn(properties, prop) && properties[prop]) {
           this[prop] = properties[prop];
+        }
+      });
+    }
+
+    private subscribeOnDataModel(): void {
+      (this.dataModel as ComponentDataContext)?.uiValueChanged$
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.onDataChanged(data);
+
+        let hasComponentDataChanged = false;
+        data.forEach(({ propertyName, propertyValue }) => {
+          const dataModelProp = `$.${propertyName}`;
+          if (this.dataModelHandlers.has(dataModelProp)) {
+            hasComponentDataChanged = true;
+            this.dataModelHandlers.get(dataModelProp)(propertyValue);
+          }
+        });
+        if (hasComponentDataChanged) {
+          this.afterComponentDataModelChanged();
         }
       });
     }
